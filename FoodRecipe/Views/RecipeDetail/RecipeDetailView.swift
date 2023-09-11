@@ -9,24 +9,30 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     var body: some View {
-        VStack {
-            ZStack(alignment: .top) {
-                Color("LightGray").ignoresSafeArea(.all)
-                // MARK: Overlay Image
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: .infinity, height: 408)
-                    .background(
-                        Image("soup")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(height: 408)
-                            .clipped()
-                    )
-                    .offset(y: -60)
-                
-                TopBar
-                MainContent
+        ScrollView {
+            VStack {
+                ZStack(alignment: .top) {
+                    Color("LightGray").ignoresSafeArea(.all)
+                    // MARK: Overlay Image
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: .infinity, height: 408)
+                        .background(
+                            Image("soup")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 408)
+                                .clipped()
+                        )
+                        .offset(y: -60)
+                    
+                    TopBar
+                    VStack {
+                        MainContent
+                        NutritionView()
+                        NutritionView()
+                    }
+                }
             }
         }
     }
@@ -90,7 +96,9 @@ var MainContent: some View {
         .frame(width: .infinity, alignment: .top)
         .background(.white)
         .cornerRadius(16)
+        
     }
     .padding(.top, 300)
     .padding(.horizontal, 25)
+    .padding(.bottom, -300)
 }
