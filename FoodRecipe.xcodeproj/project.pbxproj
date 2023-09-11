@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1A85E582AAEF08500875285 /* ZillaSlab-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E4F2AAEF08500875285 /* ZillaSlab-Regular.ttf */; };
+		A1A85E592AAEF08500875285 /* ZillaSlab-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E502AAEF08500875285 /* ZillaSlab-BoldItalic.ttf */; };
+		A1A85E5A2AAEF08500875285 /* ZillaSlab-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E512AAEF08500875285 /* ZillaSlab-SemiBoldItalic.ttf */; };
+		A1A85E5B2AAEF08500875285 /* ZillaSlab-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E522AAEF08500875285 /* ZillaSlab-LightItalic.ttf */; };
+		A1A85E5C2AAEF08500875285 /* ZillaSlab-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E532AAEF08500875285 /* ZillaSlab-Light.ttf */; };
+		A1A85E5D2AAEF08500875285 /* ZillaSlab-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E542AAEF08500875285 /* ZillaSlab-Bold.ttf */; };
+		A1A85E5E2AAEF08500875285 /* ZillaSlab-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E552AAEF08500875285 /* ZillaSlab-SemiBold.ttf */; };
+		A1A85E5F2AAEF08500875285 /* ZillaSlab-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E562AAEF08500875285 /* ZillaSlab-Italic.ttf */; };
+		A1A85E602AAEF08500875285 /* ZillaSlab-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E572AAEF08500875285 /* ZillaSlab-Medium.ttf */; };
+		A1A85E622AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E612AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf */; };
+		A1A85E682AAF031E00875285 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A85E672AAF031E00875285 /* Color.swift */; };
 		A548C0552AADBA9F00884B91 /* FoodRecipeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0542AADBA9F00884B91 /* FoodRecipeApp.swift */; };
 		A548C0572AADBA9F00884B91 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0562AADBA9F00884B91 /* ContentView.swift */; };
 		A548C0592AADBAA000884B91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A548C0582AADBAA000884B91 /* Assets.xcassets */; };
@@ -29,6 +40,17 @@
 
 /* Begin PBXFileReference section */
 		A19EAC082AADCB7900639569 /* Script.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = Script.sh; sourceTree = "<group>"; };
+		A1A85E4F2AAEF08500875285 /* ZillaSlab-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-Regular.ttf"; sourceTree = "<group>"; };
+		A1A85E502AAEF08500875285 /* ZillaSlab-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-BoldItalic.ttf"; sourceTree = "<group>"; };
+		A1A85E512AAEF08500875285 /* ZillaSlab-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		A1A85E522AAEF08500875285 /* ZillaSlab-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-LightItalic.ttf"; sourceTree = "<group>"; };
+		A1A85E532AAEF08500875285 /* ZillaSlab-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-Light.ttf"; sourceTree = "<group>"; };
+		A1A85E542AAEF08500875285 /* ZillaSlab-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-Bold.ttf"; sourceTree = "<group>"; };
+		A1A85E552AAEF08500875285 /* ZillaSlab-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-SemiBold.ttf"; sourceTree = "<group>"; };
+		A1A85E562AAEF08500875285 /* ZillaSlab-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-Italic.ttf"; sourceTree = "<group>"; };
+		A1A85E572AAEF08500875285 /* ZillaSlab-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-Medium.ttf"; sourceTree = "<group>"; };
+		A1A85E612AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-MediumItalic.ttf"; sourceTree = "<group>"; };
+		A1A85E672AAF031E00875285 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A548C0512AADBA9F00884B91 /* FoodRecipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodRecipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A548C0542AADBA9F00884B91 /* FoodRecipeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodRecipeApp.swift; sourceTree = "<group>"; };
 		A548C0562AADBA9F00884B91 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +83,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A1A85E482AAEF05500875285 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A1A85E4F2AAEF08500875285 /* ZillaSlab-Regular.ttf */,
+				A1A85E612AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf */,
+				A1A85E542AAEF08500875285 /* ZillaSlab-Bold.ttf */,
+				A1A85E502AAEF08500875285 /* ZillaSlab-BoldItalic.ttf */,
+				A1A85E562AAEF08500875285 /* ZillaSlab-Italic.ttf */,
+				A1A85E532AAEF08500875285 /* ZillaSlab-Light.ttf */,
+				A1A85E522AAEF08500875285 /* ZillaSlab-LightItalic.ttf */,
+				A1A85E572AAEF08500875285 /* ZillaSlab-Medium.ttf */,
+				A1A85E552AAEF08500875285 /* ZillaSlab-SemiBold.ttf */,
+				A1A85E512AAEF08500875285 /* ZillaSlab-SemiBoldItalic.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		A1A85E662AAF02E300875285 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A1A85E672AAF031E00875285 /* Color.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A548C0482AADBA9F00884B91 = {
 			isa = PBXGroup;
 			children = (
@@ -81,10 +128,12 @@
 		A548C0532AADBA9F00884B91 /* FoodRecipe */ = {
 			isa = PBXGroup;
 			children = (
+				A1A85E662AAF02E300875285 /* Extensions */,
+				A1A85E482AAEF05500875285 /* Fonts */,
 				A548C07F2AADDDD300884B91 /* Components */,
 				A548C0712AADBEFD00884B91 /* Models */,
 				A548C06E2AADBE3700884B91 /* Utils */,
-				A548C06D2AADBE2A00884B91 /* Core */,
+				A548C06D2AADBE2A00884B91 /* Views */,
 				A548C0542AADBA9F00884B91 /* FoodRecipeApp.swift */,
 				A548C0622AADBD7400884B91 /* GoogleService-Info.plist */,
 				A548C0582AADBAA000884B91 /* Assets.xcassets */,
@@ -101,14 +150,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		A548C06D2AADBE2A00884B91 /* Core */ = {
+		A548C06D2AADBE2A00884B91 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				A548C07E2AADDDB700884B91 /* UserProfile */,
 				A548C0702AADBE6B00884B91 /* Root */,
 				A548C06F2AADBE5F00884B91 /* Authentication */,
 			);
-			path = Core;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		A548C06E2AADBE3700884B91 /* Utils */ = {
@@ -124,7 +173,6 @@
 			children = (
 				A548C0732AADBF6A00884B91 /* Signup */,
 				A548C0722AADBF6400884B91 /* Login */,
-				A548C0782AADBFA800884B91 /* AuthViewModel.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -140,6 +188,7 @@
 		A548C0712AADBEFD00884B91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A548C0782AADBFA800884B91 /* AuthViewModel.swift */,
 				A548C07A2AADDD6800884B91 /* User.swift */,
 			);
 			path = Models;
@@ -246,9 +295,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1A85E602AAEF08500875285 /* ZillaSlab-Medium.ttf in Resources */,
+				A1A85E5A2AAEF08500875285 /* ZillaSlab-SemiBoldItalic.ttf in Resources */,
 				A548C05C2AADBAA000884B91 /* Preview Assets.xcassets in Resources */,
+				A1A85E5D2AAEF08500875285 /* ZillaSlab-Bold.ttf in Resources */,
+				A1A85E622AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf in Resources */,
+				A1A85E5C2AAEF08500875285 /* ZillaSlab-Light.ttf in Resources */,
 				A548C0592AADBAA000884B91 /* Assets.xcassets in Resources */,
+				A1A85E5F2AAEF08500875285 /* ZillaSlab-Italic.ttf in Resources */,
+				A1A85E5B2AAEF08500875285 /* ZillaSlab-LightItalic.ttf in Resources */,
+				A1A85E5E2AAEF08500875285 /* ZillaSlab-SemiBold.ttf in Resources */,
+				A1A85E582AAEF08500875285 /* ZillaSlab-Regular.ttf in Resources */,
 				A548C0632AADBD7400884B91 /* GoogleService-Info.plist in Resources */,
+				A1A85E592AAEF08500875285 /* ZillaSlab-BoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +323,7 @@
 				A548C0752AADBF8700884B91 /* SignupView.swift in Sources */,
 				A548C0852AADE2D400884B91 /* UserAvatar.swift in Sources */,
 				A548C07B2AADDD6800884B91 /* User.swift in Sources */,
+				A1A85E682AAF031E00875285 /* Color.swift in Sources */,
 				A548C07D2AADDD8E00884B91 /* ImageProcessing.swift in Sources */,
 				A548C0572AADBA9F00884B91 /* ContentView.swift in Sources */,
 				A548C0872AADE37C00884B91 /* UserProfileView.swift in Sources */,
@@ -400,6 +460,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"FoodRecipe/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FoodRecipe/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RecipePal;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -428,6 +490,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"FoodRecipe/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FoodRecipe/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RecipePal;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
