@@ -78,10 +78,10 @@ private extension SignupView {
 //                .font(.custom("ZillaSlab-Bold", size: 24))
                 .font(.custom("ZillaSlab-BoldItalic", size: 24))
             // MARK: SAMPLE COLOR
-                .foregroundColor(Color.theme.Black)
+//                .foregroundColor(Color.theme.Black)
 //                .foregroundColor(Color.theme.Blue)
 //                .foregroundColor(Color.theme.DarkBlue)
-//                .foregroundColor(Color.theme.DarkGray)
+                .foregroundColor(Color.theme.DarkGray)
 //                .foregroundColor(Color.theme.DarkWhite)
 //                .foregroundColor(Color.theme.Gray)
 //                .foregroundColor(Color.theme.LightBlue)
@@ -89,9 +89,6 @@ private extension SignupView {
 //                .foregroundColor(Color.theme.Orange)
 //                .foregroundColor(Color.theme.White)
 //                .foregroundColor(Color.theme.LightOrange)
-
-                
-            
         }
 
     }

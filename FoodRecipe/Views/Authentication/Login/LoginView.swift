@@ -8,58 +8,35 @@
 import SwiftUI
 
 struct LoginView: View {
+    
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
+        
+        // MARK: MAIN LAYOUT
         NavigationStack {
+            
             VStack {
-                // image
-                Image("logo").resizable().scaledToFill().frame(width: 100, height: 120).padding(.vertical, 32)
                 
-                // form fields
-                VStack(spacing: 24) {
-                    InputField(text: $email, title: "Email address", placeHolder: "name@gmail.com")
-                        .textInputAutocapitalization(.never)
-                    
-                    InputField(text: $password, title: "Password", placeHolder: "Enter your password", isSecureField: true)
-                }
-                .padding(.horizontal)
-                .padding(.top, 12)
-                // sign in button
-                Button {
-                    Task {
-                        try await viewModel.signIn(withEmail: email, password: password)
-                    }
-                } label: {
-                    HStack {
-                        Text("SIGN IN")
-                            .fontWeight(.semibold)
-                        Image(systemName: "arrow.forward")
-                    }
-                    .foregroundColor(.white)
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
-                }
-                .background(Color(.systemBlue))
-                .cornerRadius(12)
-                .padding(.top, 24)
+                appLogo
+                    .padding(.top, 10)
+                    .accessibilityLabel("App logo")
+            
+                loginForm
+                    .padding(.horizontal)
+                    .padding(.top, 12)
+                    .accessibilityLabel("Login form")
                 
-                
+                loginButton
+                    .accessibilityLabel("Login button")
                 Spacer()
                 
-                NavigationLink {
-                    SignupView()
-                        .navigationBarBackButtonHidden()
-                } label: {
-                    HStack(spacing: 3) {
-                        Text("Don't have an account?")
-                        Text("Sign up")
-                            .fontWeight(.bold)
-                    }
-                    .font(.system(size: 16))
-                }
-                
-                // sign up button
+                bottomNavigation
+                    .accessibilityLabel("Navigation sign up")
+
+        
             }
             .alert(isPresented: $viewModel.showingAlert) {
                 Alert(title: Text(viewModel.alertItem!.title), message: Text(viewModel.alertItem!.message), dismissButton: .default(Text("OK")))
@@ -72,5 +49,73 @@ struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
             .environmentObject(AuthViewModel())
+    }
+}
+
+
+private extension LoginView {
+    
+    // MARK: LOGO AND SLOGAN UI
+    var appLogo: some View {
+        VStack(spacing: 10) {
+            
+            Image("logo")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 100, height: 200)
+            
+            Text("From Kitchen Novice to Culinary Expert")
+                .font(.custom("ZillaSlab-BoldItalic", size: 24))
+                .foregroundColor(Color.theme.DarkGray)
+        }
+    }
+    
+    // MARK: LOGIN FORM UI
+    var loginForm: some View {
+        VStack(spacing: 24) {
+            InputField(text: $email, title: "Email address", placeHolder: "name@gmail.com")
+                .textInputAutocapitalization(.never)
+            
+            InputField(text: $password, title: "Password", placeHolder: "Enter your password", isSecureField: true)
+        }
+    }
+    
+    // MARK: LOGIN BUTTON UI
+    var loginButton: some View {
+        Button {
+            Task {
+                try await viewModel.signIn(withEmail: email, password: password)
+            }
+        } label: {
+            HStack {
+                Text("Login")
+                    .font(.custom("ZillaSlab-Bold", size: 24))
+            }
+            .foregroundColor(Color.theme.White)
+            .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+        }
+        .background(Color.theme.Orange)
+        .cornerRadius(12)
+        .padding(.top, 24)
+    }
+    
+    //MARK: BOTTOM NAVIGATION UI
+    
+    var bottomNavigation: some View {
+        HStack {
+            Text("Don't have an account?")
+                .foregroundColor(Color.theme.Blue)
+                .font(.custom("ZillaSlab-LightItalic", size: 16))
+            
+            NavigationLink {
+                SignupView()
+                    .navigationBarBackButtonHidden()
+            } label: {
+                Text("Sign up")
+                    .foregroundColor(Color.theme.Blue)
+                    .font(.custom("ZillaSlab-SemiBold", size: 16))
+            }
+        }
+
     }
 }
