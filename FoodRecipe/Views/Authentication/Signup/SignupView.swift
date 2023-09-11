@@ -140,13 +140,14 @@ private extension SignupView {
     var bottomNavigation: some View {
         HStack {
             Text("Already have an account?")
+                .foregroundColor(Color.theme.Blue)
                 .font(.custom("ZillaSlab-LightItalic", size: 16))
             
             Button {
                 dismiss()
             } label: {
                 Text("Log in")
-                    .foregroundColor(Color.theme.DarkBlue)
+                    .foregroundColor(Color.theme.Blue)
                     .font(.custom("ZillaSlab-SemiBold", size: 16))
             }
         }
