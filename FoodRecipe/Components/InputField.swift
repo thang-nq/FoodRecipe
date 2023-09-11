@@ -15,15 +15,15 @@ struct InputField: View {
     var body: some View {
         VStack (alignment: .leading, spacing: 12) {
             Text(title)
+                .font(.custom("ZillaSlab-SemiBold", size: 20))
                 .foregroundColor(Color(.darkGray))
-                .fontWeight(.semibold)
-                .font(.footnote)
+            
             if isSecureField {
                 SecureField(placeHolder, text: $text)
-                    .font(.system(size: 14))
+                    .font(.custom("ZillaSlab-Regular", size: 16))
             } else {
                 TextField(placeHolder, text: $text)
-                    .font(.system(size: 14))
+                    .font(.custom("ZillaSlab-Regular", size: 16))
             }
             
             Divider()

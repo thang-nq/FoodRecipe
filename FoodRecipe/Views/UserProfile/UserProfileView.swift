@@ -61,7 +61,6 @@ struct UserProfileView: View {
                     Task {
                         imagePath = try await viewModel.uploadAvatar(data: newValue)
                     }
-
                 }
             })
             .onAppear {
@@ -75,5 +74,6 @@ struct UserProfileView: View {
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView()
+            .environmentObject(AuthViewModel())
     }
 }
