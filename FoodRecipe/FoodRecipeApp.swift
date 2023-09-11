@@ -23,9 +23,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct FoodRecipeApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+    // init authVM
+    @StateObject var authVM = AuthViewModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(authVM)
         }
     }
 }
