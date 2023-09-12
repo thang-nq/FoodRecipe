@@ -51,9 +51,9 @@ class AuthViewModel: ObservableObject {
             try await Firestore.firestore().collection("users").document(newUser.id).setData(encodedUser)
             try await Auth.auth().currentUser?.sendEmailVerification()
             await fetchUser()
-            
-            
         } catch {
+            showingAlert = true
+            alertItem = AlertItem(title: "Signup error", message: error.localizedDescription, buttonTitle: "Dismiss")
             print("DEBUG: Failed to create user with error \(error.localizedDescription)")
         }
     }
@@ -69,14 +69,12 @@ class AuthViewModel: ObservableObject {
     }
     
     func deleteAccount() {
-        
     }
     
     func fetchUser() async {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
         self.currentUser = try? snapshot.data(as: User.self)
-        
     }
     
     func uploadAvatar(data: PhotosPickerItem) async throws -> String {
