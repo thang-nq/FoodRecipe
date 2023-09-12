@@ -31,6 +31,7 @@ struct RecipeDetailView: View {
                         MainInfo
                         NutritionView()
                         IngredientsView(ingredientsList: MOCK_INGREDIENTS)
+                        StepsView(stepsList: MOCK_STEPS)
                     }
                 }
             }
