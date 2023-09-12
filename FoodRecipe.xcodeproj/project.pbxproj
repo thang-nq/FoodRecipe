@@ -18,6 +18,10 @@
 		A1A85E602AAEF08500875285 /* ZillaSlab-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E572AAEF08500875285 /* ZillaSlab-Medium.ttf */; };
 		A1A85E622AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E612AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf */; };
 		A1A85E682AAF031E00875285 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A85E672AAF031E00875285 /* Color.swift */; };
+		A53A6B812AAF2E81007ECBCD /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B802AAF2E81007ECBCD /* Recipe.swift */; };
+		A53A6B832AAF2F21007ECBCD /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B822AAF2F21007ECBCD /* Tag.swift */; };
+		A53A6B852AAF5828007ECBCD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B842AAF5828007ECBCD /* HomeViewModel.swift */; };
+		A53A6B872AAF6080007ECBCD /* FirebaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B862AAF6080007ECBCD /* FirebaseImageView.swift */; };
 		A548C0552AADBA9F00884B91 /* FoodRecipeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0542AADBA9F00884B91 /* FoodRecipeApp.swift */; };
 		A548C0572AADBA9F00884B91 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0562AADBA9F00884B91 /* ContentView.swift */; };
 		A548C0592AADBAA000884B91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A548C0582AADBAA000884B91 /* Assets.xcassets */; };
@@ -51,6 +55,10 @@
 		A1A85E572AAEF08500875285 /* ZillaSlab-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-Medium.ttf"; sourceTree = "<group>"; };
 		A1A85E612AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-MediumItalic.ttf"; sourceTree = "<group>"; };
 		A1A85E672AAF031E00875285 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		A53A6B802AAF2E81007ECBCD /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		A53A6B822AAF2F21007ECBCD /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		A53A6B842AAF5828007ECBCD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		A53A6B862AAF6080007ECBCD /* FirebaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseImageView.swift; sourceTree = "<group>"; };
 		A548C0512AADBA9F00884B91 /* FoodRecipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodRecipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A548C0542AADBA9F00884B91 /* FoodRecipeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodRecipeApp.swift; sourceTree = "<group>"; };
 		A548C0562AADBA9F00884B91 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -189,7 +197,10 @@
 			isa = PBXGroup;
 			children = (
 				A548C0782AADBFA800884B91 /* AuthViewModel.swift */,
+				A53A6B842AAF5828007ECBCD /* HomeViewModel.swift */,
 				A548C07A2AADDD6800884B91 /* User.swift */,
+				A53A6B802AAF2E81007ECBCD /* Recipe.swift */,
+				A53A6B822AAF2F21007ECBCD /* Tag.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -224,6 +235,7 @@
 				A548C0802AADE22B00884B91 /* InputField.swift */,
 				A548C0822AADE27C00884B91 /* Alert.swift */,
 				A548C0842AADE2D400884B91 /* UserAvatar.swift */,
+				A53A6B862AAF6080007ECBCD /* FirebaseImageView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -319,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A548C0832AADE27C00884B91 /* Alert.swift in Sources */,
+				A53A6B872AAF6080007ECBCD /* FirebaseImageView.swift in Sources */,
 				A548C0792AADBFA800884B91 /* AuthViewModel.swift in Sources */,
 				A548C0752AADBF8700884B91 /* SignupView.swift in Sources */,
 				A548C0852AADE2D400884B91 /* UserAvatar.swift in Sources */,
@@ -328,7 +341,10 @@
 				A548C0572AADBA9F00884B91 /* ContentView.swift in Sources */,
 				A548C0872AADE37C00884B91 /* UserProfileView.swift in Sources */,
 				A548C0772AADBF9400884B91 /* LoginView.swift in Sources */,
+				A53A6B832AAF2F21007ECBCD /* Tag.swift in Sources */,
+				A53A6B812AAF2E81007ECBCD /* Recipe.swift in Sources */,
 				A548C0552AADBA9F00884B91 /* FoodRecipeApp.swift in Sources */,
+				A53A6B852AAF5828007ECBCD /* HomeViewModel.swift in Sources */,
 				A548C0812AADE22B00884B91 /* InputField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,15 +1,14 @@
 //
-//  UserAvatar.swift
+//  FirebaseImageView.swift
 //  FoodRecipe
 //
-//  Created by Thang Nguyen on 10/09/2023.
+//  Created by Thang Nguyen on 11/09/2023.
 //
 
 import SwiftUI
-import FirebaseStorage
 
-struct UserAvatar: View {
-    @Binding var imagePathName: String
+struct FirebaseImageView: View {
+    @State var imagePathName: String
     @State private var avatarImage: UIImage?
     
     var body: some View {
@@ -18,7 +17,6 @@ struct UserAvatar: View {
                 Image(uiImage: avatarImage)
                     .resizable()
                     .scaledToFill()
-                    .clipShape(Circle())
                 
             } else {
                 Text("Loading")
@@ -35,11 +33,10 @@ struct UserAvatar: View {
         }
     }
     
-    
 }
 
-//struct UserAvatar_Previews: PreviewProvider {
+//struct FirebaseImageView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        UserAvatar(imagePath: "bTkv0B2aBnYYjDoyayGItpTOLi82.jpeg")
+//        FirebaseImageView()
 //    }
 //}

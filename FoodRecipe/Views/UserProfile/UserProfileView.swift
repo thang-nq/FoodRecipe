@@ -7,11 +7,17 @@
 
 import SwiftUI
 import PhotosUI
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
-    @State private var imagePath: String = ""
+    @State private var avatarPath: String = ""
+    @State private var avatarViewRefresh: Bool = false
+    @StateObject var homeVM = HomeViewModel()
     @EnvironmentObject var viewModel: AuthViewModel
+    
+    
     var body: some View {
         if let user = viewModel.currentUser {
             List {
@@ -26,8 +32,9 @@ struct UserProfileView: View {
                                 .background(Color(.systemGray3))
                                 .clipShape(Circle())
                         } else {
-                            UserAvatar(imagePath: imagePath)
+                            UserAvatar(imagePathName: $avatarPath)
                                 .frame(width: 72, height: 72)
+                                .id(avatarViewRefresh)
                         }
                         
                         
@@ -42,8 +49,7 @@ struct UserProfileView: View {
                         }
                     }
                     PhotosPicker(selection: $selectedPhoto, photoLibrary: .shared()) {
-                        Text("Select a photo")
-                        
+                        Label("Select a photo", systemImage: "photo.fill")
                     }
                 }
                 
@@ -54,26 +60,49 @@ struct UserProfileView: View {
                         Text("Sign out")
                             .foregroundColor(.red)
                     }
+                    
+                }
+                
+                Section("Recipes"){
+                    Button {
+                        homeVM.getRecipeList()
+                    
+                    } label: {
+                        Text("Fetch recipes")
+                            .foregroundColor(.blue)
+                    }
+
+
+                }
+                ForEach(homeVM.recipes) {recipe in
+                    Text(recipe.name)
                 }
             }
             .onChange(of: selectedPhoto, perform: { newValue in
                 if let newValue {
                     Task {
-                        imagePath = try await viewModel.uploadAvatar(data: newValue)
+                        avatarPath = try await viewModel.uploadAvatar(data: newValue)
+                        avatarViewRefresh.toggle()
                     }
                 }
+                
             })
             .onAppear {
-                imagePath = viewModel.currentUser!.avatarUrl
+                avatarPath = viewModel.currentUser?.avatarUrl ?? ""
+                homeVM.getRecipeList()
             }
+            
+    
+
+            
         }
         
     }
 }
 
-struct UserProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserProfileView()
-            .environmentObject(AuthViewModel())
-    }
-}
+//struct UserProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserProfileView()
+//            .environmentObject(AuthViewModel())
+//    }
+//}
