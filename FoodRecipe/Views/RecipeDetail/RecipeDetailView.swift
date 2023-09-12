@@ -28,8 +28,7 @@ struct RecipeDetailView: View {
                     
                     TopBar
                     VStack {
-                        MainContent
-                        NutritionView()
+                        MainInfo
                         NutritionView()
                     }
                 }
@@ -68,37 +67,31 @@ var TopBar: some View {
 }
 
 
-// MARK: Main Content
-var MainContent: some View {
-    VStack {
-        VStack(alignment: .center, spacing: 16) {
-            Text("Chicken Soup Oven Potato")
-                .font(.custom("ZillaSlab-BoldItalic", size: 26)).fontWeight(.medium)
-                .kerning(0.552)
-                .foregroundColor(.black)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
-            HStack{
-                Tag(text: "Healthy")
-                Tag(text: "Vegan")
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            HStack {
-                Text("By ") + Text("**Nick Tran**").font(.custom("ZillaSlab-BoldItalic", size: 20)).fontWeight(.medium)
-                Spacer()
-                Text("September 1st, 2023")
-            }
-            Divider()
-            Text("A small paragraph some info about recipe. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")
-                .font(.custom("ZillaSlab-Regular", size: 20))
-                .frame(maxWidth: .infinity, alignment: .topLeading)
+// MARK: Main Info
+var MainInfo: some View {
+    SectionContainerView {
+        Text("Chicken Soup Oven Potato")
+            .font(.custom("ZillaSlab-BoldItalic", size: 26)).fontWeight(.medium)
+            .kerning(0.552)
+            .foregroundColor(.black)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+        HStack{
+            Tag(text: "Healthy")
+            Tag(text: "Vegan")
         }
-        .padding(16)
-        .frame(width: .infinity, alignment: .top)
-        .background(.white)
-        .cornerRadius(16)
-        
+        .frame(maxWidth: .infinity, alignment: .leading)
+        HStack {
+            Text("By ") + Text("**Nick Tran**").font(.custom("ZillaSlab-BoldItalic", size: 20)).fontWeight(.medium)
+            Spacer()
+            Text("September 1st, 2023")
+        }
+        Divider()
+        Text("A small paragraph some info about recipe. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")
+            .font(.custom("ZillaSlab-Regular", size: 20))
+            .frame(maxWidth: .infinity, alignment: .topLeading)
     }
     .padding(.top, 300)
     .padding(.horizontal, 25)
     .padding(.bottom, -300)
 }
+

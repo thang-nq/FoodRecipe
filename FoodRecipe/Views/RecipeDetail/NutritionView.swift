@@ -9,24 +9,13 @@ import SwiftUI
 
 struct NutritionView: View {
     var body: some View {
-        VStack {
-            VStack(alignment: .center, spacing: 16) {
-                Text("Nutrition")
-                    .font(.custom("ZillaSlab-BoldItalic", size: 26)).fontWeight(.medium)
-                    .kerning(0.552)
-                    .foregroundColor(.black)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-          
-                NutritionList
-                
-            }
-            .padding(16)
-            .frame(width: .infinity, alignment: .top)
-            .background(.white)
-            .cornerRadius(16)
+        SectionContainerView {
+            SectionTitleView(title: "Nutrition")
+            NutritionList
         }
         .padding(.top, 300)
-        .padding(.horizontal, 25)    }
+        .padding(.horizontal, 25)
+    }
 }
 
 struct NutritionView_Previews: PreviewProvider {
