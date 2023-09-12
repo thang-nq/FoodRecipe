@@ -30,10 +30,11 @@ struct RecipeDetailView: View {
                     VStack {
                         MainInfo
                         NutritionView()
+                        IngredientsView(ingredientsList: MOCK_INGREDIENTS)
                     }
                 }
             }
-        }
+        }.background(Color.theme.LightGray)
     }
 }
 
