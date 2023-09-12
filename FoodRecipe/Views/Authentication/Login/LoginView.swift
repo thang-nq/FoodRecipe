@@ -31,6 +31,7 @@ struct LoginView: View {
                 
                 loginButton
                     .accessibilityLabel("Login button")
+                
                 Spacer()
                 
                 bottomNavigation
