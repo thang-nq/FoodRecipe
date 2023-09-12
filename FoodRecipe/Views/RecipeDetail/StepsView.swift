@@ -16,7 +16,7 @@ struct StepsView: View {
     var stepsList: [String]
     var body: some View {
         SectionContainerView {
-            SectionTitleView(title: "Steps")
+//            SectionTitleView(title: "Steps")
             VStack (alignment: .leading) {
                 ForEach(stepsList, id: \.self) { step in
                     HStack {
@@ -26,10 +26,9 @@ struct StepsView: View {
                     
                 }
             }
-            
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             
-        }.padding(.horizontal, 25)
+        }
     }
 }
 

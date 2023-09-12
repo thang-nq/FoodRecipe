@@ -13,7 +13,7 @@ struct IngredientsView: View {
     var ingredientsList: [String]
     var body: some View {
         SectionContainerView {
-            SectionTitleView(title: "Ingredients")
+//            SectionTitleView(title: "Ingredients")
             VStack (alignment: .leading) {
                 ForEach(ingredientsList, id: \.self) { ingredient in
                     HStack {
@@ -26,7 +26,7 @@ struct IngredientsView: View {
             
             .frame(maxWidth: .infinity, alignment: .topLeading)
         }
-        .padding(.horizontal, 25)
+//        .padding(.horizontal, 25)
     }
 }
 

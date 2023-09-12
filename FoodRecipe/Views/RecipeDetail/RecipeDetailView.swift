@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
+import SlidingTabView
 
 struct RecipeDetailView: View {
+    @State private var selectedTabIndex = 0
     var body: some View {
         ScrollView {
             VStack {
                 ZStack(alignment: .top) {
-                    Color("LightGray").ignoresSafeArea(.all)
+                    Color("LightGray")
                     // MARK: Overlay Image
                     Rectangle()
                         .foregroundColor(.clear)
@@ -27,15 +29,49 @@ struct RecipeDetailView: View {
                         .offset(y: -60)
                     
                     TopBar
-                    VStack {
-                        MainInfo
-                        NutritionView()
-                        IngredientsView(ingredientsList: MOCK_INGREDIENTS)
-                        StepsView(stepsList: MOCK_STEPS)
+                    VStack(spacing: 15) {
+                        ZStack {
+                            VStack(spacing: 15) {
+                                MainInfo
+                                NutritionView()
+                            }
+                        }
+                        VStack {
+                            
+                            SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
+                            
+                            if selectedTabIndex == 0 {
+                                //                                IngredientsView(ingredientsList: MOCK_INGREDIENTS)
+//                                HStack {
+//                                    Text("A small paragraph some info about recipe. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")
+//                                        .font(.custom("ZillaSlab-Regular", size: 20))
+//                                        .frame(maxWidth: .infinity, alignment: .topLeading)
+//
+//                                }
+                                SectionContainerView {
+                                    Text("A small paragraph some info about recipe. Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vestibulum mi eu augue tristique maximus. Nam dictum scelerisque laoreet. Sed vel imperdiet metus, eget congue nibh. Aliquam tempus turpis mattis lorem pharetra, in gravida diam ultrices.\nPraesent felis lorem, aliquet vel dui non, congue pellentesque metus. In malesuada, nisl ut venenatis accumsan, sapien odio tincidunt sem, vel bibendum erat ex et neque.")
+                                        .font(.custom("ZillaSlab-Regular", size: 20))
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+//                                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
+                                }
+                            }
+                            
+                            if selectedTabIndex == 1 {
+                                IngredientsView(ingredientsList: MOCK_INGREDIENTS)
+                            }
+                            
+                            if selectedTabIndex == 2 {
+                                StepsView(stepsList: MOCK_STEPS)
+                            }
+                            
+                        }.background(Color.theme.White)
+                        //                        IngredientsView(ingredientsList: MOCK_INGREDIENTS)
+                        //                        StepsView(stepsList: MOCK_STEPS)
                     }
                 }
             }
-        }.background(Color.theme.LightGray)
+        }
     }
 }
 
@@ -95,5 +131,6 @@ var MainInfo: some View {
     .padding(.top, 300)
     .padding(.horizontal, 25)
     .padding(.bottom, -300)
+    .zIndex(100)
 }
 
