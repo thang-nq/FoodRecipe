@@ -16,10 +16,6 @@ class HomeViewModel: ObservableObject {
     @Published var recipes : [Recipe] = []
     private var db = Firestore.firestore()
     
-    
-
-    
-    
     func getRecipeList() {
         print(recipes)
         db.collection("recipes").getDocuments { snapshot, error in
@@ -43,5 +39,6 @@ class HomeViewModel: ObservableObject {
             }
         }
     }
+
     
 }
