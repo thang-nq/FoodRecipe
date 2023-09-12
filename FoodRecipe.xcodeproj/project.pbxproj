@@ -44,7 +44,7 @@
 
 /* Begin PBXFileReference section */
 		A17B54182AB039960096A8A9 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
-		A17B541A2AB039B70096A8A9 /* ImageProcessing.swfit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageProcessing.swfit.swift; path = FoodRecipe/Models/ImageProcessing.swfit.swift; sourceTree = SOURCE_ROOT; };
+		A17B541A2AB039B70096A8A9 /* ImageProcessing.swfit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageProcessing.swfit.swift; path = FoodRecipe/Extensions/ImageProcessing.swfit.swift; sourceTree = SOURCE_ROOT; };
 		A19EAC082AADCB7900639569 /* Script.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = Script.sh; sourceTree = "<group>"; };
 		A1A85E4F2AAEF08500875285 /* ZillaSlab-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-Regular.ttf"; sourceTree = "<group>"; };
 		A1A85E502AAEF08500875285 /* ZillaSlab-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -91,6 +91,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A17B541C2AB03A290096A8A9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A17B54182AB039960096A8A9 /* AuthViewModel.swift */,
+				A53A6B842AAF5828007ECBCD /* HomeViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		A1A85E482AAEF05500875285 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +120,7 @@
 		A1A85E662AAF02E300875285 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A17B541A2AB039B70096A8A9 /* ImageProcessing.swfit.swift */,
 				A1A85E672AAF031E00875285 /* Color.swift */,
 			);
 			path = Extensions;
@@ -136,11 +146,11 @@
 		A548C0532AADBA9F00884B91 /* FoodRecipe */ = {
 			isa = PBXGroup;
 			children = (
+				A17B541C2AB03A290096A8A9 /* ViewModels */,
 				A1A85E662AAF02E300875285 /* Extensions */,
 				A1A85E482AAEF05500875285 /* Fonts */,
 				A548C07F2AADDDD300884B91 /* Components */,
 				A548C0712AADBEFD00884B91 /* Models */,
-				A548C06E2AADBE3700884B91 /* Utils */,
 				A548C06D2AADBE2A00884B91 /* Views */,
 				A548C0542AADBA9F00884B91 /* FoodRecipeApp.swift */,
 				A548C0622AADBD7400884B91 /* GoogleService-Info.plist */,
@@ -168,14 +178,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		A548C06E2AADBE3700884B91 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				A17B541A2AB039B70096A8A9 /* ImageProcessing.swfit.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		A548C06F2AADBE5F00884B91 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,11 +198,9 @@
 		A548C0712AADBEFD00884B91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A53A6B842AAF5828007ECBCD /* HomeViewModel.swift */,
 				A548C07A2AADDD6800884B91 /* User.swift */,
 				A53A6B802AAF2E81007ECBCD /* Recipe.swift */,
 				A53A6B822AAF2F21007ECBCD /* Tag.swift */,
-				A17B54182AB039960096A8A9 /* AuthViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
