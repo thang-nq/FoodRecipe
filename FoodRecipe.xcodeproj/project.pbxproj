@@ -211,11 +211,8 @@
 		A548C06D2AADBE2A00884B91 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				A188D5AD2AB186F100E8FF0E /* TestColors */,
-=======
 				C26D20692AB19AB20003376E /* HomeScreen */,
->>>>>>> origin
 				CCD973E72AAF0A6300E1AF9C /* RecipeDetail */,
 				A548C07E2AADDDB700884B91 /* UserProfile */,
 				A548C0702AADBE6B00884B91 /* Root */,
