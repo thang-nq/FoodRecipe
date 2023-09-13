@@ -24,7 +24,6 @@ struct SignupView: View {
             
             signUpForm
                 .padding(.top, 10)
-                .padding(.horizontal)
                 .accessibilityLabel("Sign up form")
             registerBtn
                         

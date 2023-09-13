@@ -100,6 +100,13 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		A17B541D2AB03B690096A8A9 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		A1A85E482AAEF05500875285 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +153,7 @@
 		A548C0532AADBA9F00884B91 /* FoodRecipe */ = {
 			isa = PBXGroup;
 			children = (
+				A17B541D2AB03B690096A8A9 /* Managers */,
 				A17B541C2AB03A290096A8A9 /* ViewModels */,
 				A1A85E662AAF02E300875285 /* Extensions */,
 				A1A85E482AAEF05500875285 /* Fonts */,

@@ -25,7 +25,6 @@ struct LoginView: View {
                     .accessibilityLabel("App logo")
             
                 loginForm
-                    .padding(.horizontal)
                     .padding(.top, 12)
                     .accessibilityLabel("Login form")
                 
