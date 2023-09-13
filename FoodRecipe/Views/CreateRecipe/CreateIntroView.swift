@@ -1,5 +1,5 @@
 //
-//  IntroView.swift
+//  CreateIntroView.swift
 //  FoodRecipe
 //
 //  Created by Tien on 13/09/2023.
@@ -8,7 +8,7 @@
 import SwiftUI
 import PhotosUI
 
-struct IntroView: View {
+struct CreateIntroView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var recipeName = ""
     @State private var minutes = ""
@@ -103,8 +103,8 @@ struct InputFieldRecipe: View {
     }
 }
 
-struct IntroView_Previews: PreviewProvider {
+struct CreateIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        IntroView()
+        CreateIntroView()
     }
 }

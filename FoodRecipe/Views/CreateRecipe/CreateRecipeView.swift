@@ -36,7 +36,7 @@ struct CreateRecipeView: View {
             SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
             
             if selectedTabIndex == 0 {
-                IntroView()
+                CreateIntroView()
             }
             
             if selectedTabIndex == 1 {
