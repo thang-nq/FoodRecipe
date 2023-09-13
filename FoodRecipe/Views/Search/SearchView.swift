@@ -1,5 +1,5 @@
 //
-//  MockSearchView.swift
+//  SearchView.swift
 //  FoodRecipe
 //
 //  Created by Man Pham on 13/09/2023.
@@ -7,19 +7,23 @@
 
 import SwiftUI
 
+
 var MOCK_TAGS = ["chicken", "soup", "rice", "pork", "sandwich", "eggs", "duck", "avocado", "simple", "milk"]
 var MOCK_MEAL_TYPES = ["breakfast", "brunch", "lunch", "dinner", "snack"]
 
-struct MockSearchView: View {
+struct SearchView: View {
     @State var currentSelectedTags: [String] = []
     @State var currentSelectedMealTypes: [String] = []
     @State var searchInput = ""
     var body: some View {
+        // MARK: Main
         VStack(spacing: 10){
+            SearchBar(searchText: $searchInput)
             SectionTitleView(title: "Meal types")
-            TagCloudView(tags: MOCK_MEAL_TYPES, currentSelectedTags: $currentSelectedMealTypes, action: selectMealType)
+            TagsFilterView(tags: MOCK_MEAL_TYPES, currentSelectedTags: $currentSelectedMealTypes, action: selectMealType)
             SectionTitleView(title: "Tags")
-            TagCloudView(tags: MOCK_TAGS, currentSelectedTags: $currentSelectedTags, action: selectTag)
+            TagsFilterView(tags: MOCK_TAGS, currentSelectedTags: $currentSelectedTags, action: selectTag)
+            Spacer()
         }.padding(10)
     }
     func selectTag(tag: String) {
@@ -42,15 +46,13 @@ struct MockSearchView: View {
     }
 }
 
-struct MockSearchView_Previews: PreviewProvider {
+struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        MockSearchView()
+        SearchView()
     }
 }
 
-
-
-struct TagCloudView: View {
+struct TagsFilterView: View {
     var tags: [String]
     @Binding var currentSelectedTags: [String]
     var action: (String) -> Void

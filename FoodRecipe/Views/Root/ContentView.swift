@@ -12,8 +12,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if authVM.userSession != nil {
-//                UserProfileView()
-                MockSearchView()
+                UserProfileView()
             } else {
                 LoginView()
             }
