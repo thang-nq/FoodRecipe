@@ -12,24 +12,21 @@ struct RecipeCardView: View {
     
     var body: some View {
         VStack{
-            Image("recipe")
+            Image(recipe.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(maxWidth: .infinity)
                 .frame(height: 200)
                 .cornerRadius(5)
             HStack{
-                VStack{
-                    Text(recipe.name)
-                        .font(.title2.bold())
-                }
-              
-                Spacer()
-            }
-            .padding(.top, 10)
-            
+                Text(recipe.name)
+                        .font(.custom("ZillaSlab-SemiBold", size: 26))
+                        .padding(.top, 10)
+                        .frame(width: 220, alignment: .leading)
+            }.frame(maxWidth: .infinity, alignment: .leading)
             HStack {
                 Text(recipe.tag)
+                            .font(.custom("ZillaSlab-Regular", size: 20))
                             .foregroundColor(.white)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
@@ -38,34 +35,22 @@ struct RecipeCardView: View {
                 Spacer()
             }.padding(.bottom, 10)
                   
-            
             Text(recipe.description)
-               
+                .font(.custom("ZillaSlab-Regular", size: 20))
             
-        }
-        .buttonStyle(PlainButtonStyle())
-        .overlay(
-                            Button(action: {
-                                // Handle save action
-                            }) {
-                                Image("save")
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .padding(.trailing, 16)
-                            .frame(width: 44, height: 44)
-                            .offset(x:140, y:10)
-                        )
-        .overlay(
-                            Button(action: {
-                                // Handle like action
-                            }) {
-                                Image("heart")
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .padding(.trailing, 16)
-                            .frame(width: 44, height: 44)
-                            .offset(x:110, y:10)
-                        )
+            }
+            .overlay(
+                        Button(action: {
+                        // Handle save action
+                        }) {
+                            Image(systemName: "heart")
+                        }
+                        .foregroundColor(Color("Orange"))
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.trailing, 16)
+                        .font(.system(size: 25))
+                        .offset(x:140, y:20)
+            )
         .padding(.bottom, 10)
     }
 }

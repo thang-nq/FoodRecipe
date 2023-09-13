@@ -17,13 +17,23 @@ struct HomeView: View {
                 }
             SavedRecipeListView()
                 .tabItem(){
-                    Image(systemName: "bookmark.fill")
+                    Image(systemName: "heart")
                     Text("Saved Recipe")
                 }
             SearchView()
                 .tabItem(){
                     Image(systemName: "magnifyingglass")
                     Text("Search")
+                }
+            CreateRecipeView()
+                .tabItem(){
+                    Image(systemName: "plus")
+                    Text("Create Recipe")
+                }
+            UserProfileViewContainer()
+                .tabItem(){
+                    Image(systemName: "person")
+                    Text("Profile")
                 }
         }.tint(Color("Orange"))
     }

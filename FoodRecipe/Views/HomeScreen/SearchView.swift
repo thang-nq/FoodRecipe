@@ -23,13 +23,13 @@ struct SearchView: View {
                         Label("Dark", systemImage: "lightbulb")
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        // Handle profile button action
-                    }) {
-                        Image("user")
-                    }
-                }
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    Button(action: {
+//                        // Handle profile button action
+//                    }) {
+//                        Image("user")
+//                    }
+//                }
             }
         }.environment(\.colorScheme, isDark ? .dark : .light)
     }

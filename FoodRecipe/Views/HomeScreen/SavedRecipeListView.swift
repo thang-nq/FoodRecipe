@@ -23,7 +23,7 @@ struct SavedRecipeListView: View {
         NavigationView {
             VStack {
                 List {
-                    Section(header: Text("Saved Recipes")) {
+                    Section(header: Text("Saved Recipes").font(.custom("ZillaSlab-Bold", size: 30))) {
                         ForEach(filteredRecipes) { recipe in
                             NavigationLink(destination: RecipeDetailView(recipe: recipe)) {
                                 RecipeCardView(recipe: recipe)
@@ -41,13 +41,13 @@ struct SavedRecipeListView: View {
                         Label("Dark", systemImage: "lightbulb")
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        // Handle profile button action
-                    }) {
-                        Image("user")
-                    }
-                }
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    Button(action: {
+//                        // Handle profile button action
+//                    }) {
+//                        Image("user")
+//                    }
+//                }
             }
         }.environment(\.colorScheme, isDark ? .dark : .light)
     }

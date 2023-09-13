@@ -8,7 +8,7 @@
 import Foundation
 
 var recipes : [Recipe] = [
-    Recipe(name: "Pasta", imageName: "pasta", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo sunt voluptas quas, nobis error adipisci maxime dicta nam, alias nemo eos eligendi cumque a placeat autem nulla culpa sequi nostrum?", tag: "Chicken"),
-    Recipe(name: "Pizza", imageName: "pizza", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo sunt voluptas quas, nobis error adipisci maxime dicta nam, alias nemo eos eligendi cumque a placeat autem nulla culpa sequi nostrum?", tag: "Chicken"),
-    Recipe(name: "Salad", imageName: "salad", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo sunt voluptas quas, nobis error adipisci maxime dicta nam, alias nemo eos eligendi cumque a placeat autem nulla culpa sequi nostrum?", tag: "Chicken")
+    Recipe(name: "Next-level chicken caesar salad", imageName: "chicken-salad", description: "Toss lettuce, croutons and cheese in a punchy anchovy and garlic dressing for a traditional caesar salad – plus griddled chicken to take the flavour up a notch", tag: "Chicken"),
+    Recipe(name: "Tomato soup recipes", imageName: "tomato-soup", description:"Warm up with our rich tomato soup recipes. These top picks are freezable and include family-friendly, vegetarian and healthy options.", tag: "Soup"),
+    Recipe(name: "Ricotta dip with crushed tomatoes & bruschetta", imageName: "ricotta", description:"Brush slices of baguette with garlic then chargrill and pile high with Italian-style cheese dip with vibrant cherry tomatoes", tag: "Vegan")
 ]
