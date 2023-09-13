@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct IntroView: View {
+    @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var recipeName = ""
     @State private var minute = ""
+    @State private var description = ""
+
 
     var body: some View {
                 VStack{
@@ -48,7 +52,12 @@ struct IntroView: View {
                                 .padding(.trailing, 20)
                         }
                         
-                    } .padding(.horizontal, 20)
+                    } .padding(.horizontal, 20) .padding(.bottom, 20)
+                    
+                    PhotosPicker(selection: $selectedPhoto, photoLibrary: .shared()) {
+                        Label("Select a photo", systemImage: "photo.fill")
+                    }
+                    
                 }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
