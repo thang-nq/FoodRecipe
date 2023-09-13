@@ -24,11 +24,7 @@ struct IntroView: View {
 //                                .padding(.leading, 20)
 //                        Spacer()
 //                    }
-
-                    
                     InputFieldRecipe(text: $recipeName, title: "Title", placeHolder: "Enter title")
-                       
-                    
 //                    TextField(("Enter recipe name"), text: $recipeName)
 //                        .textFieldStyle(RoundedBorderTextFieldStyle())
 //                        .font(.custom("ZillaSlab-Regular", size: 18))
@@ -64,10 +60,20 @@ struct IntroView: View {
                     
                     PhotosPicker(selection: $selectedPhoto, photoLibrary: .shared()) {
                         Label("Select a photo", systemImage: "photo.fill")
+                    }.padding(.vertical, 10)
+                    
+                    HStack{
+                        Text("Description")
+                                .font(.custom("ZillaSlab-SemiBold", size: 22))
+                                .padding(.leading, 15)
+                        Spacer()
                     }
                     TextEditor(text: $description)
-//                        .colorMultiply(.gray)
-                        .padding(.horizontal, 20)
+                        .font(.custom("ZillaSlab-Regular", size: 16))
+                        .frame(height: 270)
+                        .colorMultiply(.gray)
+                        .cornerRadius(10)
+                        .padding(.horizontal, 15)
                     
                 }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
@@ -96,7 +102,6 @@ struct InputFieldRecipe: View {
         .padding(.bottom, 10)
     }
 }
-
 
 struct IntroView_Previews: PreviewProvider {
     static var previews: some View {
