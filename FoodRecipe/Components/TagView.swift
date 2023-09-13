@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Tag: View {
+struct TagView: View {
     var text: String
     var body: some View {
         Text(text)
@@ -22,8 +22,8 @@ struct Tag: View {
     }
 }
 
-struct Tag_Previews: PreviewProvider {
+struct TagView_Previews: PreviewProvider {
     static var previews: some View {
-        Tag(text: "Vegan")
+        TagView(text: "Vegan")
     }
 }

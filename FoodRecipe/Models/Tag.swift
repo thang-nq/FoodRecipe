@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct Tag: Identifiable, Codable {
     let id: String
     var name: String

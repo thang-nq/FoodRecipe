@@ -114,8 +114,8 @@ var MainInfo: some View {
             .foregroundColor(.black)
             .frame(maxWidth: .infinity, alignment: .topLeading)
         HStack{
-            Tag(text: "Healthy")
-            Tag(text: "Vegan")
+            TagView(text: "Healthy")
+            TagView(text: "Vegan")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         HStack {
