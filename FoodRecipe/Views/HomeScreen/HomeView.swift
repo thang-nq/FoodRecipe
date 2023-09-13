@@ -25,7 +25,7 @@ struct HomeView: View {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
                 }
-            CreateRecipeViewDemo()
+            CreateRecipeView()
                 .tabItem(){
                     Image(systemName: "plus")
                     Text("Create Recipe")
