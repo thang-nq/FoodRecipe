@@ -103,17 +103,22 @@ struct TagCloudView: View {
     }
     
     private func item(for text: String) -> some View {
-        Button {
+        let isSelect = currentSelectedTags.contains(text)
+        return Button {
             action(text)
             print(currentSelectedTags)
         } label: {
-            Text(text.capitalized)
-                .padding(.all, 5)
-                .font(.body)
-                .background(currentSelectedTags.contains(text) ? Color.theme.LightOrange : Color.theme.LightGray)
-                .foregroundColor(currentSelectedTags.contains(text) ? Color.theme.White : Color.theme.DarkGray)
-                .cornerRadius(5)
-            
+            HStack {
+                Text(text.capitalized)
+                    .font(.body)
+                Image(systemName: isSelect ? "checkmark" : "plus").font(.system(size: 15))
+                
+            }
+            .padding(.vertical, 5)
+            .padding(.horizontal, 5)
+            .background(isSelect ? Color.theme.LightOrange : Color.theme.LightGray)
+            .foregroundColor(isSelect ? Color.theme.White : Color.theme.DarkGray)
+            .cornerRadius(5)
         }
     }
     
