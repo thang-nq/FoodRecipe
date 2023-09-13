@@ -40,7 +40,7 @@ struct CreateRecipeView: View {
             }
             
             if selectedTabIndex == 1 {
-                IngredientsView(ingredientsList: MOCK_INGREDIENTS)
+                CreateIngredientsView()
             }
             
             if selectedTabIndex == 2 {

@@ -9,13 +9,22 @@ import SwiftUI
 
 struct CreateIngredientsView: View {
     @State private var showingSheet = false
+    @State private var InputIngredient = ""
+    @State private var Ingredients: [String] = []
     var body: some View {
-        
-        VStack{
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            ForEach(Ingredients, id: \.self) { igredient in
+                HStack {
+                            Text("•")
+                                .font(.title)
+                            Text(igredient)
+                                .font(.custom("ZillaSlab-Regular", size: 20))
+                }
+                .padding(.leading, 20)
+            }
             Spacer()
             
-            HStack{
+            HStack(){
                 Spacer()
                 Button(action: {
                                 showingSheet.toggle()
@@ -31,12 +40,12 @@ struct CreateIngredientsView: View {
             .padding(.trailing, 15)
             .padding(.bottom, 70)
             
-          
-            
         }
         .sheet(isPresented: $showingSheet){
-            Text("helo")
+            BottomSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
+                .presentationDetents([.height(300)])
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 //        .overlay(
 //            Button(action: {
 //                showingSheet.toggle()
@@ -54,7 +63,28 @@ struct CreateIngredientsView: View {
     }
 }
 
+struct BottomSheetView: View {
+    @Binding var InputIngredient : String
+    @Binding var Ingredients : [String]
+    var body: some View{
+        VStack{
+            InputFieldRecipe(text: $InputIngredient, title: "Ingredient", placeHolder: "Enter Ingredient") }
+            Button(action: {
+                if(!InputIngredient.isEmpty){
+                    Ingredients.append(InputIngredient)
+                    InputIngredient = ""
+                }
+            }) {
+                Text("Save")
+                    .foregroundColor(.white)
+                                    .font(.headline)
+                                    .frame(width: 120, height: 40)
+                                    .background(Color("Orange"))
+                                    .cornerRadius(8)
 
+            }
+        }
+}
 
 struct CreateIngredientsView_Previews: PreviewProvider {
     static var previews: some View {
