@@ -36,13 +36,6 @@ struct CreateRecipeView: View {
             SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
             
             if selectedTabIndex == 0 {
-                //                                IngredientsView(ingredientsList: MOCK_INGREDIENTS)
-//                                HStack {
-//                                    Text("A small paragraph some info about recipe. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")
-//                                        .font(.custom("ZillaSlab-Regular", size: 20))
-//                                        .frame(maxWidth: .infinity, alignment: .topLeading)
-//
-//                                }
                 IntroView()
             }
             
