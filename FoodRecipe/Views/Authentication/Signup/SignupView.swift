@@ -25,12 +25,13 @@ struct SignupView: View {
             signUpForm
                 .padding(.top, 10)
                 .accessibilityLabel("Sign up form")
+            
             registerBtn
-                        
-            Spacer()
+//            Spacer()
             bottomNavigation
         }
     }
+    
 //  MARK: PRINT FONTS (DEV LOG ONLY)
 //    init() {
 //        for familyName in UIFont.familyNames {
