@@ -35,7 +35,11 @@ struct HomeView: View {
                     Image(systemName: "person")
                     Text("Profile")
                 }
-        }.tint(Color("Orange"))
+        }
+        .onAppear(){
+            UITabBar.appearance().backgroundColor = .white
+        }
+        .tint(Color("Orange"))
 
     }
 }

@@ -12,62 +12,84 @@ struct CreateIngredientsView: View {
     @State private var InputIngredient = ""
     @State private var Ingredients: [String] = []
     var body: some View {
-        VStack(alignment: .leading) {
-            if(Ingredients.isEmpty){
-                HStack {
+        VStack{
+            ScrollView{
+                VStack(alignment: .leading) {
+                    if(Ingredients.isEmpty){
+                        HStack {
                             Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
                             Text("Click the plus button below to add ingredient")
                                 .font(.custom("ZillaSlab-Regular", size: 20))
-                }.padding(.leading, 20)
-            }
-            ForEach(Ingredients, id: \.self) { igredient in
-                HStack {
+                                
+                        }.padding(.leading, 20)
+                    }
+                    ForEach(Ingredients, id: \.self) { igredient in
+                        HStack() {
                             Text("•")
                                 .font(.title)
                             Text(igredient)
                                 .font(.custom("ZillaSlab-Regular", size: 20))
+                                .frame(width: 260, alignment: .leading)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 20)
+                    }
+                    Spacer()
+                    //            HStack(){
+                    //                Spacer()
+                    //                Button(action: {
+                    //                    showingSheet.toggle()
+                    //                }) {
+                    //                    Image(systemName: "plus")
+                    //                        .font(.system(size: 24))
+                    //                        .foregroundColor(.white)
+                    //                        .padding(20)
+                    //                        .background(Color("Orange"))
+                    //                        .clipShape(Circle())
+                    //                }
+                    //            }
+                    //            .alignmentGuide(.leading, computeValue: { _ in 0 })
+                    //            .padding(.bottom)
+                    //            .padding(.trailing, 15)
+                    //            .padding(.bottom, 70)
+                    
                 }
-                .padding(.leading, 20)
+                
             }
-            Spacer()
-            
-            HStack(){
-                Spacer()
-                Button(action: {
-                                showingSheet.toggle()
-                            }) {
-                                Image(systemName: "plus")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.white)
-                                    .padding(20)
-                                    .background(Color("Orange"))
-                                    .clipShape(Circle())
-                            }
-            }
-            .padding(.trailing, 15)
-            .padding(.bottom, 70)
-            
         }
         .sheet(isPresented: $showingSheet){
             BottomSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
                 .presentationDetents([.height(300)])
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-//        .overlay(
-//            Button(action: {
-//                showingSheet.toggle()
-//            }, label: {
-//                Image(systemName: "plus")
-//                                .font(.system(size: 24))
-//                                .foregroundColor(.white)
-//                                .padding(20)
-//                                .background(Color("Orange"))
-//                                .clipShape(Circle())
-//                                .offset(x:150, y:270)
-//            })
-//        )
+        .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
+        .overlay(
+            Button(action: {
+                self.showingSheet.toggle()
+            }, label: {
+                Image(systemName: "plus")
+                                .font(.system(size: 24))
+                                .foregroundColor(.white)
+                                .padding(20)
+                                .background(Color("Orange"))
+                                .clipShape(Circle())
+                                
+            })
+            
+            .modifier(ButtonModifier()),
+            alignment: .bottomTrailing
+            
+        )
         
     }
+}
+
+struct ButtonModifier: ViewModifier {
+  func body(content: Content) -> some View {
+    content
+          .padding(.bottom, 20)
+          .padding(.trailing, 10)
+      
+  }
 }
 
 struct BottomSheetView: View {
@@ -75,7 +97,8 @@ struct BottomSheetView: View {
     @Binding var Ingredients : [String]
     var body: some View{
         VStack{
-            InputFieldRecipe(text: $InputIngredient, title: "Ingredient", placeHolder: "Enter Ingredient") }
+            InputFieldRecipe(text: $InputIngredient, title: "Ingredient", placeHolder: "Enter Ingredient")
+        }
             Button(action: {
                 if(!InputIngredient.isEmpty){
                     Ingredients.append(InputIngredient)
