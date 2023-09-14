@@ -13,6 +13,13 @@ struct CreateIngredientsView: View {
     @State private var Ingredients: [String] = []
     var body: some View {
         VStack(alignment: .leading) {
+            if(Ingredients.isEmpty){
+                HStack {
+                            Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
+                            Text("Click the plus button below to add ingredient")
+                                .font(.custom("ZillaSlab-Regular", size: 20))
+                }.padding(.leading, 20)
+            }
             ForEach(Ingredients, id: \.self) { igredient in
                 HStack {
                             Text("•")
