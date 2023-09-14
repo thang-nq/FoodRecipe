@@ -32,7 +32,22 @@ struct CreateRecipeView: View {
 //            }
 //        }
         VStack {
+            HStack {
+                Spacer()
+                Text("Create new recipe")
+                    .font(.custom("ZillaSlab-Bold", size: 25))
+                    .padding(.leading, 70)
+                
+                Spacer()
+                
+                Button(action: {
+                    // Create button action
+                }) {
+                    Text("Create")
+                        .font(.system(size: 20))
             
+                }.padding(.trailing, 20)
+            }
             SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
             
             if selectedTabIndex == 0 {
