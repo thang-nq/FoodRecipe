@@ -30,8 +30,8 @@
             filePath = "FoodRecipe/Views/TestColors/TestColors.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "unknown"
             landmarkType = "0">
             <Locations>
@@ -63,6 +63,21 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "107"
                   endingLineNumber = "107"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "751A9093-D211-47E7-B48C-C908146BF0FE - 27da7dbfad1143bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FoodRecipe.TestColors_Previews.init() -&gt; FoodRecipe.TestColors_Previews"
+                  moduleName = "FoodRecipe"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andy/Desktop/IOS/ASM3/repo/FoodRecipe/FoodRecipe/Views/TestColors/TestColors.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "110"
+                  endingLineNumber = "110"
                   offsetFromSymbolStart = "0">
                </Location>
             </Locations>

@@ -42,9 +42,10 @@ struct OnLoadingPageView: View {
                 Button(action:{nextScreen()}){
                     Text("Lets get started")
                         .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
+                        .frame(width: 300, height: 50, alignment: .center)
+                        .contentShape(Rectangle())
                 }
                 .foregroundColor(Color.theme.DarkBlueInstance)
-                .frame(width: 300, height: 50, alignment: .center)
                 .background(Color.theme.GreenInstance)
                 .cornerRadius(8)
                 .padding(.top)
@@ -53,9 +54,10 @@ struct OnLoadingPageView: View {
                 Button(action:{nextScreen()}){
                     Text("Next")
                         .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
+                        .frame(width: 300, height: 50)
+                        .contentShape(Rectangle())
                 }
                 .foregroundColor(Color.theme.DarkBlueInstance)
-                .frame(width: 300, height: 50, alignment: .center)
                 .background(Color.theme.Orange)
                 .cornerRadius(8)
                 .padding(.top)
@@ -69,6 +71,6 @@ struct OnLoadingPageView: View {
 
 struct OnLoadingPageView_Previews: PreviewProvider {
     static var previews: some View {
-        OnLoadingPageView(imageName: "star.fill", iconColor: Color.theme.YellowInstance, title: "RecipePal Hello", description: "Welcome to RecipePal, your culinary companion! Discover, cook, and share delicious dishes with our user-friendly app. Let's get cooking!", startedButton: true, nextScreen: {})
+        OnLoadingPageView(imageName: "star.fill", iconColor: Color.theme.YellowInstance, title: "RecipePal Hello", description: "Welcome to RecipePal, your culinary companion! Discover, cook, and share delicious dishes with our user-friendly app. Let's get cooking!", startedButton: false, nextScreen: {})
     }
 }

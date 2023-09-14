@@ -10,7 +10,8 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var authVM: AuthViewModel
-    @State var showLoading: Bool = false
+//    @State var showLoading: Bool = true
+    @AppStorage("initialView") var initialView: Bool = true
     
     var body: some View {
         Group {
@@ -18,14 +19,12 @@ struct ContentView: View {
                 UserProfileView()
             } else {
                 LoginView()
-                    .onAppear {
-                        showLoading = true
-                    }
-                
             }
         }
-        .fullScreenCover(isPresented: $showLoading, content: {
-            OnLoadingList(showLoading: $showLoading)
+        .fullScreenCover(isPresented: $initialView, content: {
+//            OnLoadingList(showLoading: $showLoading)
+            OnLoadingList()
+
         })
         
     }

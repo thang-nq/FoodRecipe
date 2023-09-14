@@ -12,7 +12,7 @@ struct TestColors: View {
         
         VStack(spacing: 10) {
             Text("ACCENT COLORS")
-                .font(.custom("ZillaSlab-BoldItalic", size: 30))
+                .font(.custom("ZillaSlab-BoldItalic", size: 20))
             
             VStack(spacing: 10) {
                 Text("White")
@@ -53,10 +53,10 @@ struct TestColors: View {
             }
             
             Text("INSTANCE COLORS")
-                .font(.custom("ZillaSlab-BoldItalic", size: 30))
+                .font(.custom("ZillaSlab-BoldItalic", size: 20))
             
             VStack(spacing: 10){
-
+                
                 Text("WhiteInstance")
                     .foregroundColor(Color.theme.WhiteInstance)
             
@@ -97,6 +97,9 @@ struct TestColors: View {
                 
                 Text("GreenInstance")
                     .foregroundColor(Color.theme.GreenInstance)
+                
+                Text("YellowInstance")
+                    .foregroundColor(Color.theme.YellowInstance)
             }
 
         }

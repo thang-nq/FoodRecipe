@@ -9,9 +9,10 @@ import SwiftUI
 
 struct OnLoadingList: View {
     
-    @Binding var showLoading: Bool
-    
+//    @Binding var showLoading: Bool
     @State private var tabIndex: Int = 0
+    @AppStorage("initialView") var initialView: Bool = true
+
     
     var body: some View {
         //MARK: TABVIEW WRAPPER UI
@@ -38,10 +39,9 @@ struct OnLoadingList: View {
                 tabIndex += 1
             }
         } else {
-            showLoading = false
+//            showLoading = false
+            initialView = false
         }
-        
-
     }
     
 }
@@ -49,6 +49,8 @@ struct OnLoadingList: View {
 
 struct OnLoadingList_Previews: PreviewProvider {
     static var previews: some View {
-        OnLoadingList(showLoading: .constant(true))
+//        OnLoadingList(showLoading: .constant(true))
+        OnLoadingList()
+
     }
 }
