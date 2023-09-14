@@ -20,7 +20,7 @@ struct HomeView: View {
                     Image(systemName: "heart")
                     Text("Saved Recipe")
                 }
-            SearchViewDemo()
+            SearchView()
                 .tabItem(){
                     Image(systemName: "magnifyingglass")
                     Text("Search")
@@ -51,11 +51,7 @@ struct SavedRecipeListViewDemo: View {
         Text("SavedRecipeList")
     }
 }
-struct SearchViewDemo: View {
-    var body: some View {
-        Text("Search")
-    }
-}
+
 struct CreateRecipeViewDemo: View {
     var body: some View {
         Text("CreateRecipe")
