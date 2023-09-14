@@ -14,7 +14,6 @@ var MOCK_MEAL_TYPES = ["breakfast", "brunch", "lunch", "dinner", "snack"]
 struct SearchView: View {
     @State var currentSelectedTags: [String] = []
     @State var currentSelectedMealTypes: [String] = []
-//    @State var currentSelectedFilters: [String] = []
     @State var searchInput = ""
     @State var showingSheet: Bool = false
     var body: some View {
@@ -24,7 +23,6 @@ struct SearchView: View {
             HStack(alignment: .center, spacing: 27) {
                 // MARK: Filter bar
                 Button {
-                    print("click")
                     showingSheet.toggle()
                 } label: {
                     HStack(alignment: .center, spacing: 14) {
@@ -132,6 +130,7 @@ struct SearchView_Previews: PreviewProvider {
     }
 }
 
+// MARK: Component for render wrapping HStack
 struct TagsFilterView: View {
     var tags: [String]
     @Binding var currentSelectedTags: [String]
