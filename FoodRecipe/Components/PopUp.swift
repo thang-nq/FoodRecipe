@@ -26,7 +26,7 @@ struct PopUp: View {
         }
         .padding(.horizontal)
         .multilineTextAlignment(.center)
-        .frame(width: 400, height: 250)
+        .frame(width: 350, height: 250)
         .background(backGroundStyle)
         .overlay(alignment: .topTrailing) {
             closeButton
