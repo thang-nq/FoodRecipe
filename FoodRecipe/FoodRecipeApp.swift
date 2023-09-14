@@ -15,7 +15,7 @@ struct FoodRecipeApp: App {
         FirebaseApp.configure()
     }
     // init authVM
-    @StateObject var authVM = AuthViewModel()
+    @StateObject private var authVM = AuthViewModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
