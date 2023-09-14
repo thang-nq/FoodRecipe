@@ -45,5 +45,6 @@ struct ColorTheme {
     let WhiteInstance = Color("WhiteInstance")
     let RedInstance = Color("RedInstance")
     let GreenInstance = Color("GreenInstance")
+    let YellowInstance = Color("YellowInstance")
 
 }

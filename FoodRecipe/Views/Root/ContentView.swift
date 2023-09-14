@@ -8,15 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     @EnvironmentObject var authVM: AuthViewModel
+    @State var showLoading: Bool = false
+    
     var body: some View {
         Group {
             if authVM.userSession != nil {
                 UserProfileView()
             } else {
                 LoginView()
+                    .onAppear {
+                        showLoading = true
+                    }
+                
             }
         }
+        .fullScreenCover(isPresented: $showLoading, content: {
+            OnLoadingList(showLoading: $showLoading)
+        })
         
     }
 }
