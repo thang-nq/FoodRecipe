@@ -14,9 +14,10 @@ struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarPath: String = ""
     @State private var avatarViewRefresh: Bool = false
-    @StateObject var homeVM = HomeViewModel()
+    @State private var newRecipePhoto: PhotosPickerItem? = nil
+    @State private var selectedRecipePhotoData: Image? = nil
+    @StateObject var homeVM = RecipeViewModel.shared
     @EnvironmentObject var viewModel: AuthViewModel
-    
     
     var body: some View {
         if let user = viewModel.currentUser {
@@ -63,20 +64,70 @@ struct UserProfileView: View {
                     
                 }
                 
-                Section("Recipes"){
-                    Button {
-                        homeVM.getRecipeList()
+                
+                Section("New recipe") {
+                    PhotosPicker(selection: $newRecipePhoto, photoLibrary: .shared()) {
+                        Label("Recipe image", systemImage: "photo.fill")
+                    }
                     
+
+                }
+                
+                Button {
+                    Task{
+                        try await RecipeManager.shared.createNewRecipe(recipe: Recipe(name: "Test recipe", creatorUID: user.id, intro: "This is a healthy and easy to make dish"), backgroundImage: newRecipePhoto)
+                        // Reset state
+                        newRecipePhoto = nil
+                        selectedRecipePhotoData = nil
+                    }
+                } label: {
+                    Text("Create new recipe")
+                        .foregroundColor(.blue)
+                }
+                
+                if let selectedRecipePhotoData = selectedRecipePhotoData {
+                    selectedRecipePhotoData
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 200, height: 200)
+                }
+                
+                
+                
+                Section("My Recipes List"){
+                    Button {
+                        Task {
+                            await homeVM.getRecipeList()
+                        }
                     } label: {
                         Text("Fetch recipes")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.red)
                     }
 
 
+                    
+                    
+                    
+                    ForEach(homeVM.recommendRecipes) {recipe in
+                        Text(recipe.name)
+                        Text("RecipeID - \(recipe.id!)")
+                        Text("CreatorID - \(recipe.creatorUID)")
+                        Text("Intro - \(recipe.intro)")
+                        FirebaseImageView(imagePathName: recipe.backgroundURL)
+                            .frame(width: 100, height: 100)
+                        
+                        Button {
+                            Task {
+                                try await RecipeManager.shared.deleteRecipe(recipeID: recipe.id!)
+                            }
+                        } label: {
+                            Text("Delete")
+                                .foregroundColor(.red)
+                        }
+                    }
+                    
                 }
-                ForEach(homeVM.recipes) {recipe in
-                    Text(recipe.name)
-                }
+                
             }
             .onChange(of: selectedPhoto, perform: { newValue in
                 if let newValue {
@@ -87,22 +138,37 @@ struct UserProfileView: View {
                 }
                 
             })
+            .onChange(of: newRecipePhoto, perform: { newValue in
+                if newValue != nil {
+                    Task {
+                        if let data = try await newRecipePhoto?.loadTransferable(type: Image.self) {
+                            selectedRecipePhotoData = data
+                        }
+                    }
+                }
+                
+            })
             .onAppear {
                 avatarPath = viewModel.currentUser?.avatarUrl ?? ""
-                homeVM.getRecipeList()
+                Task {
+                    await homeVM.getRecipeList()
+                }
+                
+                
+                
             }
             
-    
-
+            
+            
             
         }
         
     }
 }
 
-struct UserProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserProfileView()
-            .environmentObject(AuthViewModel())
-    }
-}
+//struct UserProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserProfileView()
+//            .environmentObject(AuthViewModel())
+//    }
+//}

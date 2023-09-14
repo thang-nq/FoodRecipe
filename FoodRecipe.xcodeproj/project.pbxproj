@@ -22,7 +22,7 @@
 		A1A85E682AAF031E00875285 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A85E672AAF031E00875285 /* Color.swift */; };
 		A53A6B812AAF2E81007ECBCD /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B802AAF2E81007ECBCD /* Recipe.swift */; };
 		A53A6B832AAF2F21007ECBCD /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B822AAF2F21007ECBCD /* Tag.swift */; };
-		A53A6B852AAF5828007ECBCD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B842AAF5828007ECBCD /* HomeViewModel.swift */; };
+		A53A6B852AAF5828007ECBCD /* RecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B842AAF5828007ECBCD /* RecipeViewModel.swift */; };
 		A53A6B872AAF6080007ECBCD /* FirebaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B862AAF6080007ECBCD /* FirebaseImageView.swift */; };
 		A548C0552AADBA9F00884B91 /* FoodRecipeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0542AADBA9F00884B91 /* FoodRecipeApp.swift */; };
 		A548C0572AADBA9F00884B91 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0562AADBA9F00884B91 /* ContentView.swift */; };
@@ -40,6 +40,9 @@
 		A548C0832AADE27C00884B91 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0822AADE27C00884B91 /* Alert.swift */; };
 		A548C0852AADE2D400884B91 /* UserAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0842AADE2D400884B91 /* UserAvatar.swift */; };
 		A548C0872AADE37C00884B91 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0862AADE37C00884B91 /* UserProfileView.swift */; };
+		A5F1C2C32AB1A03E00949874 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2C22AB1A03E00949874 /* Errors.swift */; };
+		A5F1C2C62AB1AF1600949874 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2C52AB1AF1600949874 /* AuthManager.swift */; };
+		A5F1C2C82AB1B03C00949874 /* RecipeManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2C72AB1B03C00949874 /* RecipeManger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,7 +62,7 @@
 		A1A85E672AAF031E00875285 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A53A6B802AAF2E81007ECBCD /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		A53A6B822AAF2F21007ECBCD /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		A53A6B842AAF5828007ECBCD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		A53A6B842AAF5828007ECBCD /* RecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModel.swift; sourceTree = "<group>"; };
 		A53A6B862AAF6080007ECBCD /* FirebaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseImageView.swift; sourceTree = "<group>"; };
 		A548C0512AADBA9F00884B91 /* FoodRecipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodRecipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A548C0542AADBA9F00884B91 /* FoodRecipeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodRecipeApp.swift; sourceTree = "<group>"; };
@@ -74,6 +77,9 @@
 		A548C0822AADE27C00884B91 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		A548C0842AADE2D400884B91 /* UserAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatar.swift; sourceTree = "<group>"; };
 		A548C0862AADE37C00884B91 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		A5F1C2C22AB1A03E00949874 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		A5F1C2C52AB1AF1600949874 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		A5F1C2C72AB1B03C00949874 /* RecipeManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeManger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				A17B54182AB039960096A8A9 /* AuthViewModel.swift */,
-				A53A6B842AAF5828007ECBCD /* HomeViewModel.swift */,
+				A53A6B842AAF5828007ECBCD /* RecipeViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -122,6 +128,7 @@
 			children = (
 				A17B541A2AB039B70096A8A9 /* ImageProcessing.swfit.swift */,
 				A1A85E672AAF031E00875285 /* Color.swift */,
+				A5F1C2C22AB1A03E00949874 /* Errors.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -146,6 +153,7 @@
 		A548C0532AADBA9F00884B91 /* FoodRecipe */ = {
 			isa = PBXGroup;
 			children = (
+				A5F1C2C42AB1AF0100949874 /* Firebase */,
 				A17B541C2AB03A290096A8A9 /* ViewModels */,
 				A1A85E662AAF02E300875285 /* Extensions */,
 				A1A85E482AAEF05500875285 /* Fonts */,
@@ -240,6 +248,15 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		A5F1C2C42AB1AF0100949874 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				A5F1C2C52AB1AF1600949874 /* AuthManager.swift */,
+				A5F1C2C72AB1B03C00949874 /* RecipeManger.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -331,6 +348,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A548C0832AADE27C00884B91 /* Alert.swift in Sources */,
+				A5F1C2C62AB1AF1600949874 /* AuthManager.swift in Sources */,
+				A5F1C2C82AB1B03C00949874 /* RecipeManger.swift in Sources */,
 				A17B541B2AB039B70096A8A9 /* ImageProcessing.swfit.swift in Sources */,
 				A53A6B872AAF6080007ECBCD /* FirebaseImageView.swift in Sources */,
 				A548C0752AADBF8700884B91 /* SignupView.swift in Sources */,
@@ -343,8 +362,9 @@
 				A548C0772AADBF9400884B91 /* LoginView.swift in Sources */,
 				A53A6B832AAF2F21007ECBCD /* Tag.swift in Sources */,
 				A53A6B812AAF2E81007ECBCD /* Recipe.swift in Sources */,
+				A5F1C2C32AB1A03E00949874 /* Errors.swift in Sources */,
 				A548C0552AADBA9F00884B91 /* FoodRecipeApp.swift in Sources */,
-				A53A6B852AAF5828007ECBCD /* HomeViewModel.swift in Sources */,
+				A53A6B852AAF5828007ECBCD /* RecipeViewModel.swift in Sources */,
 				A548C0812AADE22B00884B91 /* InputField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
