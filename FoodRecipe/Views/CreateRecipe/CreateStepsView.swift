@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct CreateStepsView: View {
+    @State private var listSelectedPhoto: [PhotosPickerItem] = []
+    @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var showingSheet = false
     @State private var InputStep = ""
     @State private var Steps: [String] = []
@@ -43,7 +46,7 @@ struct CreateStepsView: View {
             }
         }
         .sheet(isPresented: $showingSheet){
-            AddStepsSheetView(InputStep: $InputStep, Steps: $Steps)
+            AddStepsSheetView(InputStep: $InputStep, Steps: $Steps, selectedPhoto: $selectedPhoto, listSelectedPhoto: $listSelectedPhoto)
                 .presentationDetents([.height(300)])
         }
         .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
@@ -70,15 +73,24 @@ struct CreateStepsView: View {
 struct AddStepsSheetView: View {
     @Binding var InputStep : String
     @Binding var Steps : [String]
+    @Binding var selectedPhoto: PhotosPickerItem?
+    @Binding var listSelectedPhoto : [PhotosPickerItem]
     var body: some View{
         VStack{
             InputFieldRecipe(text: $InputStep , title: "Step", placeHolder: "Enter step")
         }
+        
+        PhotosPicker(selection: $selectedPhoto, photoLibrary: .shared()) {
+            Label("Select a photo for step", systemImage: "photo.fill")
+        }.padding(.vertical, 10)
+        
             Button(action: {
                 if(!InputStep.isEmpty){
                     Steps.append(InputStep)
                     InputStep = ""
                 }
+                listSelectedPhoto.append(selectedPhoto!)
+                selectedPhoto = nil
             }) {
                 Text("Save")
                     .foregroundColor(.white)
