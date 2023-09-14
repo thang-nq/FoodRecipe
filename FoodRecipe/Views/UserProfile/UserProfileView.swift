@@ -14,7 +14,7 @@ struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarPath: String = ""
     @State private var avatarViewRefresh: Bool = false
-    @StateObject var homeVM = HomeViewModel()
+//    @StateObject var homeVM = HomeViewModel()
     @EnvironmentObject var viewModel: AuthViewModel
     
     //MARK: POP UP VARIABLES
@@ -45,11 +45,11 @@ struct UserProfileView: View {
                 }
                 
                 // MARK: RECIPE WRAPPER
-                VStack {
-                    ForEach(homeVM.recipes) {recipe in
-                        Text(recipe.name)
-                    }
-                }
+//                VStack {
+//                    ForEach(homeVM.recipes) {recipe in
+//                        Text(recipe.name)
+//                    }
+//                }
             }
             .overlay(
                 ZStack {
@@ -79,7 +79,6 @@ struct UserProfileView: View {
             })
             .onAppear {
                 avatarPath = viewModel.currentUser?.avatarUrl ?? ""
-                homeVM.getRecipeList()
             }
         }
         
