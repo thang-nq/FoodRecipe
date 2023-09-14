@@ -20,11 +20,13 @@ struct AuthDataResultModel {
     
 }
 
-final class AuthManager {
-    static let shared = AuthManager()
-    private(set) var alertItem: AlertItem?
+final class UserManager {
+    static let shared = UserManager()
+    private var db = Firestore.firestore().collection("users")
+    private var storage = Storage.storage().reference()
     
     private init() {
+        
     }
     
 
