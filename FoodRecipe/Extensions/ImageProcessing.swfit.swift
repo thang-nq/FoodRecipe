@@ -49,7 +49,7 @@ func loadImageFromFirebase(pathName: String, completion: @escaping (UIImage?) ->
     let storageRef = storage.reference()
     
     let imageRef = storageRef.child(pathName)
-    
+
     imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
         if let error = error {
             print("Error loading image from Firebase Storage: \(error.localizedDescription)")
@@ -57,6 +57,7 @@ func loadImageFromFirebase(pathName: String, completion: @escaping (UIImage?) ->
         } else if let data = data {
             if let image = UIImage(data: data) {
                 completion(image)
+
             } else {
                 print("Failed to create UIImage from data")
                 completion(nil)
