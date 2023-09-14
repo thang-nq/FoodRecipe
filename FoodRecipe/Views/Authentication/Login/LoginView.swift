@@ -13,19 +13,24 @@ struct LoginView: View {
     @State private var password = ""
     @EnvironmentObject var viewModel: AuthViewModel
     
+    //MARK: POP UP VARIABLES
+    @State var showPopUp = false
+    @State var popUpIcon = "person.crop.circle.badge.exclamationmark.fill"
+    @State var popUptitle = ""
+    @State var popUpContent = ""
+    @State var popUpIconColor = Color.theme.RedInstance
+    
     var body: some View {
         
         // MARK: MAIN LAYOUT
         NavigationStack {
             
             VStack {
-                
                 appLogo
                     .padding(.top, 10)
                     .accessibilityLabel("App logo")
             
                 loginForm
-                    .padding(.horizontal)
                     .padding(.top, 12)
                     .accessibilityLabel("Login form")
                 
@@ -37,11 +42,16 @@ struct LoginView: View {
                 bottomNavigation
                     .accessibilityLabel("Navigation sign up")
 
-        
             }
-            .alert(isPresented: $viewModel.showingAlert) {
-                Alert(title: Text(viewModel.alertItem!.title), message: Text(viewModel.alertItem!.message), dismissButton: .default(Text("OK")))
-            }
+            .overlay(
+                ZStack {
+                    if viewModel.showingAlert {
+                        Color.theme.DarkWhite.opacity(0.5)
+                            .edgesIgnoringSafeArea(.all)
+                        PopUp(iconName: popUpIcon , title: viewModel.alertItem!.title, content: viewModel.alertItem!.message, iconColor: popUpIconColor ,didClose: {viewModel.showingAlert = false})
+                    }
+                }
+            )
         }
     }
 }
