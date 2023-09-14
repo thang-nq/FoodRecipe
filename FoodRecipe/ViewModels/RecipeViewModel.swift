@@ -16,6 +16,7 @@ class RecipeViewModel: ObservableObject {
     @Published private(set) var recommendRecipes: [Recipe] = []
     @Published var favoriteRecipes: [Recipe] = []
     @Published var filteredRecipes: [Recipe] = []
+    @Published var myRecipeList: [Recipe] = []
     private var db = Firestore.firestore()
     static let shared = RecipeViewModel()
     
@@ -23,27 +24,6 @@ class RecipeViewModel: ObservableObject {
     }
     
     func getRecipeList() async {
-//        db.collection("recipes").getDocuments { snapshot, error in
-//            if error == nil {
-//                if let snapshot = snapshot {
-//                    self.recommendRecipes = snapshot.documents.map { d in
-//                        return Recipe(id: d.documentID,
-//                                      name: d["name"] as? String ?? "",
-//                                      creatorUID: d["creatorUID"] as? String ?? "",
-//                                      backgroundURL: d["backgroundURL"] as? String ?? "")
-//                    }
-//
-//                    print(self.recommendRecipes)
-//                } else {
-//
-//                }
-//
-//            }
-//            else {
-//                print("DEBUG - \(error!.localizedDescription)")
-//            }
-//        }
-        
         let recipes = try? await RecipeManager.shared.getRecipeList()
         self.recommendRecipes = recipes ?? []
     }
@@ -55,6 +35,12 @@ class RecipeViewModel: ObservableObject {
     
     func removeFavoriteRecipe(recipeID: String) {
         
+    }
+    
+    func getUserCreatedRecipeList(userID: String) async throws {
+        let recipes = try await RecipeManager.shared.getUserCreatedRecipeList(userID: userID)
+        print(recipes)
+        self.myRecipeList = recipes
     }
     
     func createRecipe(currentUser: User?, recipeData: Recipe) async throws {

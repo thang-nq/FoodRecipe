@@ -22,15 +22,15 @@ final class RecipeManager {
     private init() {
     }
     
-
+    
+    // MARK: Get a single recipe
     func getRecipeInformation(recipeID: String) async throws -> Recipe? {
         let document = try await db.document(recipeID).getDocument()
         let recipe = try document.data(as: Recipe.self)
         return recipe
     }
     
-    
-    
+    // MARK: Get all recipe
     func getRecipeList() async throws -> [Recipe] {
         let snapshot = try await db.getDocuments()
         var recipes: [Recipe] = []
@@ -41,26 +41,35 @@ final class RecipeManager {
         return recipes
     }
     
-//    func getMyRecipeList(userID: String) async throws -> [Recipe] {
-//        let snapshot = try await db.getDocuments()
-//        var recipes: [Recipe] = []
-//        return recipes
-//    }
+    // MARK: Get filtered recipe
     
+    
+    // MARK: Get user created recipe
+    func getUserCreatedRecipeList(userID: String) async throws -> [Recipe] {
+        let snapshot = try await db.whereField("creatorID", isEqualTo: userID).getDocuments()
+        var recipes: [Recipe] = []
+        for document in snapshot.documents {
+            let recipe = try document.data(as: Recipe.self)
+            recipes.append(recipe)
+        }
+        print(recipes)
+        return recipes
+    }
+    
+    // MARK: Create new recipe with background from PhotosPicker
     func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?) async throws {
         let recipeID = db.document().documentID
         try db.document(recipeID).setData(from: recipe)
         // If provided an image and successfully update the background image, set the backgroundURL in recipe
         if backgroundImage != nil {
-            if let backgroundImageURL = try? await uploadRecipeBGImage(data: backgroundImage!, recipeID: recipeID) {
-                try await db.document(recipeID).updateData(["backgroundURL": backgroundImageURL])
-            }
+            try await uploadRecipeBGImage(data: backgroundImage!, recipeID: recipeID)
         }
         
     }
     
     
-    func uploadRecipeBGImage(data: PhotosPickerItem, recipeID: String) async throws -> String {
+    // MARK: Upload recipe background image
+    func uploadRecipeBGImage(data: PhotosPickerItem, recipeID: String) async throws {
         
         let resizedImageData = try await resizeImage(photoData: data, targetSize: CGSize(width: 450, height: 600))
         let meta = StorageMetadata()
@@ -70,10 +79,10 @@ final class RecipeManager {
         guard let path = result.path else {
             throw RecipeManagerError.uploadImageFailed
         }
-        return path
+        try await db.document(recipeID).updateData(["backgroundURL": path])
     }
     
-    
+    // MARK: Delete recipe by ID
     func deleteRecipe(recipeID: String) async throws {
         do {
             if let recipe = try await self.getRecipeInformation(recipeID: recipeID) {

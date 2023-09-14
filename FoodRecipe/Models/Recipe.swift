@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 struct Recipe: Identifiable, Codable {
     @DocumentID var id: String?
     var name: String
-    let creatorUID: String
+    let creatorID: String
     var mealType: String = "Breakfast"
     var backgroundURL: String = ""
     var intro: String = ""

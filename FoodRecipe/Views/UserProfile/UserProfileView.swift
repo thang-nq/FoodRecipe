@@ -75,7 +75,7 @@ struct UserProfileView: View {
                 
                 Button {
                     Task{
-                        try await RecipeManager.shared.createNewRecipe(recipe: Recipe(name: "Test recipe", creatorUID: user.id, intro: "This is a healthy and easy to make dish"), backgroundImage: newRecipePhoto)
+                        try await RecipeManager.shared.createNewRecipe(recipe: Recipe(name: "Vegan recipe", creatorID: user.id, intro: "This is a healthy and easy to make dish", tags: ["Fruit", "Vegan"]), backgroundImage: newRecipePhoto)
                         // Reset state
                         newRecipePhoto = nil
                         selectedRecipePhotoData = nil
@@ -92,12 +92,31 @@ struct UserProfileView: View {
                         .frame(width: 200, height: 200)
                 }
                 
-                
+                Section("Filtered recipes") {
+                    Button {
+                        Task {
+//                            try await RecipeManager.shared.getFilteredRecipe()
+                        }
+                    } label: {
+                        Text("Delete")
+                            .foregroundColor(.red)
+                    }
+                    ForEach(homeVM.filteredRecipes) {recipe in
+                        Text(recipe.name)
+                        Text("RecipeID - \(recipe.id!)")
+                        Text("CreatorID - \(recipe.creatorID)")
+                        Text("Intro - \(recipe.intro)")
+                        FirebaseImageView(imagePathName: recipe.backgroundURL)
+                            .frame(width: 100, height: 100)
+                        
+
+                    }
+                }
                 
                 Section("My Recipes List"){
                     Button {
                         Task {
-                            await homeVM.getRecipeList()
+                            try await homeVM.getUserCreatedRecipeList(userID: user.id)
                         }
                     } label: {
                         Text("Fetch recipes")
@@ -108,10 +127,10 @@ struct UserProfileView: View {
                     
                     
                     
-                    ForEach(homeVM.recommendRecipes) {recipe in
+                    ForEach(homeVM.myRecipeList) {recipe in
                         Text(recipe.name)
                         Text("RecipeID - \(recipe.id!)")
-                        Text("CreatorID - \(recipe.creatorUID)")
+                        Text("CreatorID - \(recipe.creatorID)")
                         Text("Intro - \(recipe.intro)")
                         FirebaseImageView(imagePathName: recipe.backgroundURL)
                             .frame(width: 100, height: 100)
@@ -152,6 +171,7 @@ struct UserProfileView: View {
                 avatarPath = viewModel.currentUser?.avatarUrl ?? ""
                 Task {
                     await homeVM.getRecipeList()
+                    try await homeVM.getUserCreatedRecipeList(userID: user.id)
                 }
                 
                 
