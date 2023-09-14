@@ -29,18 +29,16 @@ struct HomeView: View {
                 .tabItem(){
                     Image(systemName: "plus")
                     Text("Create Recipe")
-                }
+                }.accentColor(Color.theme.Orange)
             UserProfileViewDemo()
                 .tabItem(){
                     Image(systemName: "person")
                     Text("Profile")
                 }
         }
+//        .tint(Color("Orange"))
         .edgesIgnoringSafeArea(.bottom)
-        .onAppear(){
-            UITabBar.appearance().backgroundColor = .white
-        }
-        .tint(Color("Orange"))
+        .accentColor(Color.theme.Orange)
 
     }
 }
