@@ -44,6 +44,7 @@
 		C26D20712AB1A0C20003376E /* CreateRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D20702AB1A0C20003376E /* CreateRecipeView.swift */; };
 		C2C88DFE2AB1D94C00312F8A /* CreateIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C88DFD2AB1D94B00312F8A /* CreateIntroView.swift */; };
 		C2C88E002AB1D9FD00312F8A /* CreateIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C88DFF2AB1D9FD00312F8A /* CreateIngredientsView.swift */; };
+		C2C88E042AB2CACD00312F8A /* CreateStepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C88E032AB2CACD00312F8A /* CreateStepsView.swift */; };
 		CC8D21872AB00B2A0036ABF3 /* IngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8D21862AB00B2A0036ABF3 /* IngredientsView.swift */; };
 		CC8D21892AB012EA0036ABF3 /* SectionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8D21882AB012EA0036ABF3 /* SectionContainerView.swift */; };
 		CC8D218B2AB0164F0036ABF3 /* SectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8D218A2AB0164F0036ABF3 /* SectionTitleView.swift */; };
@@ -90,6 +91,7 @@
 		C26D20702AB1A0C20003376E /* CreateRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeView.swift; sourceTree = "<group>"; };
 		C2C88DFD2AB1D94B00312F8A /* CreateIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIntroView.swift; sourceTree = "<group>"; };
 		C2C88DFF2AB1D9FD00312F8A /* CreateIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIngredientsView.swift; sourceTree = "<group>"; };
+		C2C88E032AB2CACD00312F8A /* CreateStepsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStepsView.swift; sourceTree = "<group>"; };
 		CC8D21862AB00B2A0036ABF3 /* IngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsView.swift; sourceTree = "<group>"; };
 		CC8D21882AB012EA0036ABF3 /* SectionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionContainerView.swift; sourceTree = "<group>"; };
 		CC8D218A2AB0164F0036ABF3 /* SectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleView.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				C26D20702AB1A0C20003376E /* CreateRecipeView.swift */,
 				C2C88DFD2AB1D94B00312F8A /* CreateIntroView.swift */,
 				C2C88DFF2AB1D9FD00312F8A /* CreateIngredientsView.swift */,
+				C2C88E032AB2CACD00312F8A /* CreateStepsView.swift */,
 			);
 			path = CreateRecipe;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				A53A6B872AAF6080007ECBCD /* FirebaseImageView.swift in Sources */,
 				A548C0752AADBF8700884B91 /* SignupView.swift in Sources */,
 				CC8D218D2AB01D080036ABF3 /* StepsView.swift in Sources */,
+				C2C88E042AB2CACD00312F8A /* CreateStepsView.swift in Sources */,
 				A548C0852AADE2D400884B91 /* UserAvatar.swift in Sources */,
 				CC8D218B2AB0164F0036ABF3 /* SectionTitleView.swift in Sources */,
 				A548C07B2AADDD6800884B91 /* User.swift in Sources */,

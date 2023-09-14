@@ -18,18 +18,17 @@ struct CreateIngredientsView: View {
                     if(Ingredients.isEmpty){
                         HStack {
                             Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
-                            Text("Click the plus button below to add ingredient")
+                            Text("Click the plus button below to adding ingredient")
                                 .font(.custom("ZillaSlab-Regular", size: 20))
                                 
                         }.padding(.leading, 20)
                     }
                     ForEach(Ingredients, id: \.self) { igredient in
                         HStack() {
-                            Text("•")
-                                .font(.title)
+                            Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
                             Text(igredient)
                                 .font(.custom("ZillaSlab-Regular", size: 20))
-                                .frame(width: 260, alignment: .leading)
+                                .frame(width: 280, alignment: .leading)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 20)
@@ -58,7 +57,7 @@ struct CreateIngredientsView: View {
             }
         }
         .sheet(isPresented: $showingSheet){
-            BottomSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
+            AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
                 .presentationDetents([.height(300)])
         }
         .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
@@ -92,7 +91,7 @@ struct ButtonModifier: ViewModifier {
   }
 }
 
-struct BottomSheetView: View {
+struct AddIngredientsSheetView: View {
     @Binding var InputIngredient : String
     @Binding var Ingredients : [String]
     var body: some View{

@@ -44,7 +44,7 @@ struct CreateRecipeView: View {
             }
             
             if selectedTabIndex == 2 {
-                StepsView(stepsList: MOCK_STEPS)
+                CreateStepsView()
             }
             
         }.background(Color.theme.White)
