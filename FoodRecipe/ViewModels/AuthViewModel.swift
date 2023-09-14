@@ -16,10 +16,10 @@ import PhotosUI
 
 @MainActor
 class AuthViewModel: ObservableObject {
-    @Published var userSession: FirebaseAuth.User?
-    @Published var currentUser: User?
-    @Published var storage = Storage.storage().reference()
-    @Published var alertItem: AlertItem?
+    @Published private(set) var userSession: FirebaseAuth.User?
+    @Published private(set) var currentUser: User?
+    private var storage = Storage.storage().reference()
+    @Published private(set) var alertItem: AlertItem?
     @Published var showingAlert = false
     
     init() {
@@ -83,8 +83,8 @@ class AuthViewModel: ObservableObject {
             let meta = StorageMetadata()
             meta.contentType = "image/jpeg"
             let imageName = "\(currentUser!.id)" + ".jpeg"
-            let result = try await storage.child(imageName).putDataAsync(resizedImageData!, metadata: meta)
-            guard let path = result.name else {
+            let result = try await storage.child("userAvatar").child(imageName).putDataAsync(resizedImageData!, metadata: meta)
+            guard let path = result.path else {
                 throw URLError(.badServerResponse)
             }
             try await Firestore.firestore().collection("users").document(currentUser!.id).updateData(["avatarUrl": path])

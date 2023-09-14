@@ -1,4 +1,6 @@
+
 .DS_Store
+
 # Created by https://www.toptal.com/developers/gitignore/api/xcode
 # Edit at https://www.toptal.com/developers/gitignore?templates=xcode
 
@@ -19,4 +21,6 @@ xcuserdata/
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
+
 # End of https://www.toptal.com/developers/gitignore/api/xcode
+
