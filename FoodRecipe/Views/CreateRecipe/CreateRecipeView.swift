@@ -28,28 +28,15 @@ struct CreateRecipeView: View {
    @State private var Steps: [String] = []
    @State private var listStepsPhoto: [PhotosPickerItem] = []
     
+    //MARK: POP UP VARIABLES
+    @State var showPopUp = false
+    @State var popUpIcon = ""
+    @State var popUptitle = ""
+    @State var popUpContent = ""
+    @State var popUpIconColor = Color.theme.BlueInstance
+    
     @State private var selectedTabIndex = 0
     var body: some View {
-//        VStack{
-//            HStack{
-//                Text("Recipename:")
-//                        .font(.custom("ZillaSlab-SemiBold", size: 26))
-//                        .padding(.leading, 20)
-//                Spacer()
-//            }
-//
-//            TextField(("Enter recipe name"), text: $recipeName)
-//                .textFieldStyle(RoundedBorderTextFieldStyle())
-//                .font(.custom("ZillaSlab-Regular", size: 18))
-//                .padding(.leading, 20)
-//                .padding(.trailing, 20)
-//            HStack{
-//                Text("Ingredients:")
-//                        .font(.custom("ZillaSlab-SemiBold", size: 26))
-//                        .padding(.leading, 20)
-//                Spacer()
-//            }
-//        }
         VStack {
             HStack {
                 Spacer()
@@ -61,6 +48,13 @@ struct CreateRecipeView: View {
                 
                 Button(action: {
                     // Create button action
+                    if recipeName.isEmpty || minutes.isEmpty || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty {
+                        showPopUp = true
+                        popUpIcon = "xmark"
+                        popUptitle = "Missing Information"
+                        popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
+                        popUpIconColor = Color.theme.RedInstance
+                    }
                 }) {
                     Text("Create")
                         .font(.system(size: 20))
@@ -81,7 +75,18 @@ struct CreateRecipeView: View {
                 CreateStepsView(Steps: $Steps, listStepsPhoto: $listStepsPhoto)
             }
             
-        }.background(Color.theme.White)
+        }
+        .overlay(
+            ZStack {
+                if showPopUp {
+                    Color.theme.DarkWhite.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                    PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
+                }
+            }
+            .opacity(showPopUp ? 1 : 0)
+        )
+        .background(Color.theme.White)
     }
 }
 
