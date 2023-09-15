@@ -18,3 +18,21 @@ class HomeViewModel: ObservableObject {
     }
     
 }
+
+
+/*
+ 
+ var homeViewModel = HomeViewModel()
+ 
+ ForEach(homeViewModel.recipes) { recipe in
+  /// render
+ }
+ 
+ 
+ // Call onAppear or button to trigger
+ Task {
+ try await homeViewModel.getAllRecipe()
+ }
+ 
+ 
+ */
