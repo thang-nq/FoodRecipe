@@ -16,7 +16,7 @@ struct SavedRecipeListView: View {
         NavigationView {
             VStack {
                 List {
-                    Section(header: Text("Today's Recipes").font(.custom("ZillaSlab-Bold", size: 30))) {
+                    Section(header: Text("Saved Recipe").font(.custom("ZillaSlab-Bold", size: 30))) {
                         ForEach(viewModel.recipes) { recipe in
                             NavigationLink(destination: RecipeDetailViewDemo(recipe: recipe)) {
                                 RecipeCardView(recipe: recipe)
