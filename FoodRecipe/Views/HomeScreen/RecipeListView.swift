@@ -52,7 +52,7 @@ struct RecipeCardView: View {
     
     var body: some View {
         VStack(alignment: .leading){
-            Image("soup")
+            Image(recipe.backgroundURL)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(maxWidth: .infinity)
