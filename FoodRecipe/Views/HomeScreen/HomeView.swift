@@ -10,12 +10,12 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         TabView{
-            RecipeListViewDemo()
+            RecipeListView()
                 .tabItem(){
                     Image(systemName: "house.fill")
                     Text("Home")
                 }
-            SavedRecipeListViewDemo()
+            SavedRecipeListView()
                 .tabItem(){
                     Image(systemName: "heart")
                     Text("Saved Recipe")
@@ -35,20 +35,11 @@ struct HomeView: View {
                     Image(systemName: "person")
                     Text("Profile")
                 }
-        }.tint(Color("Orange"))
+        }
+        
+        .edgesIgnoringSafeArea(.bottom)
+        .accentColor(Color.theme.Orange)
 
-    }
-}
-
-
-struct RecipeListViewDemo: View {
-    var body: some View {
-        Text("RecipeList")
-    }
-}
-struct SavedRecipeListViewDemo: View {
-    var body: some View {
-        Text("SavedRecipeList")
     }
 }
 
