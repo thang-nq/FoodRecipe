@@ -36,6 +36,7 @@ struct HomeView: View {
                     Text("Profile")
                 }
         }
+        
         .edgesIgnoringSafeArea(.bottom)
         .accentColor(Color.theme.Orange)
 
