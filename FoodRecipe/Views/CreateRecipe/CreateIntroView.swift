@@ -9,18 +9,18 @@ import SwiftUI
 import PhotosUI
 
 struct CreateIntroView: View {
-    @State private var selectedPhoto: PhotosPickerItem? = nil
-    @State private var recipeName = ""
-    @State private var minutes = ""
-    @State private var description = ""
-    @State private var calories: Int = 0
-    @State private var carb: Int = 0
-    @State private var protein: Int = 0
-    @State private var fat: Int = 0
-    @State private var sugars: Int = 0
-    @State private var salt: Int = 0
-    @State private var saturates: Int = 0
-    @State private var fibre: Int = 0
+    @Binding var backgroundPhoto: PhotosPickerItem?
+    @Binding var recipeName : String
+    @Binding var minutes : String
+    @Binding var description : String
+    @Binding var calories: Int
+    @Binding var carb: Int
+    @Binding var protein: Int
+    @Binding var fat: Int
+    @Binding var sugars: Int
+    @Binding var salt: Int
+    @Binding var saturates: Int
+    @Binding var fibre: Int
 
     var body: some View {
         ScrollView{
@@ -52,7 +52,7 @@ struct CreateIntroView: View {
                 
                 .padding(.top, 5)
                 
-                PhotosPicker(selection: $selectedPhoto, photoLibrary: .shared()) {
+                PhotosPicker(selection: $backgroundPhoto, photoLibrary: .shared()) {
                     Label("Select a photo for the recipe", systemImage: "photo.fill")
                 }.padding(.vertical, 10)
                 
@@ -146,6 +146,6 @@ struct NutriotionInput: View {
 
 struct CreateIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateIntroView()
+        CreateIntroView(backgroundPhoto: .constant(nil), recipeName: .constant(""), minutes: .constant(""), description: .constant(""), calories: .constant(0), carb: .constant(0), protein: .constant(0), fat: .constant(0), sugars: .constant(0), salt: .constant(0), saturates: .constant(0), fibre: .constant(0))
     }
 }

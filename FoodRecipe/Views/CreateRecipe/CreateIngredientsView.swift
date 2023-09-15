@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateIngredientsView: View {
     @State private var showingSheet = false
     @State private var InputIngredient = ""
-    @State private var Ingredients: [String] = []
+    @Binding var Ingredients: [String]
     var body: some View {
         VStack{
             ScrollView{
@@ -117,6 +117,6 @@ struct AddIngredientsSheetView: View {
 
 struct CreateIngredientsView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateIngredientsView()
+        CreateIngredientsView(Ingredients: .constant([]))
     }
 }
