@@ -7,6 +7,8 @@
 
 import Foundation
 import FirebaseFirestoreSwift
+import SwiftUI
+import PhotosUI
 
 struct Recipe: Identifiable, Codable {
     @DocumentID var id: String?
@@ -31,5 +33,13 @@ struct Recipe: Identifiable, Codable {
 struct CookingStep: Identifiable, Codable {
     @DocumentID var id: String?
     var context: String
-    var imageURL: String
+    var backgroundURL: String
+    var stepNumber: Int
+}
+
+
+struct CookingStepInterface {
+    var context: String
+    var imageData: PhotosPickerItem? = nil
+    var stepNumber: Int
 }
