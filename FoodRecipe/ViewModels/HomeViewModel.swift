@@ -26,8 +26,8 @@ class HomeViewModel: ObservableObject {
         self.recipes = try await RecipeManager.shared.getRecipeByFilters(filters: filters)
     }
     
-    func addRecipe(recipe: Recipe, image: PhotosPickerItem?) async throws {
-        try await RecipeManager.shared.createNewRecipe(recipe: recipe, backgroundImage: image)
+    func addRecipe(recipe: Recipe, image: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async throws {
+        try await RecipeManager.shared.createNewRecipe(recipe: recipe, backgroundImage: image, cookingSteps: cookingSteps)
         try await getAllRecipe()
     }
     

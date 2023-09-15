@@ -23,10 +23,20 @@ final class RecipeManager {
     }
     
     
-    // MARK: Get a single recipe
+    // MARK: Get a single recipe with all cooking steps
     func getRecipeInformation(recipeID: String) async throws -> Recipe? {
         let document = try await db.document(recipeID).getDocument()
-        let recipe = try document.data(as: Recipe.self)
+        var recipe = try document.data(as: Recipe.self)
+        let stepsData = try await db.document(recipeID).collection("cookingSteps").getDocuments()
+        var steps: [CookingStep] = []
+        for d in stepsData.documents {
+            let step = try d.data(as: CookingStep.self)
+            steps.append(step)
+        }
+        
+        // Sort the step
+        let sortedSteps = steps.sorted { $0.stepNumber < $1.stepNumber}
+        recipe.steps = sortedSteps
         return recipe
     }
     
@@ -72,20 +82,33 @@ final class RecipeManager {
         return recipes
     }
     
-    // MARK: Create new recipe with background from PhotosPicker
-    func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?) async throws {
+    // MARK: Create new recipe
+    func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async throws {
         let recipeID = db.document().documentID
         try db.document(recipeID).setData(from: recipe)
+        var backgroundURL = ""
         // If provided an image and successfully update the background image, set the backgroundURL in recipe
-        if backgroundImage != nil {
-            try await uploadRecipeBGImage(data: backgroundImage!, recipeID: recipeID)
+        if let backgroundImageData = backgroundImage {
+            backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
+            
+        }
+        // Add cooking step and related image
+        if cookingSteps != nil {
+            for step in cookingSteps! {
+                let stepID = db.document().documentID
+                try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": backgroundURL, "stepNumber": step.stepNumber])
+                // Upload if the step contain image data
+                if let imageData = step.imageData {
+                    try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
+                }
+            }
         }
         
     }
     
     
     // MARK: Upload recipe background image
-    func uploadRecipeBGImage(data: PhotosPickerItem, recipeID: String) async throws {
+    func uploadRecipeBGImage(data: PhotosPickerItem, recipeID: String) async throws -> String {
         
         let resizedImageData = try await resizeImage(photoData: data, targetSize: CGSize(width: 450, height: 600))
         let meta = StorageMetadata()
@@ -96,6 +119,20 @@ final class RecipeManager {
             throw RecipeManagerError.uploadImageFailed
         }
         try await db.document(recipeID).updateData(["backgroundURL": path])
+        print(path)
+        return path
+    }
+    
+    func uploadStepImage(data: PhotosPickerItem, recipeID: String, stepID: String) async throws {
+        let resizedImageData = try await resizeImage(photoData: data, targetSize: CGSize(width: 450, height: 600))
+        let meta = StorageMetadata()
+        meta.contentType = "image/jpeg"
+        let imageName = "\(stepID)" + ".jpeg"
+        let result = try await storage.child("recipeImage").child(imageName).putDataAsync(resizedImageData!, metadata: meta)
+        guard let path = result.path else {
+            throw RecipeManagerError.uploadImageFailed
+        }
+        try await db.document(recipeID).collection("cookingSteps").document(stepID).updateData(["backgroundURL": path])
     }
     
     // MARK: Delete recipe by ID

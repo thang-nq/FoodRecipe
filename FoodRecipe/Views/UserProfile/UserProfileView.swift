@@ -14,7 +14,9 @@ struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarPath: String = ""
     @State private var avatarViewRefresh: Bool = false
+    @State private var stepPhoto: PhotosPickerItem? = nil
     @StateObject var homeVM = HomeViewModel()
+    @StateObject var detailVM = RecipeDetailViewModel()
     @StateObject var viewModel = AuthViewModel()
 //    @EnvironmentObject var viewModel: AuthViewModel
     
@@ -45,13 +47,54 @@ struct UserProfileView: View {
                 }
                 
                 // MARK: RECIPE WRAPPER
+                
+                // recipe detail
+                ScrollView {
+                    VStack (alignment: .center) {
+                        if let recipe = detailVM.recipe {
+                            FirebaseImageView(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
+                            Text(recipe.name)
+                            Text(recipe.mealType)
+                            ForEach(recipe.steps) { step in
+                                Text("Step \(step.stepNumber) - \(step.context)")
+                                FirebaseImageView(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
+                            }
+                        } else {
+                            Text("No recipe selected")
+                        }
+                    }
+                }
+
+                
+                // Recipe list
+                
+                PhotosPicker(selection: $stepPhoto, photoLibrary: .shared()) {
+                    Label("Choose step photo", systemImage: "photo")
+                }
+                
                 Button {
                     Task {
-                        try await homeVM.addRecipe(recipe: Recipe(name: "New recipe", creatorID: user.id), image:selectedPhoto)
+                        
+                        // Add new recipe and image to firebase
+                        // Using CookingStepInterface to init
+                        // If no imagedata is provided to the steps, it will get the backgroundURL of recipe as default.
+                        // Step number is important to maintain the order
+                        try await homeVM.addRecipe(recipe: Recipe(name: "New recipe",
+                                                                  creatorID: user.id,
+                                                                  intro: "This is a healthy dish",
+                                                                  carb: 15,
+                                                                  protein: 30),
+                                                   image: stepPhoto,
+                                                   cookingSteps: [
+                                                    CookingStepInterface(context: "Prepare the ingredient", imageData: nil, stepNumber: 1),
+                                                    CookingStepInterface(context: "Cook the meal", imageData: nil, stepNumber: 2),
+                                                    CookingStepInterface(context: "Divide the meal", imageData: nil, stepNumber: 3),
+                                                    CookingStepInterface(context: "Let's eat", imageData: nil, stepNumber: 4)]
+                        )
                     }
                 } label: {
                     Text("Add new recipe")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.green)
                 }
                 Button {
                     Task {
@@ -61,27 +104,38 @@ struct UserProfileView: View {
                     Text("Get all breakfast")
                 }
                 Divider()
-                VStack {
-                    ForEach(homeVM.recipes) {recipe in
-                        HStack {
-                            Text(recipe.name)
-                            Spacer()
-                            Button {
-                                Task {
-                                    try await homeVM.deleteRecipe(recipeID: recipe.id!)
+                ScrollView {
+                    VStack {
+                        ForEach(homeVM.recipes) {recipe in
+                            HStack {
+                                Text(recipe.name)
+                                Button {
+                                    Task {
+                                        try await detailVM.getRecipeDetail(recipeID: recipe.id!)
+                                    }
+                                } label: {
+                                    Text("View detail")
                                 }
-                            } label: {
-                                Text("❌")
+                                Button {
+                                    Task {
+                                        try await homeVM.deleteRecipe(recipeID: recipe.id!)
+                                    }
+                                } label: {
+                                    Text("Delete").foregroundColor(.red)
+                                }
                             }
-                        }
 
+                        }
                     }
+
                 }
                 .onAppear {
                     Task {
                         try await homeVM.getAllRecipe()
                     }
                 }
+
+                //
                 
                 
                 
