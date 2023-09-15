@@ -42,6 +42,22 @@ final class RecipeManager {
     }
     
     // MARK: Get filtered recipe
+    func getRecipeByFilters(filters: [String: Any]) async throws -> [Recipe] {
+        let collectionRef = db
+        var query = collectionRef as Query
+        for (field, value) in filters {
+            query = query.whereField(field, isEqualTo: value)
+        }
+        
+        let snapshot = try await query.getDocuments()
+        var recipes: [Recipe] = []
+        for document in snapshot.documents {
+            let recipe = try document.data(as: Recipe.self)
+            recipes.append(recipe)
+        }
+        
+        return recipes
+    }
     
     
     // MARK: Get user created recipe

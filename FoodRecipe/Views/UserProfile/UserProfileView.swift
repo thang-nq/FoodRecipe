@@ -14,8 +14,9 @@ struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarPath: String = ""
     @State private var avatarViewRefresh: Bool = false
-//    @StateObject var homeVM = HomeViewModel()
-    @EnvironmentObject var viewModel: AuthViewModel
+    @StateObject var homeVM = HomeViewModel()
+    @StateObject var viewModel = AuthViewModel()
+//    @EnvironmentObject var viewModel: AuthViewModel
     
     //MARK: POP UP VARIABLES
     @State var showPopUp = false
@@ -40,16 +41,50 @@ struct UserProfileView: View {
                     }
                     
                     userData(fullName: user.fullName, email: user.email)
-            
                     signOutButton
                 }
                 
                 // MARK: RECIPE WRAPPER
-//                VStack {
-//                    ForEach(homeVM.recipes) {recipe in
-//                        Text(recipe.name)
-//                    }
-//                }
+                Button {
+                    Task {
+                        try await homeVM.addRecipe(recipe: Recipe(name: "New recipe", creatorID: user.id), image:selectedPhoto)
+                    }
+                } label: {
+                    Text("Add new recipe")
+                        .foregroundColor(.gray)
+                }
+                Button {
+                    Task {
+                        try await homeVM.getRecipeByMealType(mealType: "Breakfast")
+                    }
+                } label: {
+                    Text("Get all breakfast")
+                }
+                Divider()
+                VStack {
+                    ForEach(homeVM.recipes) {recipe in
+                        HStack {
+                            Text(recipe.name)
+                            Spacer()
+                            Button {
+                                Task {
+                                    try await homeVM.deleteRecipe(recipeID: recipe.id!)
+                                }
+                            } label: {
+                                Text("❌")
+                            }
+                        }
+
+                    }
+                }
+                .onAppear {
+                    Task {
+                        try await homeVM.getAllRecipe()
+                    }
+                }
+                
+                
+                
             }
             .overlay(
                 ZStack {
@@ -80,10 +115,13 @@ struct UserProfileView: View {
             .onAppear {
                 avatarPath = viewModel.currentUser?.avatarUrl ?? ""
             }
+        } else {
+            Text("Not logged in")
         }
         
     }
 }
+
 
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
