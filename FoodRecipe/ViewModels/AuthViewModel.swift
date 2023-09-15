@@ -93,4 +93,18 @@ class AuthViewModel: ObservableObject {
         return ""
         
     }
+    
+    func mockEnvObject() async throws {
+        try await signIn(withEmail: "thang@gmail.com", password: "123456")
+    }
+}
+
+@MainActor
+class MockAuthViewModel {
+    var MOCK_OBJECT = AuthViewModel()
+    init() {
+        Task {
+            try await self.MOCK_OBJECT.signIn(withEmail:"thang@gmail.com", password: "123456")
+        }
+    }
 }
