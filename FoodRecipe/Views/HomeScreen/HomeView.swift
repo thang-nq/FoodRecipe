@@ -25,11 +25,6 @@ struct HomeView: View {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
                 }
-            CreateRecipeView()
-                .tabItem(){
-                    Image(systemName: "plus")
-                    Text("Create Recipe")
-                }
             UserProfileViewContainer()
                 .tabItem(){
                     Image(systemName: "person")
