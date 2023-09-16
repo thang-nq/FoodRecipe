@@ -28,7 +28,8 @@ struct InputField: View {
             
             Divider()
         }
-        .padding()
+        .padding(.horizontal)
+        .padding(.vertical, 5)
     }
 }
 

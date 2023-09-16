@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct Progress: View {
+    var loadingSize: CGFloat
+    
     var body: some View {
             ProgressView()
             .progressViewStyle(CircularProgressViewStyle(tint: Color.theme.OrangeInstance))
-            .scaleEffect(3)
+            .scaleEffect(loadingSize > 0 ? loadingSize : 3)
     }
 }
 
 struct Progress_Previews: PreviewProvider {
     static var previews: some View {
-        Progress()
+        Progress(loadingSize: 3)
     }
 }
