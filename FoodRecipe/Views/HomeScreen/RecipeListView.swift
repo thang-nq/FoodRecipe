@@ -17,7 +17,7 @@ struct RecipeListView: View {
                 List {
                     Section(header: Text("Today's Recipes").font(.custom("ZillaSlab-Bold", size: 30))) {
                         ForEach(viewModel.recipes) { recipe in
-                            NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!)) {
+                            NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!).navigationBarHidden(true)) {
                                 RecipeCardView(recipe: recipe)
                             }
                         }

@@ -10,28 +10,33 @@ import SlidingTabView
 
 struct RecipeDetailView: View {
     var recipeId: String
+//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var detailVM = RecipeDetailViewModel()
     @State private var selectedTabIndex = 0
+    func back() {
+        // Back action
+//        self.presentationMode.wrappedValue.dismiss()
+    }
     var body: some View {
         ScrollView {
             VStack {
-                ZStack(alignment: .top) {
-                    Color("LightGray")
-                    // MARK: Overlay Image
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .frame(width: .infinity, height: 408)
-                        .background(
-                            Image("soup")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(height: 408)
-                                .clipped()
-                        )
-                        .offset(y: -60)
-                    
-                    TopBar()
-                    if let recipeDetail = detailVM.recipe {
+                if let recipeDetail = detailVM.recipe {
+                    ZStack(alignment: .top) {
+                        Color("LightGray")
+                        // MARK: Overlay Image
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: .infinity, height: 408)
+                            .background(
+                                FirebaseImage(imagePathName: recipeDetail.backgroundURL)
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: .infinity,height: 408)
+                                    .clipped()
+                            )
+                            .offset(y: -60)
+                        
+                        TopBar(action: back)
+                        //                    if let recipeDetail = detailVM.recipe {
                         VStack(spacing: 15) {
                             ZStack {
                                 VStack(spacing: 15) {
@@ -57,6 +62,7 @@ struct RecipeDetailView: View {
                                 }
                             }.background(Color.theme.White)
                         }
+                        
                     }
                 }
             }
@@ -84,8 +90,13 @@ struct RecipeDetailView_Previews: PreviewProvider {
 
 
 struct TopBar: View {
+    var action: () -> Void
     var body: some View {
         HStack  {
+            Button {
+                action()
+            } label: {
+                
             Image("chevron-left")
                 .resizable()
                 .frame(width: 24, height: 24)
@@ -93,6 +104,8 @@ struct TopBar: View {
                 .padding(10)
                 .background(.white)
                 .clipShape(Circle())
+            }
+
             
             Spacer()
             Image("heart-orange")
