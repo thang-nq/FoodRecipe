@@ -12,6 +12,7 @@ struct CreateIngredientsView: View {
     @State private var InputIngredient = ""
     @Binding var Ingredients: [String]
     
+    // Remove Ingredient function
     private func removeIngredient(_ ingredient: String) {
         if let index = Ingredients.firstIndex(of: ingredient) {
             Ingredients.remove(at: index)

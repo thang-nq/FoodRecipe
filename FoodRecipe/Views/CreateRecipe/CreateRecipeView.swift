@@ -30,7 +30,7 @@ struct CreateRecipeView: View {
     @State private var Ingredients: [String] = []
     
     @State private var Steps: [String] = []
-    @State private var listStepsPhoto: [PhotosPickerItem] = []
+    @State private var listStepsPhoto: [PhotosPickerItem?] = []
     
     @State private var cookingSteps: [CookingStepInterface] = []
     @State private var recipeValidated: Bool = false
@@ -44,14 +44,34 @@ struct CreateRecipeView: View {
     
     @State private var selectedTabIndex = 0
     
+//    func addingCookingSteps (){
+//
+//        for index in 0..<Steps.count {
+//            let context = Steps[index]
+//            var imageData: PhotosPickerItem? = nil
+//
+//            if index < listStepsPhoto.count {
+//                imageData = listStepsPhoto[index]
+//            }
+//
+//            let cookingStep = CookingStepInterface(context: context, imageData: imageData, stepNumber: index + 1)
+//            cookingSteps.append(cookingStep)
+//        }
+//    }
     //Adding Cooking Steps function
-    func addingCookingSteps (){
+    func addingCookingSteps() {
         for index in 0..<Steps.count {
             let context = Steps[index]
             var imageData: PhotosPickerItem? = nil
             
             if index < listStepsPhoto.count {
-                imageData = listStepsPhoto[index]
+                if let photo = listStepsPhoto[index] {
+                    imageData = photo
+                } else {
+                    imageData = backgroundPhoto
+                }
+            } else {
+                imageData = backgroundPhoto
             }
             
             let cookingStep = CookingStepInterface(context: context, imageData: imageData, stepNumber: index + 1)
@@ -96,14 +116,6 @@ struct CreateRecipeView: View {
                         .font(.system(size: 20))
             
                 }.padding(.trailing, 20)
-//                ForEach(cookingSteps) { cookingStep in
-//                    VStack {
-//                        Text("Step \(cookingStep.stepNumber)")
-//                            .font(.headline)
-//                        Text(cookingStep.context)
-//                            .font(.body)
-//                    }
-//                }
             }
             SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
             
