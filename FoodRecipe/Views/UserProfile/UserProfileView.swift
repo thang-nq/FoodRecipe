@@ -12,7 +12,6 @@ import FirebaseFirestoreSwift
 
 struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
-    @State private var avatarPath: String = ""
     @State private var avatarViewRefresh: Bool = false
     @State private var stepPhoto: PhotosPickerItem? = nil
     @StateObject var homeVM = HomeViewModel()
@@ -38,8 +37,10 @@ struct UserProfileView: View {
                         if user.avatarUrl.isEmpty {
                             emptyAvatar(initials: user.initials)
                         } else {
-                            UserAvatar(imagePathName: $avatarPath)
+                            UserAvatar(imagePathName: user.avatarUrl)
+                                .frame(width: 200, height: 200)
                                 .id(avatarViewRefresh)
+                            
                         }
                     }
                     
@@ -56,6 +57,13 @@ struct UserProfileView: View {
                             FirebaseImage(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
                                 .padding(.bottom)
                             Text(recipe.name)
+                            HStack(alignment: .center) {
+                                Text("Created by - \(recipe.creatorName)")
+                                UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
+                            }
+                            Text("Created at - \(recipe.createdAt)")
+                            
+                            
                             Text(recipe.mealType)
                             ForEach(recipe.steps) { step in
                                 Text("Step \(step.stepNumber) - \(step.context)")
@@ -106,10 +114,10 @@ struct UserProfileView: View {
                 }
                 Button {
                     Task {
-                        try await homeVM.getRecipeByMealType(mealType: "Breakfast")
+                        await homeVM.searchRecipeByTags(tags: ["Chicken"])
                     }
                 } label: {
-                    Text("Get all breakfast")
+                    Text("Get filteredj recipe")
                 }
                 Divider()
                 ScrollView {
@@ -117,9 +125,10 @@ struct UserProfileView: View {
                         ForEach(homeVM.recipes) {recipe in
                             HStack {
                                 Text(recipe.name)
+                                Text("Created by - \(recipe.creatorName)")
                                 Button {
                                     Task {
-                                        try await detailVM.getRecipeDetail(recipeID: recipe.id!)
+                                        await detailVM.getRecipeDetail(recipeID: recipe.id!)
                                     }
                                 } label: {
                                     Text("View detail")
@@ -137,10 +146,8 @@ struct UserProfileView: View {
                     }
 
                 }
-                .onAppear {
-                    Task {
-                        try await homeVM.getAllRecipe()
-                    }
+                .task {
+                    await homeVM.getAllRecipe()
                 }
 
                 //
@@ -169,28 +176,27 @@ struct UserProfileView: View {
                     popUpIconColor = Color.theme.GreenInstance
                     
                     Task {
-                        avatarPath = try await viewModel.uploadAvatar(data: newValue)
+                        try await viewModel.uploadAvatar(data: newValue)
+                        try await viewModel.fetchUser()
                         avatarViewRefresh.toggle()
                     }
                 }
             })
             .onAppear {
-                avatarPath = viewModel.currentUser?.avatarUrl ?? ""
+                
             }
-        } else {
-            Text("Not logged in")
         }
         
     }
 }
 
 
-//struct UserProfileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserProfileView()
-//            .environmentObject(AuthViewModel())
-//    }
-//}
+struct UserProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        UserProfileView()
+            .environmentObject(AuthViewModel())
+    }
+}
 
 
 private extension UserProfileView {

@@ -24,48 +24,103 @@ final class RecipeManager {
     
     
     // MARK: Get a single recipe with all cooking steps
-    func getRecipeInformation(recipeID: String) async throws -> Recipe? {
-        let document = try await db.document(recipeID).getDocument()
-        var recipe = try document.data(as: Recipe.self)
-        let stepsData = try await db.document(recipeID).collection("cookingSteps").getDocuments()
-        var steps: [CookingStep] = []
-        for d in stepsData.documents {
-            let step = try d.data(as: CookingStep.self)
-            steps.append(step)
+    func getRecipeInformation(recipeID: String) async -> Recipe? {
+        var recipe : Recipe? = nil
+        do {
+            let document = try await db.document(recipeID).getDocument()
+            recipe = try document.data(as: Recipe.self)
+            let stepsData = try await db.document(recipeID).collection("cookingSteps").getDocuments()
+            var steps: [CookingStep] = []
+            for d in stepsData.documents {
+                let step = try d.data(as: CookingStep.self)
+                steps.append(step)
+            }
+            
+            // Fetch creator data
+            if let user = await UserManager.shared.getUserData(userID: recipe!.creatorID) {
+                recipe!.creatorName = user.fullName
+                recipe!.creatorAvatar = user.avatarUrl
+            }
+            
+            // Format time
+            recipe!.createdAt = formatTimestamp(recipe!.timeStamp)
+            
+            // Sort the step
+            let sortedSteps = steps.sorted { $0.stepNumber < $1.stepNumber}
+            recipe!.steps = sortedSteps
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
         }
-        
-        // Sort the step
-        let sortedSteps = steps.sorted { $0.stepNumber < $1.stepNumber}
-        recipe.steps = sortedSteps
+
         return recipe
     }
     
     // MARK: Get all recipe
-    func getRecipeList() async throws -> [Recipe] {
-        let snapshot = try await db.getDocuments()
+    func getRecipeList() async -> [Recipe] {
         var recipes: [Recipe] = []
-        for document in snapshot.documents {
-            let recipe = try document.data(as: Recipe.self)
-            recipes.append(recipe)
+        do {
+            let snapshot = try await db.getDocuments()
+            
+            for document in snapshot.documents {
+                var recipe = try document.data(as: Recipe.self)
+                // Fetch user
+                if let user = await UserManager.shared.getUserData(userID: recipe.creatorID) {
+                    recipe.creatorName = user.fullName
+                    recipe.creatorAvatar = user.avatarUrl
+                }
+                // format time stamp
+                recipe.createdAt = formatTimestamp(recipe.timeStamp)
+                recipes.append(recipe)
+                
+            }
+            
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
         }
         return recipes
     }
     
     // MARK: Get filtered recipe
-    func getRecipeByFilters(filters: [String: Any]) async throws -> [Recipe] {
-        let collectionRef = db
-        var query = collectionRef as Query
-        for (field, value) in filters {
-            query = query.whereField(field, isEqualTo: value)
-        }
+    func getRecipeByFilters(filters: [String: Any]) async -> [Recipe] {
         
-        let snapshot = try await query.getDocuments()
         var recipes: [Recipe] = []
-        for document in snapshot.documents {
-            let recipe = try document.data(as: Recipe.self)
-            recipes.append(recipe)
+        do {
+            let collectionRef = db
+            var query = collectionRef as Query
+            for (field, value) in filters {
+                query = query.whereField(field, isEqualTo: value)
+            }
+            
+            let snapshot = try await query.getDocuments()
+            
+            for document in snapshot.documents {
+                let recipe = try document.data(as: Recipe.self)
+                recipes.append(recipe)
+            }
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
         }
         
+        return recipes
+    }
+    
+    func filterRecipeByTags(tags: [String]) async -> [Recipe] {
+        var recipes: [Recipe] = []
+        do {
+            let collectionRef = db
+            var query = collectionRef as Query
+            let tagArray = tags.map { [$0] }
+            print(tagArray)
+            query = query.whereField("tags", in: tagArray)
+            let snapshot = try await query.getDocuments()
+            for d in snapshot.documents {
+                let recipe = try d.data(as: Recipe.self)
+                recipes.append(recipe)
+            }
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
+        }
+        print(recipes)
         return recipes
     }
     
@@ -82,26 +137,31 @@ final class RecipeManager {
     }
     
     // MARK: Create new recipe
-    func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async throws {
-        let recipeID = db.document().documentID
-        try db.document(recipeID).setData(from: recipe)
-        var backgroundURL = "default.jpeg"
-        // If provided an image and successfully update the background image, set the backgroundURL in recipe
-        if let backgroundImageData = backgroundImage {
-            backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
-            
-        }
-        // Add cooking step and related image
-        if cookingSteps != nil {
-            for step in cookingSteps! {
-                let stepID = db.document().documentID
-                try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": backgroundURL, "stepNumber": step.stepNumber])
-                // Upload if the step contain image data
-                if let imageData = step.imageData {
-                    try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
+    func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async {
+        do {
+            let recipeID = db.document().documentID
+            try db.document(recipeID).setData(from: recipe)
+            var backgroundURL = "default.jpeg"
+            // If provided an image and successfully update the background image, set the backgroundURL in recipe
+            if let backgroundImageData = backgroundImage {
+                backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
+                
+            }
+            // Add cooking step and related image
+            if cookingSteps != nil {
+                for step in cookingSteps! {
+                    let stepID = db.document().documentID
+                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": backgroundURL, "stepNumber": step.stepNumber])
+                    // Upload if the step contain image data
+                    if let imageData = step.imageData {
+                        try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
+                    }
                 }
             }
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
         }
+
         
     }
     
@@ -133,10 +193,11 @@ final class RecipeManager {
         try await db.document(recipeID).collection("cookingSteps").document(stepID).updateData(["backgroundURL": path])
     }
     
+    
     // MARK: Delete recipe by ID
-    func deleteRecipe(recipeID: String) async throws {
+    func deleteRecipe(recipeID: String) async {
         do {
-            if let recipe = try await self.getRecipeInformation(recipeID: recipeID) {
+            if let recipe = await self.getRecipeInformation(recipeID: recipeID) {
                 try await db.document(recipeID).delete()
                 // Delete background image
                 if !recipe.backgroundURL.isEmpty {

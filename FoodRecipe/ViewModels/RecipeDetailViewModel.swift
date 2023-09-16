@@ -12,9 +12,9 @@ import Foundation
 class RecipeDetailViewModel: ObservableObject {
     @Published var recipe: Recipe? = nil
     
-    func getRecipeDetail(recipeID: String) async throws {
+    func getRecipeDetail(recipeID: String) async {
         self.recipe = nil
-        self.recipe = try await RecipeManager.shared.getRecipeInformation(recipeID: recipeID)
+        self.recipe = await RecipeManager.shared.getRecipeInformation(recipeID: recipeID)
     }
     
     func updateRecipe(recipeID: String) async throws {

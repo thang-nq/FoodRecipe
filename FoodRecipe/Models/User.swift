@@ -11,7 +11,7 @@ struct User: Identifiable, Codable {
     let id: String
     let fullName: String
     let email: String
-    var avatarUrl: String = ""
+    var avatarUrl: String = "default.jpeg"
 //    var isVegan: Bool = false
 //    var bio: String = "This is user bio"
     var initials: String {

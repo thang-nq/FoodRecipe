@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SwiftUI
 import PhotosUI
@@ -14,6 +15,10 @@ struct Recipe: Identifiable, Codable {
     @DocumentID var id: String?
     var name: String
     let creatorID: String
+    var timeStamp: Timestamp = Timestamp(date: Date())
+    var createdAt: String = ""
+    var creatorName: String = ""
+    var creatorAvatar: String = ""
     var mealType: String = "Breakfast"
     var backgroundURL: String = "default.jpeg"
     var intro: String = ""
@@ -32,6 +37,7 @@ struct Recipe: Identifiable, Codable {
     var steps: [CookingStep] = []
 
 }
+
 
 struct CookingStep: Identifiable, Codable {
     @DocumentID var id: String?
