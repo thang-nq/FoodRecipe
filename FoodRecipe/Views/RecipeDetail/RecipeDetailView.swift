@@ -60,7 +60,7 @@ struct RecipeDetailView: View {
                                 if selectedTabIndex == 2 {
                                     StepsView(stepsList: recipeDetail.steps)
                                 }
-                            }.background(Color.theme.White)
+                            }.background(Color.theme.WhiteInstance)
                         }
                         
                     }

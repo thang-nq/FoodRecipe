@@ -57,7 +57,7 @@ struct SearchView: View {
                                 .padding(.vertical, 5)
                                 .padding(.horizontal, 5)
                                 .background(Color.theme.LightOrange)
-                                .foregroundColor(Color.theme.White)
+                                .foregroundColor(Color.theme.WhiteInstance)
                                 .cornerRadius(5)
                             }
                         }
@@ -198,7 +198,7 @@ struct TagsFilterView: View {
             .padding(.vertical, 5)
             .padding(.horizontal, 5)
             .background(isSelect ? Color.theme.LightOrange : Color.theme.LightGray)
-            .foregroundColor(isSelect ? Color.theme.White : Color.theme.DarkGray)
+            .foregroundColor(isSelect ? Color.theme.WhiteInstance : Color.theme.DarkGray)
             .cornerRadius(5)
         }
     }
