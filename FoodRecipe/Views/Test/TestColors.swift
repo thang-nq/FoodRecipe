@@ -15,8 +15,6 @@ struct TestColors: View {
                 .font(.custom("ZillaSlab-BoldItalic", size: 20))
             
             VStack(spacing: 10) {
-                Text("White")
-                    .foregroundColor(Color.theme.White)
             
                 Text("Black")
                     .foregroundColor(Color.theme.Black)
@@ -123,5 +121,7 @@ struct TestColors_Previews: PreviewProvider {
         }
     }
 }
+
+
 
 

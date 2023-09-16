@@ -18,8 +18,8 @@ struct UserProfileView: View {
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     // MARK: change to environment object when demo
-    @StateObject var viewModel = AuthViewModel()
-    //    @EnvironmentObject var viewModel: AuthViewModel
+//    @StateObject var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel: AuthViewModel
     
     //MARK: POP UP VARIABLES
     @State var showPopUp = false
@@ -189,7 +189,7 @@ struct UserProfileView: View {
 //struct UserProfileView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        UserProfileView()
-//            .environmentObject(AuthViewModel())
+//            
 //    }
 //}
 

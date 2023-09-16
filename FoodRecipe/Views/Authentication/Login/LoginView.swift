@@ -9,9 +9,9 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State private var email = ""
-    @State private var password = ""
     @EnvironmentObject var viewModel: AuthViewModel
+    @State private var submitButton = true
+    @ObservedObject var inputFieldManager = InputFieldManager()
     
     //MARK: POP UP VARIABLES
     @State var showPopUp = false
@@ -84,30 +84,28 @@ private extension LoginView {
     // MARK: LOGIN FORM UI
     var loginForm: some View {
         VStack(spacing: 24) {
-            InputField(text: $email, title: "Email address", placeHolder: "name@gmail.com")
+            InputField(text: $inputFieldManager.emailInput, title: "Email address", placeHolder: "name@gmail.com")
                 .textInputAutocapitalization(.never)
             
-            InputField(text: $password, title: "Password", placeHolder: "Enter your password", isSecureField: true)
+            InputField(text: $inputFieldManager.passwordInput, title: "Password", placeHolder: "Enter your password", isSecureField: true)
         }
     }
     
     // MARK: LOGIN BUTTON UI
     var loginButton: some View {
-        Button {
-            Task {
-                try await viewModel.signIn(withEmail: email, password: password)
-            }
-        } label: {
-            HStack {
-                Text("Login")
-                    .font(.custom("ZillaSlab-Bold", size: 24))
-            }
-            .foregroundColor(Color.theme.White)
-            .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+        
+        Button(action:{Task {try await viewModel.signIn(withEmail: inputFieldManager.emailInput, password: inputFieldManager.passwordInput)}})
+        {
+            Text("Login")
+                .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
+                .frame(width: 350, height: 50)
+                .contentShape(Rectangle())
         }
-        .background(Color.theme.Orange)
-        .cornerRadius(12)
-        .padding(.top, 24)
+        .foregroundColor(Color.theme.DarkBlueInstance)
+        .background(inputFieldManager.isValidLogin() ? Color.theme.LightGray: Color.theme.Orange)
+        .cornerRadius(8)
+        .disabled(inputFieldManager.isValidLogin())
+
     }
     
     //MARK: BOTTOM NAVIGATION UI
