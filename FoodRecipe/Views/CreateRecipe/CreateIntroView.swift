@@ -21,6 +21,31 @@ struct CreateIntroView: View {
     @Binding var salt: Int
     @Binding var saturates: Int
     @Binding var fibre: Int
+    @Binding var currentSelectedTags: [String]
+    @Binding var currentSelectedMealTypes: [String]
+    
+    var MOCK_TAGS = ["chicken", "soup", "rice", "pork", "sandwich", "eggs", "duck", "avocado", "simple", "milk"]
+    var MOCK_MEAL_TYPES = ["breakfast", "brunch", "lunch", "dinner", "snack"]
+    
+    func selectTag(tag: String) {
+        if(currentSelectedTags.contains(tag)) {
+            if let index = currentSelectedTags.firstIndex(of: tag) {
+                currentSelectedTags.remove(at: index)
+            }
+        } else {
+            currentSelectedTags.append(tag)
+        }
+    }
+    
+    func selectMealType(tag: String) {
+        if(currentSelectedMealTypes.contains(tag)) {
+            if let index = currentSelectedMealTypes.firstIndex(of: tag) {
+                currentSelectedMealTypes.remove(at: index)
+            }
+        } else {
+            currentSelectedMealTypes.append(tag)
+        }
+    }
 
     var body: some View {
         ScrollView{
@@ -89,6 +114,25 @@ struct CreateIntroView: View {
                     NutriotionInput(value: $fibre, name: "Fibre", placeHolder: "0")
                 }
                 
+                VStack{
+                    HStack{
+                        Text("Meal types")
+                            .font(.custom("ZillaSlab-SemiBold", size: 22))
+                            .padding(.leading, 15)
+                        Spacer()
+                    }
+                    TagsFilterView(tags: MOCK_MEAL_TYPES, currentSelectedTags: $currentSelectedMealTypes, action: selectMealType)
+                        .padding(.leading, 15)
+                    HStack{
+                        Text("Tags")
+                            .font(.custom("ZillaSlab-SemiBold", size: 22))
+                            .padding(.leading, 15)
+                        Spacer()
+                    }
+                    TagsFilterView(tags: MOCK_TAGS, currentSelectedTags: $currentSelectedTags, action: selectTag)
+                        .padding(.leading, 15)
+                }
+                
             }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
     }
@@ -146,6 +190,6 @@ struct NutriotionInput: View {
 
 struct CreateIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateIntroView(backgroundPhoto: .constant(nil), recipeName: .constant(""), minutes: .constant(""), description: .constant(""), calories: .constant(0), carb: .constant(0), protein: .constant(0), fat: .constant(0), sugars: .constant(0), salt: .constant(0), saturates: .constant(0), fibre: .constant(0))
+        CreateIntroView(backgroundPhoto: .constant(nil), recipeName: .constant(""), minutes: .constant(""), description: .constant(""), calories: .constant(0), carb: .constant(0), protein: .constant(0), fat: .constant(0), sugars: .constant(0), salt: .constant(0), saturates: .constant(0), fibre: .constant(0), currentSelectedTags: .constant([]), currentSelectedMealTypes: .constant([]))
     }
 }

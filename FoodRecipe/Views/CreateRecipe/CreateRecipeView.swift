@@ -23,10 +23,14 @@ struct CreateRecipeView: View {
     @State private var saturates: Int = 0
     @State private var fibre: Int = 0
     
+    @State private var currentSelectedTags: [String] = []
+    @State private var currentSelectedMealTypes: [String] = []
+    
     @State private var Ingredients: [String] = []
     
-   @State private var Steps: [String] = []
-   @State private var listStepsPhoto: [PhotosPickerItem] = []
+    @State private var Steps: [String] = []
+    @State private var listStepsPhoto: [PhotosPickerItem] = []
+    
     
     //MARK: POP UP VARIABLES
     @State var showPopUp = false
@@ -64,7 +68,7 @@ struct CreateRecipeView: View {
             SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
             
             if selectedTabIndex == 0 {
-                CreateIntroView(backgroundPhoto: $backgroundPhoto ,recipeName: $recipeName, minutes: $minutes, description: $description, calories: $calories, carb: $carb, protein: $protein, fat: $fat, sugars: $sugars, salt: $salt, saturates: $saturates, fibre: $fibre)
+                CreateIntroView(backgroundPhoto: $backgroundPhoto ,recipeName: $recipeName, minutes: $minutes, description: $description, calories: $calories, carb: $carb, protein: $protein, fat: $fat, sugars: $sugars, salt: $salt, saturates: $saturates, fibre: $fibre, currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes)
             }
             
             if selectedTabIndex == 1 {
