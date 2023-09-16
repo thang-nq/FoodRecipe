@@ -10,6 +10,7 @@ import SlidingTabView
 import PhotosUI
 
 struct CreateRecipeView: View {
+    @StateObject var homeVM = HomeViewModel()
     @State private var backgroundPhoto: PhotosPickerItem? = nil
     @State private var recipeName = ""
     @State private var minutes = ""
@@ -29,8 +30,10 @@ struct CreateRecipeView: View {
     @State private var Ingredients: [String] = []
     
     @State private var Steps: [String] = []
-    @State private var listStepsPhoto: [PhotosPickerItem] = []
+    @State private var listStepsPhoto: [PhotosPickerItem?] = []
     
+    @State private var cookingSteps: [CookingStepInterface] = []
+    @State private var recipeValidated: Bool = false
     
     //MARK: POP UP VARIABLES
     @State var showPopUp = false
@@ -40,6 +43,41 @@ struct CreateRecipeView: View {
     @State var popUpIconColor = Color.theme.BlueInstance
     
     @State private var selectedTabIndex = 0
+    
+//    func addingCookingSteps (){
+//
+//        for index in 0..<Steps.count {
+//            let context = Steps[index]
+//            var imageData: PhotosPickerItem? = nil
+//
+//            if index < listStepsPhoto.count {
+//                imageData = listStepsPhoto[index]
+//            }
+//
+//            let cookingStep = CookingStepInterface(context: context, imageData: imageData, stepNumber: index + 1)
+//            cookingSteps.append(cookingStep)
+//        }
+//    }
+    //Adding Cooking Steps function
+    func addingCookingSteps() {
+        for index in 0..<Steps.count {
+            let context = Steps[index]
+            var imageData: PhotosPickerItem? = nil
+            
+            if index < listStepsPhoto.count {
+                if let photo = listStepsPhoto[index] {
+                    imageData = photo
+                } else {
+                    imageData = backgroundPhoto
+                }
+            } else {
+                imageData = backgroundPhoto
+            }
+            
+            let cookingStep = CookingStepInterface(context: context, imageData: imageData, stepNumber: index + 1)
+            cookingSteps.append(cookingStep)
+        }
+    }
     var body: some View {
         VStack {
             HStack {
@@ -51,13 +89,27 @@ struct CreateRecipeView: View {
                 Spacer()
                 
                 Button(action: {
-                    // Create button action
                     if recipeName.isEmpty || minutes.isEmpty || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty {
                         showPopUp = true
                         popUpIcon = "xmark"
                         popUptitle = "Missing Information"
                         popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
                         popUpIconColor = Color.theme.RedInstance
+                    } else{
+                        recipeValidated = true
+                        addingCookingSteps()
+                    }
+                    if (recipeValidated == true){
+                        Task {
+                            try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
+                                                                      creatorID: "99",
+                                                                      intro: description,
+                                                                      carb: carb,
+                                                                      protein: protein),
+                                                       image: backgroundPhoto,
+                                                       cookingSteps: cookingSteps
+                            )
+                        }
                     }
                 }) {
                     Text("Create")
@@ -99,3 +151,4 @@ struct CreateRecipeView_Previews: PreviewProvider {
         CreateRecipeView()
     }
 }
+
