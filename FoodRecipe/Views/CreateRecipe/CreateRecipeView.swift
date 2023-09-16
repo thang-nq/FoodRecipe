@@ -76,7 +76,7 @@ struct CreateRecipeView: View {
             }
             
             if selectedTabIndex == 2 {
-                CreateStepsView(Steps: $Steps, listStepsPhoto: $listStepsPhoto)
+                CreateStepsView(Steps: $Steps, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
             }
             
         }

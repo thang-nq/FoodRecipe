@@ -11,6 +11,7 @@ import PhotosUI
 struct CreateStepsView: View {
     @Binding var Steps: [String]
     @Binding var listStepsPhoto: [PhotosPickerItem]
+    @Binding var backgroundPhoto: PhotosPickerItem?
     @State private var stepPhoto: PhotosPickerItem? = nil
     @State private var showingSheet = false
     @State private var InputStep = ""
@@ -46,7 +47,7 @@ struct CreateStepsView: View {
             }
         }
         .sheet(isPresented: $showingSheet){
-            AddStepsSheetView(InputStep: $InputStep, Steps: $Steps, stepPhoto: $stepPhoto, listStepsPhoto: $listStepsPhoto)
+            AddStepsSheetView(InputStep: $InputStep, Steps: $Steps, stepPhoto: $stepPhoto, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
                 .presentationDetents([.height(300)])
         }
         .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
@@ -75,6 +76,7 @@ struct AddStepsSheetView: View {
     @Binding var Steps : [String]
     @Binding var stepPhoto: PhotosPickerItem?
     @Binding var listStepsPhoto : [PhotosPickerItem]
+    @Binding var backgroundPhoto: PhotosPickerItem?
     var body: some View{
         VStack{
             InputFieldRecipe(text: $InputStep , title: "Step", placeHolder: "Enter step")
@@ -89,8 +91,19 @@ struct AddStepsSheetView: View {
                     Steps.append(InputStep)
                     InputStep = ""
                 }
-                listStepsPhoto.append(stepPhoto!)
-                stepPhoto = nil
+//                if(stepPhoto == nil){
+//                    stepPhoto = backgroundPhoto
+//                    listStepsPhoto.append(stepPhoto!)
+//                } else {
+//                    listStepsPhoto.append(stepPhoto!)
+//                    stepPhoto = nil
+//                }
+                if let photo = stepPhoto {
+                              listStepsPhoto.append(photo)
+                          } else if let background = backgroundPhoto {
+                              listStepsPhoto.append(background)
+                          }
+                          stepPhoto = nil
             }) {
                 Text("Save")
                     .foregroundColor(.white)
@@ -105,7 +118,7 @@ struct AddStepsSheetView: View {
 
 struct CreateStepsView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateStepsView(Steps: .constant([]), listStepsPhoto: .constant([]))
+        CreateStepsView(Steps: .constant([]), listStepsPhoto: .constant([]), backgroundPhoto: .constant(nil))
     }
 }
 
