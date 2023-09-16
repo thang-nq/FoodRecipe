@@ -97,15 +97,15 @@ struct TopBar: View {
                 action()
             } label: {
                 
-            Image("chevron-left")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundColor(.white)
-                .padding(10)
-                .background(.white)
-                .clipShape(Circle())
+                Image("chevron-left")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .background(.white)
+                    .clipShape(Circle())
             }
-
+            
             
             Spacer()
             Image("heart-orange")
