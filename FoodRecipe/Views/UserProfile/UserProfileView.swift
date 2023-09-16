@@ -17,8 +17,8 @@ struct UserProfileView: View {
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     // MARK: change to environment object when demo
-    @StateObject var viewModel = AuthViewModel()
-//    @EnvironmentObject var viewModel: AuthViewModel
+//    @StateObject var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel: AuthViewModel
     
     //MARK: POP UP VARIABLES
     @State var showPopUp = false
@@ -177,7 +177,7 @@ struct UserProfileView: View {
                     
                     Task {
                         try await viewModel.uploadAvatar(data: newValue)
-                        try await viewModel.fetchUser()
+                        await viewModel.fetchUser()
                         avatarViewRefresh.toggle()
                     }
                 }
@@ -197,6 +197,7 @@ struct UserProfileView_Previews: PreviewProvider {
             .environmentObject(AuthViewModel())
     }
 }
+
 
 
 private extension UserProfileView {

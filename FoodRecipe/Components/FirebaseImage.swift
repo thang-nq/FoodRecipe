@@ -18,7 +18,7 @@ struct FirebaseImage: View {
                     .resizable()
                     .scaledToFit()
             } else {
-                Text("Loading")
+                Progress(loadingSize: 3)
             }
         }
         .onAppear {
