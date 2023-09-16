@@ -91,19 +91,13 @@ struct AddStepsSheetView: View {
                     Steps.append(InputStep)
                     InputStep = ""
                 }
-//                if(stepPhoto == nil){
-//                    stepPhoto = backgroundPhoto
-//                    listStepsPhoto.append(stepPhoto!)
-//                } else {
-//                    listStepsPhoto.append(stepPhoto!)
-//                    stepPhoto = nil
-//                }
                 if let photo = stepPhoto {
-                              listStepsPhoto.append(photo)
-                          } else if let background = backgroundPhoto {
-                              listStepsPhoto.append(background)
-                          }
-                          stepPhoto = nil
+                    listStepsPhoto.append(photo)
+                } else if let background = backgroundPhoto {
+                    listStepsPhoto.append(background)
+                }
+                stepPhoto = nil
+                InputStep = ""
             }) {
                 Text("Save")
                     .foregroundColor(.white)
@@ -111,7 +105,6 @@ struct AddStepsSheetView: View {
                                     .frame(width: 120, height: 40)
                                     .background(Color("Orange"))
                                     .cornerRadius(8)
-
             }
         }
 }
