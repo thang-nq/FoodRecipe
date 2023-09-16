@@ -25,7 +25,7 @@ struct HomeView: View {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
                 }
-            CreateRecipeViewDemo()
+            CreateRecipeView()
                 .tabItem(){
                     Image(systemName: "plus")
                     Text("Create Recipe")
@@ -36,7 +36,6 @@ struct HomeView: View {
                     Text("Profile")
                 }
         }
-        
         .edgesIgnoringSafeArea(.bottom)
         .accentColor(Color.theme.Orange)
 
