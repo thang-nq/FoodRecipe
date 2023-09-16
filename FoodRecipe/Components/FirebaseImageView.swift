@@ -19,7 +19,7 @@ struct FirebaseImageView: View {
                     .scaledToFill()
                 
             } else {
-                Text("Loading")
+                Progress()
             }
         }
         .onAppear {
