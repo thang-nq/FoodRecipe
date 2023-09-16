@@ -48,11 +48,11 @@ struct NutritionElementView: View {
         VStack (spacing: 7){
             Text(item.type)
                 .font(.system(size: 18))
-                .foregroundColor(Color.theme.White)
+                .foregroundColor(Color.theme.WhiteInstance)
                 .bold()
             Text("\(item.value)")
                 .font(.system(size: 22))
-                .foregroundColor(Color.theme.White)
+                .foregroundColor(Color.theme.WhiteInstance)
                 .fontWeight(.semibold)
         }
         .padding(10)

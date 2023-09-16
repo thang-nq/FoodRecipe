@@ -29,6 +29,17 @@ final class UserManager {
         
     }
     
+    func getUserData(userID: String) async -> User? {
+        var user: User? = nil
+        do {
+            let document = try await db.document(userID).getDocument()
+            user = try document.data(as: User.self)
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
+        }
+        return user
+    }
+    
 
     
 }
