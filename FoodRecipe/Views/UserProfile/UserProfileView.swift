@@ -17,6 +17,7 @@ struct UserProfileView: View {
     @State private var stepPhoto: PhotosPickerItem? = nil
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
+    // MARK: change to environment object when demo
     @StateObject var viewModel = AuthViewModel()
 //    @EnvironmentObject var viewModel: AuthViewModel
     
@@ -52,15 +53,17 @@ struct UserProfileView: View {
                 ScrollView {
                     VStack (alignment: .center) {
                         if let recipe = detailVM.recipe {
-                            FirebaseImageView(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
+                            FirebaseImage(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
+                                .padding(.bottom)
                             Text(recipe.name)
                             Text(recipe.mealType)
                             ForEach(recipe.steps) { step in
                                 Text("Step \(step.stepNumber) - \(step.context)")
-                                FirebaseImageView(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
+                                FirebaseImage(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
+                                    .padding(.bottom)
                             }
                         } else {
-                            Text("No recipe selected")
+                            
                         }
                     }
                 }
@@ -79,11 +82,16 @@ struct UserProfileView: View {
                         // Using CookingStepInterface to init
                         // If no imagedata is provided to the steps, it will get the backgroundURL of recipe as default.
                         // Step number is important to maintain the order
-                        try await homeVM.addRecipe(recipe: Recipe(name: "New recipe",
+                        try await homeVM.addRecipe(recipe: Recipe(name: "Crispy Pork",
                                                                   creatorID: user.id,
                                                                   intro: "This is a healthy dish",
+                                                                  servingSize: 3,
+                                                                  cookingTime: 90,
+                                                                  calories: 740,
                                                                   carb: 15,
-                                                                  protein: 30),
+                                                                  protein: 30,
+                                                                  ingredients: ["300g Pork", "20g Salt"],
+                                                                  tags: ["Pork", "Dinner"]),
                                                    image: stepPhoto,
                                                    cookingSteps: [
                                                     CookingStepInterface(context: "Prepare the ingredient", imageData: nil, stepNumber: 1),
@@ -177,12 +185,12 @@ struct UserProfileView: View {
 }
 
 
-struct UserProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserProfileView()
-            .environmentObject(AuthViewModel())
-    }
-}
+//struct UserProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserProfileView()
+//            .environmentObject(AuthViewModel())
+//    }
+//}
 
 
 private extension UserProfileView {

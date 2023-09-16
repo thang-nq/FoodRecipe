@@ -15,8 +15,10 @@ struct Recipe: Identifiable, Codable {
     var name: String
     let creatorID: String
     var mealType: String = "Breakfast"
-    var backgroundURL: String = ""
+    var backgroundURL: String = "default.jpeg"
     var intro: String = ""
+    var servingSize: Int = 1
+    var cookingTime: Int = 10
     var calories: Int = 300
     var carb: Int = 0
     var protein: Int = 0
@@ -25,6 +27,7 @@ struct Recipe: Identifiable, Codable {
     var salt: Int = 0
     var saturates: Int = 0
     var fibre: Int = 0
+    var ingredients: [String] = []
     var tags: [String] = ["Chicken", "Salad"]
     var steps: [CookingStep] = []
 

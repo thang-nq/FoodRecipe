@@ -12,7 +12,8 @@ struct User: Identifiable, Codable {
     let fullName: String
     let email: String
     var avatarUrl: String = ""
-    
+//    var isVegan: Bool = false
+//    var bio: String = "This is user bio"
     var initials: String {
         let formatter = PersonNameComponentsFormatter()
         if let components = formatter.personNameComponents(from: fullName) {
@@ -21,6 +22,10 @@ struct User: Identifiable, Codable {
         }
         return ""
     }
+}
+
+struct UserPreference {
+    
 }
 
 extension User {
