@@ -14,26 +14,30 @@ class HomeViewModel: ObservableObject {
     
     init() {}
     
-    func getAllRecipe() async throws {
-        self.recipes = try await RecipeManager.shared.getRecipeList()
+    func getAllRecipe() async {
+        self.recipes = await RecipeManager.shared.getRecipeList()
     }
     
-    func getRecipeByMealType(mealType: String) async throws {
-        self.recipes = try await RecipeManager.shared.getRecipeByFilters(filters: ["mealType": mealType])
+    func getRecipeByMealType(mealType: String) async {
+        self.recipes = await RecipeManager.shared.getRecipeByFilters(filters: ["mealType": mealType])
     }
     
-    func getRecipeByFilters(filters: [String: Any]) async throws {
-        self.recipes = try await RecipeManager.shared.getRecipeByFilters(filters: filters)
+    func getRecipeByFilters(filters: [String: Any]) async {
+        self.recipes = await RecipeManager.shared.getRecipeByFilters(filters: filters)
     }
     
     func addRecipe(recipe: Recipe, image: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async throws {
-        try await RecipeManager.shared.createNewRecipe(recipe: recipe, backgroundImage: image, cookingSteps: cookingSteps)
-        try await getAllRecipe()
+        await RecipeManager.shared.createNewRecipe(recipe: recipe, backgroundImage: image, cookingSteps: cookingSteps)
+        await getAllRecipe()
     }
     
     func deleteRecipe(recipeID: String) async throws {
-        try await RecipeManager.shared.deleteRecipe(recipeID: recipeID)
-        try await getAllRecipe()
+        await RecipeManager.shared.deleteRecipe(recipeID: recipeID)
+        await getAllRecipe()
+    }
+    
+    func searchRecipeByTags(tags: [String]) async {
+        self.recipes = await RecipeManager.shared.filterRecipeByTags(tags: tags)
     }
     
 }

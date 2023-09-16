@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseStorage
 
 struct UserAvatar: View {
-    @Binding var imagePathName: String // userID
+    @State var imagePathName: String // userID
     @State private var avatarImage: UIImage?
     
     var body: some View {
@@ -19,7 +19,7 @@ struct UserAvatar: View {
                     .resizable()
                     .scaledToFill()
                     .clipShape(Circle())
-                    .frame(width: 100, height: 200)
+//                    .frame(width: 100, height: 200)
                 
             } else {
                 Text("Loading")
