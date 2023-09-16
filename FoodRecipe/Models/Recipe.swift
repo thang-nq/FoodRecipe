@@ -35,6 +35,20 @@ struct Recipe: Identifiable, Codable {
     var ingredients: [String] = []
     var tags: [String] = ["Chicken", "Salad"]
     var steps: [CookingStep] = []
+    
+    var nutritionsArray: [NutritionItem] {
+        var newArr = [
+            NutritionItem(type: "Calories", value: self.calories),
+            NutritionItem(type: "Carb", value: self.carb),
+            NutritionItem(type: "Protein", value: self.protein),
+            NutritionItem(type: "Fat", value: self.fat),
+            NutritionItem(type: "Sugars", value: self.sugars),
+            NutritionItem(type: "Salt", value: self.salt),
+            NutritionItem(type: "Saturates", value: self.saturates),
+            NutritionItem(type: "fibre", value: self.fibre),
+        ]
+        return newArr.filter({ $0.value > 0})
+    }
 
 }
 
@@ -51,4 +65,10 @@ struct CookingStepInterface {
     var context: String
     var imageData: PhotosPickerItem? = nil
     var stepNumber: Int
+}
+
+struct NutritionItem: Identifiable {
+    var id = UUID()
+    var type: String
+    var value: Int
 }

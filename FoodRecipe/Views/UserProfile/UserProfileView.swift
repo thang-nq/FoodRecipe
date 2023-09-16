@@ -75,7 +75,7 @@ struct UserProfileView: View {
                         }
                     }
                 }
-
+                
                 
                 // Recipe list
                 
@@ -129,6 +129,7 @@ struct UserProfileView: View {
                                 Button {
                                     Task {
                                         await detailVM.getRecipeDetail(recipeID: recipe.id!)
+                                        print("recipe id: \(recipe.id!)")
                                     }
                                 } label: {
                                     Text("View detail")
@@ -141,15 +142,15 @@ struct UserProfileView: View {
                                     Text("Delete").foregroundColor(.red)
                                 }
                             }
-
+                            
                         }
                     }
-
+                    
                 }
                 .task {
                     await homeVM.getAllRecipe()
                 }
-
+                
                 //
                 
                 
@@ -163,7 +164,7 @@ struct UserProfileView: View {
                         PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
                     }
                 }
-                .opacity(showPopUp ? 1 : 0)
+                    .opacity(showPopUp ? 1 : 0)
             )
             .onChange(of: selectedPhoto, perform: { newValue in
                 if let newValue {
@@ -225,7 +226,7 @@ private extension UserProfileView {
                 .foregroundColor(.blue)
         }
     }
-        
+    
     //MARK: LOGOUT BUTTON UI
     var signOutButton: some View {
         Button {
