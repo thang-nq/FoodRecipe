@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FirebaseImageView: View {
+struct FirebaseImage: View {
     @State var imagePathName: String
     @State private var avatarImage: UIImage?
     
@@ -16,8 +16,7 @@ struct FirebaseImageView: View {
             if let avatarImage = avatarImage {
                 Image(uiImage: avatarImage)
                     .resizable()
-                    .scaledToFill()
-                
+                    .scaledToFit()
             } else {
                 Text("Loading")
             }

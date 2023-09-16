@@ -78,7 +78,6 @@ final class RecipeManager {
             let recipe = try document.data(as: Recipe.self)
             recipes.append(recipe)
         }
-        print(recipes)
         return recipes
     }
     
@@ -86,7 +85,7 @@ final class RecipeManager {
     func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async throws {
         let recipeID = db.document().documentID
         try db.document(recipeID).setData(from: recipe)
-        var backgroundURL = ""
+        var backgroundURL = "default.jpeg"
         // If provided an image and successfully update the background image, set the backgroundURL in recipe
         if let backgroundImageData = backgroundImage {
             backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
@@ -119,7 +118,6 @@ final class RecipeManager {
             throw RecipeManagerError.uploadImageFailed
         }
         try await db.document(recipeID).updateData(["backgroundURL": path])
-        print(path)
         return path
     }
     
@@ -139,11 +137,12 @@ final class RecipeManager {
     func deleteRecipe(recipeID: String) async throws {
         do {
             if let recipe = try await self.getRecipeInformation(recipeID: recipeID) {
-                
                 try await db.document(recipeID).delete()
                 // Delete background image
                 if !recipe.backgroundURL.isEmpty {
-                    try await storage.child(recipe.backgroundURL).delete()
+                    if recipe.backgroundURL != "default.jpeg" {
+                        try await storage.child(recipe.backgroundURL).delete()
+                    }
                 }
             }
             
