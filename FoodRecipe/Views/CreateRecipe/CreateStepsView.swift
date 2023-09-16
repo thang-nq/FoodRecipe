@@ -84,7 +84,9 @@ struct AddStepsSheetView: View {
         
         PhotosPicker(selection: $stepPhoto, photoLibrary: .shared()) {
             Label("Select a photo for step", systemImage: "photo.fill")
-        }.padding(.vertical, 10)
+        }
+        .padding(.vertical, 10)
+        .foregroundColor(Color("Orange"))
         
             Button(action: {
                 if(!InputStep.isEmpty){
