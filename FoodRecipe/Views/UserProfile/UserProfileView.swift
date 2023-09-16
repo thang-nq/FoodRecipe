@@ -19,7 +19,7 @@ struct UserProfileView: View {
     @StateObject var detailVM = RecipeDetailViewModel()
     // MARK: change to environment object when demo
     @StateObject var viewModel = AuthViewModel()
-//    @EnvironmentObject var viewModel: AuthViewModel
+    //    @EnvironmentObject var viewModel: AuthViewModel
     
     //MARK: POP UP VARIABLES
     @State var showPopUp = false
@@ -67,7 +67,7 @@ struct UserProfileView: View {
                         }
                     }
                 }
-
+                
                 
                 // Recipe list
                 
@@ -119,6 +119,7 @@ struct UserProfileView: View {
                                 Text(recipe.name)
                                 Button {
                                     Task {
+                                        print("recipe id: \(recipe.id!)")
                                         try await detailVM.getRecipeDetail(recipeID: recipe.id!)
                                     }
                                 } label: {
@@ -132,17 +133,17 @@ struct UserProfileView: View {
                                     Text("Delete").foregroundColor(.red)
                                 }
                             }
-
+                            
                         }
                     }
-
+                    
                 }
                 .onAppear {
                     Task {
                         try await homeVM.getAllRecipe()
                     }
                 }
-
+                
                 //
                 
                 
@@ -156,7 +157,7 @@ struct UserProfileView: View {
                         PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
                     }
                 }
-                .opacity(showPopUp ? 1 : 0)
+                    .opacity(showPopUp ? 1 : 0)
             )
             .onChange(of: selectedPhoto, perform: { newValue in
                 if let newValue {
@@ -218,7 +219,7 @@ private extension UserProfileView {
                 .foregroundColor(.blue)
         }
     }
-        
+    
     //MARK: LOGOUT BUTTON UI
     var signOutButton: some View {
         Button {
