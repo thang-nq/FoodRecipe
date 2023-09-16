@@ -8,26 +8,23 @@
 import SwiftUI
 
 struct SignupView: View {
-    @State private var email = ""
-    @State private var password = ""
-    @State private var fullName = ""
-    @State private var confirmPassword = ""
+        
+    @ObservedObject var inputFieldManager = InputFieldManager()    
     @EnvironmentObject var viewModel: AuthViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         // MARK: MAIN LAYOUT
-        VStack(spacing: 10) {
+        VStack() {
             appLogo
-                .padding(.top, 10)
                 .accessibilityLabel("App logo")
             
             signUpForm
-                .padding(.top, 10)
                 .accessibilityLabel("Sign up form")
+                .padding(.horizontal, 10)
             
             registerBtn
-//            Spacer()
+            Spacer()
             bottomNavigation
         }
     }
@@ -103,11 +100,11 @@ private extension SignupView {
                 .font(.custom("ZillaSlab-BoldItalic", size: 30))
             
             VStack{
-                InputField(text: $fullName, title: "Name", placeHolder: "Enter your name")
-                InputField(text: $email, title: "E-mail", placeHolder: "name@gmail.com")
+                InputField(text: $inputFieldManager.nameInput, title: "Name", placeHolder: "Enter your name")
+                InputField(text: $inputFieldManager.emailInput, title: "E-mail", placeHolder: "name@gmail.com")
                     .textInputAutocapitalization(.never)
-                InputField(text: $password, title: "Password", placeHolder: "Enter your password", isSecureField: true)
-                InputField(text: $confirmPassword, title: "Repeat Password", placeHolder: "Confirm your password", isSecureField: true)
+                InputField(text: $inputFieldManager.passwordInput, title: "Password", placeHolder: "Enter your password", isSecureField: true)
+                InputField(text: $inputFieldManager.repeatPWInput, title: "Repeat Password", placeHolder: "Confirm your password", isSecureField: true)
             }
             
         }
@@ -115,22 +112,20 @@ private extension SignupView {
     
     // MARK: SUBMIT BUTTON UI
     var registerBtn: some View {
-        Button {
-            Task {
-                try await viewModel.createUser(withEmail: email, password: password, fullName: fullName)
-            }
-        } label: {
-            HStack {
-                Text("Register")
-                    .font(.custom("ZillaSlab-Bold", size: 24))
-            }
-            .foregroundColor(Color.theme.White)
-            // fix later
-            .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+        
+        Button(action:{
+            Task {try await viewModel.createUser(withEmail: inputFieldManager.emailInput, password: inputFieldManager.passwordInput, fullName: inputFieldManager.nameInput
+            )}}){
+            Text("Register")
+                .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
+                .frame(width: 380, height: 50)
+                .contentShape(Rectangle())
         }
-        .background(Color.theme.Orange)
+        .foregroundColor(Color.theme.DarkBlueInstance)
+        .background(inputFieldManager.isValidRegister() ? Color.theme.LightGray: Color.theme.Orange)
         .cornerRadius(8)
-        .padding(.top, 24)
+        .disabled(inputFieldManager.isValidRegister())
+        
     }
     
     // MARK: BOTTOM NAVIGATION UI

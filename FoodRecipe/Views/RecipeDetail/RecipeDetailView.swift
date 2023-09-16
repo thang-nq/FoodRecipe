@@ -10,12 +10,12 @@ import SlidingTabView
 
 struct RecipeDetailView: View {
     var recipeId: String
-//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var detailVM = RecipeDetailViewModel()
     @State private var selectedTabIndex = 0
     func back() {
         // Back action
-//        self.presentationMode.wrappedValue.dismiss()
+        self.presentationMode.wrappedValue.dismiss()
     }
     var body: some View {
         ScrollView {
@@ -84,7 +84,7 @@ struct RecipeDetailView: View {
 
 struct RecipeDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDetailView(recipeId: "5N7hXZoR5665bigyPD8c")
+        RecipeDetailView(recipeId: "GAHWzx1LuKetTSE44Ica")
     }
 }
 
