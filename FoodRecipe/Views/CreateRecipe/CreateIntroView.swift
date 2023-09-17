@@ -74,14 +74,7 @@ struct CreateIntroView: View {
                 //                        .padding(.leading, 20)
                 //                        .padding(.trailing, 20)
                 HStack{
-                    Text("Cook time")
-                        .font(.custom("ZillaSlab-SemiBold", size: 22))
-                        .padding(.leading, 15)
-                    Spacer()
-                }
-                HStack{
-                    
-                    InputFieldRecipe(text: $minutes, title: "minutes", placeHolder: "Enter minutes")
+                    InputFieldRecipe(text: $minutes, title: "Cook time", placeHolder: "Enter minutes")
                         .frame(width: 150)
                     Spacer()
                 }
@@ -100,7 +93,7 @@ struct CreateIntroView: View {
                 }
                 TextEditor(text: $description)
                     .font(.custom("ZillaSlab-Regular", size: 16))
-                    .frame(height: 230)
+                    .frame(height: 250)
                     .colorMultiply(Color(.systemGray6))
                     .cornerRadius(10)
                     .padding(.horizontal, 15)
