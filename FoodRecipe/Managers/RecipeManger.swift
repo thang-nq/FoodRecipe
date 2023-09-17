@@ -18,6 +18,7 @@ final class RecipeManager {
     private var db = Firestore.firestore().collection("recipes")
     private var storage = Storage.storage().reference()
     private init() {
+        
     }
     
     
@@ -26,6 +27,7 @@ final class RecipeManager {
         var recipe : Recipe? = nil
         do {
             let document = try await db.document(recipeID).getDocument()
+            let currentUser = try await UserManager.shared.getCurrentUserData()
             recipe = try document.data(as: Recipe.self)
             let stepsData = try await db.document(recipeID).collection("cookingSteps").getDocuments()
             var steps: [CookingStep] = []
@@ -43,6 +45,11 @@ final class RecipeManager {
             // Format time
             recipe!.createdAt = formatTimestamp(recipe!.timeStamp)
             
+            // Check saved state
+            if currentUser!.savedRecipe.contains(recipeID) {
+                recipe!.isSaved = true
+            }
+            
             // Sort the step
             let sortedSteps = steps.sorted { $0.stepNumber < $1.stepNumber}
             recipe!.steps = sortedSteps
@@ -55,26 +62,28 @@ final class RecipeManager {
     
     //MARK: Get saved recipe of a user
     func getUserSavedRecipes(userID: String) async -> [Recipe] {
-        var foundRecipeIDs: [String] = []
         var recipes: [Recipe] = []
         do {
-            if let user = await UserManager.shared.getUserData(userID: userID) {
-                let snapshot = try await db.whereField(FieldPath.documentID(), in: user.savedRecipe).getDocuments()
-                for d in snapshot.documents {
-                    var recipe = try d.data(as: Recipe.self)
-                    recipe.createdAt = formatTimestamp(recipe.timeStamp)
-                    
-                    // Fetch creator info
-                    if let creator = await UserManager.shared.getUserData(userID: recipe.creatorID) {
-                        recipe.creatorName = creator.fullName
-                        recipe.creatorAvatar = creator.avatarUrl
+            
+            if let user = UserManager.shared.currentUser {
+                let userData = await UserManager.shared.getUserData(userID: user.id)
+                if userData!.savedRecipe.count > 0 {
+                    let snapshot = try await db.whereField(FieldPath.documentID(), in: userData!.savedRecipe).getDocuments()
+                    for d in snapshot.documents {
+                        var recipe = try d.data(as: Recipe.self)
+                        recipe.createdAt = formatTimestamp(recipe.timeStamp)
+                        
+                        // Fetch creator info
+                        if let creator = await UserManager.shared.getUserData(userID: recipe.creatorID) {
+                            recipe.creatorName = creator.fullName
+                            recipe.creatorAvatar = creator.avatarUrl
+                        }
+                        
+                        recipes.append(recipe)
                     }
                     
-                    recipes.append(recipe)
-                    foundRecipeIDs.append(d.documentID)
                 }
-                // Update to removed any deleted (not found) recipe
-                try await UserManager.shared.updateUser(userID: userID, updateValues: ["savedRecipe": foundRecipeIDs])
+
             }
         } catch {
             print("DEBUG: \(error.localizedDescription)")
@@ -83,11 +92,13 @@ final class RecipeManager {
         return recipes
     }
     
+    
     // MARK: Add/remove recipe from saved recipe
     func saveOrRemoveRecipeFromFavorite(recipeID: String) async {
         do {
             if let user = UserManager.shared.currentUser {
-                var savedRecipe = user.savedRecipe
+                let userData = await UserManager.shared.getUserData(userID: user.id)
+                var savedRecipe = userData!.savedRecipe
                 if savedRecipe.contains(recipeID) {
                     let index = savedRecipe.firstIndex(of: recipeID)
                     savedRecipe.remove(at: index!)
@@ -95,8 +106,9 @@ final class RecipeManager {
                     savedRecipe.append(recipeID)
                 }
                 
-                try await UserManager.shared.updateUser(userID: user.id, updateValues: ["savedRecipe": savedRecipe])
                 
+                
+                try await UserManager.shared.updateUser(userID: user.id, updateValues: ["savedRecipe": savedRecipe])
             } else {
                 throw UserManagerError.userIDNotFound
             }
@@ -111,28 +123,30 @@ final class RecipeManager {
     func getRecipeList() async -> [Recipe] {
         var recipes: [Recipe] = []
         do {
-            let userData = UserManager.shared.currentUser
-            let snapshot = try await db.getDocuments()
-            
-            for document in snapshot.documents {
-                var recipe = try document.data(as: Recipe.self)
-                // Fetch user
-                if let user = await UserManager.shared.getUserData(userID: recipe.creatorID) {
-                    recipe.creatorName = user.fullName
-                    recipe.creatorAvatar = user.avatarUrl
-                }
-                // format time stamp
-                recipe.createdAt = formatTimestamp(recipe.timeStamp)
+            if let userData = UserManager.shared.currentUser {
+                let currentUserData = await UserManager.shared.getUserData(userID: userData.id)
+                let snapshot = try await db.getDocuments()
                 
-//                 Check if already saved
-                if userData != nil {
-                    if userData!.savedRecipe.contains(document.documentID) {
+                for document in snapshot.documents {
+                    var recipe = try document.data(as: Recipe.self)
+                    // Fetch user
+                    if let user = await UserManager.shared.getUserData(userID: recipe.creatorID) {
+                        recipe.creatorName = user.fullName
+                        recipe.creatorAvatar = user.avatarUrl
+                    }
+                    // format time stamp
+                    recipe.createdAt = formatTimestamp(recipe.timeStamp)
+                    
+    //                 Check if already saved
+                    if currentUserData!.savedRecipe.contains(document.documentID) {
                         recipe.isSaved = true
                     }
+                    
+                    recipes.append(recipe)
                 }
-                
-                recipes.append(recipe)
             }
+            
+            
             
         } catch {
             print("DEBUG: \(error.localizedDescription)")

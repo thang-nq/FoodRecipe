@@ -56,7 +56,7 @@ struct CookModeView: View {
                         .clipShape(Circle())
                     }
 
-                }.padding(.horizontal, 20),
+                }.padding(20),
                 alignment: .bottom
             )
             .animation(.easeInOut, value: pageIndex)

@@ -17,6 +17,7 @@ struct UserProfileView: View {
     @State private var inputText: String = ""
     @State private var oldPassword: String = ""
     @State private var password: String = ""
+    @State private var savedRecipe: [Recipe] = []
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     // MARK: change to environment object when demo
@@ -73,29 +74,54 @@ struct UserProfileView: View {
 //                    }
                 }
                 
+//                ScrollView {
+//                    VStack (alignment: .center) {
+//                        if let recipe = detailVM.recipe {
+//                            FirebaseImage(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
+//                                .padding(.bottom)
+//                            Text(recipe.name)
+//                            HStack(alignment: .center) {
+//                                Text("Created by - \(recipe.creatorName)")
+//                                UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
+//                            }
+//                            Text("Created at - \(recipe.createdAt)")
+//                            Text(recipe.mealType)
+//                            ForEach(recipe.steps) { step in
+//                                Text("Step \(step.stepNumber) - \(step.context)")
+//                                FirebaseImage(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
+//                                    .padding(.bottom)
+//                            }
+//                        } else {
+//
+//                        }
+//                    }
+//                }
+
+                
                 ScrollView {
-                    VStack (alignment: .center) {
-                        if let recipe = detailVM.recipe {
-                            FirebaseImage(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
-                                .padding(.bottom)
-                            Text(recipe.name)
-                            HStack(alignment: .center) {
+                    VStack {
+                        Text("Saved recipes")
+                        ForEach(homeVM.savedRecipes) {recipe in
+                            VStack {
+                                Text(recipe.name)
                                 Text("Created by - \(recipe.creatorName)")
-                                UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
+                                Text(recipe.isSaved ? "Already saved" : "Save to favorite")
+                                Button {
+                                    Task {
+                                        await homeVM.saveOrRemoveRecipe(recipeID: recipe.id!)
+                                    }
+                                } label: {
+                                    Text("🗑️ Unsave")
+                                }
                             }
-                            Text("Created at - \(recipe.createdAt)")
-                            Text(recipe.mealType)
-                            ForEach(recipe.steps) { step in
-                                Text("Step \(step.stepNumber) - \(step.context)")
-                                FirebaseImage(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
-                                    .padding(.bottom)
-                            }
-                        } else {
                             
                         }
                     }
+                    
                 }
-
+                .task {
+                    await homeVM.getSavedRecipe()
+                }
 
                 
                 
@@ -107,9 +133,9 @@ struct UserProfileView: View {
                 
                 // Recipe list
                 
-                PhotosPicker(selection: $stepPhoto, photoLibrary: .shared()) {
-                    Label("Choose step photo", systemImage: "photo")
-                }
+//                PhotosPicker(selection: $stepPhoto, photoLibrary: .shared()) {
+//                    Label("Choose step photo", systemImage: "photo")
+//                }
                 
                 Button {
                     Task {
@@ -140,16 +166,18 @@ struct UserProfileView: View {
                     Text("Add new recipe")
                         .foregroundColor(.green)
                 }
-                Button {
-                    Task {
-//                        await homeVM.searchRecipeByTags(tags: ["Chicken", "Pork"])
-                        await homeVM.searchRecipeByText(text: inputText)
-                    }
-                } label: {
-                    Text("Search")
-                }
                 
-                InputField(text: $inputText, title: "Search Field", placeHolder: "Type here")
+                
+//                Button {
+//                    Task {
+////                        await homeVM.searchRecipeByTags(tags: ["Chicken", "Pork"])
+//                        await homeVM.searchRecipeByText(text: inputText)
+//                    }
+//                } label: {
+//                    Text("Search")
+//                }
+//
+//                InputField(text: $inputText, title: "Search Field", placeHolder: "Type here")
                 
                 Divider()
                 ScrollView {
@@ -158,13 +186,13 @@ struct UserProfileView: View {
                             VStack {
                                 Text(recipe.name)
                                 Text("Created by - \(recipe.creatorName)")
-                                Text(recipe.isSaved ? "Already saved" : "Save to favorite")
+                                
                                 Button {
                                     Task {
                                         await homeVM.saveOrRemoveRecipe(recipeID: recipe.id!)
                                     }
                                 } label: {
-                                    Text("♥️ add to favorite")
+                                    Text(recipe.isSaved ? "Remove save" : "Save to favorite ♥️")
                                 }
                                 Button {
                                     Task {

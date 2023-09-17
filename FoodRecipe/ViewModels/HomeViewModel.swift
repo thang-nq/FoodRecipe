@@ -11,6 +11,7 @@ import PhotosUI
 @MainActor
 class HomeViewModel: ObservableObject {
     @Published var recipes: [Recipe] = []
+    @Published var savedRecipes: [Recipe] = []
     
     init() {}
     func getAllRecipe() async {
@@ -48,8 +49,18 @@ class HomeViewModel: ObservableObject {
         if let userData = UserManager.shared.currentUser {
             await RecipeManager.shared.saveOrRemoveRecipeFromFavorite(recipeID: recipeID)
         }
+        await getSavedRecipe()
         await getAllRecipe()
         
+    }
+    
+    func getSavedRecipe() async {
+        var recipes: [Recipe] = []
+        if UserManager.shared.currentUser != nil {
+            let userData = await UserManager.shared.getUserData(userID: UserManager.shared.currentUser!.id)
+            recipes = await RecipeManager.shared.getUserSavedRecipes(userID: userData!.id)
+        }
+        self.savedRecipes = recipes
     }
     
 }

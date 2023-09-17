@@ -15,9 +15,14 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            if authVM.userSession != nil {
+            if $authVM.userSession != nil {
 //                UserProfileView()
-                HomeView()
+                if authVM.currentUser != nil {
+                    HomeView()
+                } else {
+                    Text("Loading")
+                }
+
             } else {
                 LoginView()
             }

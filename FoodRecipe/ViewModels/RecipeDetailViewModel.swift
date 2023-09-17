@@ -17,6 +17,11 @@ class RecipeDetailViewModel: ObservableObject {
         self.recipe = await RecipeManager.shared.getRecipeInformation(recipeID: recipeID)
     }
     
+    func saveOrReomveSavedRecipe(recipeID: String) async {
+        await RecipeManager.shared.saveOrRemoveRecipeFromFavorite(recipeID: recipeID)
+        await getRecipeDetail(recipeID: recipeID)
+    }
+    
     func updateRecipe(recipeID: String) async throws {
         
     }
