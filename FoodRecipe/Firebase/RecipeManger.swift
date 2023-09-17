@@ -13,8 +13,6 @@ import FirebaseFirestoreSwift
 import PhotosUI
 
 
-
-
 final class RecipeManager {
     static let shared = RecipeManager()
     private var db = Firestore.firestore().collection("recipes")
@@ -104,14 +102,13 @@ final class RecipeManager {
         return recipes
     }
     
+    
+    // MARK: search recipe by an array of tags
     func filterRecipeByTags(tags: [String]) async -> [Recipe] {
         var recipes: [Recipe] = []
         do {
-            let collectionRef = db
-            var query = collectionRef as Query
-            let tagArray = tags.map { [$0] }
-            print(tagArray)
-            query = query.whereField("tags", in: tagArray)
+            
+            let query = db.whereField("tags", arrayContainsAny: tags)
             let snapshot = try await query.getDocuments()
             for d in snapshot.documents {
                 let recipe = try d.data(as: Recipe.self)
@@ -120,7 +117,42 @@ final class RecipeManager {
         } catch {
             print("DEBUG: \(error.localizedDescription)")
         }
-        print(recipes)
+        return recipes
+    }
+    
+    
+    func searchRecipeByText(text: String) async -> [Recipe] {
+        var recipes: [Recipe] = []
+        do {
+            let queryString = text.lowercased()
+            let snapshot = try await db.getDocuments()
+            for d in snapshot.documents {
+                let recipe = try d.data(as: Recipe.self)
+                
+                var matchTag = false
+                var matchIngredient = false
+                var matchMealtype = false
+                
+                
+                let tagLowercase = recipe.tags.map {$0.lowercased()}
+                let ingredientLowercase = recipe.ingredients.map {$0.lowercased()}
+                for ingredient in ingredientLowercase {
+                    if ingredient.contains(queryString) {
+                        matchIngredient = true
+                    }
+                }
+                matchTag = tagLowercase.contains(queryString) ? true : false
+                matchMealtype = recipe.mealType.lowercased().contains(queryString)
+                
+                
+                if recipe.name.lowercased().contains(queryString) || matchTag || matchIngredient || matchMealtype {
+                    recipes.append(recipe)
+                }
+            }
+            
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
+        }
         return recipes
     }
     
@@ -140,6 +172,10 @@ final class RecipeManager {
     func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async {
         do {
             let recipeID = db.document().documentID
+            
+//            var recipeData = recipe
+//            recipeData.tags = recipe.tags.map {$0.lowercased()}
+            // save document
             try db.document(recipeID).setData(from: recipe)
             var backgroundURL = "default.jpeg"
             // If provided an image and successfully update the background image, set the backgroundURL in recipe

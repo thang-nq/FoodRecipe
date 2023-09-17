@@ -37,7 +37,7 @@ struct Recipe: Identifiable, Codable {
     var steps: [CookingStep] = []
     
     var nutritionsArray: [NutritionItem] {
-        var newArr = [
+        let newArr = [
             NutritionItem(type: "Calories", value: self.calories),
             NutritionItem(type: "Carb", value: self.carb),
             NutritionItem(type: "Protein", value: self.protein),

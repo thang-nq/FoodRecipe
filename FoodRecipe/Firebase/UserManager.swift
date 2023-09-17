@@ -12,7 +12,6 @@ import FirebaseStorage
 import FirebaseFirestoreSwift
 import PhotosUI
 
-
 struct AuthDataResultModel {
     let UID: String
     let email: String

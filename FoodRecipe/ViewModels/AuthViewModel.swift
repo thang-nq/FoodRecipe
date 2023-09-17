@@ -58,6 +58,20 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    func changePassword(oldPassword oldpassword: String ,newPassword password: String) async {
+        do {
+            if let user = Auth.auth().currentUser {
+                let credential = EmailAuthProvider.credential(withEmail: user.email!, password: oldpassword)
+                try await user.reauthenticate(with: credential)
+                try await Auth.auth().currentUser?.updatePassword(to: password)
+                
+            }
+            
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
+        }
+    }
+    
     func signOut() {
         do {
             try Auth.auth().signOut() // sign out user in the firebase
@@ -65,6 +79,14 @@ class AuthViewModel: ObservableObject {
             self.currentUser = nil // clear local user data
         } catch {
             print("DEBUG: Failed to signout with error \(error.localizedDescription)")
+        }
+    }
+    
+    func sendResetPasswordEmail(withEmail email: String) async {
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
         }
     }
     

@@ -16,8 +16,8 @@ struct ContentView: View {
     var body: some View {
         Group {
             if authVM.userSession != nil {
-//                UserProfileView()
-                HomeView()
+                UserProfileView()
+//                HomeView()
             } else {
                 LoginView()
             }
