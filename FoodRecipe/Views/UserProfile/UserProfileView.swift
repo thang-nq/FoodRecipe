@@ -53,16 +53,24 @@ struct UserProfileView: View {
                     
                     //MARK: change password
                     
-//                    InputField(text: $oldPassword, title: "Old password", placeHolder: "enter old password")
-//                    InputField(text: $password, title: "New password", placeHolder: "enter new password")
-//
-//                    Button {
-//                        Task {
-//                            await viewModel.changePassword(oldPassword: oldPassword, newPassword: password)
-//                        }
-//                    } label: {
-//                        Text("Change password")
-//                    }
+                    InputField(text: $oldPassword, title: "Old password", placeHolder: "enter old password")
+                    InputField(text: $password, title: "New password", placeHolder: "enter new password")
+
+                    Button {
+                        Task {
+                            await viewModel.changePassword(oldPassword: oldPassword, newPassword: password)
+                        }
+                    } label: {
+                        Text("Change password")
+                    }
+                    
+                    Button {
+                        Task {
+                            await viewModel.sendResetPasswordEmail(withEmail: "latuan2906@gmail.com")
+                        }
+                    } label: {
+                        Text("Send reset pw email")
+                    }
                 }
                 
                 ScrollView {
