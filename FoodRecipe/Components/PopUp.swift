@@ -31,7 +31,7 @@ struct PopUp: View {
         .overlay(alignment: .topTrailing) {
             closeButton
         }
-        .transition(.move(edge: .bottom))
+//        .transition(.move(edge: .bottom))
     }
 }
 
