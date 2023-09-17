@@ -15,6 +15,8 @@ struct UserProfileView: View {
     @State private var avatarViewRefresh: Bool = false
     @State private var stepPhoto: PhotosPickerItem? = nil
     @State private var inputText: String = ""
+    @State private var oldPassword: String = ""
+    @State private var password: String = ""
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     // MARK: change to environment object when demo
@@ -47,11 +49,22 @@ struct UserProfileView: View {
                     
                     userData(fullName: user.fullName, email: user.email)
                     signOutButton
+                    
+                    
+                    //MARK: change password
+                    
+//                    InputField(text: $oldPassword, title: "Old password", placeHolder: "enter old password")
+//                    InputField(text: $password, title: "New password", placeHolder: "enter new password")
+//
+//                    Button {
+//                        Task {
+//                            await viewModel.changePassword(oldPassword: oldPassword, newPassword: password)
+//                        }
+//                    } label: {
+//                        Text("Change password")
+//                    }
                 }
                 
-                // MARK: RECIPE WRAPPER
-                
-                // recipe detail
                 ScrollView {
                     VStack (alignment: .center) {
                         if let recipe = detailVM.recipe {
@@ -74,6 +87,14 @@ struct UserProfileView: View {
                         }
                     }
                 }
+
+
+                
+                
+                // MARK: RECIPE WRAPPER
+                
+                // recipe detail
+
                 
                 
                 // Recipe list
@@ -154,7 +175,6 @@ struct UserProfileView: View {
                     await homeVM.getAllRecipe()
                 }
                 
-                //
                 
                 
                 

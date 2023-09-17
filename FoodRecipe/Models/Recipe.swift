@@ -14,7 +14,6 @@ import PhotosUI
 struct Recipe: Identifiable, Codable {
     @DocumentID var id: String?
     var name: String
-//    var nameLowercase: String = ""
     let creatorID: String
     var timeStamp: Timestamp = Timestamp(date: Date())
     var createdAt: String = ""
@@ -38,7 +37,7 @@ struct Recipe: Identifiable, Codable {
     var steps: [CookingStep] = []
     
     var nutritionsArray: [NutritionItem] {
-        var newArr = [
+        let newArr = [
             NutritionItem(type: "Calories", value: self.calories),
             NutritionItem(type: "Carb", value: self.carb),
             NutritionItem(type: "Protein", value: self.protein),
