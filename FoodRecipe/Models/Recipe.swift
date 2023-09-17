@@ -61,7 +61,6 @@ struct CookingStep: Identifiable, Codable {
     var stepNumber: Int
 }
 
-
 struct CookingStepInterface {
     var context: String
     var imageData: PhotosPickerItem? = nil

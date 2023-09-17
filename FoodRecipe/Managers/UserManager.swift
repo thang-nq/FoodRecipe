@@ -44,7 +44,7 @@ final class UserManager {
     
     func updateUser(userID: String, updateValues: [String: Any]) async throws {
         if let user = await self.getUserData(userID: userID) {
-            try await db.document(userID).updateData(updateValues)
+            try await db.document(user.id).updateData(updateValues)
         } else {
             throw UserManagerError.userIDNotFound
         }
