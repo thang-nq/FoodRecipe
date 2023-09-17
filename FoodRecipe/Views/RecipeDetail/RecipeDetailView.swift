@@ -73,17 +73,17 @@ struct RecipeDetailView: View {
                 HStack {
                     if let recipeDetail = detailVM.recipe {
                         NavigationLink(destination: CookModeView(recipe: recipeDetail)) {
-                            Image(systemName: "chevron.right")
+                            Image(systemName: "flame")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 24, height: 24)
+                                .frame(width: 30, height: 30)
                                 .foregroundColor(.white)
                                 .padding(10)
                                 .background(Color.theme.Orange)
                                 .clipShape(Circle())
                         }
                     }
-                }.padding(.horizontal, 10),
+                }.padding(15),
                 
                 alignment: .bottomTrailing
             )

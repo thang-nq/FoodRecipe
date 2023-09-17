@@ -16,6 +16,10 @@ struct CookModeView: View {
         self.presentationMode.wrappedValue.dismiss()
     }
     var pages: [Page] = Page.samplePages
+    init(recipe: Recipe) {
+        self.recipe = recipe
+        self.pages = recipe.steps.map { Page(name: "Step \($0.stepNumber)", description: $0.context, imageUrl: $0.backgroundURL, tag: $0.stepNumber - 1)}
+    }
     var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $pageIndex) {
