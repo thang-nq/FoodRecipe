@@ -104,9 +104,20 @@ struct CreateRecipeView: View {
                         Task {
                             try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
                                                                       creatorID: "99",
+                                                                      mealType: currentSelectedMealTypes[0],
                                                                       intro: description,
+                                                                      servingSize: servingSize,
+                                                                      cookingTime: cookingTime,
+                                                                      calories: calories,
                                                                       carb: carb,
-                                                                      protein: protein),
+                                                                      protein: protein,
+                                                                      fat: fat,
+                                                                      sugars: sugars,
+                                                                      salt: salt,
+                                                                      saturates: saturates,
+                                                                      fibre: fibre,
+                                                                      ingredients: Ingredients,
+                                                                      tags: currentSelectedTags),
                                                        image: backgroundPhoto,
                                                        cookingSteps: cookingSteps
                             )

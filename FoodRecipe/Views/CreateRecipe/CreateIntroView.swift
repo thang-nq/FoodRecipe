@@ -25,8 +25,8 @@ struct CreateIntroView: View {
     @Binding var currentSelectedTags: [String]
     @Binding var currentSelectedMealTypes: [String]
     
-    var MOCK_TAGS = ["chicken", "soup", "rice", "pork", "sandwich", "eggs", "duck", "avocado", "simple", "milk"]
-    var MOCK_MEAL_TYPES = ["breakfast", "brunch", "lunch", "dinner", "snack"]
+    var MOCK_TAGS = ["Chicken", "Soup", "Rice", "Pork", "Sandwich", "Eggs", "Duck", "Avocado", "Simple", "Milk"]
+    var MOCK_MEAL_TYPES = ["Breakfast", "Brunch", "Lunch", "Dinner", "Snack"]
     
     func selectTag(tag: String) {
         if(currentSelectedTags.contains(tag)) {
