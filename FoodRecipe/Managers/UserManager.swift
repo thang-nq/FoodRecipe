@@ -69,6 +69,19 @@ final class UserManager {
         return self.currentUser
     }
     
+    func getCurrentUserData() async throws -> User? {
+        var user: User? = nil
+        if currentUser != nil {
+            user = await getUserData(userID: self.currentUser!.id) 
+        } else {
+            throw RecipeManagerError.userNotLoggedIn
+        }
+        
+        return user
+    }
+    
+    
+    
     
 
     
