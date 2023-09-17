@@ -14,6 +14,7 @@ struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarViewRefresh: Bool = false
     @State private var stepPhoto: PhotosPickerItem? = nil
+    @State private var inputText: String = ""
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     // MARK: change to environment object when demo
@@ -62,8 +63,6 @@ struct UserProfileView: View {
                                 UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
                             }
                             Text("Created at - \(recipe.createdAt)")
-                            
-                            
                             Text(recipe.mealType)
                             ForEach(recipe.steps) { step in
                                 Text("Step \(step.stepNumber) - \(step.context)")
@@ -114,11 +113,15 @@ struct UserProfileView: View {
                 }
                 Button {
                     Task {
-                        await homeVM.searchRecipeByTags(tags: ["Chicken"])
+//                        await homeVM.searchRecipeByTags(tags: ["Chicken", "Pork"])
+                        await homeVM.searchRecipeByText(text: inputText)
                     }
                 } label: {
-                    Text("Get filteredj recipe")
+                    Text("Search")
                 }
+                
+                InputField(text: $inputText, title: "Search Field", placeHolder: "Type here")
+                
                 Divider()
                 ScrollView {
                     VStack {

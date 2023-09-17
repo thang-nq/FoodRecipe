@@ -40,6 +40,10 @@ class HomeViewModel: ObservableObject {
         self.recipes = await RecipeManager.shared.filterRecipeByTags(tags: tags)
     }
     
+    func searchRecipeByText(text: String) async {
+        self.recipes = await RecipeManager.shared.searchRecipeByText(text: text)
+    }
+    
 }
 
 
