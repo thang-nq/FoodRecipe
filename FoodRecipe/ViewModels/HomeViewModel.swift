@@ -13,7 +13,6 @@ class HomeViewModel: ObservableObject {
     @Published var recipes: [Recipe] = []
     
     init() {}
-    
     func getAllRecipe() async {
         self.recipes = await RecipeManager.shared.getRecipeList()
     }
@@ -38,6 +37,19 @@ class HomeViewModel: ObservableObject {
     
     func searchRecipeByTags(tags: [String]) async {
         self.recipes = await RecipeManager.shared.filterRecipeByTags(tags: tags)
+    }
+    
+    func searchRecipeByText(text: String) async {
+        self.recipes = await RecipeManager.shared.searchRecipeByText(text: text)
+    }
+    
+    
+    func saveOrRemoveRecipe(recipeID: String) async {
+        if let userData = UserManager.shared.currentUser {
+            await RecipeManager.shared.saveOrRemoveRecipeFromFavorite(recipeID: recipeID)
+        }
+        await getAllRecipe()
+        
     }
     
 }

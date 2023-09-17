@@ -13,8 +13,6 @@ import FirebaseFirestoreSwift
 import PhotosUI
 
 
-
-
 final class RecipeManager {
     static let shared = RecipeManager()
     private var db = Firestore.firestore().collection("recipes")
@@ -55,10 +53,65 @@ final class RecipeManager {
         return recipe
     }
     
+    //MARK: Get saved recipe of a user
+    func getUserSavedRecipes(userID: String) async -> [Recipe] {
+        var foundRecipeIDs: [String] = []
+        var recipes: [Recipe] = []
+        do {
+            if let user = await UserManager.shared.getUserData(userID: userID) {
+                let snapshot = try await db.whereField(FieldPath.documentID(), in: user.savedRecipe).getDocuments()
+                for d in snapshot.documents {
+                    var recipe = try d.data(as: Recipe.self)
+                    recipe.createdAt = formatTimestamp(recipe.timeStamp)
+                    
+                    // Fetch creator info
+                    if let creator = await UserManager.shared.getUserData(userID: recipe.creatorID) {
+                        recipe.creatorName = creator.fullName
+                        recipe.creatorAvatar = creator.avatarUrl
+                    }
+                    
+                    recipes.append(recipe)
+                    foundRecipeIDs.append(d.documentID)
+                }
+                // Update to removed any deleted (not found) recipe
+                try await UserManager.shared.updateUser(userID: userID, updateValues: ["savedRecipe": foundRecipeIDs])
+            }
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
+        }
+        
+        return recipes
+    }
+    
+    // MARK: Add/remove recipe from saved recipe
+    func saveOrRemoveRecipeFromFavorite(recipeID: String) async {
+        do {
+            if let user = UserManager.shared.currentUser {
+                var savedRecipe = user.savedRecipe
+                if savedRecipe.contains(recipeID) {
+                    let index = savedRecipe.firstIndex(of: recipeID)
+                    savedRecipe.remove(at: index!)
+                } else {
+                    savedRecipe.append(recipeID)
+                }
+                
+                try await UserManager.shared.updateUser(userID: user.id, updateValues: ["savedRecipe": savedRecipe])
+                
+            } else {
+                throw UserManagerError.userIDNotFound
+            }
+        } catch {
+            
+        }
+    }
+    
+    
+    
     // MARK: Get all recipe
     func getRecipeList() async -> [Recipe] {
         var recipes: [Recipe] = []
         do {
+            let userData = UserManager.shared.currentUser
             let snapshot = try await db.getDocuments()
             
             for document in snapshot.documents {
@@ -70,8 +123,15 @@ final class RecipeManager {
                 }
                 // format time stamp
                 recipe.createdAt = formatTimestamp(recipe.timeStamp)
-                recipes.append(recipe)
                 
+//                 Check if already saved
+                if userData != nil {
+                    if userData!.savedRecipe.contains(document.documentID) {
+                        recipe.isSaved = true
+                    }
+                }
+                
+                recipes.append(recipe)
             }
             
         } catch {
@@ -104,14 +164,13 @@ final class RecipeManager {
         return recipes
     }
     
+    
+    // MARK: search recipe by an array of tags
     func filterRecipeByTags(tags: [String]) async -> [Recipe] {
         var recipes: [Recipe] = []
         do {
-            let collectionRef = db
-            var query = collectionRef as Query
-            let tagArray = tags.map { [$0] }
-            print(tagArray)
-            query = query.whereField("tags", in: tagArray)
+            
+            let query = db.whereField("tags", arrayContainsAny: tags)
             let snapshot = try await query.getDocuments()
             for d in snapshot.documents {
                 let recipe = try d.data(as: Recipe.self)
@@ -120,7 +179,42 @@ final class RecipeManager {
         } catch {
             print("DEBUG: \(error.localizedDescription)")
         }
-        print(recipes)
+        return recipes
+    }
+    
+    
+    func searchRecipeByText(text: String) async -> [Recipe] {
+        var recipes: [Recipe] = []
+        do {
+            let queryString = text.lowercased()
+            let snapshot = try await db.getDocuments()
+            for d in snapshot.documents {
+                let recipe = try d.data(as: Recipe.self)
+                
+                var matchTag = false
+                var matchIngredient = false
+                var matchMealtype = false
+                
+                
+                let tagLowercase = recipe.tags.map {$0.lowercased()}
+                let ingredientLowercase = recipe.ingredients.map {$0.lowercased()}
+                for ingredient in ingredientLowercase {
+                    if ingredient.contains(queryString) {
+                        matchIngredient = true
+                    }
+                }
+                matchTag = tagLowercase.contains(queryString) ? true : false
+                matchMealtype = recipe.mealType.lowercased().contains(queryString)
+                
+                
+                if recipe.name.lowercased().contains(queryString) || matchTag || matchIngredient || matchMealtype {
+                    recipes.append(recipe)
+                }
+            }
+            
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
+        }
         return recipes
     }
     
@@ -140,6 +234,7 @@ final class RecipeManager {
     func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async {
         do {
             let recipeID = db.document().documentID
+            // save document
             try db.document(recipeID).setData(from: recipe)
             var backgroundURL = "default.jpeg"
             // If provided an image and successfully update the background image, set the backgroundURL in recipe

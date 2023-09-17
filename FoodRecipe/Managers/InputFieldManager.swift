@@ -11,6 +11,7 @@ import SwiftUI
 
 class InputFieldManager: ObservableObject {
     
+    //MARK: AUTHENTICATION VARIABLES
     let emailLimit = 50
     let passwordLimit = 20
     let nameLimit = 20
@@ -40,13 +41,16 @@ class InputFieldManager: ObservableObject {
     }
     
     @Published var repeatPWInput = "" {
+        
         didSet {
             if repeatPWInput.count > passwordLimit {
                 repeatPWInput = String(repeatPWInput.prefix(passwordLimit))
             }
         }
+        
     }
     
+    //MARK: SKIP VERIFY PASSWORD FORMAT FOR UX
     var isPasswordFormat: Bool {
         let password = passwordInput
         let uppercaseLetterCharacterSet = CharacterSet.uppercaseLetters
@@ -56,11 +60,10 @@ class InputFieldManager: ObservableObject {
         let containsUppercase = password.rangeOfCharacter(from: uppercaseLetterCharacterSet) != nil
         let containsDigit = password.rangeOfCharacter(from: decimalDigitCharacterSet) != nil
         let containsSpecialChar = password.rangeOfCharacter(from: specialCharacterSet) != nil
-        
-//        print(containsUppercase && containsDigit && containsSpecialChar)
         return containsUppercase && containsDigit && containsSpecialChar
     }
     
+    //MARK: AUTHENTICATION FEATURES
     
     func isValidLogin() -> Bool {
         return emailInput.isEmpty || passwordInput.isEmpty
@@ -69,4 +72,18 @@ class InputFieldManager: ObservableObject {
     func isValidRegister() -> Bool {
         return emailInput.isEmpty || passwordInput.isEmpty || nameInput.isEmpty || repeatPWInput.isEmpty
     }
+    
+    func repeatNotMatch() -> Bool {
+        if repeatPWInput == passwordInput {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    
+    //MARK: OTHER FEATURES ==>>>>>
+    
+    
+    
 }

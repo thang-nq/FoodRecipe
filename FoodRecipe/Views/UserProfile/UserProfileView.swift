@@ -14,6 +14,9 @@ struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarViewRefresh: Bool = false
     @State private var stepPhoto: PhotosPickerItem? = nil
+    @State private var inputText: String = ""
+    @State private var oldPassword: String = ""
+    @State private var password: String = ""
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     // MARK: change to environment object when demo
@@ -46,11 +49,30 @@ struct UserProfileView: View {
                     
                     userData(fullName: user.fullName, email: user.email)
                     signOutButton
+                    
+                    
+                    //MARK: change password
+                    
+//                    InputField(text: $oldPassword, title: "Old password", placeHolder: "enter old password")
+//                    InputField(text: $password, title: "New password", placeHolder: "enter new password")
+//
+//                    Button {
+//                        Task {
+//                            await viewModel.changePassword(oldPassword: oldPassword, newPassword: password)
+//                        }
+//                    } label: {
+//                        Text("Change password")
+//                    }
+//
+//                    Button {
+//                        Task {
+//                            await viewModel.sendResetPasswordEmail(withEmail: "latuan2906@gmail.com")
+//                        }
+//                    } label: {
+//                        Text("Send reset pw email")
+//                    }
                 }
                 
-                // MARK: RECIPE WRAPPER
-                
-                // recipe detail
                 ScrollView {
                     VStack (alignment: .center) {
                         if let recipe = detailVM.recipe {
@@ -62,8 +84,6 @@ struct UserProfileView: View {
                                 UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
                             }
                             Text("Created at - \(recipe.createdAt)")
-                            
-                            
                             Text(recipe.mealType)
                             ForEach(recipe.steps) { step in
                                 Text("Step \(step.stepNumber) - \(step.context)")
@@ -75,6 +95,14 @@ struct UserProfileView: View {
                         }
                     }
                 }
+
+
+                
+                
+                // MARK: RECIPE WRAPPER
+                
+                // recipe detail
+
                 
                 
                 // Recipe list
@@ -114,22 +142,33 @@ struct UserProfileView: View {
                 }
                 Button {
                     Task {
-                        await homeVM.searchRecipeByTags(tags: ["Chicken"])
+//                        await homeVM.searchRecipeByTags(tags: ["Chicken", "Pork"])
+                        await homeVM.searchRecipeByText(text: inputText)
                     }
                 } label: {
-                    Text("Get filteredj recipe")
+                    Text("Search")
                 }
+                
+                InputField(text: $inputText, title: "Search Field", placeHolder: "Type here")
+                
                 Divider()
                 ScrollView {
                     VStack {
                         ForEach(homeVM.recipes) {recipe in
-                            HStack {
+                            VStack {
                                 Text(recipe.name)
                                 Text("Created by - \(recipe.creatorName)")
+                                Text(recipe.isSaved ? "Already saved" : "Save to favorite")
+                                Button {
+                                    Task {
+                                        await homeVM.saveOrRemoveRecipe(recipeID: recipe.id!)
+                                    }
+                                } label: {
+                                    Text("♥️ add to favorite")
+                                }
                                 Button {
                                     Task {
                                         await detailVM.getRecipeDetail(recipeID: recipe.id!)
-                                        print("recipe id: \(recipe.id!)")
                                     }
                                 } label: {
                                     Text("View detail")
@@ -151,7 +190,6 @@ struct UserProfileView: View {
                     await homeVM.getAllRecipe()
                 }
                 
-                //
                 
                 
                 
