@@ -60,7 +60,7 @@ struct CreateRecipeView: View {
 //        }
 //    }
     //Adding Cooking Steps function
-    func addingCookingSteps() {
+    func addingCookingSteps() async{
         for index in 0..<Steps.count {
             let context = Steps[index]
             var imageData: PhotosPickerItem? = nil
@@ -78,6 +78,13 @@ struct CreateRecipeView: View {
             let cookingStep = CookingStepInterface(context: context, imageData: imageData, stepNumber: index + 1)
             cookingSteps.append(cookingStep)
         }
+    }
+    func showSuccessPopup() async{
+        showPopUp = true
+        popUpIcon = "checkmark.message.fill"
+        popUptitle = "Create recipe success"
+        popUpContent = "You can check your recipe in the My Recipe section"
+        popUpIconColor = Color.theme.GreenInstance
     }
     var body: some View {
         VStack {
@@ -98,10 +105,10 @@ struct CreateRecipeView: View {
                         popUpIconColor = Color.theme.RedInstance
                     } else{
                         recipeValidated = true
-                        addingCookingSteps()
                     }
                     if (recipeValidated == true){
                         Task {
+                            await addingCookingSteps()
                             try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
                                                                       creatorID: "99",
                                                                       mealType: currentSelectedMealTypes[0],
@@ -121,13 +128,8 @@ struct CreateRecipeView: View {
                                                        image: backgroundPhoto,
                                                        cookingSteps: cookingSteps
                             )
+                            await showSuccessPopup()
                         }
-                        showPopUp = true
-                        popUpIcon = "checkmark.message.fill"
-                        popUptitle = "Create recipe success"
-                        popUpContent = "You can check your recipe in the My Recipe section"
-                        popUpIconColor = Color.theme.GreenInstance
-                        
                     }
                 }) {
                     Text("Create")
