@@ -17,7 +17,7 @@ struct StepsView: View {
     var stepsList: [CookingStep]
     var body: some View {
         SectionContainerView {
-//            SectionTitleView(title: "Steps")
+            //            SectionTitleView(title: "Steps")
             VStack (alignment: .leading) {
                 ForEach(stepsList) { step in
                     HStack {

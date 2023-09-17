@@ -38,7 +38,7 @@ struct Recipe: Identifiable, Codable {
     var isSaved: Bool = false
     
     var nutritionsArray: [NutritionItem] {
-        let newArr = [
+        let nutritionArr = [
             NutritionItem(type: "Calories", value: self.calories),
             NutritionItem(type: "Carb", value: self.carb),
             NutritionItem(type: "Protein", value: self.protein),
@@ -48,7 +48,7 @@ struct Recipe: Identifiable, Codable {
             NutritionItem(type: "Saturates", value: self.saturates),
             NutritionItem(type: "fibre", value: self.fibre),
         ]
-        return newArr.filter({ $0.value > 0})
+        return nutritionArr.filter({ $0.value > 0})
     }
 
 }
