@@ -30,7 +30,7 @@ struct RecipeDetailView: View {
                             .background(
                                 FirebaseImage(imagePathName: recipeDetail.backgroundURL)
                                     .aspectRatio(contentMode: .fill)
-                                    .frame(width: .infinity,height: 408)
+                                    .frame(minWidth: 408, maxHeight: 408)
                                     .clipped()
                             )
                             .offset(y: -60)
@@ -71,6 +71,7 @@ struct RecipeDetailView: View {
                 do {
                     try await detailVM.getRecipeDetail(recipeID: recipeId)
                     if let recipe = detailVM.recipe {
+                        print(recipe.id)
                         print(recipe.name)
                     }
                 } catch {
@@ -84,7 +85,7 @@ struct RecipeDetailView: View {
 
 struct RecipeDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDetailView(recipeId: "GAHWzx1LuKetTSE44Ica")
+        RecipeDetailView(recipeId: "t2La6onXPUw3pHf4K2yF")
     }
 }
 

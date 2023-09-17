@@ -18,6 +18,15 @@ struct StepsView: View {
     var body: some View {
         SectionContainerView {
 //            SectionTitleView(title: "Steps")
+            HStack {
+                Spacer()
+                Button {
+                    
+                } label: {
+                    Text("Enter Cook Mode").foregroundColor(Color.theme.Orange)
+                }
+
+            }
             VStack (alignment: .leading) {
                 ForEach(stepsList) { step in
                     HStack {
