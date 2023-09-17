@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		A12005182AB58B3B00E11DF6 /* InputFieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */; };
 		A120051A2AB5A22800E11DF6 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005192AB5A22800E11DF6 /* SignupView.swift */; };
-		A120051D2AB6E9BE00E11DF6 /* BMIFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120051C2AB6E9BE00E11DF6 /* BMIFormView.swift */; };
+		A120051D2AB6E9BE00E11DF6 /* TDDEFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */; };
+		A120051F2AB74B6000E11DF6 /* testView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120051E2AB74B6000E11DF6 /* testView.swift */; };
+		A12005212AB74F6200E11DF6 /* TDEEWelcomeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005202AB74F6200E11DF6 /* TDEEWelcomeList.swift */; };
 		A1556EDF2AB2E42E00074074 /* OnLoadingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1556EDE2AB2E42E00074074 /* OnLoadingPageView.swift */; };
 		A1556EE12AB2EB9B00074074 /* OnLoadingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1556EE02AB2EB9B00074074 /* OnLoadingList.swift */; };
 		A17132F32AB5728D00F103CF /* TestProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17132F22AB5728D00F103CF /* TestProgress.swift */; };
@@ -81,7 +83,9 @@
 /* Begin PBXFileReference section */
 		A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldManager.swift; sourceTree = "<group>"; };
 		A12005192AB5A22800E11DF6 /* SignupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
-		A120051C2AB6E9BE00E11DF6 /* BMIFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMIFormView.swift; sourceTree = "<group>"; };
+		A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDDEFormView.swift; sourceTree = "<group>"; };
+		A120051E2AB74B6000E11DF6 /* testView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testView.swift; sourceTree = "<group>"; };
+		A12005202AB74F6200E11DF6 /* TDEEWelcomeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDEEWelcomeList.swift; sourceTree = "<group>"; };
 		A1556EDE2AB2E42E00074074 /* OnLoadingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnLoadingPageView.swift; sourceTree = "<group>"; };
 		A1556EE02AB2EB9B00074074 /* OnLoadingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnLoadingList.swift; sourceTree = "<group>"; };
 		A17132F22AB5728D00F103CF /* TestProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProgress.swift; sourceTree = "<group>"; };
@@ -163,12 +167,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A120051B2AB6E9A300E11DF6 /* BMI */ = {
+		A120051B2AB6E9A300E11DF6 /* TDDE */ = {
 			isa = PBXGroup;
 			children = (
-				A120051C2AB6E9BE00E11DF6 /* BMIFormView.swift */,
+				A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */,
 			);
-			path = BMI;
+			path = TDDE;
 			sourceTree = "<group>";
 		};
 		A1556EDD2AB2E3A400074074 /* Welcome */ = {
@@ -176,6 +180,7 @@
 			children = (
 				A1556EDE2AB2E42E00074074 /* OnLoadingPageView.swift */,
 				A1556EE02AB2EB9B00074074 /* OnLoadingList.swift */,
+				A12005202AB74F6200E11DF6 /* TDEEWelcomeList.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -196,6 +201,7 @@
 			children = (
 				A188D5AE2AB1870500E8FF0E /* TestColors.swift */,
 				A17132F22AB5728D00F103CF /* TestProgress.swift */,
+				A120051E2AB74B6000E11DF6 /* testView.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -275,7 +281,7 @@
 		A548C06D2AADBE2A00884B91 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A120051B2AB6E9A300E11DF6 /* BMI */,
+				A120051B2AB6E9A300E11DF6 /* TDDE */,
 				A188D5AD2AB186F100E8FF0E /* Test */,
 				C2E927862AB4D14500C9E450 /* CreateRecipe */,
 				A1556EDD2AB2E3A400074074 /* Welcome */,
@@ -523,6 +529,7 @@
 				A548C0852AADE2D400884B91 /* UserAvatar.swift in Sources */,
 				CC85B0C62AB1A78900913056 /* SearchBar.swift in Sources */,
 				CC8D218B2AB0164F0036ABF3 /* SectionTitleView.swift in Sources */,
+				A120051F2AB74B6000E11DF6 /* testView.swift in Sources */,
 				A12005182AB58B3B00E11DF6 /* InputFieldManager.swift in Sources */,
 				A548C07B2AADDD6800884B91 /* User.swift in Sources */,
 				A17B54192AB039960096A8A9 /* AuthViewModel.swift in Sources */,
@@ -530,7 +537,7 @@
 				CC8D21872AB00B2A0036ABF3 /* IngredientsView.swift in Sources */,
 				A548C0572AADBA9F00884B91 /* ContentView.swift in Sources */,
 				A57741F42AB43CBC009B4882 /* HomeViewModel.swift in Sources */,
-				A120051D2AB6E9BE00E11DF6 /* BMIFormView.swift in Sources */,
+				A120051D2AB6E9BE00E11DF6 /* TDDEFormView.swift in Sources */,
 				A57741F82AB483C7009B4882 /* SearchViewModel.swift in Sources */,
 				CCD973EE2AAF3D3300E1AF9C /* NutritionView.swift in Sources */,
 				C2E9278A2AB4D48C00C9E450 /* CreateIntroView.swift in Sources */,
@@ -555,6 +562,7 @@
 				A548C0552AADBA9F00884B91 /* FoodRecipeApp.swift in Sources */,
 				A57741FA2AB5E4D1009B4882 /* DateTimeFormat.swift in Sources */,
 				C26D206C2AB19AE00003376E /* HomeView.swift in Sources */,
+				A12005212AB74F6200E11DF6 /* TDEEWelcomeList.swift in Sources */,
 				A57741F62AB45F97009B4882 /* RecipeDetailViewModel.swift in Sources */,
 				A17132F32AB5728D00F103CF /* TestProgress.swift in Sources */,
 				C2C88E242AB443C000312F8A /* RecipeDetailViewDemo.swift in Sources */,

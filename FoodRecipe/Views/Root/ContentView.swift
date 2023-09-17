@@ -20,7 +20,7 @@ struct ContentView: View {
                 if authVM.currentUser != nil {
                     HomeView()
                 } else {
-                    Text("Loading")
+                    Progress(loadingSize: 4)
                 }
 
             } else {
