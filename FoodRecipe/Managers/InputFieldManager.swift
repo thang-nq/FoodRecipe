@@ -82,7 +82,29 @@ class InputFieldManager: ObservableObject {
     }
     
     
-    //MARK: OTHER FEATURES ==>>>>>
+    //MARK: BMI FEATURES
+    
+    @Published var ageInput = "" {
+        didSet {
+            let filtered = ageInput.filter { $0.isNumber }
+            if ageInput != filtered {
+                ageInput = filtered
+            }
+        }
+    }
+    
+    @Published var heightInput = "" {
+        didSet {
+            let filtered = heightInput.filter { $0.isNumber }
+            if heightInput != filtered {
+                heightInput = filtered
+            }
+        }
+    }
+    
+    func isValidBMIForm() -> Bool {
+        return ageInput.isEmpty || heightInput.isEmpty
+    }
     
     
     
