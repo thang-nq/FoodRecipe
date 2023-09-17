@@ -100,7 +100,7 @@ struct CreateIntroView: View {
                 }
                 TextEditor(text: $description)
                     .font(.custom("ZillaSlab-Regular", size: 16))
-                    .frame(height: 250)
+                    .frame(height: 230)
                     .colorMultiply(Color(.systemGray6))
                     .cornerRadius(10)
                     .padding(.horizontal, 15)
