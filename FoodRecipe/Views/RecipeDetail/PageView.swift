@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PageView: View {
     var page: Page
-    var incrementPage: () -> Void
+    var totalSteps: Int
     var body: some View {
         VStack(spacing: 0) {
             Image("soup")
@@ -24,11 +24,6 @@ struct PageView: View {
                     .foregroundColor(Color.theme.Orange)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                 Text(page.description)
-                Button {
-                        incrementPage()
-                    } label: {
-                        Text("Next page")
-                    }
             }
             .padding()
             .frame(maxWidth: .infinity)
@@ -39,6 +34,6 @@ struct PageView: View {
 
 struct PageView_Previews: PreviewProvider {
     static var previews: some View {
-        PageView(page: Page.samplePage, incrementPage: {print("do nothing")})
+        PageView(page: Page.samplePage, totalSteps: 3)
     }
 }

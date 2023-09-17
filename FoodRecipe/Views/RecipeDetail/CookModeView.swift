@@ -15,12 +15,41 @@ struct CookModeView: View {
         VStack(spacing: 0) {
             TabView(selection: $pageIndex) {
                 ForEach(pages) { page in
-//                    Spacer()
-                    PageView(page: page, incrementPage: incrementPage).tag(page.tag)
-                    
-
+                    PageView(page: page, totalSteps: pages.count).tag(page.tag)
                 }
             }
+            .overlay(
+                HStack {
+                    Button {
+                        decrementPage()
+                    } label: {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(Color.theme.WhiteInstance)
+                        .padding(10)
+                        .background(Color.theme.Orange)
+                        .clipShape(Circle())
+                    }
+
+                    Spacer()
+                    Button {
+                        incrementPage()
+                    } label: {
+                    Image(systemName: "chevron.right")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Color.theme.Orange)
+                        .clipShape(Circle())
+                    }
+
+                }.padding(.horizontal, 20),
+                alignment: .bottom
+            )
             .animation(.easeInOut, value: pageIndex)
             .tabViewStyle(.page)
             
@@ -32,11 +61,19 @@ struct CookModeView: View {
     }
     
     func incrementPage() {
-        pageIndex += 1
+        if(pageIndex < pages.count - 1) {
+            pageIndex += 1
+        }else {
+            pageIndex = 0
+        }
     }
     
     func decrementPage() {
-        pageIndex -= 1
+        if(pageIndex > 0) {
+          pageIndex -= 1
+        }else {
+            pageIndex = pages.count - 1
+        }
     }
 }
 
@@ -73,22 +110,22 @@ struct Page: Identifiable {
     
     static var samplePages: [Page] = [
         Page(
-        name: "Step 1",
-        description: "Make the dressing by blending all of the ingredients in a food processor (or very finely chop them), saving a few herb leaves for the salad. You can make the dressing up to 24 hrs before serving.",
-        imageUrl: "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Minecraft%20(1).png",
-        tag: 0),
+            name: "Step 1",
+            description: "Make the dressing by blending all of the ingredients in a food processor (or very finely chop them), saving a few herb leaves for the salad. You can make the dressing up to 24 hrs before serving.",
+            imageUrl: "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Minecraft%20(1).png",
+            tag: 0),
         
         Page(
-        name: "Step 2",
-        description: "Heat 1 tbsp olive oil in a large frying pan with a lid and brown 2 chopped chicken breasts for 5-8 mins until golden",
-        imageUrl: "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Minecraft%20(1).png",
-        tag: 1),
+            name: "Step 2",
+            description: "Heat 1 tbsp olive oil in a large frying pan with a lid and brown 2 chopped chicken breasts for 5-8 mins until golden",
+            imageUrl: "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Minecraft%20(1).png",
+            tag: 1),
         
         Page(
-        name: "Step 3",
-        description: "Add 1 thinly sliced red pepper, 2 crushed garlic cloves, 75g sliced chorizo and 1 tbsp Cajun seasoning, and cook for 5 mins more.",
-        imageUrl: "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Minecraft%20(1).png",
-        tag: 2
+            name: "Step 3",
+            description: "Add 1 thinly sliced red pepper, 2 crushed garlic cloves, 75g sliced chorizo and 1 tbsp Cajun seasoning, and cook for 5 mins more.",
+            imageUrl: "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Minecraft%20(1).png",
+            tag: 2
         )
     ]
 }
