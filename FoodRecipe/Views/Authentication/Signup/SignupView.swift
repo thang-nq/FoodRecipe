@@ -13,9 +13,16 @@ struct SignupView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     @Environment(\.dismiss) var dismiss
     
+    //MARK: POP UP VARIABLES
+    @State var showPopUp = false
+    @State var popUpIcon = ""
+    @State var popUptitle = ""
+    @State var popUpContent = ""
+    @State var popUpIconColor = Color.theme.RedInstance
+    
     var body: some View {
         // MARK: MAIN LAYOUT
-        VStack() {
+        VStack{
             appLogo
                 .accessibilityLabel("App logo")
             
@@ -27,6 +34,25 @@ struct SignupView: View {
             Spacer()
             bottomNavigation
         }
+        .overlay(
+            ZStack {
+                if viewModel.showingAlert {
+                    Color.theme.DarkWhite.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                    PopUp(iconName: "person.crop.circle.badge.exclamationmark.fill" , title: viewModel.alertItem!.title, content: viewModel.alertItem!.message, iconColor: popUpIconColor ,didClose: {viewModel.showingAlert = false})
+                }
+            }
+        )
+        .overlay(
+            ZStack {
+                if showPopUp {
+                    Color.theme.DarkWhite.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                    PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
+                }
+            }
+        )
+        
     }
     
 //  MARK: PRINT FONTS (DEV LOG ONLY)
@@ -61,31 +87,9 @@ private extension SignupView {
                 .scaledToFill()
                 .frame(width: 100, height: 200)
             
-            // MARK: SAMPLE FONT
-            // COLOR SELECTION PREVIEW IN ASSEST COLOR FOLDER
             Text("From Kitchen Novice to Culinary Expert")
-//                .font(.custom("ZillaSlab-Regular", size: 24))
-//                .font(.custom("ZillaSlab-Italic", size: 24))
-//                .font(.custom("ZillaSlab-Light", size: 24))
-//                .font(.custom("ZillaSlab-LightItalic", size: 24))
-//                .font(.custom("ZillaSlab-Medium", size: 24))
-//                .font(.custom("ZillaSlab-MediumItalic", size: 24))
-//                .font(.custom("ZillaSlab-SemiBold", size: 24))
-//                .font(.custom("ZillaSlab-SemiBoldItalic", size: 24))
-//                .font(.custom("ZillaSlab-Bold", size: 24))
                 .font(.custom("ZillaSlab-BoldItalic", size: 24))
-            // MARK: SAMPLE COLOR
-//                .foregroundColor(Color.theme.Black)
-//                .foregroundColor(Color.theme.Blue)
-//                .foregroundColor(Color.theme.DarkBlue)
                 .foregroundColor(Color.theme.DarkGray)
-//                .foregroundColor(Color.theme.DarkWhite)
-//                .foregroundColor(Color.theme.Gray)
-//                .foregroundColor(Color.theme.LightBlue)
-//                .foregroundColor(Color.theme.LightGray)
-//                .foregroundColor(Color.theme.Orange)
-//                .foregroundColor(Color.theme.White)
-//                .foregroundColor(Color.theme.LightOrange)
         }
 
     }
@@ -114,8 +118,18 @@ private extension SignupView {
     var registerBtn: some View {
         
         Button(action:{
-            Task {try await viewModel.createUser(withEmail: inputFieldManager.emailInput, password: inputFieldManager.passwordInput, fullName: inputFieldManager.nameInput
-            )}}){
+            if inputFieldManager.repeatNotMatch() {
+                showPopUp = true
+                popUpIcon = "checkmark.circle.badge.xmark.fill"
+                popUptitle = "Invalid confirm password"
+                popUpContent = "Your confirm password does not match"
+            }
+            else
+            {
+                Task {try await viewModel.createUser(withEmail: inputFieldManager.emailInput, password: inputFieldManager.passwordInput, fullName: inputFieldManager.nameInput)}
+            }
+        })
+        {
             Text("Register")
                 .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
                 .frame(width: 380, height: 50)

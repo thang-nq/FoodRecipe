@@ -45,7 +45,7 @@ struct OnLoadingPageView: View {
                         .frame(width: 300, height: 50, alignment: .center)
                         .contentShape(Rectangle())
                 }
-                .foregroundColor(Color.theme.DarkBlueInstance)
+                .foregroundColor(Color.theme.WhiteInstance)
                 .background(Color.theme.GreenInstance)
                 .cornerRadius(8)
                 .padding(.top)
@@ -57,7 +57,7 @@ struct OnLoadingPageView: View {
                         .frame(width: 300, height: 50)
                         .contentShape(Rectangle())
                 }
-                .foregroundColor(Color.theme.DarkBlueInstance)
+                .foregroundColor(Color.theme.WhiteInstance)
                 .background(Color.theme.Orange)
                 .cornerRadius(8)
                 .padding(.top)

@@ -10,11 +10,12 @@ import PhotosUI
 
 struct CreateStepsView: View {
     @Binding var Steps: [String]
-    @Binding var listStepsPhoto: [PhotosPickerItem]
+    @Binding var listStepsPhoto: [PhotosPickerItem?]
     @Binding var backgroundPhoto: PhotosPickerItem?
     @State private var stepPhoto: PhotosPickerItem? = nil
     @State private var showingSheet = false
     @State private var InputStep = ""
+    
     var body: some View {
         VStack{
             ScrollView{
@@ -28,9 +29,26 @@ struct CreateStepsView: View {
                         }.padding(.leading, 20)
                     }
                     ForEach(Array(Steps.enumerated()), id: \.element) { (index, step) in
-                        VStack{
+//                        VStack{
+//                            Text("Step \(index + 1):") // Add the step number
+//                                .font(.custom("ZillaSlab-Regular", size: 22))
+//                        }.frame(maxWidth: .infinity, alignment: .leading)
+//                            .padding(.leading, 20)
+                        HStack{
                             Text("Step \(index + 1):") // Add the step number
                                 .font(.custom("ZillaSlab-Regular", size: 22))
+                            Button(action: {
+                                // Delete the step at the current index
+                                Steps.remove(at: index)
+                                // Delete the corresponding step photo
+                                listStepsPhoto.remove(at: index)
+                            }) {
+                                Image(systemName: "minus.circle")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                                    .foregroundColor(Color("Orange"))
+                                    .padding(.trailing, 20)
+                            }
                         }.frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 20)
                         HStack {
@@ -41,6 +59,7 @@ struct CreateStepsView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 20)
+                    
                     }
                 }
                 
@@ -75,7 +94,7 @@ struct AddStepsSheetView: View {
     @Binding var InputStep : String
     @Binding var Steps : [String]
     @Binding var stepPhoto: PhotosPickerItem?
-    @Binding var listStepsPhoto : [PhotosPickerItem]
+    @Binding var listStepsPhoto : [PhotosPickerItem?]
     @Binding var backgroundPhoto: PhotosPickerItem?
     var body: some View{
         VStack{
@@ -84,26 +103,21 @@ struct AddStepsSheetView: View {
         
         PhotosPicker(selection: $stepPhoto, photoLibrary: .shared()) {
             Label("Select a photo for step", systemImage: "photo.fill")
-        }.padding(.vertical, 10)
+        }
+        .padding(.vertical, 10)
+        .foregroundColor(Color("Orange"))
         
             Button(action: {
                 if(!InputStep.isEmpty){
                     Steps.append(InputStep)
-                    InputStep = ""
                 }
-//                if(stepPhoto == nil){
-//                    stepPhoto = backgroundPhoto
-//                    listStepsPhoto.append(stepPhoto!)
-//                } else {
-//                    listStepsPhoto.append(stepPhoto!)
-//                    stepPhoto = nil
-//                }
                 if let photo = stepPhoto {
-                              listStepsPhoto.append(photo)
-                          } else if let background = backgroundPhoto {
-                              listStepsPhoto.append(background)
-                          }
-                          stepPhoto = nil
+                    listStepsPhoto.append(photo)
+                } else{
+                    listStepsPhoto.append(nil)
+                }
+                stepPhoto = nil
+                InputStep = ""
             }) {
                 Text("Save")
                     .foregroundColor(.white)
@@ -111,7 +125,6 @@ struct AddStepsSheetView: View {
                                     .frame(width: 120, height: 40)
                                     .background(Color("Orange"))
                                     .cornerRadius(8)
-
             }
         }
 }
