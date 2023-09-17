@@ -18,6 +18,7 @@ final class RecipeManager {
     private var db = Firestore.firestore().collection("recipes")
     private var storage = Storage.storage().reference()
     private init() {
+        
     }
     
     
@@ -122,29 +123,30 @@ final class RecipeManager {
     func getRecipeList() async -> [Recipe] {
         var recipes: [Recipe] = []
         do {
-            let userData = UserManager.shared.currentUser
-            let currentUserData = await UserManager.shared.getUserData(userID: userData!.id)
-            let snapshot = try await db.getDocuments()
-            
-            for document in snapshot.documents {
-                var recipe = try document.data(as: Recipe.self)
-                // Fetch user
-                if let user = await UserManager.shared.getUserData(userID: recipe.creatorID) {
-                    recipe.creatorName = user.fullName
-                    recipe.creatorAvatar = user.avatarUrl
-                }
-                // format time stamp
-                recipe.createdAt = formatTimestamp(recipe.timeStamp)
+            if let userData = UserManager.shared.currentUser {
+                let currentUserData = await UserManager.shared.getUserData(userID: userData.id)
+                let snapshot = try await db.getDocuments()
                 
-//                 Check if already saved
-                if userData != nil {
+                for document in snapshot.documents {
+                    var recipe = try document.data(as: Recipe.self)
+                    // Fetch user
+                    if let user = await UserManager.shared.getUserData(userID: recipe.creatorID) {
+                        recipe.creatorName = user.fullName
+                        recipe.creatorAvatar = user.avatarUrl
+                    }
+                    // format time stamp
+                    recipe.createdAt = formatTimestamp(recipe.timeStamp)
+                    
+    //                 Check if already saved
                     if currentUserData!.savedRecipe.contains(document.documentID) {
                         recipe.isSaved = true
                     }
+                    
+                    recipes.append(recipe)
                 }
-                
-                recipes.append(recipe)
             }
+            
+            
             
         } catch {
             print("DEBUG: \(error.localizedDescription)")

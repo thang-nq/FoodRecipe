@@ -16,8 +16,8 @@ import PhotosUI
 
 @MainActor
 class AuthViewModel: ObservableObject {
-    @Published private(set) var userSession: FirebaseAuth.User?
-    @Published private(set) var currentUser: User?
+    @Published var userSession: FirebaseAuth.User?
+    @Published var currentUser: User?
     private var storage = Storage.storage().reference()
     @Published private(set) var alertItem: AlertItem?
     @Published var showingAlert = false

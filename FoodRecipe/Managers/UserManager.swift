@@ -26,7 +26,9 @@ final class UserManager {
     private var storage = Storage.storage().reference()
     
     private init() {
-        
+        Task {
+            try? await fetchCurrentUser()
+        }
     }
     
     func getUserData(userID: String) async -> User? {
