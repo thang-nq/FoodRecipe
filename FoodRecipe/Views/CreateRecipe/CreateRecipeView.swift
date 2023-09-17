@@ -27,6 +27,7 @@ struct CreateRecipeView: View {
     
     @State private var currentSelectedTags: [String] = []
     @State private var currentSelectedMealTypes: [String] = []
+    @State private var currentMealType : String = ""
     
     @State private var Ingredients: [String] = []
     
@@ -59,8 +60,16 @@ struct CreateRecipeView: View {
 //            cookingSteps.append(cookingStep)
 //        }
 //    }
+    func getMealType(){
+        if(currentSelectedMealTypes.isEmpty){
+            currentMealType = ""
+        }else {
+            let mealType = currentSelectedMealTypes[0]
+            currentMealType = mealType
+        }
+    }
     //Adding Cooking Steps function
-    func addingCookingSteps() {
+    func addingCookingSteps() async{
         for index in 0..<Steps.count {
             let context = Steps[index]
             var imageData: PhotosPickerItem? = nil
@@ -79,6 +88,36 @@ struct CreateRecipeView: View {
             cookingSteps.append(cookingStep)
         }
     }
+    func showSuccessPopup() async{
+        showPopUp = true
+        popUpIcon = "checkmark.message.fill"
+        popUptitle = "Create recipe success"
+        popUpContent = "You can check your recipe in the My Recipe section"
+        popUpIconColor = Color.theme.GreenInstance
+    }
+    func resetTheCreateRecipeForm() async{
+        backgroundPhoto = nil
+        recipeName = ""
+        cookingTime = 0
+        servingSize = 0
+        description = ""
+        calories = 0
+        carb = 0
+        protein = 0
+        fat = 0
+        sugars = 0
+        salt = 0
+        saturates = 0
+        fibre = 0
+        currentSelectedTags = []
+        currentSelectedMealTypes = []
+        currentMealType = ""
+        Ingredients = []
+        Steps = []
+        listStepsPhoto = []
+        cookingSteps = []
+        recipeValidated = false
+    }
     var body: some View {
         VStack {
             HStack {
@@ -90,7 +129,8 @@ struct CreateRecipeView: View {
                 Spacer()
                 
                 Button(action: {
-                    if recipeName.isEmpty || cookingTime == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty {
+                    getMealType()
+                    if recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || currentSelectedTags.isEmpty || Steps.isEmpty {
                         showPopUp = true
                         popUpIcon = "xmark"
                         popUptitle = "Missing Information"
@@ -98,13 +138,13 @@ struct CreateRecipeView: View {
                         popUpIconColor = Color.theme.RedInstance
                     } else{
                         recipeValidated = true
-                        addingCookingSteps()
                     }
                     if (recipeValidated == true){
                         Task {
+                            await addingCookingSteps()
                             try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
                                                                       creatorID: "99",
-                                                                      mealType: currentSelectedMealTypes[0],
+                                                                      mealType: currentMealType,
                                                                       intro: description,
                                                                       servingSize: servingSize,
                                                                       cookingTime: cookingTime,
@@ -121,13 +161,9 @@ struct CreateRecipeView: View {
                                                        image: backgroundPhoto,
                                                        cookingSteps: cookingSteps
                             )
+                            await showSuccessPopup()
+                            await resetTheCreateRecipeForm()
                         }
-                        showPopUp = true
-                        popUpIcon = "checkmark.message.fill"
-                        popUptitle = "Create recipe success"
-                        popUpContent = "You can check your recipe in the My Recipe section"
-                        popUpIconColor = Color.theme.GreenInstance
-                        
                     }
                 }) {
                     Text("Create")
