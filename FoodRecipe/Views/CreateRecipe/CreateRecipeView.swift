@@ -27,6 +27,7 @@ struct CreateRecipeView: View {
     
     @State private var currentSelectedTags: [String] = []
     @State private var currentSelectedMealTypes: [String] = []
+    @State private var currentMealType : String = ""
     
     @State private var Ingredients: [String] = []
     
@@ -59,6 +60,14 @@ struct CreateRecipeView: View {
 //            cookingSteps.append(cookingStep)
 //        }
 //    }
+    func getMealType(){
+        if(currentSelectedMealTypes.isEmpty){
+            currentMealType = ""
+        }else {
+            let mealType = currentSelectedMealTypes[0]
+            currentMealType = mealType
+        }
+    }
     //Adding Cooking Steps function
     func addingCookingSteps() async{
         for index in 0..<Steps.count {
@@ -97,7 +106,8 @@ struct CreateRecipeView: View {
                 Spacer()
                 
                 Button(action: {
-                    if recipeName.isEmpty || cookingTime == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty {
+                    getMealType()
+                    if recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || currentSelectedTags.isEmpty || Steps.isEmpty {
                         showPopUp = true
                         popUpIcon = "xmark"
                         popUptitle = "Missing Information"
@@ -111,7 +121,7 @@ struct CreateRecipeView: View {
                             await addingCookingSteps()
                             try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
                                                                       creatorID: "99",
-                                                                      mealType: currentSelectedMealTypes[0],
+                                                                      mealType: currentMealType,
                                                                       intro: description,
                                                                       servingSize: servingSize,
                                                                       cookingTime: cookingTime,
