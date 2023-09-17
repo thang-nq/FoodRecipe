@@ -110,6 +110,12 @@ struct CreateRecipeView: View {
                                                        cookingSteps: cookingSteps
                             )
                         }
+                        showPopUp = true
+                        popUpIcon = "checkmark.message.fill"
+                        popUptitle = "Create recipe success"
+                        popUpContent = "You can check your recipe in the My Recipe section"
+                        popUpIconColor = Color.theme.GreenInstance
+                        
                     }
                 }) {
                     Text("Create")
