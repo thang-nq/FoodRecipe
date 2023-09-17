@@ -37,12 +37,23 @@ struct CreateIntroView: View {
         }
     }
     
+//    func selectMealType(tag: String) {
+//        if(currentSelectedMealTypes.contains(tag)) {
+//            if let index = currentSelectedMealTypes.firstIndex(of: tag) {
+//                currentSelectedMealTypes.remove(at: index)
+//            }
+//        } else {
+//            currentSelectedMealTypes.append(tag)
+//        }
+//    }
+    
     func selectMealType(tag: String) {
-        if(currentSelectedMealTypes.contains(tag)) {
+        if currentSelectedMealTypes.contains(tag) {
             if let index = currentSelectedMealTypes.firstIndex(of: tag) {
                 currentSelectedMealTypes.remove(at: index)
             }
         } else {
+            currentSelectedMealTypes.removeAll()
             currentSelectedMealTypes.append(tag)
         }
     }
