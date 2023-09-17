@@ -18,6 +18,7 @@ enum RecipeManagerError: LocalizedError {
         case .uploadImageFailed:
             return "Failed to upload recipe image"
         }
+        
     }
      
 //    var failureReason: String? {
@@ -33,4 +34,16 @@ enum RecipeManagerError: LocalizedError {
 //            return "Please sign in first"
 //        }
 //    }
+}
+
+
+enum UserManagerError: LocalizedError {
+    case userIDNotFound
+    
+    var errorDescription: String? {
+        switch self {
+        case .userIDNotFound:
+            return "Fetch user data error: User ID not found"
+        }
+    }
 }

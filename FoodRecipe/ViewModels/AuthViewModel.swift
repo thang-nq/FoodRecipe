@@ -32,7 +32,8 @@ class AuthViewModel: ObservableObject {
     
     func signIn(withEmail email: String, password: String) async throws {
         do {
-            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+//            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            let result = try await UserManager.shared.signIn(withEmail: email, password: password)
             self.userSession = result.user
             await fetchUser()
         } catch {
@@ -74,7 +75,8 @@ class AuthViewModel: ObservableObject {
     
     func signOut() {
         do {
-            try Auth.auth().signOut() // sign out user in the firebase
+//            try Auth.auth().signOut() // sign out user in the firebase
+            try UserManager.shared.signOut()
             self.userSession = nil // clear user session
             self.currentUser = nil // clear local user data
         } catch {
@@ -94,9 +96,10 @@ class AuthViewModel: ObservableObject {
     }
     
     func fetchUser() async {
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
-        self.currentUser = try? snapshot.data(as: User.self)
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
+        let userData = try? await UserManager.shared.fetchCurrentUser()
+        self.currentUser = userData
     }
     
     func uploadAvatar(data: PhotosPickerItem) async throws -> String {
@@ -116,17 +119,20 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    func mockEnvObject() async throws {
-        try await signIn(withEmail: "thang@gmail.com", password: "123456")
+//    func saveOrRemoveRecipe(recipeID: String) async {
+//        if let userData = currentUser {
+//            await RecipeManager.shared.saveOrRemoveRecipeFromFavorite(userID: userData.id, recipeID: recipeID)
+//        }
+//    }
+    
+    
+    func fetchUserSavedRecipe() async -> [Recipe]{
+        var recipes: [Recipe] = []
+        if let userData = currentUser {
+          recipes = await RecipeManager.shared.getUserSavedRecipes(userID: userData.id)
+        }
+        return recipes
     }
+    
 }
 
-@MainActor
-class MockAuthViewModel {
-    var MOCK_OBJECT = AuthViewModel()
-    init() {
-        Task {
-            try await self.MOCK_OBJECT.signIn(withEmail:"thang@gmail.com", password: "123456")
-        }
-    }
-}

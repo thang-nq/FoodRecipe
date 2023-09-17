@@ -21,6 +21,7 @@ struct AuthDataResultModel {
 
 final class UserManager {
     static let shared = UserManager()
+    private(set) var currentUser: User? = nil
     private var db = Firestore.firestore().collection("users")
     private var storage = Storage.storage().reference()
     
@@ -38,6 +39,36 @@ final class UserManager {
         }
         return user
     }
+    
+    func updateUser(userID: String, updateValues: [String: Any]) async throws {
+        if let user = await self.getUserData(userID: userID) {
+            try await db.document(userID).updateData(updateValues)
+        } else {
+            throw UserManagerError.userIDNotFound
+        }
+    }
+    
+    
+    func signIn(withEmail email: String, password: String) async throws -> AuthDataResult {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            let user = await getUserData(userID: result.user.uid)
+            self.currentUser = user
+            return result
+    }
+    
+    func signOut() throws {
+            try Auth.auth().signOut() // sign out user in the firebase
+            self.currentUser = nil // clear local user data
+    }
+    
+    func fetchCurrentUser() async throws -> User? {
+        if let uid = Auth.auth().currentUser?.uid {
+            let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
+            self.currentUser = try snapshot.data(as: User.self)
+        }
+        return self.currentUser
+    }
+    
     
 
     

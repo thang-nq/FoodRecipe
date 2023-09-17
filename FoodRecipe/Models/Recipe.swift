@@ -35,6 +35,7 @@ struct Recipe: Identifiable, Codable {
     var ingredients: [String] = []
     var tags: [String] = ["Chicken", "Salad"]
     var steps: [CookingStep] = []
+    var isSaved: Bool = false
     
     var nutritionsArray: [NutritionItem] {
         let newArr = [
