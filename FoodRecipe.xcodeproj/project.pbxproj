@@ -342,6 +342,8 @@
 		A5F1C2D42AB3247A00949874 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				A5F1C2D72AB324B400949874 /* RecipeManger.swift */,
+				A5F1C2D62AB324B400949874 /* UserManager.swift */,
 				A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */,
 			);
 			path = Managers;
@@ -350,8 +352,6 @@
 		A5F1C2D52AB3249F00949874 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				A5F1C2D62AB324B400949874 /* UserManager.swift */,
-				A5F1C2D72AB324B400949874 /* RecipeManger.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
