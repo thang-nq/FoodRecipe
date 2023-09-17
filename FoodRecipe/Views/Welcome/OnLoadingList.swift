@@ -18,14 +18,14 @@ struct OnLoadingList: View {
         //MARK: TABVIEW WRAPPER UI
         TabView(selection: $tabIndex) {
             
-            OnLoadingPageView(imageName: "brain.head.profile", iconColor: Color.theme.DarkBlueInstance, title: "Welcome to RecipePal", description: "Welcome to RecipePal, your culinary companion! Discover, cook, and share delicious dishes with our user-friendly app. Let's get cooking!", startedButton: false, nextScreen: nextPage)
+            OnLoadingPageView(imageName: "lasso.and.sparkles", iconColor: Color.theme.BlueInstance, title: "Welcome to RecipePal", description: "Welcome to RecipePal, your culinary companion! Discover, cook, and share delicious dishes with our user-friendly app. Let's get cooking!", startedButton: false, nextScreen: nextPage)
                 .tag(0)
             
             
             OnLoadingPageView(imageName: "carrot.fill", iconColor: Color.theme.Orange, title: "Recipe Categories", description: "Discover a world of flavors with RecipePal's diverse categories, from appetizers to desserts. Whether you're a pro chef or a beginner, find inspiration and guidance in our app. Start your culinary adventure today!", startedButton: false, nextScreen: nextPage)
                 .tag(1)
             
-            OnLoadingPageView(imageName: "fish.fill", iconColor: Color.theme.BlueInstance, title: "RecipePal Hello", description: "Welcome to RecipePal, your culinary companion! Discover, cook, and share delicious dishes with our user-friendly app. Let's get cooking!", startedButton: true, nextScreen: nextPage)
+            OnLoadingPageView(imageName: "brain.head.profile", iconColor: Color.theme.GrayInstance, title: "BMI Tracking", description: "But wait, there's more! We're excited to introduce a brand new feature that's all about your health and well-being. With RecipePal's BMI tracking, you can now keep tabs on your health while enjoying amazing recipes", startedButton: true, nextScreen: nextPage)
                 .tag(2)
         }
         .tabViewStyle(.page(indexDisplayMode: .always))

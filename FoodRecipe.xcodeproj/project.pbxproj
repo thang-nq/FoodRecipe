@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A12005182AB58B3B00E11DF6 /* InputFieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */; };
 		A120051A2AB5A22800E11DF6 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005192AB5A22800E11DF6 /* SignupView.swift */; };
+		A120051D2AB6E9BE00E11DF6 /* BMIFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120051C2AB6E9BE00E11DF6 /* BMIFormView.swift */; };
 		A1556EDF2AB2E42E00074074 /* OnLoadingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1556EDE2AB2E42E00074074 /* OnLoadingPageView.swift */; };
 		A1556EE12AB2EB9B00074074 /* OnLoadingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1556EE02AB2EB9B00074074 /* OnLoadingList.swift */; };
 		A17132F32AB5728D00F103CF /* TestProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17132F22AB5728D00F103CF /* TestProgress.swift */; };
@@ -77,6 +78,7 @@
 /* Begin PBXFileReference section */
 		A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldManager.swift; sourceTree = "<group>"; };
 		A12005192AB5A22800E11DF6 /* SignupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
+		A120051C2AB6E9BE00E11DF6 /* BMIFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMIFormView.swift; sourceTree = "<group>"; };
 		A1556EDE2AB2E42E00074074 /* OnLoadingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnLoadingPageView.swift; sourceTree = "<group>"; };
 		A1556EE02AB2EB9B00074074 /* OnLoadingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnLoadingList.swift; sourceTree = "<group>"; };
 		A17132F22AB5728D00F103CF /* TestProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProgress.swift; sourceTree = "<group>"; };
@@ -155,6 +157,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A120051B2AB6E9A300E11DF6 /* BMI */ = {
+			isa = PBXGroup;
+			children = (
+				A120051C2AB6E9BE00E11DF6 /* BMIFormView.swift */,
+			);
+			path = BMI;
+			sourceTree = "<group>";
+		};
 		A1556EDD2AB2E3A400074074 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +269,7 @@
 		A548C06D2AADBE2A00884B91 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A120051B2AB6E9A300E11DF6 /* BMI */,
 				A188D5AD2AB186F100E8FF0E /* Test */,
 				C2E927862AB4D14500C9E450 /* CreateRecipe */,
 				A1556EDD2AB2E3A400074074 /* Welcome */,
@@ -510,6 +521,7 @@
 				CC8D21872AB00B2A0036ABF3 /* IngredientsView.swift in Sources */,
 				A548C0572AADBA9F00884B91 /* ContentView.swift in Sources */,
 				A57741F42AB43CBC009B4882 /* HomeViewModel.swift in Sources */,
+				A120051D2AB6E9BE00E11DF6 /* BMIFormView.swift in Sources */,
 				A57741F82AB483C7009B4882 /* SearchViewModel.swift in Sources */,
 				CCD973EE2AAF3D3300E1AF9C /* NutritionView.swift in Sources */,
 				C2E9278A2AB4D48C00C9E450 /* CreateIntroView.swift in Sources */,
