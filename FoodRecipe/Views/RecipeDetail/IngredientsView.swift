@@ -24,7 +24,8 @@ struct IngredientsView: View {
                 }
             }
             
-            .frame(maxWidth: .infinity, alignment: .topLeading)
+//            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
 //        .padding(.horizontal, 25)
     }

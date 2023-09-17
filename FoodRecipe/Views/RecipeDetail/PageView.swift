@@ -18,7 +18,7 @@ struct PageView: View {
                 .frame(height: 390)
                 .clipped()
             VStack(alignment: .leading) {
-                Text("Step \(page.tag + 1) of 2 ")
+                Text("Step \(page.tag + 1) of \(totalSteps)")
                     .font(.custom("ZillaSlab-Bold", size: 26)).fontWeight(.medium)
                     .kerning(0.552)
                     .foregroundColor(Color.theme.Orange)
@@ -28,7 +28,7 @@ struct PageView: View {
             .padding()
             .frame(maxWidth: .infinity)
             Spacer()
-        }
+        }.navigationBarHidden(true)
     }
 }
 

@@ -9,15 +9,26 @@ import SwiftUI
 
 struct NavBar: View {
     var title: String
+    var leftIconName: String?
+    var leftIconAction: () -> Void = {}
     var body: some View {
         ZStack {
             Color.clear
                 .background(Color.theme.Orange)
-            Text(title)
-                .foregroundColor(Color.theme.WhiteInstance)
-                .font(.largeTitle.weight(.bold))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 20)
+            HStack {
+                if let leftIconNameUnwrapped = leftIconName {
+                    Button {
+                        leftIconAction()
+                    } label: {
+                        Image(systemName: leftIconNameUnwrapped).font(.system(size: 20)).foregroundColor(Color.theme.WhiteInstance)
+                    }
+                }
+                
+                Text(title)
+                    .foregroundColor(Color.theme.WhiteInstance)
+                    .font(.largeTitle.weight(.bold))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }.padding(.horizontal, 10)
         }
         .frame(height: 50)
         .frame(maxHeight: .infinity, alignment: .top)
@@ -26,6 +37,6 @@ struct NavBar: View {
 
 struct NavBar_Previews: PreviewProvider {
     static var previews: some View {
-        NavBar(title: "Featured")
+        NavBar(title: "Featured", leftIconName: "xmark")
     }
 }

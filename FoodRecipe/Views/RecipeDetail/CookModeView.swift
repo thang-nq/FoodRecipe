@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct CookModeView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var recipe: Recipe
     @State var pageIndex = 0
+    private func back() {
+        // Back action
+        self.presentationMode.wrappedValue.dismiss()
+    }
     var pages: [Page] = Page.samplePages
     var body: some View {
         VStack(spacing: 0) {
@@ -56,7 +61,7 @@ struct CookModeView: View {
         }
         .padding(.top, 50)
         .overlay(
-            NavBar(title: "Cook Mode")
+            NavBar(title: "Cook Mode", leftIconName: "xmark", leftIconAction: back)
         )
     }
     
