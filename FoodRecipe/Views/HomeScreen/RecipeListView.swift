@@ -52,8 +52,7 @@ struct RecipeCardView: View {
     
     var body: some View {
         VStack(alignment: .leading){
-            Image(recipe.backgroundURL)
-                .resizable()
+            FirebaseImage(imagePathName: recipe.backgroundURL)
                 .aspectRatio(contentMode: .fill)
                 .frame(maxWidth: .infinity)
                 .frame(height: 200)
