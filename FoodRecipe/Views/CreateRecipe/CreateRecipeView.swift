@@ -95,6 +95,29 @@ struct CreateRecipeView: View {
         popUpContent = "You can check your recipe in the My Recipe section"
         popUpIconColor = Color.theme.GreenInstance
     }
+    func resetTheCreateRecipeForm() async{
+        backgroundPhoto = nil
+        recipeName = ""
+        cookingTime = 0
+        servingSize = 0
+        description = ""
+        calories = 0
+        carb = 0
+        protein = 0
+        fat = 0
+        sugars = 0
+        salt = 0
+        saturates = 0
+        fibre = 0
+        currentSelectedTags = []
+        currentSelectedMealTypes = []
+        currentMealType = ""
+        Ingredients = []
+        Steps = []
+        listStepsPhoto = []
+        cookingSteps = []
+        recipeValidated = false
+    }
     var body: some View {
         VStack {
             HStack {
@@ -139,6 +162,7 @@ struct CreateRecipeView: View {
                                                        cookingSteps: cookingSteps
                             )
                             await showSuccessPopup()
+                            await resetTheCreateRecipeForm()
                         }
                     }
                 }) {
