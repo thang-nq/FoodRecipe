@@ -13,7 +13,8 @@ struct CreateRecipeView: View {
     @StateObject var homeVM = HomeViewModel()
     @State private var backgroundPhoto: PhotosPickerItem? = nil
     @State private var recipeName = ""
-    @State private var minutes = ""
+    @State private var cookingTime : Int = 0
+    @State private var servingSize : Int = 0
     @State private var description = ""
     @State private var calories: Int = 0
     @State private var carb: Int = 0
@@ -89,7 +90,7 @@ struct CreateRecipeView: View {
                 Spacer()
                 
                 Button(action: {
-                    if recipeName.isEmpty || minutes.isEmpty || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty {
+                    if recipeName.isEmpty || cookingTime == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty {
                         showPopUp = true
                         popUpIcon = "xmark"
                         popUptitle = "Missing Information"
@@ -126,7 +127,7 @@ struct CreateRecipeView: View {
             SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
             
             if selectedTabIndex == 0 {
-                CreateIntroView(backgroundPhoto: $backgroundPhoto ,recipeName: $recipeName, minutes: $minutes, description: $description, calories: $calories, carb: $carb, protein: $protein, fat: $fat, sugars: $sugars, salt: $salt, saturates: $saturates, fibre: $fibre, currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes)
+                CreateIntroView(backgroundPhoto: $backgroundPhoto ,recipeName: $recipeName, cookingTime: $cookingTime, servingSize: $servingSize, description: $description, calories: $calories, carb: $carb, protein: $protein, fat: $fat, sugars: $sugars, salt: $salt, saturates: $saturates, fibre: $fibre, currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes)
             }
             
             if selectedTabIndex == 1 {
