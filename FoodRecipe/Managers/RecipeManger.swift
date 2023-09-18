@@ -56,7 +56,7 @@ final class RecipeManager {
         } catch {
             print("DEBUG: \(error.localizedDescription)")
         }
-
+        
         return recipe
     }
     
@@ -83,7 +83,7 @@ final class RecipeManager {
                     }
                     
                 }
-
+                
             }
         } catch {
             print("DEBUG: \(error.localizedDescription)")
@@ -137,7 +137,7 @@ final class RecipeManager {
                     // format time stamp
                     recipe.createdAt = formatTimestamp(recipe.timeStamp)
                     
-    //                 Check if already saved
+                    //                 Check if already saved
                     if currentUserData!.savedRecipe.contains(document.documentID) {
                         recipe.isSaved = true
                     }
@@ -245,32 +245,27 @@ final class RecipeManager {
     }
     
     // MARK: Create new recipe
-    func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async {
-        do {
-            let recipeID = db.document().documentID
-            // save document
-            try db.document(recipeID).setData(from: recipe)
-            var backgroundURL = "default.jpeg"
-            // If provided an image and successfully update the background image, set the backgroundURL in recipe
-            if let backgroundImageData = backgroundImage {
-                backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
-                
-            }
-            // Add cooking step and related image
-            if cookingSteps != nil {
-                for step in cookingSteps! {
-                    let stepID = db.document().documentID
-                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": backgroundURL, "stepNumber": step.stepNumber])
-                    // Upload if the step contain image data
-                    if let imageData = step.imageData {
-                        try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
-                    }
+    func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async throws {
+        let recipeID = db.document().documentID
+        // save document
+        try db.document(recipeID).setData(from: recipe)
+        var backgroundURL = "default.jpeg"
+        // If provided an image and successfully update the background image, set the backgroundURL in recipe
+        if let backgroundImageData = backgroundImage {
+            backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
+            
+        }
+        // Add cooking step and related image
+        if cookingSteps != nil {
+            for step in cookingSteps! {
+                let stepID = db.document().documentID
+                try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": backgroundURL, "stepNumber": step.stepNumber])
+                // Upload if the step contain image data
+                if let imageData = step.imageData {
+                    try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
                 }
             }
-        } catch {
-            print("DEBUG: \(error.localizedDescription)")
         }
-
         
     }
     
@@ -303,22 +298,73 @@ final class RecipeManager {
     }
     
     
-    // MARK: Delete recipe by ID
-    func deleteRecipe(recipeID: String) async {
-        do {
-            if let recipe = await self.getRecipeInformation(recipeID: recipeID) {
-                try await db.document(recipeID).delete()
-                // Delete background image
-                if !recipe.backgroundURL.isEmpty {
-                    if recipe.backgroundURL != "default.jpeg" {
-                        try await storage.child(recipe.backgroundURL).delete()
+    // MARK: Update recipe
+    func updateRecipe(recipeID: String, updateData: updateRecipeInterface) async throws {
+        if var recipeToUpdate = await getRecipeInformation(recipeID: recipeID) {
+            recipeToUpdate.calories = updateData.calories ?? recipeToUpdate.calories
+            recipeToUpdate.carb = updateData.carb ?? recipeToUpdate.carb
+            recipeToUpdate.salt = updateData.salt ?? recipeToUpdate.salt
+            recipeToUpdate.saturates = updateData.saturates ?? recipeToUpdate.saturates
+            recipeToUpdate.protein = updateData.protein ?? recipeToUpdate.protein
+            recipeToUpdate.fat = updateData.fat ?? recipeToUpdate.fat
+            recipeToUpdate.fibre = updateData.fibre ?? recipeToUpdate.fibre
+            recipeToUpdate.ingredients = updateData.ingredients ?? recipeToUpdate.ingredients
+            recipeToUpdate.cookingTime = updateData.cookingTime ?? recipeToUpdate.cookingTime
+            recipeToUpdate.intro = updateData.intro ?? recipeToUpdate.intro
+            recipeToUpdate.servingSize = updateData.servingSize ?? recipeToUpdate.servingSize
+            recipeToUpdate.name = updateData.name ?? recipeToUpdate.name
+            
+            try db.document(recipeID).setData(from: recipeToUpdate, merge: true)
+            if let updateBackgroundImage = updateData.backgroundImage {
+                try await uploadRecipeBGImage(data: updateBackgroundImage, recipeID: recipeID)
+            }
+            if let updateSteps = updateData.steps {
+                for step in recipeToUpdate.steps {
+                    try await db.document(recipeID).collection("cookingSteps").document(step.id!).delete()
+                }
+                for step in updateSteps {
+                    let stepID = db.document().documentID
+                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": "", "stepNumber": step.stepNumber])
+                    if let stepImage = step.imageData {
+                        try await uploadStepImage(data: stepImage, recipeID: recipeID, stepID: stepID)
                     }
                 }
             }
-            
-        } catch {
-            print("DEBUG - \(error.localizedDescription)")
         }
     }
+    
+    // MARK: Update step context or background image
+    func updateCookingStep(recipeID: String, stepID: String, context: String?, backgroundImage: PhotosPickerItem?) async throws {
+        let document = try await db.document(recipeID).collection("cookingSteps").document(stepID).getDocument()
+        var cookingStep = try document.data(as: CookingStep.self)
+        if context != nil {
+            try await db.document(recipeID).collection("cookingSteps").document(stepID).updateData(["context": context!])
+        }
+        if let imageStepData = backgroundImage {
+            try await uploadStepImage(data: imageStepData, recipeID: recipeID, stepID: stepID)
+        }
+    }
+    
+    // MARK: Delete a cooking step
+    func deleteCookingStep(recipeID: String, stepID: String) async throws {
+        try await db.document(recipeID).collection("cookingSteps").document(stepID).delete()
+    }
+    
+    
+    
+    // MARK: Delete recipe by ID
+    func deleteRecipe(recipeID: String) async throws {
+        if let recipe = await self.getRecipeInformation(recipeID: recipeID) {
+            try await db.document(recipeID).delete()
+            // Delete background image
+            if !recipe.backgroundURL.isEmpty {
+                if recipe.backgroundURL != "default.jpeg" {
+                    try await storage.child(recipe.backgroundURL).delete()
+                }
+            }
+        }
+    }
+    
+    
 }
 
