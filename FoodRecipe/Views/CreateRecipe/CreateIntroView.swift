@@ -62,18 +62,7 @@ struct CreateIntroView: View {
     var body: some View {
         ScrollView{
             VStack{
-                //                    HStack{
-                //                        Text("Title:")
-                //                                .font(.custom("ZillaSlab-SemiBold", size: 26))
-                //                                .padding(.leading, 20)
-                //                        Spacer()
-                //                    }
                 InputFieldRecipe(text: $recipeName, title: "Title", placeHolder: "Enter title")
-                //                    TextField(("Enter recipe name"), text: $recipeName)
-                //                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                //                        .font(.custom("ZillaSlab-Regular", size: 18))
-                //                        .padding(.leading, 20)
-                //                        .padding(.trailing, 20)
                 HStack(){
                     NumberInput(value: $cookingTime, name: "Cook time", placeHolder: "Enter minutes")
                         .frame(width: 150)
