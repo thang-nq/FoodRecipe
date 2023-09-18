@@ -37,7 +37,7 @@ struct SavedRecipeListView: View {
         .onAppear {
             Task(priority: .medium) {
                 do {
-                    try await viewModel.getAllRecipe()
+                    try await viewModel.getSavedRecipe()
                 } catch {
                     // Handle any errors that occur during the async operation
                     print("Error: \(error)")

@@ -14,10 +14,16 @@ struct RecipeDetailView: View {
     var recipeId: String
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var detailVM = RecipeDetailViewModel()
+    @StateObject var homeVM = HomeViewModel()
     @State private var selectedTabIndex = 0
     private func back() {
         // Back action
         self.presentationMode.wrappedValue.dismiss()
+    }
+    private func saveAction() {
+        Task {
+            await homeVM.saveOrRemoveRecipe(recipeID: recipeId)
+        }
     }
     var body: some View {
         NavigationView {
@@ -38,7 +44,7 @@ struct RecipeDetailView: View {
                                 )
                                 .offset(y: -60)
                             
-                            TopBar(isSaved: recipeDetail.isSaved, action: back)
+                            TopBar(recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
                             //                    if let recipeDetail = detailVM.recipe {
                             VStack(spacing: 15) {
                                 ZStack {
@@ -113,12 +119,14 @@ struct RecipeDetailView_Previews: PreviewProvider {
 
 
 struct TopBar: View {
+    var recipeId: String
     var isSaved: Bool
-    var action: () -> Void
+    var backAction: () -> Void
+    var saveAction: () -> Void
     var body: some View {
         HStack  {
             Button {
-                action()
+                backAction()
             } label: {
                 
                 Image("chevron-left")
@@ -132,14 +140,19 @@ struct TopBar: View {
             
             
             Spacer()
-            Image(systemName: "heart")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundColor(isSaved ? Color.theme.WhiteInstance : Color.theme.Black.opacity(0.5))
-                .padding(10)
-                .background(isSaved ? Color.theme.Orange : .white)
-                .clipShape(Circle())
+            
+            Button {
+                saveAction()
+            } label: {
+                Image(systemName: "heart")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(isSaved ? Color.theme.WhiteInstance : Color.theme.Black.opacity(0.5))
+                    .padding(10)
+                    .background(isSaved ? Color.theme.Orange : .white)
+                    .clipShape(Circle())
+            }
         }.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 25)
     }
 }
