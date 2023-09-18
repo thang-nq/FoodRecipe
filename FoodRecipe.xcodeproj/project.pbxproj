@@ -257,7 +257,6 @@
 		A548C0532AADBA9F00884B91 /* FoodRecipe */ = {
 			isa = PBXGroup;
 			children = (
-				A5F1C2D52AB3249F00949874 /* Firebase */,
 				A5F1C2D42AB3247A00949874 /* Managers */,
 				A17B541C2AB03A290096A8A9 /* ViewModels */,
 				A1A85E662AAF02E300875285 /* Extensions */,
@@ -374,13 +373,6 @@
 				A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		A5F1C2D52AB3249F00949874 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Firebase;
 			sourceTree = "<group>";
 		};
 		C26D20692AB19AB20003376E /* HomeScreen */ = {
