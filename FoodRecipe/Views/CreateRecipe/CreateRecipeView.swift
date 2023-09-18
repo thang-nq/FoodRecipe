@@ -24,19 +24,16 @@ struct CreateRecipeView: View {
     @State private var salt: Int = 0
     @State private var saturates: Int = 0
     @State private var fibre: Int = 0
-    
     @State private var currentSelectedTags: [String] = []
     @State private var currentSelectedMealTypes: [String] = []
     @State private var currentMealType : String = ""
-    
     @State private var Ingredients: [String] = []
-    
     @State private var Steps: [String] = []
     @State private var listStepsPhoto: [PhotosPickerItem?] = []
-    
     @State private var cookingSteps: [CookingStepInterface] = []
     @State private var recipeValidated: Bool = false
-    
+    @State private var selectedTabIndex = 0
+    @State private var isLoading = false
     //MARK: POP UP VARIABLES
     @State var showPopUp = false
     @State var popUpIcon = ""
@@ -44,22 +41,7 @@ struct CreateRecipeView: View {
     @State var popUpContent = ""
     @State var popUpIconColor = Color.theme.BlueInstance
     
-    @State private var selectedTabIndex = 0
-    @State private var isLoading = false
-//    func addingCookingSteps (){
-//
-//        for index in 0..<Steps.count {
-//            let context = Steps[index]
-//            var imageData: PhotosPickerItem? = nil
-//
-//            if index < listStepsPhoto.count {
-//                imageData = listStepsPhoto[index]
-//            }
-//
-//            let cookingStep = CookingStepInterface(context: context, imageData: imageData, stepNumber: index + 1)
-//            cookingSteps.append(cookingStep)
-//        }
-//    }
+    // Get meal type function
     func getMealType(){
         if(currentSelectedMealTypes.isEmpty){
             currentMealType = ""
@@ -68,7 +50,8 @@ struct CreateRecipeView: View {
             currentMealType = mealType
         }
     }
-    //Adding Cooking Steps function
+    
+    // Adding Cooking Steps with photo function
     func addingCookingSteps() async{
         for index in 0..<Steps.count {
             let context = Steps[index]
@@ -88,6 +71,8 @@ struct CreateRecipeView: View {
             cookingSteps.append(cookingStep)
         }
     }
+    
+    // Show success pop up function
     func showSuccessPopup() async{
         showPopUp = true
         popUpIcon = "checkmark.message.fill"
@@ -95,6 +80,8 @@ struct CreateRecipeView: View {
         popUpContent = "You can check your recipe in the My Recipe section"
         popUpIconColor = Color.theme.GreenInstance
     }
+    
+    // Reset recipe function
     func resetTheCreateRecipeForm() async{
         backgroundPhoto = nil
         recipeName = ""
@@ -118,12 +105,17 @@ struct CreateRecipeView: View {
         cookingSteps = []
         recipeValidated = false
     }
+    
+    // Loading
     func loading() async{
         isLoading = true
     }
+    
+    // Cancel loading
     func cancelLoading() async{
         isLoading = false
     }
+    
     var body: some View {
         ZStack{
             VStack {
