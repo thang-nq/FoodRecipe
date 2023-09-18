@@ -21,9 +21,7 @@ struct ContentView: View {
 //                    UserProfileView()
                     HomeView()
                 } else {
-                    Text("Fetching user data...")
-                        .padding()
-                    Progress(loadingSize: 3)
+                    Progress(loadingSize: 4)
                 }
 
             } else {
