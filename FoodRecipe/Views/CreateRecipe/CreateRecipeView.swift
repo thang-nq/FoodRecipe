@@ -184,7 +184,7 @@ private extension CreateRecipeView{
                 getMealType()
                 
                 // Validate input field
-                if recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || currentSelectedTags.isEmpty || Steps.isEmpty {
+                if recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || calories == 0 {
                     showPopUp = true
                     popUpIcon = "xmark"
                     popUptitle = "Missing Information"
