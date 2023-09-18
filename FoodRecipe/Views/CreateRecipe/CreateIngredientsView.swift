@@ -26,6 +26,7 @@ struct CreateIngredientsView: View {
         VStack{
             ScrollView{
                     ingredients
+                        .accessibilityLabel("Ingredients")
             }
         }
         .sheet(isPresented: $showingSheet){

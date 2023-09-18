@@ -129,7 +129,7 @@ struct CreateRecipeView: View {
                     .accessibilityLabel("Top bar")
                 
                 slidingTab
-                    .accessibilityLabel("Top bar")
+                    .accessibilityLabel("Sliding tab")
                 
             }
             .overlay(
