@@ -25,10 +25,12 @@ struct HomeView: View {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
                 }
-            CreateRecipeView()
+//            CreateRecipeView()
+            TDDEFormView()
                 .tabItem(){
-                    Image(systemName: "plus")
-                    Text("Create Recipe")
+                    Image(systemName: "brain")
+                    Text("TDEE")
+//                    Text("Create Recipe")
                 }
             UserProfileViewDemo()
                 .tabItem(){
