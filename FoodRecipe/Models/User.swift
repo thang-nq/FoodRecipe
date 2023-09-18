@@ -15,6 +15,9 @@ struct User: Identifiable, Codable {
     var savedRecipe: [String] = []
 //    var isVegan: Bool = false
 //    var bio: String = "This is user bio"
+//    var gender
+//    var height
+//    var activityLevel
     var initials: String {
         let formatter = PersonNameComponentsFormatter()
         if let components = formatter.personNameComponents(from: fullName) {

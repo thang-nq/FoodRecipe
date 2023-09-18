@@ -32,7 +32,6 @@ class AuthViewModel: ObservableObject {
     
     func signIn(withEmail email: String, password: String) async throws {
         do {
-//            let result = try await Auth.auth().signIn(withEmail: email, password: password)
             let result = try await UserManager.shared.signIn(withEmail: email, password: password)
             self.userSession = result.user
             await fetchUser()
@@ -45,12 +44,13 @@ class AuthViewModel: ObservableObject {
     
     func createUser(withEmail email: String, password: String, fullName: String) async throws {
         do {
-            let result = try await Auth.auth().createUser(withEmail: email, password: password)
+//            let result = try await Auth.auth().createUser(withEmail: email, password: password)
+//            let newUser = User(id: result.user.uid, fullName: fullName, email: email)
+//            let encodedUser = try Firestore.Encoder().encode(newUser)
+//            try await Firestore.firestore().collection("users").document(newUser.id).setData(encodedUser)
+//            try await Auth.auth().currentUser?.sendEmailVerification()
+            let result = try await UserManager.shared.createUser(withEmail: email, password: password, fullName: fullName)
             self.userSession = result.user
-            let newUser = User(id: result.user.uid, fullName: fullName, email: email)
-            let encodedUser = try Firestore.Encoder().encode(newUser)
-            try await Firestore.firestore().collection("users").document(newUser.id).setData(encodedUser)
-            try await Auth.auth().currentUser?.sendEmailVerification()
             await fetchUser()
         } catch {
             showingAlert = true
@@ -75,7 +75,6 @@ class AuthViewModel: ObservableObject {
     
     func signOut() {
         do {
-//            try Auth.auth().signOut() // sign out user in the firebase
             try UserManager.shared.signOut()
             self.userSession = nil // clear user session
             self.currentUser = nil // clear local user data
@@ -96,8 +95,6 @@ class AuthViewModel: ObservableObject {
     }
     
     func fetchUser() async {
-//        guard let uid = Auth.auth().currentUser?.uid else {return}
-//        guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
         let userData = try? await UserManager.shared.fetchCurrentUser()
         self.currentUser = userData
     }
@@ -118,12 +115,6 @@ class AuthViewModel: ObservableObject {
         return ""
         
     }
-    
-//    func saveOrRemoveRecipe(recipeID: String) async {
-//        if let userData = currentUser {
-//            await RecipeManager.shared.saveOrRemoveRecipeFromFavorite(userID: userData.id, recipeID: recipeID)
-//        }
-//    }
     
     
     func fetchUserSavedRecipe() async -> [Recipe]{
