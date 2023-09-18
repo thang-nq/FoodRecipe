@@ -30,12 +30,13 @@ struct CreateIngredientsView: View {
             }
         }
         .sheet(isPresented: $showingSheet){
+            // MARK: ADD INGREDIENTS SHEET
             AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
                 .presentationDetents([.height(300)])
         }
         .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
         .overlay(
-            // Create new ingredient button
+            // MARK: Create new ingredient button
             Button(action: {
                 self.showingSheet.toggle()
             }, label: {
