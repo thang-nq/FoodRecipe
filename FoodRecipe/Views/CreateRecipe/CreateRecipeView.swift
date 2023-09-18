@@ -124,22 +124,12 @@ struct CreateRecipeView: View {
         ZStack{
             
             VStack {
+                
                 topBar
                     .accessibilityLabel("Top bar")
                 
                 slidingTab
                     .accessibilityLabel("Top bar")
-                
-                // Check the selected tab index
-                if selectedTabIndex == 0 {
-                    CreateIntroView(backgroundPhoto: $backgroundPhoto ,recipeName: $recipeName, cookingTime: $cookingTime, servingSize: $servingSize, description: $description, calories: $calories, carb: $carb, protein: $protein, fat: $fat, sugars: $sugars, salt: $salt, saturates: $saturates, fibre: $fibre, currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes)
-                }
-                if selectedTabIndex == 1 {
-                    CreateIngredientsView(Ingredients: $Ingredients)
-                }
-                if selectedTabIndex == 2 {
-                    CreateStepsView(Steps: $Steps, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
-                }
                 
             }
             .overlay(
@@ -243,7 +233,19 @@ private extension CreateRecipeView{
     
     //MARK: SLIDING TAB UI
     var slidingTab: some View{
-        SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
+        VStack{
+            SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
+            // Check the selected tab index
+            if selectedTabIndex == 0 {
+                CreateIntroView(backgroundPhoto: $backgroundPhoto ,recipeName: $recipeName, cookingTime: $cookingTime, servingSize: $servingSize, description: $description, calories: $calories, carb: $carb, protein: $protein, fat: $fat, sugars: $sugars, salt: $salt, saturates: $saturates, fibre: $fibre, currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes)
+            }
+            if selectedTabIndex == 1 {
+                CreateIngredientsView(Ingredients: $Ingredients)
+            }
+            if selectedTabIndex == 2 {
+                CreateStepsView(Steps: $Steps, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
+            }
+        }
     }
     
 }

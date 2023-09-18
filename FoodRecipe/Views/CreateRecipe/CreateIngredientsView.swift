@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct CreateIngredientsView: View {
+    // MARK: VARIABLES
     @State private var showingSheet = false
     @State private var InputIngredient = ""
     @Binding var Ingredients: [String]
     
+    // MARK: FUNCTION
     // Remove Ingredient function
     private func removeIngredient(_ ingredient: String) {
         if let index = Ingredients.firstIndex(of: ingredient) {
@@ -20,40 +22,10 @@ struct CreateIngredientsView: View {
     }
     
     var body: some View {
+        // MARK: MAIN LAYOUT
         VStack{
             ScrollView{
-                VStack(alignment: .leading) {
-                    if(Ingredients.isEmpty){
-                        HStack {
-                            Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
-                            Text("Click the plus button below to adding ingredient")
-                                .font(.custom("ZillaSlab-Regular", size: 20))
-                                
-                        }.padding(.leading, 20)
-                    }
-                    ForEach(Ingredients, id: \.self) { ingredient in
-                        HStack() {
-                            Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
-                            Text(ingredient)
-                                .font(.custom("ZillaSlab-Regular", size: 20))
-                                .frame(width: 280, alignment: .leading)
-                            Spacer()
-                            Button(action: {
-                                removeIngredient(ingredient)
-                            }) {
-                                Image(systemName: "minus.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                                    .foregroundColor(Color("Orange"))
-                                    .padding(.trailing, 15)
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 20)
-                    }
-                    Spacer()
-                }
-                
+                    ingredients
             }
         }
         .sheet(isPresented: $showingSheet){
@@ -62,6 +34,7 @@ struct CreateIngredientsView: View {
         }
         .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
         .overlay(
+            // Create new ingredient button
             Button(action: {
                 self.showingSheet.toggle()
             }, label: {
@@ -73,15 +46,14 @@ struct CreateIngredientsView: View {
                                 .clipShape(Circle())
                                 
             })
-            
             .modifier(ButtonModifier()),
             alignment: .bottomTrailing
-            
         )
         
     }
 }
 
+// Button modifier
 struct ButtonModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
@@ -91,6 +63,7 @@ struct ButtonModifier: ViewModifier {
   }
 }
 
+// MARK: ADD INGREDIENTS SHEET VIEW
 struct AddIngredientsSheetView: View {
     @Binding var InputIngredient : String
     @Binding var Ingredients : [String]
@@ -121,3 +94,39 @@ struct CreateIngredientsView_Previews: PreviewProvider {
     }
 }
 
+private extension CreateIngredientsView{
+    // MARK: INGREDIENTS UI
+    var ingredients: some View{
+        VStack(alignment: .leading) {
+            if(Ingredients.isEmpty){
+                HStack {
+                    Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
+                    Text("Click the plus button below to adding ingredient")
+                        .font(.custom("ZillaSlab-Regular", size: 20))
+                        
+                }.padding(.leading, 20)
+            }
+            ForEach(Ingredients, id: \.self) { ingredient in
+                HStack() {
+                    Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
+                    Text(ingredient)
+                        .font(.custom("ZillaSlab-Regular", size: 20))
+                        .frame(width: 280, alignment: .leading)
+                    Spacer()
+                    Button(action: {
+                        removeIngredient(ingredient)
+                    }) {
+                        Image(systemName: "minus.circle")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .foregroundColor(Color("Orange"))
+                            .padding(.trailing, 15)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 20)
+            }
+            Spacer()
+        }
+    }
+}
