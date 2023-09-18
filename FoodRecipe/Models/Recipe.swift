@@ -50,7 +50,74 @@ struct Recipe: Identifiable, Codable {
         ]
         return nutritionArr.filter({ $0.value > 0})
     }
-
+    
+    static var sampleRecipe: Recipe = Recipe(
+        name: "Yakitori Grilled Chicken",
+        creatorID: "somerandomID",
+        timeStamp: Timestamp(date: Date()),
+        createdAt:  "",
+        creatorName: "Man Pham Quang",
+        creatorAvatar: "",
+        mealType: "Breakfast",
+        backgroundURL:  "default.jpeg",
+        intro:  "Grilling beef tenderloin over charcoal is a surefire way to achieve a mouthwatering, smoky flavor and a perfectly juicy and tender result. This recipe guide will walk you through the steps to prepare and grill a delicious beef tenderloin that will impress your family and friends at your next barbecue gathering.",
+        servingSize:  1,
+        cookingTime:  10,
+        calories:  300,
+        carb: 100,
+        protein: 20,
+        fat: 19,
+        sugars: 150,
+        salt:  30,
+        saturates:  80,
+        fibre:  20,
+        ingredients:  [
+            "2 to 3 pounds of beef tenderloin (whole)",
+            "2 tablespoons olive oil",
+            "4 cloves garlic, minced",
+            "2 tablespoons fresh rosemary, finely chopped",
+            "2 tablespoons fresh thyme, finely chopped",
+            "Salt and black pepper to taste",
+            "1/4 cup soy sauce",
+            "1/4 cup soy sauce"
+            
+        ],
+        tags:  ["Chicken", "Salad"],
+        steps:  [
+            CookingStep(
+                id: "1",
+                context: "Begin by setting up your charcoal grill for indirect grilling. Fill a charcoal chimney starter with charcoal briquettes and light them. Once the coals are ashed over, pour them onto one side of the grill, creating a two-zone fire. Place a drip pan under the grill grate on the cool side.",
+                backgroundURL: "soup",
+                stepNumber: 1
+            ),
+            CookingStep(
+                id: "2",
+                context: "Cover the grill and allow it to preheat for about 10-15 minutes. Aim for a medium-high temperature of around 350-400°F (175-200°C).",
+                backgroundURL: "soup",
+                stepNumber: 2
+            ),
+            CookingStep(
+                id: "3",
+                context: "Trim any excess fat and silver skin from the beef tenderloin.\nIn a small bowl, mix together the olive oil, minced garlic, chopped rosemary, chopped thyme, salt, and black pepper.\nRub the mixture evenly over the entire surface of the beef tenderloin. Allow it to marinate for at least 30 minutes at room temperature.",
+                backgroundURL: "soup",
+                stepNumber: 3
+            ),
+            CookingStep(
+                id: "4",
+                context: "In a separate bowl, whisk together all the marinade ingredients until well combined.",
+                backgroundURL: "soup",
+                stepNumber: 4
+            ),
+            CookingStep(
+                id: "5",
+                context: "Place the marinated beef tenderloin in a large resealable plastic bag and pour the marinade over it. Seal the bag, removing as much air as possible, and refrigerate for at least 2 hours, or overnight for maximum flavor",
+                backgroundURL: "soup",
+                stepNumber: 5
+            ),
+        ],
+        isSaved: true
+    )
+    
 }
 
 
