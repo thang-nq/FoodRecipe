@@ -12,6 +12,11 @@ import SwiftUI
 struct SavedRecipeListView: View {
     @StateObject private var viewModel = HomeViewModel()
     @AppStorage("isDarkMode") var isDark = false
+    func saveAction(recipeId: String) -> Void {
+        Task {
+            await viewModel.saveOrRemoveRecipe(recipeID: recipeId)
+        }
+    }
     var body: some View {
         NavigationView {
             VStack {
@@ -19,7 +24,7 @@ struct SavedRecipeListView: View {
                     Section(header: Text("Saved Recipe").font(.custom("ZillaSlab-Bold", size: 30))) {
                         ForEach(viewModel.recipes) { recipe in
                             NavigationLink(destination: RecipeDetailViewDemo(recipe: recipe)) {
-                                RecipeCardView(recipe: recipe)
+                                RecipeCardView(recipe: recipe, saveAction: saveAction)
                             }
                         }
                     }.headerProminence(.increased)
@@ -37,7 +42,7 @@ struct SavedRecipeListView: View {
         .onAppear {
             Task(priority: .medium) {
                 do {
-                    try await viewModel.getAllRecipe()
+                    try await viewModel.getSavedRecipe()
                 } catch {
                     // Handle any errors that occur during the async operation
                     print("Error: \(error)")
