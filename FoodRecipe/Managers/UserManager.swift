@@ -50,17 +50,28 @@ final class UserManager {
         }
     }
     
+    func createUser(withEmail email: String, password: String, fullName: String) async throws -> AuthDataResult {
+        let result = try await Auth.auth().createUser(withEmail: email, password: password)
+        let newUser = User(id: result.user.uid, fullName: fullName, email: email)
+        let encodedUser = try Firestore.Encoder().encode(newUser)
+        try await Firestore.firestore().collection("users").document(newUser.id).setData(encodedUser)
+        try await Auth.auth().currentUser?.sendEmailVerification()
+        return result
+        
+    }
+    
+    
     
     func signIn(withEmail email: String, password: String) async throws -> AuthDataResult {
-            let result = try await Auth.auth().signIn(withEmail: email, password: password)
-            let user = await getUserData(userID: result.user.uid)
-            self.currentUser = user
-            return result
+        let result = try await Auth.auth().signIn(withEmail: email, password: password)
+        let user = await getUserData(userID: result.user.uid)
+        self.currentUser = user
+        return result
     }
     
     func signOut() throws {
-            try Auth.auth().signOut() // sign out user in the firebase
-            self.currentUser = nil // clear local user data
+        try Auth.auth().signOut() // sign out user in the firebase
+        self.currentUser = nil // clear local user data
     }
     
     func fetchCurrentUser() async throws -> User? {
@@ -74,7 +85,7 @@ final class UserManager {
     func getCurrentUserData() async throws -> User? {
         var user: User? = nil
         if currentUser != nil {
-            user = await getUserData(userID: self.currentUser!.id) 
+            user = await getUserData(userID: self.currentUser!.id)
         } else {
             throw RecipeManagerError.userNotLoggedIn
         }
@@ -85,6 +96,6 @@ final class UserManager {
     
     
     
-
+    
     
 }

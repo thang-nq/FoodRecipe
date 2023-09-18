@@ -21,6 +21,7 @@ struct TDDEFormView: View {
             title
             form
         }
+            
     }
 }
 
@@ -121,7 +122,7 @@ private extension TDDEFormView {
             .cornerRadius(8)
             .disabled(inputFieldManager.isValidBMIForm())
         }
-        .navigationBarTitle("Settings")
+        
     }
         
     

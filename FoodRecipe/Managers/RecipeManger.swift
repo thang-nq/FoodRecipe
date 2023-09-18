@@ -303,6 +303,58 @@ final class RecipeManager {
     }
     
     
+    // MARK: Update recipe
+    func updateRecipe(recipeID: String, updateData: updateRecipeInterface) async throws {
+        if var recipeToUpdate = await getRecipeInformation(recipeID: recipeID) {
+            recipeToUpdate.calories = updateData.calories ?? recipeToUpdate.calories
+            recipeToUpdate.carb = updateData.carb ?? recipeToUpdate.carb
+            recipeToUpdate.salt = updateData.salt ?? recipeToUpdate.salt
+            recipeToUpdate.saturates = updateData.saturates ?? recipeToUpdate.saturates
+            recipeToUpdate.protein = updateData.protein ?? recipeToUpdate.protein
+            recipeToUpdate.fat = updateData.fat ?? recipeToUpdate.fat
+            recipeToUpdate.fibre = updateData.fibre ?? recipeToUpdate.fibre
+            recipeToUpdate.ingredients = updateData.ingredients ?? recipeToUpdate.ingredients
+            recipeToUpdate.cookingTime = updateData.cookingTime ?? recipeToUpdate.cookingTime
+            recipeToUpdate.intro = updateData.intro ?? recipeToUpdate.intro
+            recipeToUpdate.servingSize = updateData.servingSize ?? recipeToUpdate.servingSize
+            recipeToUpdate.name = updateData.name ?? recipeToUpdate.name
+            if let updateBackgroundImage = updateData.backgroundImage {
+                try await uploadRecipeBGImage(data: updateBackgroundImage, recipeID: recipeID)
+            }
+            if let updateSteps = updateData.steps {
+                for step in recipeToUpdate.steps {
+                    try await db.document(recipeID).collection("cookingSteps").document(step.id!).delete()
+                }
+                for step in updateSteps {
+                    let stepID = db.document().documentID
+                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": "", "stepNumber": step.stepNumber])
+                    if let stepImage = step.imageData {
+                        try await uploadStepImage(data: stepImage, recipeID: recipeID, stepID: stepID)
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: Update step context or background image
+    func updateCookingStep(recipeID: String, stepID: String, context: String?, backgroundImage: PhotosPickerItem?) async throws {
+        let document = try await db.document(recipeID).collection("cookingSteps").document(stepID).getDocument()
+        var cookingStep = try document.data(as: CookingStep.self)
+        if context != nil {
+            try await db.document(recipeID).collection("cookingSteps").document(stepID).updateData(["context": context!])
+        }
+        if let imageStepData = backgroundImage {
+            try await uploadStepImage(data: imageStepData, recipeID: recipeID, stepID: stepID)
+        }
+    }
+    
+    // MARK: Delete a cooking step
+    func deleteCookingStep(recipeID: String, stepID: String) async throws {
+        try await db.document(recipeID).collection("cookingSteps").document(stepID).delete()
+    }
+    
+    
+    
     // MARK: Delete recipe by ID
     func deleteRecipe(recipeID: String) async {
         do {

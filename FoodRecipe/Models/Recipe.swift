@@ -72,3 +72,23 @@ struct NutritionItem: Identifiable {
     var type: String
     var value: Int
 }
+
+struct updateRecipeInterface {
+    var name: String? = nil
+    var mealType: String? = nil
+    var backgroundImage: PhotosPickerItem? = nil
+    var intro: String? = nil
+    var servingSize: Int? = nil
+    var cookingTime: Int? = nil
+    var calories: Int? = nil
+    var carb: Int? = nil
+    var protein: Int? = nil
+    var fat: Int? = nil
+    var sugars: Int? = nil
+    var salt: Int? = nil
+    var saturates: Int? = nil
+    var fibre: Int? = nil
+    var ingredients: [String]? = nil
+    var tags: [String]? = nil
+    var steps: [CookingStepInterface]? = nil
+}
