@@ -38,7 +38,7 @@ struct RecipeDetailView: View {
                                 )
                                 .offset(y: -60)
                             
-                            TopBar(action: back)
+                            TopBar(isSaved: recipeDetail.isSaved, action: back)
                             //                    if let recipeDetail = detailVM.recipe {
                             VStack(spacing: 15) {
                                 ZStack {
@@ -92,15 +92,15 @@ struct RecipeDetailView: View {
                     do {
                         try await detailVM.getRecipeDetail(recipeID: recipeId)
                         if let recipe = detailVM.recipe {
-                            print(recipe.id)
-                            print(recipe.name)
+                        }else {
+                            detailVM.getMockRecipeDetail()
                         }
                     } catch {
                         // Handle any errors that occur during the async operation
                         print("Error: \(error)")
                     }
                 }
-        }
+            }
         }
     }
 }
@@ -113,6 +113,7 @@ struct RecipeDetailView_Previews: PreviewProvider {
 
 
 struct TopBar: View {
+    var isSaved: Bool
     var action: () -> Void
     var body: some View {
         HStack  {
@@ -123,7 +124,7 @@ struct TopBar: View {
                 Image("chevron-left")
                     .resizable()
                     .frame(width: 24, height: 24)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.theme.Black.opacity(0.5))
                     .padding(10)
                     .background(.white)
                     .clipShape(Circle())
@@ -131,13 +132,13 @@ struct TopBar: View {
             
             
             Spacer()
-            Image("heart-orange")
+            Image(systemName: "heart")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
-                .foregroundColor(.white)
+                .foregroundColor(isSaved ? Color.theme.WhiteInstance : Color.theme.Black.opacity(0.5))
                 .padding(10)
-                .background(.white)
+                .background(isSaved ? Color.theme.Orange : .white)
                 .clipShape(Circle())
         }.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 25)
     }
