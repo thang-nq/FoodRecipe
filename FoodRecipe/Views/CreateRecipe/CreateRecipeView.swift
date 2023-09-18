@@ -118,6 +118,51 @@ struct CreateRecipeView: View {
         isLoading = false
     }
     
+    // Create recipe function
+    func createRecipe(){
+        getMealType()
+        // Validate input field
+        if recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || calories == 0 {
+            showPopUp = true
+            popUpIcon = "xmark"
+            popUptitle = "Missing Information"
+            popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
+            popUpIconColor = Color.theme.RedInstance
+        } else{
+            recipeValidated = true
+        }
+        
+        // Creating recipe when the inputs are validated
+        if (recipeValidated == true){
+            Task {
+                await loading()
+                await addingCookingSteps()
+                try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
+                                                          creatorID: "99",
+                                                          mealType: currentMealType,
+                                                          intro: description,
+                                                          servingSize: servingSize,
+                                                          cookingTime: cookingTime,
+                                                          calories: calories,
+                                                          carb: carb,
+                                                          protein: protein,
+                                                          fat: fat,
+                                                          sugars: sugars,
+                                                          salt: salt,
+                                                          saturates: saturates,
+                                                          fibre: fibre,
+                                                          ingredients: Ingredients,
+                                                          tags: currentSelectedTags),
+                                           image: backgroundPhoto,
+                                           cookingSteps: cookingSteps
+                )
+                await resetTheCreateRecipeForm()
+                await cancelLoading()
+                await showSuccessPopup()
+            }
+        }
+    }
+    
     var body: some View {
         
         //MARK: MAIN LAYOUT
@@ -181,48 +226,8 @@ private extension CreateRecipeView{
             
             // Button create new recipe
             Button(action: {
-                getMealType()
-                
-                // Validate input field
-                if recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || calories == 0 {
-                    showPopUp = true
-                    popUpIcon = "xmark"
-                    popUptitle = "Missing Information"
-                    popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
-                    popUpIconColor = Color.theme.RedInstance
-                } else{
-                    recipeValidated = true
-                }
-                
-                // Creating recipe when the inputs are validated
-                if (recipeValidated == true){
-                    Task {
-                        await loading()
-                        await addingCookingSteps()
-                        try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
-                                                                  creatorID: "99",
-                                                                  mealType: currentMealType,
-                                                                  intro: description,
-                                                                  servingSize: servingSize,
-                                                                  cookingTime: cookingTime,
-                                                                  calories: calories,
-                                                                  carb: carb,
-                                                                  protein: protein,
-                                                                  fat: fat,
-                                                                  sugars: sugars,
-                                                                  salt: salt,
-                                                                  saturates: saturates,
-                                                                  fibre: fibre,
-                                                                  ingredients: Ingredients,
-                                                                  tags: currentSelectedTags),
-                                                   image: backgroundPhoto,
-                                                   cookingSteps: cookingSteps
-                        )
-                        await resetTheCreateRecipeForm()
-                        await cancelLoading()
-                        await showSuccessPopup()
-                    }
-                }
+                // Create recipe
+                createRecipe()
             }) {
                 Text("Create")
                     .font(.system(size: 20))
