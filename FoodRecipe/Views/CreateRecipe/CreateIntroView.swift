@@ -187,7 +187,7 @@ private extension CreateIntroView{
             TextEditor(text: $description)
                 .font(.custom("ZillaSlab-Regular", size: 16))
                 .frame(height: 250)
-                .colorMultiply(Color(.systemGray6))
+                .colorMultiply(Color.theme.DarkWhite)
                 .cornerRadius(10)
                 .padding(.horizontal, 15)
                 .padding(.bottom, 10)

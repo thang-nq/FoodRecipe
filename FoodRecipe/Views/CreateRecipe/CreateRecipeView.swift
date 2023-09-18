@@ -239,7 +239,7 @@ private extension CreateRecipeView{
     //MARK: SLIDING TAB UI
     var slidingTab: some View{
         VStack{
-            SlidingTabView(selection: $createRecipeVM.selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
+            SlidingTabView(selection: $createRecipeVM.selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.OrangeInstance, selectionBarColor: Color.theme.OrangeInstance)
             // Check the selected tab index
             if createRecipeVM.selectedTabIndex == 0 {
                 CreateIntroView(backgroundPhoto: $createRecipeVM.backgroundPhoto ,recipeName: $createRecipeVM.recipeName, cookingTime: $createRecipeVM.cookingTime, servingSize: $createRecipeVM.servingSize, description: $createRecipeVM.description, calories: $createRecipeVM.calories, carb: $createRecipeVM.carb, protein: $createRecipeVM.protein, fat: $createRecipeVM.fat, sugars: $createRecipeVM.sugars, salt: $createRecipeVM.salt, saturates: $createRecipeVM.saturates, fibre: $createRecipeVM.fibre, currentSelectedTags: $createRecipeVM.currentSelectedTags, currentSelectedMealTypes: $createRecipeVM.currentSelectedMealTypes)
