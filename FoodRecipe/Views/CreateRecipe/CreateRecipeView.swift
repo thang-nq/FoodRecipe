@@ -45,7 +45,7 @@ struct CreateRecipeView: View {
     @State var popUpIconColor = Color.theme.BlueInstance
     
     @State private var selectedTabIndex = 0
-    
+    @State private var isLoading = false
 //    func addingCookingSteps (){
 //
 //        for index in 0..<Steps.count {
@@ -118,85 +118,105 @@ struct CreateRecipeView: View {
         cookingSteps = []
         recipeValidated = false
     }
+    func loading() async{
+        isLoading = true
+    }
+    func cancelLoading() async{
+        isLoading = false
+    }
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Text("Create new recipe")
-                    .font(.custom("ZillaSlab-Bold", size: 25))
-                    .padding(.leading, 70)
-                
-                Spacer()
-                
-                Button(action: {
-                    getMealType()
-                    if recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || currentSelectedTags.isEmpty || Steps.isEmpty {
-                        showPopUp = true
-                        popUpIcon = "xmark"
-                        popUptitle = "Missing Information"
-                        popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
-                        popUpIconColor = Color.theme.RedInstance
-                    } else{
-                        recipeValidated = true
-                    }
-                    if (recipeValidated == true){
-                        Task {
-                            await addingCookingSteps()
-                            try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
-                                                                      creatorID: "99",
-                                                                      mealType: currentMealType,
-                                                                      intro: description,
-                                                                      servingSize: servingSize,
-                                                                      cookingTime: cookingTime,
-                                                                      calories: calories,
-                                                                      carb: carb,
-                                                                      protein: protein,
-                                                                      fat: fat,
-                                                                      sugars: sugars,
-                                                                      salt: salt,
-                                                                      saturates: saturates,
-                                                                      fibre: fibre,
-                                                                      ingredients: Ingredients,
-                                                                      tags: currentSelectedTags),
-                                                       image: backgroundPhoto,
-                                                       cookingSteps: cookingSteps
-                            )
-                            await showSuccessPopup()
-                            await resetTheCreateRecipeForm()
+        ZStack{
+            VStack {
+                HStack {
+                    Spacer()
+                    Text("Create new recipe")
+                        .font(.custom("ZillaSlab-Bold", size: 25))
+                        .padding(.leading, 70)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        getMealType()
+                        if recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || currentSelectedTags.isEmpty || Steps.isEmpty {
+                            showPopUp = true
+                            popUpIcon = "xmark"
+                            popUptitle = "Missing Information"
+                            popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
+                            popUpIconColor = Color.theme.RedInstance
+                        } else{
+                            recipeValidated = true
                         }
+                        if (recipeValidated == true){
+                            Task {
+                                await loading()
+                                await addingCookingSteps()
+                                try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
+                                                                          creatorID: "99",
+                                                                          mealType: currentMealType,
+                                                                          intro: description,
+                                                                          servingSize: servingSize,
+                                                                          cookingTime: cookingTime,
+                                                                          calories: calories,
+                                                                          carb: carb,
+                                                                          protein: protein,
+                                                                          fat: fat,
+                                                                          sugars: sugars,
+                                                                          salt: salt,
+                                                                          saturates: saturates,
+                                                                          fibre: fibre,
+                                                                          ingredients: Ingredients,
+                                                                          tags: currentSelectedTags),
+                                                           image: backgroundPhoto,
+                                                           cookingSteps: cookingSteps
+                                )
+                                await resetTheCreateRecipeForm()
+                                await cancelLoading()
+                                await showSuccessPopup()
+                            }
+                        }
+                    }) {
+                        Text("Create")
+                            .font(.system(size: 20))
+                        
+                    }.padding(.trailing, 20)
+                }
+                SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
+                
+                if selectedTabIndex == 0 {
+                    CreateIntroView(backgroundPhoto: $backgroundPhoto ,recipeName: $recipeName, cookingTime: $cookingTime, servingSize: $servingSize, description: $description, calories: $calories, carb: $carb, protein: $protein, fat: $fat, sugars: $sugars, salt: $salt, saturates: $saturates, fibre: $fibre, currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes)
+                }
+                
+                if selectedTabIndex == 1 {
+                    CreateIngredientsView(Ingredients: $Ingredients)
+                }
+                
+                if selectedTabIndex == 2 {
+                    CreateStepsView(Steps: $Steps, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
+                }
+                
+            }
+            .overlay(
+                ZStack {
+                    if showPopUp {
+                        Color.theme.DarkWhite.opacity(0.5)
+                            .edgesIgnoringSafeArea(.all)
+                        PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
                     }
-                }) {
-                    Text("Create")
-                        .font(.system(size: 20))
-            
-                }.padding(.trailing, 20)
-            }
-            SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
-            
-            if selectedTabIndex == 0 {
-                CreateIntroView(backgroundPhoto: $backgroundPhoto ,recipeName: $recipeName, cookingTime: $cookingTime, servingSize: $servingSize, description: $description, calories: $calories, carb: $carb, protein: $protein, fat: $fat, sugars: $sugars, salt: $salt, saturates: $saturates, fibre: $fibre, currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes)
-            }
-            
-            if selectedTabIndex == 1 {
-                CreateIngredientsView(Ingredients: $Ingredients)
-            }
-            
-            if selectedTabIndex == 2 {
-                CreateStepsView(Steps: $Steps, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
-            }
-            
-        }
-        .overlay(
-            ZStack {
-                if showPopUp {
-                    Color.theme.DarkWhite.opacity(0.5)
-                        .edgesIgnoringSafeArea(.all)
-                    PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
+                }
+                    .opacity(showPopUp ? 1 : 0)
+            )
+            .background(Color.theme.White)
+            if (isLoading == true){
+                ZStack {
+                    Color(.black)
+                        .ignoresSafeArea()
+                        .opacity(0.5)
+                        .background(Color.clear)
+                    
+                    Progress(loadingSize: 3)
                 }
             }
-            .opacity(showPopUp ? 1 : 0)
-        )
-        .background(Color.theme.White)
+        }
     }
 }
 
