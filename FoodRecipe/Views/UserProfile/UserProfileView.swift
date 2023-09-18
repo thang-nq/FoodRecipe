@@ -74,54 +74,88 @@ struct UserProfileView: View {
 //                    }
                 }
                 
+                
+                // MARK: Update recipe
+                ScrollView {
+                    VStack (alignment: .center) {
+                        if let recipe = detailVM.recipe {
+                            Button {
+                                Task {
+                                    
+                                    // Update entire recipe and re-define cooking steps (overwrite old cookingSteps)
+                                    await detailVM.updateRecipe(recipeID: recipe.id!, updateData: updateRecipeInterface(name: "Updated recipe and steps", steps: [CookingStepInterface(context: "New step context", imageData: stepPhoto, stepNumber: 1)]))
+                                }
+                            } label: {
+                                Text("Update recipe")
+                            }
+                            FirebaseImage(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
+                                .padding(.bottom)
+                            Text(recipe.name)
+                            HStack(alignment: .center) {
+                                Text("Created by - \(recipe.creatorName)")
+                                UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
+                            }
+                            Text("Created at - \(recipe.createdAt)")
+                            Text(recipe.mealType)
+                            ForEach(recipe.steps) { step in
+
+                                
+                                Text("Step \(step.stepNumber) - \(step.context)")
+                                FirebaseImage(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
+                                    .padding(.bottom)
+                                
+                                
+                                Button {
+                                    Task {
+                                        
+                                        // MARK: Update a step
+                                        await detailVM.updateCookingStep(recipeID: recipe.id!, stepID: step.id!, context: "This step is updated", backgroundImage: stepPhoto)
+                                    }
+                                } label: {
+                                    Text("Update this step")
+                                }
+                                
+                                
+                                // MARK: Delete a step
+                                Button {
+                                    Task {
+                                        await detailVM.deleteCookingStep(recipeID: recipe.id!, stepID: step.id!)
+                                    }
+                                } label: {
+                                    Text("Delete this step").foregroundColor(.red)
+                                }
+                            }
+                        } else {
+
+                        }
+                    }
+                }
+
+                
 //                ScrollView {
-//                    VStack (alignment: .center) {
-//                        if let recipe = detailVM.recipe {
-//                            FirebaseImage(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
-//                                .padding(.bottom)
-//                            Text(recipe.name)
-//                            HStack(alignment: .center) {
+//                    VStack {
+//                        Text("Saved recipes")
+//                        ForEach(homeVM.savedRecipes) {recipe in
+//                            VStack {
+//                                Text(recipe.name)
 //                                Text("Created by - \(recipe.creatorName)")
-//                                UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
+//                                Text(recipe.isSaved ? "Already saved" : "Save to favorite")
+//                                Button {
+//                                    Task {
+//                                        await homeVM.saveOrRemoveRecipe(recipeID: recipe.id!)
+//                                    }
+//                                } label: {
+//                                    Text("🗑️ Unsave")
+//                                }
 //                            }
-//                            Text("Created at - \(recipe.createdAt)")
-//                            Text(recipe.mealType)
-//                            ForEach(recipe.steps) { step in
-//                                Text("Step \(step.stepNumber) - \(step.context)")
-//                                FirebaseImage(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
-//                                    .padding(.bottom)
-//                            }
-//                        } else {
 //
 //                        }
 //                    }
+//
 //                }
-
-                
-                ScrollView {
-                    VStack {
-                        Text("Saved recipes")
-                        ForEach(homeVM.savedRecipes) {recipe in
-                            VStack {
-                                Text(recipe.name)
-                                Text("Created by - \(recipe.creatorName)")
-                                Text(recipe.isSaved ? "Already saved" : "Save to favorite")
-                                Button {
-                                    Task {
-                                        await homeVM.saveOrRemoveRecipe(recipeID: recipe.id!)
-                                    }
-                                } label: {
-                                    Text("🗑️ Unsave")
-                                }
-                            }
-                            
-                        }
-                    }
-                    
-                }
-                .task {
-                    await homeVM.getSavedRecipe()
-                }
+//                .task {
+//                    await homeVM.getSavedRecipe()
+//                }
 
                 
                 
@@ -133,9 +167,9 @@ struct UserProfileView: View {
                 
                 // Recipe list
                 
-//                PhotosPicker(selection: $stepPhoto, photoLibrary: .shared()) {
-//                    Label("Choose step photo", systemImage: "photo")
-//                }
+                PhotosPicker(selection: $stepPhoto, photoLibrary: .shared()) {
+                    Label("Choose step photo", systemImage: "photo")
+                }
                 
                 Button {
                     Task {

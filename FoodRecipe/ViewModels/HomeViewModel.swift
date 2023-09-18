@@ -12,8 +12,15 @@ import PhotosUI
 class HomeViewModel: ObservableObject {
     @Published var recipes: [Recipe] = []
     @Published var savedRecipes: [Recipe] = []
+    @Published var showError: Bool = false
+    @Published var errorMessage: String?
     
-    init() {}
+    init() {
+        Task {
+            await getAllRecipe()
+        }
+    }
+    
     func getAllRecipe() async {
         self.recipes = await RecipeManager.shared.getRecipeList()
     }
@@ -22,18 +29,26 @@ class HomeViewModel: ObservableObject {
         self.recipes = await RecipeManager.shared.getRecipeByFilters(filters: ["mealType": mealType])
     }
     
-    func getRecipeByFilters(filters: [String: Any]) async {
-        self.recipes = await RecipeManager.shared.getRecipeByFilters(filters: filters)
-    }
     
-    func addRecipe(recipe: Recipe, image: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async throws {
-        await RecipeManager.shared.createNewRecipe(recipe: recipe, backgroundImage: image, cookingSteps: cookingSteps)
-        await getAllRecipe()
+    func addRecipe(recipe: Recipe, image: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async {
+        do {
+            try await RecipeManager.shared.createNewRecipe(recipe: recipe, backgroundImage: image, cookingSteps: cookingSteps)
+            await getAllRecipe()
+        } catch {
+            errorMessage = error.localizedDescription
+            showError = true
+        }
+
     }
     
     func deleteRecipe(recipeID: String) async throws {
-        await RecipeManager.shared.deleteRecipe(recipeID: recipeID)
-        await getAllRecipe()
+        do {
+            try await RecipeManager.shared.deleteRecipe(recipeID: recipeID)
+            await getAllRecipe()
+        } catch {
+            errorMessage = error.localizedDescription
+            showError = true
+        }
     }
     
     func searchRecipeByTags(tags: [String]) async {
@@ -63,6 +78,10 @@ class HomeViewModel: ObservableObject {
         self.savedRecipes = recipes
     }
     
+    // To be removed
+    func getRecipeByFilters(filters: [String: Any]) async {
+        self.recipes = await RecipeManager.shared.getRecipeByFilters(filters: filters)
+    }
 }
 
 
