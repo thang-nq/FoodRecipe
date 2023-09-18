@@ -14,7 +14,6 @@ struct RecipeDetailView: View {
     var recipeId: String
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var detailVM = RecipeDetailViewModel()
-    @StateObject var homeVM = HomeViewModel()
     @State private var selectedTabIndex = 0
     private func back() {
         // Back action
@@ -22,7 +21,7 @@ struct RecipeDetailView: View {
     }
     private func saveAction() {
         Task {
-            await homeVM.saveOrRemoveRecipe(recipeID: recipeId)
+            await detailVM.saveOrReomveSavedRecipe(recipeID: recipeId)
         }
     }
     var body: some View {
