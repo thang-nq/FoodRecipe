@@ -10,7 +10,7 @@ import SwiftUI
 struct TDEEWelcomeList: View {
     
     @State private var tabIndex: Int = 0
-    @AppStorage("initialView") var initialView: Bool = true
+    @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
     
     var body: some View {
         //MARK: TABVIEW WRAPPER UI
@@ -31,14 +31,12 @@ struct TDEEWelcomeList: View {
     }
     
     func nextPage() {
-        
         if tabIndex < 2 {
             withAnimation{
                 tabIndex += 1
             }
         } else {
-//            showLoading = false
-            initialView = false
+            TDDEIntro = false
         }
     }}
 

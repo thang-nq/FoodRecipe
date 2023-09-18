@@ -17,6 +17,10 @@ class RecipeDetailViewModel: ObservableObject {
         self.recipe = await RecipeManager.shared.getRecipeInformation(recipeID: recipeID)
     }
     
+    func getMockRecipeDetail() {
+        self.recipe = Recipe.sampleRecipe
+    }
+    
     func saveOrReomveSavedRecipe(recipeID: String) async {
         await RecipeManager.shared.saveOrRemoveRecipeFromFavorite(recipeID: recipeID)
         await getRecipeDetail(recipeID: recipeID)
