@@ -32,30 +32,30 @@ struct CookModeView: View {
                     Button {
                         decrementPage()
                     } label: {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(Color.theme.WhiteInstance)
-                        .padding(10)
-                        .background(Color.theme.Orange)
-                        .clipShape(Circle())
+                        Image(systemName: "chevron.left")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(Color.theme.WhiteInstance)
+                            .padding(10)
+                            .background(Color.theme.Orange)
+                            .clipShape(Circle())
                     }
-
+                    
                     Spacer()
                     Button {
                         incrementPage()
                     } label: {
-                    Image(systemName: "chevron.right")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(Color.theme.Orange)
-                        .clipShape(Circle())
+                        Image(systemName: "chevron.right")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.theme.Orange)
+                            .clipShape(Circle())
                     }
-
+                    
                 }.padding(20),
                 alignment: .bottom
             )
@@ -79,7 +79,7 @@ struct CookModeView: View {
     
     func decrementPage() {
         if(pageIndex > 0) {
-          pageIndex -= 1
+            pageIndex -= 1
         }else {
             pageIndex = pages.count - 1
         }
@@ -89,16 +89,7 @@ struct CookModeView: View {
 struct CookModeView_Previews: PreviewProvider {
     static var previews: some View {
         CookModeView(
-            recipe: Recipe(name: "Crispy Pork",
-                           creatorID: "randomid",
-                           intro: "This is a healthy dish",
-                           servingSize: 3,
-                           cookingTime: 90,
-                           calories: 740,
-                           carb: 15,
-                           protein: 30,
-                           ingredients: ["300g Pork", "20g Salt"],
-                           tags: ["Pork", "Dinner"])
+            recipe:  Recipe.sampleRecipe
         )
     }
 }

@@ -12,7 +12,6 @@ import SwiftUI
 //                  "3 garlic cloves, finely diced",
 //                  "Rebus lagi air kaldu, masukkan makaroni dan masak hingga setengah matang. Masukkan wortel dan masak hingga mendidih. ",
 //                  "Masukkan bumbu dan daun seledri. Masak hingga semua bahan matang dan kuah sedap."]
-var MOCK_STEPS = [CookingStep(context: "Do this and that", backgroundURL: "", stepNumber: 1)]
 struct StepsView: View {
     var stepsList: [CookingStep]
     var body: some View {
@@ -37,7 +36,7 @@ struct StepsView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack(alignment: .top) {
             Color("LightGray").ignoresSafeArea(.all)
-            StepsView(stepsList: MOCK_STEPS)
+            StepsView(stepsList: Recipe.sampleRecipe.steps)
         }
     }
 }
