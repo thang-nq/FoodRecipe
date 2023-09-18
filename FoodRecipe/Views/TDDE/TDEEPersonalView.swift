@@ -21,6 +21,7 @@ struct TDEEPersonalView: View {
         NavigationStack{
             VStack{
                 caloriesCalculate
+                todayList
             }
             .navigationTitle("Today's calories")
         }
@@ -45,10 +46,23 @@ private extension TDEEPersonalView {
         }
     }
     
-//    //MARK: TODAY'S FOOD LIST
-//    var todayList: some View {
-//        List {
-//
-//        }
-//    }
+    
+    //MARK: TODAY'S FOOD LIST
+    var todayList: some View {
+        VStack(alignment: .leading){
+            Text("Today list")
+                .font(.custom("ZillaSlab-Bold", size: 26))
+                .padding(.horizontal, 20)
+            ScrollView {
+                RecipeCard()
+                Divider()
+                RecipeCard()
+                Divider()
+                RecipeCard()
+                Divider()
+                RecipeCard()
+            }
+        }
+    }
+    
 }
