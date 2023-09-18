@@ -85,7 +85,7 @@ struct RecipeCardView: View {
                         Button(action: {
                         // Handle save action
                         }) {
-                            Image(systemName: "heart")
+                            Image(systemName: recipe.isSaved ? "heart.fill" : "heart")
                         }
                         .foregroundColor(Color("Orange"))
                         .buttonStyle(PlainButtonStyle())
