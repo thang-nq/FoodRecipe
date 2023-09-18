@@ -46,11 +46,10 @@ private extension TDEEPersonalView {
         }
     }
     
-    
     //MARK: TODAY'S FOOD LIST
     var todayList: some View {
         VStack(alignment: .leading){
-            Text("Today list")
+            Text("Today Meals")
                 .font(.custom("ZillaSlab-Bold", size: 26))
                 .padding(.horizontal, 20)
             ScrollView {
@@ -62,6 +61,7 @@ private extension TDEEPersonalView {
                 Divider()
                 RecipeCard()
             }
+            .padding(.horizontal)
         }
     }
     

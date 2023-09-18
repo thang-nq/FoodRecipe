@@ -17,16 +17,15 @@ struct RecipeCard: View {
                 .frame(width: 80, height: 80, alignment: .center)
                 .clipShape(Circle())
 
-            Spacer()
             VStack(alignment: .leading){
         
                 Text("Beef Tender Charcoal")
                     .foregroundColor(Color.theme.DarkBlue)
-                    .font(.custom("ZillaSlab-SemiBold", size: 24))
+                    .font(.custom("ZillaSlab-SemiBold", size: 20))
             
                 Text("Calories: 600 Kcal")
                     .foregroundColor(Color.theme.DarkBlue)
-                    .font(.custom("ZillaSlab-Regular", size: 18))
+                    .font(.custom("ZillaSlab-Regular", size: 16))
                 
                 HStack{
                     Text("Carb: 90g")
@@ -34,11 +33,17 @@ struct RecipeCard: View {
                     Text("Fat: 12g")
                 }
                 .foregroundColor(Color.theme.DarkBlue)
-                .font(.custom("ZillaSlab-Regular", size: 18))
+                .font(.custom("ZillaSlab-Regular", size: 16))
             }
             Spacer()
-            Button(action:{}, label: {Image(systemName: "trash")})
-                .foregroundColor(Color.theme.RedInstance)
+            VStack(alignment: .center, spacing: 15){
+                Button(action:{}, label: {Image(systemName: "info.circle.fill")})
+                    .foregroundColor(Color.theme.BlueInstance)
+                
+                Button(action:{}, label: {Image(systemName: "trash")})
+                    .foregroundColor(Color.theme.RedInstance)
+            }
+
         }
         .foregroundColor(Color.theme.DarkWhite)
         .padding()
