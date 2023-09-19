@@ -11,14 +11,29 @@ import SwiftUI
 struct RecipeListView: View {
     @StateObject private var viewModel = HomeViewModel()
     @AppStorage("isDarkMode") var isDark = false
+    func saveAction(recipeId: String) {
+        Task {
+            await viewModel.saveOrRemoveRecipe(recipeID: recipeId)
+        }
+    }
+    func fetchRecipes() {
+        Task {
+            do {
+                try await viewModel.getAllRecipe()
+            } catch {
+                // Handle any errors that occur during the async operation
+                print("Error: \(error)")
+            }
+        }
+    }
     var body: some View {
         NavigationView {
             VStack {
                 List {
                     Section(header: Text("Today's Recipes").font(.custom("ZillaSlab-Bold", size: 30))) {
                         ForEach(viewModel.recipes) { recipe in
-                            NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!).navigationBarHidden(true)) {
-                                RecipeCardView(recipe: recipe)
+                            NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!, onDissappear: fetchRecipes).navigationBarHidden(true)) {
+                                RecipeCardView(recipe: recipe, saveAction: saveAction)
                             }
                         }
                     }.headerProminence(.increased)
@@ -34,14 +49,7 @@ struct RecipeListView: View {
             }
         }
         .onAppear {
-            Task(priority: .medium) {
-                do {
-                    try await viewModel.getAllRecipe()
-                } catch {
-                    // Handle any errors that occur during the async operation
-                    print("Error: \(error)")
-                }
-            }
+            fetchRecipes()
         }
         .environment(\.colorScheme, isDark ? .dark : .light)
     }
@@ -49,6 +57,7 @@ struct RecipeListView: View {
 
 struct RecipeCardView: View {
     var recipe: Recipe
+    var saveAction: (String) -> Void
     
     var body: some View {
         VStack(alignment: .leading){
@@ -59,9 +68,9 @@ struct RecipeCardView: View {
                 .cornerRadius(5)
             HStack{
                 Text(recipe.name)
-                        .font(.custom("ZillaSlab-SemiBold", size: 26))
-                        .padding(.top, 10)
-                        .frame(width: 220, alignment: .leading)
+                    .font(.custom("ZillaSlab-SemiBold", size: 26))
+                    .padding(.top, 10)
+                    .frame(width: 220, alignment: .leading)
             }.frame(maxWidth: .infinity, alignment: .leading)
             HStack {
                 ForEach(recipe.tags, id: \.self) { tag in
@@ -76,23 +85,25 @@ struct RecipeCardView: View {
                 Spacer()
             }
             .padding(.bottom, 10)
-                  
+            
             Text(recipe.intro)
                 .font(.custom("ZillaSlab-Regular", size: 20))
             
+        }
+        .overlay(
+            Button(action: {
+                // Handle save action
+                //                homeVM
+                saveAction(recipe.id!)
+            }) {
+                Image(systemName: recipe.isSaved ? "heart.fill" : "heart")
             }
-            .overlay(
-                        Button(action: {
-                        // Handle save action
-                        }) {
-                            Image(systemName: "heart")
-                        }
-                        .foregroundColor(Color("Orange"))
-                        .buttonStyle(PlainButtonStyle())
-                        .padding(.trailing, 16)
-                        .font(.system(size: 25))
-                        .offset(x:140, y:50)
-            )
+                .foregroundColor(Color("Orange"))
+                .buttonStyle(PlainButtonStyle())
+                .padding(.trailing, 16)
+                .font(.system(size: 25))
+                .offset(x:140, y:50)
+        )
         .padding(.bottom, 10)
     }
 }

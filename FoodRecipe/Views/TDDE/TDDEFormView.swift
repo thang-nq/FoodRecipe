@@ -15,18 +15,22 @@ struct TDDEFormView: View {
     @State private var activityLevel: Float = 1.2
     @ObservedObject var inputFieldManager = InputFieldManager()
     @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
+    
     @State private var navigateToPersonalTDEE = false
     
     //MARK: init font cus nav title
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "ZillaSlab-Bold", size: 30)!]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.theme.Orange)]
     }
     
     var body: some View {
         NavigationStack{
             VStack{
                 form
+                submitButton
             }
+//            .navigationBarTitle("TDEE CALCULATOR", displayMode: .large)
             .navigationTitle(Text("TDEE CALCULATOR"))
             .navigationBarBackButtonHidden(true)
         }
@@ -43,34 +47,28 @@ struct TDDEFormView_Previews: PreviewProvider {
     }
 }
 
-private extension TDDEFormView {    
-    //MARK: TITLE UI
-    var title: some View {
-            Text("TDEE CALCULATOR")
-                .font(.custom("ZillaSlab-BoldItalic", size: 30))
-    }
-    
+private extension TDDEFormView {
     //MARK: FORM UI
     var form: some View {
         
-        Form {
+        List {
             //MARK: GENDER UI
-            Section(header: Text("Select your gender")){
+            Section {
                 Picker("Gender", selection: $gender){
-                    
                     Text("Male")
                         .tag("MALE")
-                    
                     Text("Female")
                         .tag("FEMALE")
-                        
                 }
                 .font(.custom("ZillaSlab-BoldItalic", size: 16))
                 .foregroundColor(Color.theme.DarkBlue)
-            }
-            .font(.custom("ZillaSlab-Bold", size: 18))
-            .foregroundColor(Color.theme.DarkBlue)
 
+            } header: {
+                Text("Select your gender")
+                    .font(.custom("ZillaSlab-Bold", size: 18))
+                    .foregroundColor(Color.theme.DarkBlue)
+            }
+            
             //MARK: AGE UI
             Section(header: Text("Your age")) {
                 TextField("Your age", text: $inputFieldManager.ageInput)
@@ -88,9 +86,10 @@ private extension TDDEFormView {
             }
             .font(.custom("ZillaSlab-Bold", size: 18))
             .foregroundColor(Color.theme.DarkBlue)
+        
             
             //MARK: ACTIVITY LEVEL
-            Section(header: Text("Select your activity level")){
+            Section{
                 Picker("Activity level", selection: $activityLevel){
                     Text("Sedentary")
                         .tag(1.2)
@@ -110,36 +109,42 @@ private extension TDDEFormView {
                 .font(.custom("ZillaSlab-BoldItalic", size: 16))
                 .foregroundColor(Color.theme.DarkBlue)
                 
+            } header: {
+                Text("Select your activity level")
+                    .font(.custom("ZillaSlab-Bold", size: 18))
+                    .foregroundColor(Color.theme.DarkBlue)
+            } footer: {
                 Text("Activity level is a factor that is based on the amount of activity a person undergoes. This includes deliberate exercise as well as other activities that a person may undergo as part of their job or typical daily activities. These factors are more specifically referred to as the thermic effect of activity, and non-exercise activity thermogenesis (energy expended for non-sleeping, eating, or sports-like exercise).")
                     .font(.custom("ZillaSlab-Regular", size: 16))
                     .foregroundColor(Color.theme.DarkGray)
             }
-            .font(.custom("ZillaSlab-Bold", size: 18))
-            .foregroundColor(Color.theme.DarkBlue)
-            
-            //MARK: SUBMIT BUTTON
-            
-            Button(action:{
-                //Convert age and height string to INT & FLOAT
-                let ageInt = (inputFieldManager.ageInput as NSString).integerValue
-                let heightInt = (inputFieldManager.heightInput as NSString).integerValue
-                print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel)")
-                navigateToPersonalTDEE = true
-            }){
-                Text("Submit")
-                    .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
-                    .frame(width: 350, height: 50)
-                    .contentShape(Rectangle())
-            }
-            .foregroundColor(Color.theme.DarkBlueInstance)
-            .background(inputFieldManager.isValidBMIForm() ? Color.theme.LightGray: Color.theme.Orange)
-            .cornerRadius(8)
-            .disabled(inputFieldManager.isValidBMIForm())
-            .navigationDestination(isPresented: $navigateToPersonalTDEE){
-                TDEEPersonalView()
-            }
+        }
+        .listStyle(.sidebar)
+    }
+    
+    
+    //MARK: SUBMIT BUTTON
+    var submitButton: some View {
+        Button(action:{
+            //Convert age and height string to INT & FLOAT
+            let ageInt = (inputFieldManager.ageInput as NSString).integerValue
+            let heightInt = (inputFieldManager.heightInput as NSString).integerValue
+            print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel)")
+            navigateToPersonalTDEE = true
+        }){
+            Text("Submit")
+                .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
+                .frame(width: 350, height: 50)
+                .contentShape(Rectangle())
+        }
+        .foregroundColor(Color.theme.DarkBlueInstance)
+        .background(inputFieldManager.isValidBMIForm() ? Color.theme.LightGray: Color.theme.Orange)
+        .cornerRadius(8)
+        .disabled(inputFieldManager.isValidBMIForm())
+        .navigationDestination(isPresented: $navigateToPersonalTDEE){
+            TDEEPersonalView()
         }
     }
         
-    
+        
 }

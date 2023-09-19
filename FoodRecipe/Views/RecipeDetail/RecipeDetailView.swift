@@ -12,12 +12,18 @@ import SlidingTabView
 
 struct RecipeDetailView: View {
     var recipeId: String
+    var onDissappear: () -> Void
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var detailVM = RecipeDetailViewModel()
     @State private var selectedTabIndex = 0
     private func back() {
         // Back action
         self.presentationMode.wrappedValue.dismiss()
+    }
+    private func saveAction() {
+        Task {
+            await detailVM.saveOrReomveSavedRecipe(recipeID: recipeId)
+        }
     }
     var body: some View {
         NavigationView {
@@ -38,7 +44,7 @@ struct RecipeDetailView: View {
                                 )
                                 .offset(y: -60)
                             
-                            TopBar(isSaved: recipeDetail.isSaved, action: back)
+                            TopBar(recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
                             //                    if let recipeDetail = detailVM.recipe {
                             VStack(spacing: 15) {
                                 ZStack {
@@ -101,24 +107,29 @@ struct RecipeDetailView: View {
                     }
                 }
             }
+            .onDisappear {
+                onDissappear()
+            }
         }
     }
 }
 
 struct RecipeDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDetailView(recipeId: "QemaUoPfXPDMThjSF3og")
+        RecipeDetailView(recipeId: "QemaUoPfXPDMThjSF3og", onDissappear: {})
     }
 }
 
 
 struct TopBar: View {
+    var recipeId: String
     var isSaved: Bool
-    var action: () -> Void
+    var backAction: () -> Void
+    var saveAction: () -> Void
     var body: some View {
         HStack  {
             Button {
-                action()
+                backAction()
             } label: {
                 
                 Image("chevron-left")
@@ -132,14 +143,19 @@ struct TopBar: View {
             
             
             Spacer()
-            Image(systemName: "heart")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundColor(isSaved ? Color.theme.WhiteInstance : Color.theme.Black.opacity(0.5))
-                .padding(10)
-                .background(isSaved ? Color.theme.Orange : .white)
-                .clipShape(Circle())
+            
+            Button {
+                saveAction()
+            } label: {
+                Image(systemName: "heart")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(isSaved ? Color.theme.WhiteInstance : Color.theme.Black.opacity(0.5))
+                    .padding(10)
+                    .background(isSaved ? Color.theme.Orange : .white)
+                    .clipShape(Circle())
+            }
         }.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 25)
     }
 }
@@ -162,9 +178,9 @@ struct MainInfo: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             HStack {
-                Text("By ") + Text("**Nick Tran**").font(.custom("ZillaSlab-BoldItalic", size: 20)).fontWeight(.medium)
+                Text("By ") + Text("**\(recipe.creatorName)**").font(.custom("ZillaSlab-BoldItalic", size: 20)).fontWeight(.medium)
                 Spacer()
-                Text("September 1st, 2023")
+                Text(recipe.createdAt)
             }
             Divider()
             Text(recipe.intro)

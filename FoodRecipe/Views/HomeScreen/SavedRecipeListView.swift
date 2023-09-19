@@ -12,14 +12,29 @@ import SwiftUI
 struct SavedRecipeListView: View {
     @StateObject private var viewModel = HomeViewModel()
     @AppStorage("isDarkMode") var isDark = false
+    func saveAction(recipeId: String) -> Void {
+        Task {
+            await viewModel.saveOrRemoveRecipe(recipeID: recipeId)
+        }
+    }
+    func fetchSavedRecipes() -> Void {
+        Task(priority: .medium) {
+                do {
+                    try await viewModel.getSavedRecipe()
+                } catch {
+                    // Handle any errors that occur during the async operation
+                    print("Error: \(error)")
+                }
+            }
+    }
     var body: some View {
         NavigationView {
             VStack {
                 List {
                     Section(header: Text("Saved Recipe").font(.custom("ZillaSlab-Bold", size: 30))) {
-                        ForEach(viewModel.recipes) { recipe in
-                            NavigationLink(destination: RecipeDetailViewDemo(recipe: recipe)) {
-                                RecipeCardView(recipe: recipe)
+                        ForEach(viewModel.savedRecipes) { recipe in
+                            NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!, onDissappear: fetchSavedRecipes).navigationBarHidden(true)) {
+                                RecipeCardView(recipe: recipe, saveAction: saveAction)
                             }
                         }
                     }.headerProminence(.increased)
@@ -35,14 +50,7 @@ struct SavedRecipeListView: View {
             }
         }
         .onAppear {
-            Task(priority: .medium) {
-                do {
-                    try await viewModel.getAllRecipe()
-                } catch {
-                    // Handle any errors that occur during the async operation
-                    print("Error: \(error)")
-                }
-            }
+            fetchSavedRecipes()
         }
         .environment(\.colorScheme, isDark ? .dark : .light)
     }

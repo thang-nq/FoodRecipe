@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A11EAE902AB97BFC008E56B5 /* TDEEWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11EAE8F2AB97BFC008E56B5 /* TDEEWrapperView.swift */; };
 		A12005182AB58B3B00E11DF6 /* InputFieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */; };
 		A120051A2AB5A22800E11DF6 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005192AB5A22800E11DF6 /* SignupView.swift */; };
 		A120051D2AB6E9BE00E11DF6 /* TDDEFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */; };
@@ -55,6 +56,7 @@
 		A57741F62AB45F97009B4882 /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57741F52AB45F97009B4882 /* RecipeDetailViewModel.swift */; };
 		A57741F82AB483C7009B4882 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57741F72AB483C7009B4882 /* SearchViewModel.swift */; };
 		A57741FA2AB5E4D1009B4882 /* DateTimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57741F92AB5E4D1009B4882 /* DateTimeFormat.swift */; };
+		A5A529A32AB931B600F2591F /* SaveRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A529A22AB931B600F2591F /* SaveRecipeViewModel.swift */; };
 		A5F1C2D82AB324B500949874 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2D62AB324B400949874 /* UserManager.swift */; };
 		A5F1C2D92AB324B500949874 /* RecipeManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2D72AB324B400949874 /* RecipeManger.swift */; };
 		A5F1C2DB2AB3265D00949874 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2DA2AB3265D00949874 /* Errors.swift */; };
@@ -84,6 +86,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A11EAE8F2AB97BFC008E56B5 /* TDEEWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDEEWrapperView.swift; sourceTree = "<group>"; };
 		A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldManager.swift; sourceTree = "<group>"; };
 		A12005192AB5A22800E11DF6 /* SignupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDDEFormView.swift; sourceTree = "<group>"; };
@@ -130,6 +133,7 @@
 		A57741F52AB45F97009B4882 /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
 		A57741F72AB483C7009B4882 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		A57741F92AB5E4D1009B4882 /* DateTimeFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeFormat.swift; sourceTree = "<group>"; };
+		A5A529A22AB931B600F2591F /* SaveRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRecipeViewModel.swift; sourceTree = "<group>"; };
 		A5F1C2D62AB324B400949874 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		A5F1C2D72AB324B400949874 /* RecipeManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeManger.swift; sourceTree = "<group>"; };
 		A5F1C2DA2AB3265D00949874 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 				A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */,
 				A17F89372AB82BC500D0FBD7 /* TDEEPersonalView.swift */,
 				A17F89392AB837B800D0FBD7 /* RecipeCard.swift */,
+				A11EAE8F2AB97BFC008E56B5 /* TDEEWrapperView.swift */,
 			);
 			path = TDDE;
 			sourceTree = "<group>";
@@ -201,6 +206,7 @@
 				A57741F52AB45F97009B4882 /* RecipeDetailViewModel.swift */,
 				A57741F72AB483C7009B4882 /* SearchViewModel.swift */,
 				C2C5F22A2AB85A4A003A54A6 /* CreateRecipeViewModel.swift */,
+				A5A529A22AB931B600F2591F /* SaveRecipeViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -525,6 +531,7 @@
 				A188D5AA2AB1747700E8FF0E /* RoundedCorners.swift in Sources */,
 				A5F1C2D92AB324B500949874 /* RecipeManger.swift in Sources */,
 				A17132F52AB573B500F103CF /* Progress.swift in Sources */,
+				A5A529A32AB931B600F2591F /* SaveRecipeViewModel.swift in Sources */,
 				A5F1C2DB2AB3265D00949874 /* Errors.swift in Sources */,
 				CC8D218D2AB01D080036ABF3 /* StepsView.swift in Sources */,
 				A548C0852AADE2D400884B91 /* UserAvatar.swift in Sources */,
@@ -532,6 +539,7 @@
 				CC8D218B2AB0164F0036ABF3 /* SectionTitleView.swift in Sources */,
 				A120051F2AB74B6000E11DF6 /* testView.swift in Sources */,
 				A12005182AB58B3B00E11DF6 /* InputFieldManager.swift in Sources */,
+				A11EAE902AB97BFC008E56B5 /* TDEEWrapperView.swift in Sources */,
 				A548C07B2AADDD6800884B91 /* User.swift in Sources */,
 				A17B54192AB039960096A8A9 /* AuthViewModel.swift in Sources */,
 				A1A85E682AAF031E00875285 /* Color.swift in Sources */,
