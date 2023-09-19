@@ -26,7 +26,7 @@ struct HomeView: View {
                     Text("Search")
                 }
 //            CreateRecipeView()
-            TDDEFormView()
+            CreateRecipeView()
                 .tabItem(){
                     Image(systemName: "brain")
                     Text("TDEE")
