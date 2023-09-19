@@ -139,7 +139,7 @@ class CreateRecipeViewModel: ObservableObject {
             Task {
                 await loading()
                 await addingCookingSteps()
-                try await homeVM.addRecipe(recipe: Recipe(name: recipeName,
+                await homeVM.addRecipe(recipe: Recipe(name: recipeName,
                                                           creatorID: "99",
                                                           mealType: currentMealType,
                                                           intro: description,
