@@ -45,17 +45,22 @@ struct RecipeDetailView: View {
                                 .offset(y: -60)
                             
                             TopBar(recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
-                            //                    if let recipeDetail = detailVM.recipe {
+                            
+                            // MARK: Content
                             VStack(spacing: 15) {
                                 ZStack {
                                     VStack(spacing: 15) {
+                                        // MARK: MainInfo
                                         MainInfo(recipe: recipeDetail)
+                                        // MARK: Nutrition
                                         NutritionView(recipe: recipeDetail)
                                     }
                                 }
                                 VStack {
+                                    // MARK: Sliding tab views
                                     SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
                                     if selectedTabIndex == 0 {
+                                        // Intro
                                         SectionContainerView {
                                             Text(recipeDetail.intro)
                                                 .font(.custom("ZillaSlab-Regular", size: 20))
@@ -63,10 +68,12 @@ struct RecipeDetailView: View {
                                         }
                                     }
                                     if selectedTabIndex == 1 {
+                                        // Ingredients
                                         IngredientsView(ingredientsList: recipeDetail.ingredients)
                                     }
                                     
                                     if selectedTabIndex == 2 {
+                                        // Steps
                                         StepsView(stepsList: recipeDetail.steps)
                                     }
                                 }.background(Color.theme.WhiteInstance).frame(minHeight: 300)
@@ -121,6 +128,7 @@ struct RecipeDetailView_Previews: PreviewProvider {
 }
 
 
+// MARK: TopBar
 struct TopBar: View {
     var recipeId: String
     var isSaved: Bool
@@ -131,7 +139,7 @@ struct TopBar: View {
             Button {
                 backAction()
             } label: {
-                
+                // Back button
                 Image("chevron-left")
                     .resizable()
                     .frame(width: 24, height: 24)
@@ -147,6 +155,7 @@ struct TopBar: View {
             Button {
                 saveAction()
             } label: {
+                // Save recipe
                 Image(systemName: "heart")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -160,6 +169,7 @@ struct TopBar: View {
     }
 }
 
+// MARK: MainInfo
 struct MainInfo: View {
     let recipe: Recipe
     var body: some View {
@@ -182,10 +192,40 @@ struct MainInfo: View {
                 Spacer()
                 Text(recipe.createdAt)
             }
-            Divider()
-            Text(recipe.intro)
-                .font(.custom("ZillaSlab-Regular", size: 20))
-                .frame(maxWidth: .infinity, alignment: .topLeading)
+            HStack(alignment: .center, spacing: 16) {
+                VStack(spacing: 8) {
+                    Image(systemName: "clock")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Color.theme.Orange)
+                        .frame(width: 24, height: 24)
+                    Text("\(recipe.cookingTime) minutes")
+                }.frame(maxWidth: .infinity)
+                //                Divider()
+                //                Rectangle().fill(.blue).frame(width: 1) // or any other color
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .frame(width: 1, height: 70)
+                    .background(Color.theme.Black.opacity(0.3))
+                
+                VStack(spacing: 8){
+                    Image(systemName: "fork.knife")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Color.theme.Orange)
+                        .frame(width: 24, height: 24)
+                    Text("Serves \(recipe.servingSize)")
+                }.frame(maxWidth: .infinity)
+            }.padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 8)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .background(.white)
+                .shadow(color: Color.theme.Black.opacity(0.3), radius: 0, x: 0, y: -1)
+//                .shadow(color: Color.theme.Black.opacity(0.3), radius: 0, x: 0, y: 1)
+//            Text(recipe.intro)
+//                .font(.custom("ZillaSlab-Regular", size: 20))
+//                .frame(maxWidth: .infinity, alignment: .topLeading)
         }
         .padding(.top, 300)
         .padding(.horizontal, 25)

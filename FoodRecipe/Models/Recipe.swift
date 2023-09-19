@@ -55,7 +55,7 @@ struct Recipe: Identifiable, Codable {
         name: "Yakitori Grilled Chicken",
         creatorID: "somerandomID",
         timeStamp: Timestamp(date: Date()),
-        createdAt:  "",
+        createdAt:  "September 11th, 2012",
         creatorName: "Man Pham Quang",
         creatorAvatar: "",
         mealType: "Breakfast",
