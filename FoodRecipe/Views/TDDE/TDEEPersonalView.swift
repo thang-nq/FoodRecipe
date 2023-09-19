@@ -9,8 +9,9 @@ import SwiftUI
 
 struct TDEEPersonalView: View {
     
-    @State var TDEENumber: Int = 0
-    @State var caloriesConsumed: Int = 0
+    @State var TDEENumber: Int = 3000
+    @State var caloriesConsumed: Int = 2456
+    @State private var navigateToTDEEForm = false
     
     //MARK: init font cus nav title
     init() {
@@ -21,9 +22,14 @@ struct TDEEPersonalView: View {
         NavigationStack{
             VStack{
                 caloriesCalculate
+                    .frame(height: 200)
+                
                 todayList
+                    .padding(.top, 20)
             }
-            .navigationTitle("Today's calories")
+            .navigationTitle("MY CALORIES")
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: reCalButton)
         }
     }
 }
@@ -39,11 +45,57 @@ private extension TDEEPersonalView {
     
     //MARK: CALCULATOR PERSONAL UI
     var caloriesCalculate: some View {
-        HStack {
-            Text("Total calories: \(TDEENumber)")
-            Text("Calories balancse: \(caloriesConsumed)")
-            Text("Balance calories: \(TDEENumber - caloriesConsumed)")
+        VStack(alignment: .center){
+            Text("Suggestion nutitrions")
+                .foregroundColor(Color.theme.DarkBlue)
+                .font(.custom("ZillaSlab-SemiBold", size: 24))
+                .padding(.bottom, 5)
+            
+            HStack{
+                Text("Carbs: 90g")
+                Divider()
+                Text("Protein: 120g")
+                Divider()
+                Text("Fat: 40g")
+            }
+            .foregroundColor(Color.theme.Blue)
+            .font(.custom("ZillaSlab-Regular", size: 14))
+            
+            Divider()
+                .frame(width: 350, height: 2)
+                .background(Color.theme.DarkBlue)
+                
+            
+            HStack(alignment: .center, spacing: 40){
+                
+                VStack{
+                    Text("Total Calories")
+                        .foregroundColor(Color.theme.Orange)
+                    Text("\(TDEENumber)")
+                }
+                            
+                VStack{
+                    Text("Consumed")
+                        .foregroundColor(Color.theme.Orange)
+                    Text("\(caloriesConsumed)")
+                }
+                
+        
+                VStack {
+                    Text("Balance")
+                        .foregroundColor(Color.theme.Orange)
+                    Text("\(TDEENumber - caloriesConsumed)")
+                }
+    
+            }
+            .frame(height: 80)
+            .font(.custom("ZillaSlab-SemiBold", size: 20))
         }
+        .padding()
+        .background(
+            RoundedCorners(color: Color.theme.WhiteInstance, tl: 5, tr: 5, bl:5, br: 5)
+                .shadow(color: Color.theme.DarkBlueInstance.opacity(0.5) ,radius: 2)
+        )
     }
     
     //MARK: TODAY'S FOOD LIST
@@ -63,6 +115,24 @@ private extension TDEEPersonalView {
             }
             .padding(.horizontal)
         }
+    }
+    
+    //MARK: RECAlCULATE TDEE
+    var reCalButton: some View {
+        Button(action: {
+            navigateToTDEEForm = true
+        }){
+            Text("Recalculator")
+        }
+        .navigationDestination(isPresented: $navigateToTDEEForm){
+            TDDEFormView()
+        }
+        .font(.custom("ZillaSlab-SemiBold", size: 16))
+        .frame(width: 150, height: 40, alignment: .center)
+        .foregroundColor(Color.theme.DarkBlue)
+        .background(Color.theme.OrangeInstance)
+        .cornerRadius(8)
+
     }
     
 }
