@@ -12,6 +12,7 @@ import SlidingTabView
 
 struct RecipeDetailView: View {
     var recipeId: String
+    var onDissappear: () -> Void
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var detailVM = RecipeDetailViewModel()
     @State private var selectedTabIndex = 0
@@ -106,13 +107,16 @@ struct RecipeDetailView: View {
                     }
                 }
             }
+            .onDisappear {
+                onDissappear()
+            }
         }
     }
 }
 
 struct RecipeDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDetailView(recipeId: "QemaUoPfXPDMThjSF3og")
+        RecipeDetailView(recipeId: "QemaUoPfXPDMThjSF3og", onDissappear: {})
     }
 }
 
@@ -174,9 +178,9 @@ struct MainInfo: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             HStack {
-                Text("By ") + Text("**Nick Tran**").font(.custom("ZillaSlab-BoldItalic", size: 20)).fontWeight(.medium)
+                Text("By ") + Text("**\(recipe.creatorName)**").font(.custom("ZillaSlab-BoldItalic", size: 20)).fontWeight(.medium)
                 Spacer()
-                Text("September 1st, 2023")
+                Text(recipe.createdAt)
             }
             Divider()
             Text(recipe.intro)
