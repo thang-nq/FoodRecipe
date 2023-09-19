@@ -12,8 +12,18 @@ struct RecipeListView: View {
     @StateObject private var viewModel = HomeViewModel()
     @AppStorage("isDarkMode") var isDark = false
     func saveAction(recipeId: String) {
-         Task {
-             await viewModel.saveOrRemoveRecipe(recipeID: recipeId)
+        Task {
+            await viewModel.saveOrRemoveRecipe(recipeID: recipeId)
+        }
+    }
+    func fetchRecipes() {
+        Task {
+            do {
+                try await viewModel.getAllRecipe()
+            } catch {
+                // Handle any errors that occur during the async operation
+                print("Error: \(error)")
+            }
         }
     }
     var body: some View {
@@ -22,7 +32,7 @@ struct RecipeListView: View {
                 List {
                     Section(header: Text("Today's Recipes").font(.custom("ZillaSlab-Bold", size: 30))) {
                         ForEach(viewModel.recipes) { recipe in
-                            NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!).navigationBarHidden(true)) {
+                            NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!, onDissappear: fetchRecipes).navigationBarHidden(true)) {
                                 RecipeCardView(recipe: recipe, saveAction: saveAction)
                             }
                         }
@@ -39,14 +49,7 @@ struct RecipeListView: View {
             }
         }
         .onAppear {
-            Task(priority: .medium) {
-                do {
-                    try await viewModel.getAllRecipe()
-                } catch {
-                    // Handle any errors that occur during the async operation
-                    print("Error: \(error)")
-                }
-            }
+            fetchRecipes()
         }
         .environment(\.colorScheme, isDark ? .dark : .light)
     }
@@ -90,7 +93,7 @@ struct RecipeCardView: View {
         .overlay(
             Button(action: {
                 // Handle save action
-//                homeVM
+                //                homeVM
                 saveAction(recipe.id!)
             }) {
                 Image(systemName: recipe.isSaved ? "heart.fill" : "heart")
