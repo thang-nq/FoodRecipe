@@ -114,6 +114,7 @@ private extension CreateStepsView{
                 HStack{
                     Text("Step \(index + 1):") // Add the step number
                         .font(.custom("ZillaSlab-Regular", size: 22))
+                    Spacer()
                     Button(action: {
                         // Delete the step at the current index
                         Steps.remove(at: index)
@@ -138,6 +139,8 @@ private extension CreateStepsView{
                 .padding(.leading, 20)
             
             }
+            Text("")
+                .frame(height: 150)
         }
     }
 }

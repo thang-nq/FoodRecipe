@@ -128,7 +128,9 @@ private extension CreateIngredientsView{
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 20)
             }
-            Spacer()
+            Text("")
+                .frame(height: 150)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
