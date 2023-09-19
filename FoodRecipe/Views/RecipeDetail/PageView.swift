@@ -12,8 +12,7 @@ struct PageView: View {
     var totalSteps: Int
     var body: some View {
         VStack(spacing: 0) {
-            Image("soup")
-                .resizable()
+            FirebaseImage(imagePathName: page.imageUrl)
                 .aspectRatio(contentMode: .fill)
                 .frame(height: 390)
                 .clipped()
