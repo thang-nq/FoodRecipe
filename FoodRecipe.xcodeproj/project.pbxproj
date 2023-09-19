@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A11EAE902AB97BFC008E56B5 /* TDEEWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11EAE8F2AB97BFC008E56B5 /* TDEEWrapperView.swift */; };
 		A12005182AB58B3B00E11DF6 /* InputFieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */; };
 		A120051A2AB5A22800E11DF6 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005192AB5A22800E11DF6 /* SignupView.swift */; };
 		A120051D2AB6E9BE00E11DF6 /* TDDEFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */; };
@@ -84,6 +85,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A11EAE8F2AB97BFC008E56B5 /* TDEEWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDEEWrapperView.swift; sourceTree = "<group>"; };
 		A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldManager.swift; sourceTree = "<group>"; };
 		A12005192AB5A22800E11DF6 /* SignupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDDEFormView.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */,
 				A17F89372AB82BC500D0FBD7 /* TDEEPersonalView.swift */,
 				A17F89392AB837B800D0FBD7 /* RecipeCard.swift */,
+				A11EAE8F2AB97BFC008E56B5 /* TDEEWrapperView.swift */,
 			);
 			path = TDDE;
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				CC8D218B2AB0164F0036ABF3 /* SectionTitleView.swift in Sources */,
 				A120051F2AB74B6000E11DF6 /* testView.swift in Sources */,
 				A12005182AB58B3B00E11DF6 /* InputFieldManager.swift in Sources */,
+				A11EAE902AB97BFC008E56B5 /* TDEEWrapperView.swift in Sources */,
 				A548C07B2AADDD6800884B91 /* User.swift in Sources */,
 				A17B54192AB039960096A8A9 /* AuthViewModel.swift in Sources */,
 				A1A85E682AAF031E00875285 /* Color.swift in Sources */,
