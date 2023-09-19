@@ -79,6 +79,11 @@ final class RecipeManager {
                             recipe.creatorAvatar = creator.avatarUrl
                         }
                         
+                        // Check saved state
+                        if userData!.savedRecipe.contains(d.documentID) {
+                            recipe.isSaved = true
+                        }
+                        
                         recipes.append(recipe)
                     }
                     
