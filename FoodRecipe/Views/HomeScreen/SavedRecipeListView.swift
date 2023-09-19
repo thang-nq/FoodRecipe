@@ -22,7 +22,7 @@ struct SavedRecipeListView: View {
             VStack {
                 List {
                     Section(header: Text("Saved Recipe").font(.custom("ZillaSlab-Bold", size: 30))) {
-                        ForEach(viewModel.recipes) { recipe in
+                        ForEach(viewModel.savedRecipes) { recipe in
                             NavigationLink(destination: RecipeDetailViewDemo(recipe: recipe)) {
                                 RecipeCardView(recipe: recipe, saveAction: saveAction)
                             }
