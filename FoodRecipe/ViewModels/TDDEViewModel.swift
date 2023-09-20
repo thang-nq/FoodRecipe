@@ -28,7 +28,7 @@ class TDDEViewModel : ObservableObject {
     }
     
     func calculateTDDE(age: Int, height: Int, gender: String, activityLevel: Float) async {
-        print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel)")
+//        print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel)")
     }
     
     

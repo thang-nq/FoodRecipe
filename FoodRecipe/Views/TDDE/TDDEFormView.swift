@@ -65,7 +65,7 @@ private extension TDDEFormView {
 
             } header: {
                 Text("Select your gender")
-                    .font(.custom("ZillaSlab-Bold", size: 18))
+                    .font(Font.custom.Heading)
                     .foregroundColor(Color.theme.DarkBlue)
             }
             
@@ -81,12 +81,20 @@ private extension TDDEFormView {
             //MARK: HEIGHT UI
             Section(header: Text("Your height")) {
                 TextField("Your height (cm)", text: $inputFieldManager.heightInput)
-                    .font(.custom("ZillaSlab-MediumItalic", size: 16))
+                    .font(Font.custom.ContentItalic)
                     .keyboardType(.decimalPad)
             }
             .font(.custom("ZillaSlab-Bold", size: 18))
             .foregroundColor(Color.theme.DarkBlue)
         
+            //MARK: HEIGHT UI
+            Section(header: Text("Your weight")) {
+                TextField("Your weight (kg)", text: $inputFieldManager.weightInput)
+                    .font(Font.custom.ContentItalic)
+                    .keyboardType(.decimalPad)
+            }
+            .font(.custom("ZillaSlab-Bold", size: 18))
+            .foregroundColor(Color.theme.DarkBlue)
             
             //MARK: ACTIVITY LEVEL
             Section{
@@ -129,9 +137,11 @@ private extension TDDEFormView {
             //Convert age and height string to INT & FLOAT
             let ageInt = (inputFieldManager.ageInput as NSString).integerValue
             let heightInt = (inputFieldManager.heightInput as NSString).integerValue
-            print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel)")
+            let weightInt = (inputFieldManager.weightInput as NSString).integerValue
+            
+            print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel); WEIGHT: \(weightInt) ")
             Task {
-                await tddeViewModel.calculateTDDE()
+//                await tddeViewModel.calculateTDDE()
             }
             navigateToPersonalTDEE = true
         }){
