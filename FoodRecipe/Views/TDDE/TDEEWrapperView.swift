@@ -23,7 +23,6 @@ struct TDEEWrapperView: View {
                 
             } else{
                 //                TDDEFormView()
-                LoginView()
             }
         }
     }
