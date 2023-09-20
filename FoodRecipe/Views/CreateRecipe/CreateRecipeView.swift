@@ -36,6 +36,7 @@ struct CreateRecipeView: View {
                 }
                     .opacity(createRecipeVM.showPopUp ? 1 : 0)
             )
+            .offset(y: -40)
             .background(Color.theme.White)
             
             // MARK: CHECK LOADING

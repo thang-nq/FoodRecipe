@@ -75,6 +75,7 @@ struct UpdateRecipeView: View {
                     }
                         .opacity(updateVM.showPopUp ? 1 : 0)
                 )
+                .offset(y: -40)
                 .background(Color.theme.White)
                 .onAppear {
                     Task(priority: .medium) {
