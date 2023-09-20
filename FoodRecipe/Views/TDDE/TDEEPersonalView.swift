@@ -20,16 +20,19 @@ struct TDEEPersonalView: View {
     
     var body: some View {
         NavigationStack{
-            VStack{
-                caloriesCalculate
-                    .frame(height: 200)
+            ScrollView{
+                VStack{
+                    caloriesCalculate
+                        .frame(height: 200)
+                    
+                    todayList
+                        .padding(.top, 20)
+                }
+                .navigationTitle("MY CALORIES")
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(trailing: reCalButton)
                 
-                todayList
-                    .padding(.top, 20)
             }
-            .navigationTitle("MY CALORIES")
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: reCalButton)
         }
     }
 }

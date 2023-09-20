@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TDEEWrapperView: View {
-    @State var isTDEECalculator: Bool = true
+    @State var isTDEECalculator: Bool = false
     var body: some View {
         Group {
             if isTDEECalculator {
