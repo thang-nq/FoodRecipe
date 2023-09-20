@@ -8,10 +8,16 @@
 import Foundation
 
 @MainActor
-class UserProfileViewModel {
+class UserProfileViewModel: ObservableObject {
     @Published var recipeList: [Recipe] = []
     @Published var errorMessage: String?
     @Published var showError: Bool = false
+    
+    init() {
+        Task {
+            await getUserCreatedRecipe()
+        }
+    }
     
     func getUserCreatedRecipe() async {
         do {

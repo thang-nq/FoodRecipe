@@ -10,6 +10,8 @@ import Foundation
 @MainActor
 class TDDEViewModel : ObservableObject {
     @Published var tddeRecipes: [Recipe] = []
+    @Published var recommendCal: Int = 0
+    
     
     init() {
         Task {
@@ -19,7 +21,12 @@ class TDDEViewModel : ObservableObject {
 
     
     func getTDDERecipe() async {
-        self.tddeRecipes = await RecipeManager.shared.getUserTDDERecipes()
+        if let currentUser = UserManager.shared.currentUser {
+            self.tddeRecipes = await RecipeManager.shared.getUserTDDERecipes()
+            self.recommendCal = UserManager.shared.currentUser!.recommendCal
+        }
+
+        
     }
     
     func removeRecipeFromTDDE(recipeID: String) async {
@@ -27,8 +34,20 @@ class TDDEViewModel : ObservableObject {
         await getTDDERecipe()
     }
     
-    func calculateTDDE(age: Int, height: Int, gender: String, activityLevel: Float) async {
-//        print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel)")
+    
+    func calculateTDDE(age: Int, height: Int, weight: Int, gender: String, activityLevel: Float) async {
+        if let currentUser = UserManager.shared.currentUser {
+            var recCalories: Int = 0
+            if gender == "MALE" {
+                let result = 10 * Float(weight) + 6.25 * Float(height) - 5 * Float(age) + 5
+                recCalories = Int(round(result))
+            } else if gender == "FEMALE" {
+                let result = 10 * Float(weight) + 6.25 * Float(height) - 5 * Float(age) - 161
+                recCalories = Int(round(result))
+            }
+            try? await UserManager.shared.updateUser(userID: currentUser.id, updateValues: ["recommendCal": recCalories, "enableTDDE": true])
+            self.recommendCal = UserManager.shared.currentUser!.recommendCal
+        }
     }
     
     
