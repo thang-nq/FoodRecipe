@@ -52,6 +52,7 @@ struct Recipe: Identifiable, Codable {
     }
     
     static var sampleRecipe: Recipe = Recipe(
+        id: "asokdfjaskdfjaso239849iowefj",
         name: "Yakitori Grilled Chicken",
         creatorID: "somerandomID",
         timeStamp: Timestamp(date: Date()),
@@ -117,6 +118,12 @@ struct Recipe: Identifiable, Codable {
         ],
         isSaved: true
     )
+    
+    static var sampleRecipeList: [Recipe] = Array(0...5).map { index in
+        var newRecipe = sampleRecipe
+        newRecipe.id = "\(index)"
+        return newRecipe
+    }
     
 }
 
