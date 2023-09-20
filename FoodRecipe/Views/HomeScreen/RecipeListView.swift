@@ -33,7 +33,7 @@ struct RecipeListView: View {
                     Text("Today's Recipes")
                         .font(Font.custom.NavigationTitle)
                     VStack {
-                        ForEach(Recipe.sampleRecipeList) { recipe in
+                        ForEach(viewModel.recipes) { recipe in
                             NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!, onDissappear: fetchRecipes).navigationBarHidden(true)) {
                                 RecipeCardView(recipe: recipe, saveAction: saveAction)
                             }
@@ -41,6 +41,7 @@ struct RecipeListView: View {
                     }.padding(10)
                 }.padding(10)
                 .toolbar {
+                // MARK: Tool Bar
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: { isDark.toggle() }) {
                             isDark ? Label("Dark", systemImage: "lightbulb.fill") :

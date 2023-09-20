@@ -12,7 +12,7 @@ struct RecipeCardView: View {
     var saveAction: (String) -> Void
     
     var body: some View {
-        VStack(spacing: 5){
+        VStack(alignment: .leading, spacing: 5){
             FirebaseImage(imagePathName: recipe.backgroundURL)
                 .aspectRatio(contentMode: .fill)
                 .frame(maxWidth: .infinity)
@@ -21,7 +21,6 @@ struct RecipeCardView: View {
                 .overlay(
                     Button(action: {
                         // Handle save action
-                        //                homeVM
                         saveAction(recipe.id!)
                     }) {
                         Image(systemName: recipe.isSaved ? "heart.fill" : "heart")
