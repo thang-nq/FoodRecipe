@@ -45,13 +45,22 @@ struct RecipeCard: View {
             }
 
         }
+        .padding(5)
+        .background(backGroundStyle)
         .foregroundColor(Color.theme.DarkWhite)
-        .padding()
+        .padding(.horizontal, 10)
     }
 }
 
 struct RecipeCard_Previews: PreviewProvider {
     static var previews: some View {
         RecipeCard()
+    }
+}
+
+private extension RecipeCard {
+    var backGroundStyle: some View {
+        RoundedCorners(color: Color.theme.DarkWhiteInstance, tl: 10, tr: 10, bl:10, br: 10)
+            .shadow(color: .black.opacity(0.2) ,radius: 5)
     }
 }

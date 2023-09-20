@@ -9,6 +9,7 @@ import Foundation
 
 @MainActor
 class UserProfileViewModel: ObservableObject {
+    static var shared = UserProfileViewModel()
     @Published var recipeList: [Recipe] = []
     @Published var errorMessage: String?
     @Published var showError: Bool = false
