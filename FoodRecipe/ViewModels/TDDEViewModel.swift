@@ -10,6 +10,8 @@ import Foundation
 @MainActor
 class TDDEViewModel : ObservableObject {
     @Published var tddeRecipes: [Recipe] = []
+    @Published var tddeCount: Int = 0
+    
     
     init() {
         Task {

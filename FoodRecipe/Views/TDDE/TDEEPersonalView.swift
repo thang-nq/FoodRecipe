@@ -12,6 +12,7 @@ struct TDEEPersonalView: View {
     @State var TDEENumber: Int = 3000
     @State var caloriesConsumed: Int = 2456
     @State private var navigateToTDEEForm = false
+    @EnvironmentObject private var authVM: AuthViewModel
     
     //MARK: init font cus nav title
     init() {
