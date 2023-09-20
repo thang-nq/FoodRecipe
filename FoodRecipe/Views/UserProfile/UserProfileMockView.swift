@@ -48,6 +48,23 @@ struct UserProfileMockView: View {
                 }
             }
         }
+        .onChange(of: selectedPhoto, perform: { newValue in
+                if let newValue {
+                    
+                    // CALL POP UP
+                    showPopUp = true
+                    popUpIcon = "checkmark.message.fill"
+                    popUptitle = "Upload avatar success"
+                    popUpContent = "If you have any more requests or need further assistance, feel free to ask!, If you have any more requests or need further assistance, feel free to ask!"
+                    popUpIconColor = Color.theme.GreenInstance
+                    
+                    Task {
+                        try await viewModel.uploadAvatar(data: newValue)
+                        await viewModel.fetchUser()
+                        avatarViewRefresh.toggle()
+                    }
+                }
+            })
     }
 }
 
@@ -58,6 +75,16 @@ struct UserProfileMockView_Previews: PreviewProvider {
 }
 
 private extension UserProfileMockView {
+    // MARK: USER AVATAR
+    func emptyAvatar(initials: String) -> some View {
+        Text(initials)
+            .font(.title)
+            .fontWeight(.semibold)
+            .foregroundColor(.white)
+            .frame(width: 72, height: 72)
+            .background(Color(.systemGray3))
+            .clipShape(Circle())
+    }
     func top(currentUser: User) -> some View {
         VStack {
             SectionTitleView(title: "User Profile Settings")
@@ -73,22 +100,35 @@ private extension UserProfileMockView {
                         //                            .foregroundColor()
                     }.padding(0)
                     Spacer()
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .frame(width: 60, height: 60)
-                        .background(
-                            
-                            FirebaseImage(imagePathName: currentUser.avatarUrl)
-                                .aspectRatio(contentMode: .fill)
+                    
+                    PhotosPicker(selection: $selectedPhoto, photoLibrary: .shared()) {
+                        if currentUser.avatarUrl.isEmpty {
+                            emptyAvatar(initials: currentUser.initials)
+                        } else {
+                            UserAvatar(imagePathName: currentUser.avatarUrl)
                                 .frame(width: 60, height: 60)
-                                .clipped()
-                        )
-                        .cornerRadius(60)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 60)
-                                .inset(by: -2.5)
-                                .stroke(.white, lineWidth: 5)
-                        )
+                                .id(avatarViewRefresh)
+                            
+                        }
+                    }
+//                    Rectangle()
+//                        .foregroundColor(.clear)
+//                        .frame(width: 60, height: 60)
+//                        .background(
+//
+//                            FirebaseImage(imagePathName: currentUser.avatarUrl)
+//                                .aspectRatio(contentMode: .fill)
+//                                .frame(width: 60, height: 60)
+//                                .clipped()
+//
+//
+//                        )
+//                        .cornerRadius(60)
+//                        .overlay(
+//                            RoundedRectangle(cornerRadius: 60)
+//                                .inset(by: -2.5)
+//                                .stroke(.white, lineWidth: 5)
+//                        )
                 }
                 Text(currentUser.initials)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
