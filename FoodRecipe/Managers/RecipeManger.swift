@@ -391,13 +391,14 @@ final class RecipeManager {
             if let updateBackgroundImage = updateData.backgroundImage {
                 try await uploadRecipeBGImage(data: updateBackgroundImage, recipeID: recipeID)
             }
+            
             if let updateSteps = updateData.steps {
                 for step in recipeToUpdate.steps {
                     try await db.document(recipeID).collection("cookingSteps").document(step.id!).delete()
                 }
                 for step in updateSteps {
                     let stepID = db.document().documentID
-                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": "", "stepNumber": step.stepNumber])
+                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": recipeToUpdate.backgroundURL, "stepNumber": step.stepNumber])
                     if let stepImage = step.imageData {
                         try await uploadStepImage(data: stepImage, recipeID: recipeID, stepID: stepID)
                     }
@@ -417,6 +418,8 @@ final class RecipeManager {
             try await uploadStepImage(data: imageStepData, recipeID: recipeID, stepID: stepID)
         }
     }
+    
+//    func addCookingStep(recipeID: String, context: String?, )
     
     // MARK: Delete a cooking step
     func deleteCookingStep(recipeID: String, stepID: String) async throws {
