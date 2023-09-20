@@ -111,11 +111,8 @@ private extension TDEEPersonalView {
                 .padding(.horizontal, 20)
             ScrollView {
                 RecipeCard()
-                Divider()
                 RecipeCard()
-                Divider()
                 RecipeCard()
-                Divider()
                 RecipeCard()
             }
             .padding(.horizontal)

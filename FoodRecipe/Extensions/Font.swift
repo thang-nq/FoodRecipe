@@ -26,6 +26,7 @@ struct FontCustom {
     
     let Content = Font.custom("ZillaSlab-Regular", size: 16)
     let ContentItalic = Font.custom("ZillaSlab-MediumItalic", size: 16)
+    let ContentBold = Font.custom("ZillaSlab-Bold", size: 16)
     
     let SubContent = Font.custom("ZillaSlab-Regular", size: 14)
     let SubContentItalic = Font.custom("ZillaSlab-MediumItalic", size: 14)
