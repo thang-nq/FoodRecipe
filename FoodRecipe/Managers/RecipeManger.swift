@@ -54,7 +54,7 @@ final class RecipeManager {
             let sortedSteps = steps.sorted { $0.stepNumber < $1.stepNumber}
             recipe!.steps = sortedSteps
         } catch {
-            print("DEBUG: \(error.localizedDescription)")
+//            print("DEBUG: \(error.localizedDescription)")
         }
         
         return recipe
@@ -91,7 +91,7 @@ final class RecipeManager {
                 
             }
         } catch {
-            print("DEBUG: \(error.localizedDescription)")
+//            print("DEBUG: \(error.localizedDescription)")
         }
         
         return recipes
@@ -105,10 +105,10 @@ final class RecipeManager {
             if let user = UserManager.shared.currentUser {
                 let userData = await UserManager.shared.getUserData(userID: user.id)
                 if userData!.tddeRecipes.count > 0 {
-                    var tddeRecipesIDs = userData!.tddeRecipes
+                    let tddeRecipesIDs = userData!.tddeRecipes
                     let snapshot = try await db.whereField(FieldPath.documentID(), in: userData!.savedRecipe).getDocuments()
                     for d in snapshot.documents {
-                        var recipe = try d.data(as: Recipe.self)
+                        let recipe = try d.data(as: Recipe.self)
                         recipes.append(recipe)
                     }
                     
@@ -132,7 +132,7 @@ final class RecipeManager {
     func addRecipeToTDDE(recipeID: String) async {
         do {
             if let localUser = UserManager.shared.currentUser {
-                var userData = await UserManager.shared.getUserData(userID: localUser.id)
+                let userData = await UserManager.shared.getUserData(userID: localUser.id)
                 var tddeRecipes = userData!.tddeRecipes
                 tddeRecipes.append(recipeID)
                 try await UserManager.shared.updateUser(userID: localUser.id, updateValues: ["tddeRecipes": tddeRecipes])
@@ -145,7 +145,7 @@ final class RecipeManager {
     func removeRecipeFromTDDE(recipeID: String) async {
         do {
             if let localUser = UserManager.shared.currentUser {
-                var userData = await UserManager.shared.getUserData(userID: localUser.id)
+                let userData = await UserManager.shared.getUserData(userID: localUser.id)
                 var tddeRecipes = userData!.tddeRecipes
                 
 
@@ -317,26 +317,32 @@ final class RecipeManager {
     
     // MARK: Create new recipe
     func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async throws {
-        let recipeID = db.document().documentID
-        // save document
-        try db.document(recipeID).setData(from: recipe)
-        var backgroundURL = "default.jpeg"
-        // If provided an image and successfully update the background image, set the backgroundURL in recipe
-        if let backgroundImageData = backgroundImage {
-            backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
-            
-        }
-        // Add cooking step and related image
-        if cookingSteps != nil {
-            for step in cookingSteps! {
-                let stepID = db.document().documentID
-                try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": backgroundURL, "stepNumber": step.stepNumber])
-                // Upload if the step contain image data
-                if let imageData = step.imageData {
-                    try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
+        
+        if let userData = UserManager.shared.currentUser {
+            let recipeID = db.document().documentID
+            var recipeData = recipe
+            recipeData.creatorID = userData.id
+            // save document
+            try db.document(recipeID).setData(from: recipeData)
+            var backgroundURL = "default.jpeg"
+            // If provided an image and successfully update the background image, set the backgroundURL in recipe
+            if let backgroundImageData = backgroundImage {
+                backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
+                
+            }
+            // Add cooking step and related image
+            if cookingSteps != nil {
+                for step in cookingSteps! {
+                    let stepID = db.document().documentID
+                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": backgroundURL, "stepNumber": step.stepNumber])
+                    // Upload if the step contain image data
+                    if let imageData = step.imageData {
+                        try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
+                    }
                 }
             }
         }
+        
         
     }
     
@@ -391,13 +397,14 @@ final class RecipeManager {
             if let updateBackgroundImage = updateData.backgroundImage {
                 try await uploadRecipeBGImage(data: updateBackgroundImage, recipeID: recipeID)
             }
+            
             if let updateSteps = updateData.steps {
                 for step in recipeToUpdate.steps {
                     try await db.document(recipeID).collection("cookingSteps").document(step.id!).delete()
                 }
                 for step in updateSteps {
                     let stepID = db.document().documentID
-                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": "", "stepNumber": step.stepNumber])
+                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": recipeToUpdate.backgroundURL, "stepNumber": step.stepNumber])
                     if let stepImage = step.imageData {
                         try await uploadStepImage(data: stepImage, recipeID: recipeID, stepID: stepID)
                     }
@@ -415,6 +422,17 @@ final class RecipeManager {
         }
         if let imageStepData = backgroundImage {
             try await uploadStepImage(data: imageStepData, recipeID: recipeID, stepID: stepID)
+        }
+    }
+    
+    func addCookingStep(recipeID: String, context: String, backgroundImage: PhotosPickerItem?, stepNumber: Int) async throws {
+        if let recipeData = await getRecipeInformation(recipeID: recipeID) {
+            let stepID = db.document().documentID
+            var cookingStep = CookingStep(context: context, backgroundURL: recipeData.backgroundURL, stepNumber: stepNumber)
+            try db.document(recipeID).collection("cookingSteps").document(stepID).setData(from: cookingStep)
+            if let imageData = backgroundImage {
+                try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
+            }
         }
     }
     

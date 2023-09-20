@@ -39,11 +39,11 @@ struct TDEEPersonalView: View {
     }
 }
 
-struct TDEEPersonalView_Previews: PreviewProvider {
-    static var previews: some View {
-        TDEEPersonalView()
-    }
-}
+//struct TDEEPersonalView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TDEEPersonalView()
+//    }
+//}
 
 
 private extension TDEEPersonalView {
@@ -64,7 +64,7 @@ private extension TDEEPersonalView {
                 Text("Fat: 40g")
             }
             .foregroundColor(Color.theme.Blue)
-            .font(Font.custom.ContentRegular)
+            .font(Font.custom.Content)
             
             Divider()
                 .frame(width: 350, height: 2)
@@ -76,7 +76,7 @@ private extension TDEEPersonalView {
                 VStack{
                     Text("Total Calo")
                         .foregroundColor(Color.theme.Orange)
-                    Text("\(UserManager.shared.currentUser!.recommendCal)")
+                    Text("\(tddeViewModel.recommendCal)")
                 }
                             
                 VStack{
@@ -89,7 +89,7 @@ private extension TDEEPersonalView {
                 VStack {
                     Text("Balance")
                         .foregroundColor(Color.theme.Orange)
-                    Text("\(UserManager.shared.currentUser!.recommendCal - caloriesConsumed)")
+                    Text("\(tddeViewModel.recommendCal - caloriesConsumed)")
                 }
     
             }
