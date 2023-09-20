@@ -32,7 +32,7 @@ struct CompactRecipeCard: View {
                 Text("Chicken Soup Oven Potato")
                     .font(.custom("ZillaSlab-Bold", size: 20)).fontWeight(.medium)
                     .kerning(0.552)
-                    .foregroundColor(.black)
+                    .foregroundColor(Color.theme.Black)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)

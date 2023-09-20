@@ -11,6 +11,26 @@ struct UserProfileMockView: View {
     var body: some View {
         VStack {
             top
+            HStack {
+                SectionTitleView(title: "My Recipes")
+                Button {
+                    
+                } label: {
+                    Text("View all").foregroundColor(Color.theme.Orange).underline()
+                }
+                
+            }
+            Grid {
+                GridRow {
+                    CompactRecipeCard()
+                    CompactRecipeCard()
+                }
+                GridRow {
+                    CompactRecipeCard()
+                    CompactRecipeCard()
+                }
+            }
+            Spacer()
         }.padding(16)
     }
 }
@@ -24,21 +44,17 @@ struct UserProfileMockView_Previews: PreviewProvider {
 private extension UserProfileMockView {
     var top: some View {
         VStack {
-            Text("User Profile Settings")
-                .font(.custom("ZillaSlab-Bold", size: 26)).fontWeight(.medium)
-                .kerning(0.552)
-                .foregroundColor(.black)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
+            SectionTitleView(title: "User Profile Settings")
             VStack {
                 HStack {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Nararaya Kirana")
                             .font(.custom("ZillaSlab-Regular", size: 26))
                             .kerning(0.552)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.theme.Black)
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                         Text("nararaya.putri@mail.com")
-                            .foregroundColor(.black)
+//                            .foregroundColor()
                     }.padding(0)
                     Spacer()
                     Rectangle()
@@ -64,7 +80,6 @@ private extension UserProfileMockView {
             .background(Color.theme.White)
             .shadow(color: Color.theme.Black.opacity(0.1), radius: 0, x: 0, y: -1)
             .shadow(color: Color.theme.Black.opacity(0.1), radius: 0, x: 0, y: 1)
-            Spacer()
         }
     }
 }

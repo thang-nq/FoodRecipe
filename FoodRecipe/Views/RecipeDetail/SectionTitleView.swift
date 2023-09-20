@@ -13,7 +13,7 @@ struct SectionTitleView: View {
         Text(title)
             .font(.custom("ZillaSlab-Bold", size: 26)).fontWeight(.medium)
             .kerning(0.552)
-            .foregroundColor(.black)
+            .foregroundColor(Color.theme.Black)
             .frame(maxWidth: .infinity, alignment: .topLeading)
     }
 }
