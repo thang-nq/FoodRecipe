@@ -42,11 +42,11 @@ struct TDDEFormView: View {
     
 }
 
-struct TDDEFormView_Previews: PreviewProvider {
-    static var previews: some View {
-        TDDEFormView()
-    }
-}
+//struct TDDEFormView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TDDEFormView()
+//    }
+//}
 
 private extension TDDEFormView {
     //MARK: FORM UI
@@ -61,22 +61,22 @@ private extension TDDEFormView {
                     Text("Female")
                         .tag("FEMALE")
                 }
-                .font(.custom("ZillaSlab-BoldItalic", size: 16))
+                .font(Font.custom.Content)
                 .foregroundColor(Color.theme.DarkBlue)
 
             } header: {
                 Text("Select your gender")
-                    .font(Font.custom.Heading)
+                    .font(Font.custom.SubHeading)
                     .foregroundColor(Color.theme.DarkBlue)
             }
             
             //MARK: AGE UI
             Section(header: Text("Your age")) {
                 TextField("Your age", text: $inputFieldManager.ageInput)
-                    .font(.custom("ZillaSlab-MediumItalic", size: 16))
+                    .font(Font.custom.ContentItalic)
                     .keyboardType(.decimalPad)
             }
-            .font(.custom("ZillaSlab-Bold", size: 18))
+            .font(Font.custom.SubHeading)
             .foregroundColor(Color.theme.DarkBlue)
             
             //MARK: HEIGHT UI
@@ -85,7 +85,7 @@ private extension TDDEFormView {
                     .font(Font.custom.ContentItalic)
                     .keyboardType(.decimalPad)
             }
-            .font(.custom("ZillaSlab-Bold", size: 18))
+            .font(Font.custom.SubHeading)
             .foregroundColor(Color.theme.DarkBlue)
         
             //MARK: HEIGHT UI
@@ -94,7 +94,7 @@ private extension TDDEFormView {
                     .font(Font.custom.ContentItalic)
                     .keyboardType(.decimalPad)
             }
-            .font(.custom("ZillaSlab-Bold", size: 18))
+            .font(Font.custom.SubHeading)
             .foregroundColor(Color.theme.DarkBlue)
             
             //MARK: ACTIVITY LEVEL
@@ -117,20 +117,20 @@ private extension TDDEFormView {
                         .tag(1.9)
                     
                 }
-                .font(.custom("ZillaSlab-BoldItalic", size: 16))
+                .font(Font.custom.Content)
                 .foregroundColor(Color.theme.DarkBlue)
                 
             } header: {
                 Text("Select your activity level")
-                    .font(.custom("ZillaSlab-Bold", size: 18))
+                    .font(Font.custom.SubHeading)
                     .foregroundColor(Color.theme.DarkBlue)
             } footer: {
                 Text("Activity level is a factor that is based on the amount of activity a person undergoes. This includes deliberate exercise as well as other activities that a person may undergo as part of their job or typical daily activities. These factors are more specifically referred to as the thermic effect of activity, and non-exercise activity thermogenesis (energy expended for non-sleeping, eating, or sports-like exercise).")
-                    .font(.custom("ZillaSlab-Regular", size: 16))
+                    .font(Font.custom.SubContent)
                     .foregroundColor(Color.theme.DarkGray)
             }
         }
-        .listStyle(.sidebar)
+//        .listStyle(.sidebar)
     }
     
     
@@ -150,8 +150,8 @@ private extension TDDEFormView {
             navigateToPersonalTDEE = true
             
         }){
-            Text("Submit")
-                .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
+            Text("CALCULATE")
+                .font(Font.custom.ButtonText)
                 .frame(width: 350, height: 50)
                 .contentShape(Rectangle())
         }
