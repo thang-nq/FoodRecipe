@@ -37,6 +37,13 @@ struct RecipeCardView: View {
                     .font(Font.custom.Heading)
             }.frame(maxWidth: .infinity, alignment: .leading)
             HStack {
+                Text(recipe.mealType)
+                        .font(Font.custom.SubContent)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 3)
+                        .background(getTagColor(tagValue: recipe.mealType))
+                        .cornerRadius(8)
                 ForEach(recipe.tags, id: \.self) { tag in
                     Text(tag)
                         .font(Font.custom.SubContent)

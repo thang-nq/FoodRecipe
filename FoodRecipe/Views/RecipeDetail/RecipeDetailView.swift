@@ -222,10 +222,6 @@ struct MainInfo: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .background(.white)
                 .shadow(color: Color.theme.Black.opacity(0.3), radius: 0, x: 0, y: -1)
-//                .shadow(color: Color.theme.Black.opacity(0.3), radius: 0, x: 0, y: 1)
-//            Text(recipe.intro)
-//                .font(.custom("ZillaSlab-Regular", size: 20))
-//                .frame(maxWidth: .infinity, alignment: .topLeading)
         }
         .padding(.top, 300)
         .padding(.horizontal, 25)
