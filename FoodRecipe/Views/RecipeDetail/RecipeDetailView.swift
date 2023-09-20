@@ -192,9 +192,9 @@ struct MainInfo: View {
                 .foregroundColor(.black)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
             HStack {
-                Tag(text: recipe.mealType)
+                Tag(text: recipe.mealType, tagColor: Color.theme.BlueInstance)
                 ForEach(recipe.tags, id: \.self) { tag in
-                    Tag(text: tag)
+                    Tag(text: tag, tagColor: Color.theme.Orange)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
