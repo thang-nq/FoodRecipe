@@ -88,11 +88,14 @@ private extension UserProfileMockView {
                 HStack {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(currentUser.fullName)
-                            .font(.custom("ZillaSlab-Regular", size: 26))
-                            .kerning(0.552)
+                            .font(.custom.Heading)
                             .foregroundColor(Color.theme.Black)
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                         Text(currentUser.email)
+                            .font(.custom.Content)
+                            .foregroundColor(Color.theme.Orange)
+                            .underline()
+                        Text(currentUser.initials).font(.custom.Content)
                         //                            .foregroundColor()
                     }.padding(0)
                     Spacer()
@@ -126,8 +129,7 @@ private extension UserProfileMockView {
 //                                .stroke(.white, lineWidth: 5)
 //                        )
                 }
-                Text(currentUser.initials)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                
             }
             .padding(.vertical, 16)
             .background(Color.theme.White)
@@ -141,7 +143,9 @@ private extension UserProfileMockView {
             HStack {
                 SectionTitleView(title: "My Recipes")
                 NavigationLink(destination: CreateRecipeView()) {
-                    Text("Create recipe").foregroundColor(Color.theme.Orange).underline()
+                    Text("Create recipe")
+                        .font(.custom.SubContent)
+                        .foregroundColor(Color.theme.Orange).underline()
                 }
             }
             Grid {

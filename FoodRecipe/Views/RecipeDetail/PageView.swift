@@ -54,11 +54,11 @@ struct PageView: View {
             )
             VStack(alignment: .leading) {
                 Text("Step \(page.tag + 1) of \(totalSteps)")
-                    .font(.custom("ZillaSlab-Bold", size: 26)).fontWeight(.medium)
+                    .font(.custom.Heading)
                     .kerning(0.552)
                     .foregroundColor(Color.theme.Orange)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
-                Text(page.description)
+                Text(page.description).font(.custom.Content)
             }
             .padding()
             .frame(maxWidth: .infinity)

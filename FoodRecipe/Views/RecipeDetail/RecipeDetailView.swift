@@ -33,16 +33,7 @@ struct RecipeDetailView: View {
                         ZStack(alignment: .top) {
                             Color("LightGray")
                             // MARK: Overlay Image
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: .infinity, height: 408)
-                                .background(
-                                    FirebaseImage(imagePathName: recipeDetail.backgroundURL)
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(minWidth: 408, maxHeight: 408)
-                                        .clipped()
-                                )
-                                .offset(y: -60)
+                            CoverImage(recipeDetail: recipeDetail)
                             
                             TopBar(recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
                             
@@ -58,14 +49,14 @@ struct RecipeDetailView: View {
                                 }
                                 VStack {
                                     // MARK: Sliding tab views
-                                    SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
+                                    SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom.SubHeading,  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
                                     if selectedTabIndex == 0 {
                                         // Intro
                                         SectionContainerView {
                                             Text(recipeDetail.intro)
-                                                .font(.custom("ZillaSlab-Regular", size: 20))
+                                                .font(.custom.Content)
                                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                        }
+                                        }.padding(.horizontal, 10).padding(.vertical, 0)
                                     }
                                     if selectedTabIndex == 1 {
                                         // Ingredients
@@ -176,7 +167,7 @@ struct MainInfo: View {
         //    return SectionContainerView {
         SectionContainerView {
             Text(recipe.name)
-                .font(.custom("ZillaSlab-BoldItalic", size: 26)).fontWeight(.medium)
+                .font(.custom.Heading)
                 .kerning(0.552)
                 .foregroundColor(.black)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -188,9 +179,9 @@ struct MainInfo: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             HStack {
-                Text("By ") + Text("**\(recipe.creatorName)**").font(.custom("ZillaSlab-BoldItalic", size: 20)).fontWeight(.medium)
+                Text("By ").font(.custom.Content) + Text("\(recipe.creatorName)").font(.custom.ContentBold)
                 Spacer()
-                Text(recipe.createdAt)
+                Text(recipe.createdAt).font(.custom.ContentItalic)
             }
             HStack(alignment: .center, spacing: 16) {
                 VStack(spacing: 8) {
@@ -199,7 +190,7 @@ struct MainInfo: View {
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(Color.theme.Orange)
                         .frame(width: 24, height: 24)
-                    Text("\(recipe.cookingTime) minutes")
+                    Text("\(recipe.cookingTime) minutes").font(.custom.SubHeading).fontWeight(.regular)
                 }.frame(maxWidth: .infinity)
                 //                Divider()
                 //                Rectangle().fill(.blue).frame(width: 1) // or any other color
@@ -214,7 +205,7 @@ struct MainInfo: View {
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(Color.theme.Orange)
                         .frame(width: 24, height: 24)
-                    Text("Serves \(recipe.servingSize)")
+                    Text("Serves \(recipe.servingSize)").font(.custom.SubHeading).fontWeight(.regular)
                 }.frame(maxWidth: .infinity)
             }.padding(.horizontal, 16)
                 .padding(.top, 16)
@@ -229,4 +220,19 @@ struct MainInfo: View {
         .zIndex(100)
     }
     
+}
+
+private extension RecipeDetailView {
+    func CoverImage(recipeDetail: Recipe) -> some View {
+        Rectangle()
+            .foregroundColor(.clear)
+            .frame(width: .infinity, height: 408)
+            .background(
+                FirebaseImage(imagePathName: recipeDetail.backgroundURL)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(minWidth: 408, maxHeight: 408)
+                    .clipped()
+            )
+            .offset(y: -60)
+    }
 }
