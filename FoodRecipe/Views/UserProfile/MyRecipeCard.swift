@@ -1,13 +1,13 @@
 //
-//  RecipeCard.swift
+//  MyRecipeCard.swift
 //  FoodRecipe
 //
-//  Created by Tuấn Vũ Trụ on 18/09/2023.
+//  Created by Tuấn Vũ Trụ on 20/09/2023.
 //
 
 import SwiftUI
 
-struct RecipeCard: View {
+struct MyRecipeCard: View {
     var body: some View {
         HStack(alignment: .center){
             
@@ -23,21 +23,21 @@ struct RecipeCard: View {
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.SubHeading)
             
-                Text("Calories: 600 Kcal")
+                HStack {
+                    Tag(text: "Vegan")
+                }
+                
+//                Text("Calories: 600 Kcal")
+//                    .foregroundColor(Color.theme.DarkBlue)
+//                    .font(Font.custom.SubContent)
+                
+                Text("Created: 19/19/1919")
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.SubContent)
-                
-                HStack{
-                    Text("Carb: 90g")
-                    Text("Proterin: 40g")
-                    Text("Fat: 12g")
-                }
-                .foregroundColor(Color.theme.DarkBlue)
-                .font(Font.custom.SubContent)
             }
             Spacer()
             VStack(alignment: .center, spacing: 15){
-                Button(action:{}, label: {Image(systemName: "info.circle.fill")})
+                Button(action:{}, label: {Image(systemName: "highlighter")})
                     .foregroundColor(Color.theme.BlueInstance)
                 
                 Button(action:{}, label: {Image(systemName: "trash")})
@@ -46,12 +46,11 @@ struct RecipeCard: View {
 
         }
         .foregroundColor(Color.theme.DarkWhite)
-        .padding()
-    }
+        .padding()    }
 }
 
-struct RecipeCard_Previews: PreviewProvider {
+struct MyRecipeCard_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeCard()
+        MyRecipeCard()
     }
 }
