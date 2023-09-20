@@ -34,6 +34,7 @@ class HomeViewModel: ObservableObject {
         do {
             try await RecipeManager.shared.createNewRecipe(recipe: recipe, backgroundImage: image, cookingSteps: cookingSteps)
             await getAllRecipe()
+            await UserProfileViewModel.shared.getUserCreatedRecipe()
         } catch {
             errorMessage = error.localizedDescription
             showError = true

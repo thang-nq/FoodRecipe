@@ -12,11 +12,11 @@ struct TDDEFormView: View {
     
     //MARK: USER VARAIBLES
     @State private var gender: String = "MALE"
-    @State private var activityLevel: Float = 1.2
+    @State private var activityLevel: Double = 1.2
     @ObservedObject var inputFieldManager = InputFieldManager()
     @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
     @StateObject var tddeViewModel = TDDEViewModel()
-    @EnvironmentObject var authViewModel: AuthViewModel
+//    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var navigateToPersonalTDEE = false
     
     //MARK: init font cus nav title
@@ -100,20 +100,22 @@ private extension TDDEFormView {
             //MARK: ACTIVITY LEVEL
             Section{
                 Picker("Activity level", selection: $activityLevel){
+                    
                     Text("Sedentary")
                         .tag(1.2)
-                    
+
                     Text("Light")
                         .tag(1.375)
-                    
+
                     Text("Moderate")
                         .tag(1.55)
-                    
+
                     Text("Active")
                         .tag(1.725)
-                    
+
                     Text("Very Active")
                         .tag(1.9)
+                    
                 }
                 .font(.custom("ZillaSlab-BoldItalic", size: 16))
                 .foregroundColor(Color.theme.DarkBlue)
@@ -143,8 +145,10 @@ private extension TDDEFormView {
             print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel); WEIGHT: \(weightInt) ")
             Task {
                 await tddeViewModel.calculateTDDE(age: ageInt, height: heightInt, weight: weightInt, gender: gender, activityLevel: activityLevel)
+                
             }
             navigateToPersonalTDEE = true
+            
         }){
             Text("Submit")
                 .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
@@ -156,7 +160,7 @@ private extension TDDEFormView {
         .cornerRadius(8)
         .disabled(inputFieldManager.isValidBMIForm())
         .navigationDestination(isPresented: $navigateToPersonalTDEE){
-            TDEEPersonalView()
+//            TDEEPersonalView()
         }
     }
         

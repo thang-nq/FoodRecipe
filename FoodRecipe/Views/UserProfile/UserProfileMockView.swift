@@ -21,7 +21,7 @@ struct UserProfileMockView: View {
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     @StateObject var tddeVM = TDDEViewModel()
-    @StateObject var userProfileViewModel = UserProfileViewModel()
+    @StateObject var userProfileViewModel = UserProfileViewModel.shared
     // MARK: change to environment object when demo
     //    @StateObject var viewModel = AuthViewModel()
     @EnvironmentObject var viewModel: AuthViewModel
