@@ -151,7 +151,7 @@ struct NumberInput: View {
                     .foregroundColor(Color.theme.RedInstance)
             }
             TextField(placeHolder, value: $value, formatter: NumberFormatter())
-                .font(.custom("ZillaSlab-Regular", size: 15))
+                .font(Font.custom.Content)
             
             Divider()
         }
@@ -168,9 +168,9 @@ struct NutritionInput: View {
     var body: some View {
         VStack (alignment: .leading, spacing: 12) {
             Text(name)
-                .font(.custom("ZillaSlab-Regular", size: 15))
+                .font(Font.custom.Content)
             TextField(placeHolder, value: $value, formatter: NumberFormatter())
-                .font(.custom("ZillaSlab-Regular", size: 15))
+                .font(Font.custom.Content)
             
             Divider()
         }
@@ -188,13 +188,13 @@ struct RequireNutritionInput: View {
         VStack (alignment: .leading, spacing: 12) {
             HStack{
                 Text(name)
-                    .font(.custom("ZillaSlab-Regular", size: 15))
+                    .font(Font.custom.Content)
                 Text("*")
-                    .font(.system(size: 22))
+                    .font(Font.custom.Content)
                     .foregroundColor(Color.theme.RedInstance)
             }
             TextField(placeHolder, value: $value, formatter: NumberFormatter())
-                .font(.custom("ZillaSlab-Regular", size: 15))
+                .font(Font.custom.Content)
             
             Divider()
         }
@@ -248,7 +248,7 @@ private extension CreateIntroView{
                 Spacer()
             }
             TextEditor(text: $description)
-                .font(.custom("ZillaSlab-Regular", size: 16))
+                .font(Font.custom.Content)
                 .frame(height: 250)
                 .colorMultiply(Color.theme.DarkWhite)
                 .cornerRadius(10)

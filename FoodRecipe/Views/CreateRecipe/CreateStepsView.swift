@@ -186,7 +186,7 @@ private extension CreateStepsView{
                 HStack {
                     Circle().fill(Color.theme.OrangeInstance).frame(width: 10, height: 10)
                     Text("Click the plus button below to adding step")
-                        .font(.custom("ZillaSlab-Regular", size: 20))
+                        .font(Font.custom.Content)
                         
                 }.padding(.leading, 20)
             }
@@ -223,7 +223,7 @@ private extension CreateStepsView{
                 HStack {
                     Circle().fill(Color.theme.OrangeInstance).frame(width: 10, height: 10)
                     Text(step)
-                        .font(.custom("ZillaSlab-Regular", size: 20))
+                        .font(Font.custom.Content)
                         .frame(width: 300, alignment: .leading)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
