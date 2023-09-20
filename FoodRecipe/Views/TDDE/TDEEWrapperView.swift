@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct TDEEWrapperView: View {
-    @State var isTDEECalculator: Bool = false
+
+    @State var isTDEECalculator: Bool = true
+    @EnvironmentObject var authViewModel: AuthViewModel
+
     var body: some View {
         Group {
             if isTDEECalculator {
@@ -20,8 +23,8 @@ struct TDEEWrapperView: View {
     }
 }
 
-struct TDEEWrapperView_Previews: PreviewProvider {
-    static var previews: some View {
-        TDEEWrapperView()
-    }
-}
+//struct TDEEWrapperView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TDEEWrapperView()
+//    }
+//}

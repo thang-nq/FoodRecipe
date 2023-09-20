@@ -78,6 +78,10 @@ class HomeViewModel: ObservableObject {
         self.savedRecipes = recipes
     }
     
+    func addRecipeToTDDE(recipeID: String) async {
+        await RecipeManager.shared.addRecipeToTDDE(recipeID: recipeID)
+    }
+    
     // To be removed
     func getRecipeByFilters(filters: [String: Any]) async {
         self.recipes = await RecipeManager.shared.getRecipeByFilters(filters: filters)
