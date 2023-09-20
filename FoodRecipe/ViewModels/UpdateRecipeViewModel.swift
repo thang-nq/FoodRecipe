@@ -34,6 +34,7 @@ class UpdateRecipeViewModel: ObservableObject {
     @Published var Ingredients: [String] = []
     @Published var Steps: [String] = []
     @Published var listStepsPhoto: [PhotosPickerItem?] = []
+    @Published var stepId: [String] = []
     @Published var cookingSteps: [CookingStepInterface] = []
     @Published var recipeValidated: Bool = false
     @Published var selectedTabIndex = 0
@@ -58,26 +59,6 @@ class UpdateRecipeViewModel: ObservableObject {
         }
     }
     
-    // Adding Cooking Steps with photo function
-    func addingCookingSteps() async{
-        for index in 0..<Steps.count {
-            let context = Steps[index]
-            var imageData: PhotosPickerItem? = nil
-            
-            if index < listStepsPhoto.count {
-                if let photo = listStepsPhoto[index] {
-                    imageData = photo
-                } else {
-                    imageData = nil
-                }
-            } else {
-                imageData = nil
-            }
-            
-            let cookingStep = CookingStepInterface(context: context, imageData: imageData, stepNumber: index + 1)
-            cookingSteps.append(cookingStep)
-        }
-    }
     
     // Show success pop up function
     func showSuccessPopup() async{

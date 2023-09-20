@@ -13,10 +13,10 @@ struct UpdateRecipeView: View {
     @StateObject var updateVM = UpdateRecipeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     //MARK: VARIABLES
-    @State var userId = UserManager.shared.currentUser!.id
     var recipeId : String
     @State private var selectedTabIndex = 0
     @State private var isLoading = false
+    @State private var updatingStep = false
 
     func fetchRecipeDetail() async{
         if let recipe = detailVM.recipe{
@@ -38,17 +38,14 @@ struct UpdateRecipeView: View {
             updateVM.currentMealType = recipe.mealType
             updateVM.Ingredients = recipe.ingredients
             updateVM.currentSelectedMealTypes.append(recipe.mealType)
-            print(updateVM.currentSelectedMealTypes)
-            print("hello")
-            print(updateVM.currentSelectedTags)
+            updateVM.stepId = recipe.steps.map { $0.id! }
+            updateVM.Steps = recipe.steps.map { $0.context }
         }
     }
-    func addCookingSteps() async{
+    func fetchSteps() async{
         if let recipe = detailVM.recipe{
             updateVM.Steps = recipe.steps.map { $0.context }
-            //photolist
         }
-        
     }
     var body: some View {
         ZStack{
@@ -75,7 +72,6 @@ struct UpdateRecipeView: View {
                     }
                         .opacity(updateVM.showPopUp ? 1 : 0)
                 )
-                .offset(y: -40)
                 .background(Color.theme.White)
                 .onAppear {
                     Task(priority: .medium) {
@@ -86,11 +82,15 @@ struct UpdateRecipeView: View {
                                 detailVM.getMockRecipeDetail()
                             }
                             await fetchRecipeDetail()
-                            await addCookingSteps()
                         } catch {
                             // Handle any errors that occur during the async operation
                             print("Error: \(error)")
                         }
+                    }
+                }
+                .onChange(of: updatingStep) { newValue in
+                    Task{
+                        await fetchSteps()
                     }
                 }
             // MARK: CHECK LOADING
@@ -152,7 +152,7 @@ private extension UpdateRecipeView{
                 UpdateIngredientsView(Ingredients: $updateVM.Ingredients)
             }
             if updateVM.selectedTabIndex == 2 {
-                UpdateStepsView(Steps: $updateVM.Steps, listStepsPhoto: $updateVM.listStepsPhoto, backgroundPhoto: $updateVM.backgroundPhoto)
+                UpdateStepsView(recipeId: recipeId,Steps: $updateVM.Steps, listStepsPhoto: $updateVM.listStepsPhoto, backgroundPhoto: $updateVM.backgroundPhoto, listStepId: $updateVM.stepId)
             }
         }
     }

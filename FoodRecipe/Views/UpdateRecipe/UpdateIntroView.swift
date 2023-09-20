@@ -97,10 +97,10 @@ private extension UpdateIntroView{
     var timeAndServingInput: some View{
         HStack(){
             NumberInput(value: $cookingTime, name: "Cook time", placeHolder: "Enter minutes")
-                .frame(width: 150)
+                .frame(width: 170)
                 .padding(.trailing, 30)
             NumberInput(value: $servingSize, name: "Serving size", placeHolder: "Enter serving size")
-                .frame(width: 150)
+                .frame(width: 180)
             Spacer()
         }
     }

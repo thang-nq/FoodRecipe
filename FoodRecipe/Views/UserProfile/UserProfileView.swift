@@ -83,7 +83,6 @@ struct UserProfileView: View {
                         if let recipe = detailVM.recipe {
                             Button {
                                 Task {
-
                                     // Update entire recipe and re-define cooking steps (overwrite old cookingSteps)
                                     await detailVM.updateRecipe(recipeID: recipe.id!, updateData: updateRecipeInterface(name: "Updated recipe and steps", mealType: "UpdatedMealtype", backgroundImage: stepPhoto, steps: [CookingStepInterface(context: "New step context", imageData: stepPhoto, stepNumber: 1)]))
                                 }

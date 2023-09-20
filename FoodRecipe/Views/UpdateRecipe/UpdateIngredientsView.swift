@@ -10,7 +10,9 @@ import SwiftUI
 struct UpdateIngredientsView: View {
     // MARK: VARIABLES
     @State private var showingSheet = false
+    @State private var showingUpdateSheet = false
     @State private var InputIngredient = ""
+    @State private var updateInputIngredient = ""
     @Binding var Ingredients: [String]
     
     // MARK: FUNCTION
@@ -21,6 +23,11 @@ struct UpdateIngredientsView: View {
         }
     }
     
+    private func updateIngredient(_ ingredient: String) {
+        updateInputIngredient = ingredient
+        showingUpdateSheet.toggle()
+    }
+    
     var body: some View {
         // MARK: MAIN LAYOUT
         VStack{
@@ -29,14 +36,8 @@ struct UpdateIngredientsView: View {
                         .accessibilityLabel("Ingredients")
             }
         }
-        .sheet(isPresented: $showingSheet){
-            // MARK: ADD INGREDIENTS SHEET
-            AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
-                .presentationDetents([.height(300)])
-        }
-        .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
         .overlay(
-            // MARK: Create new ingredient button
+            // MARK: ADD INGREDIENTS BUTTON
             Button(action: {
                 self.showingSheet.toggle()
             }, label: {
@@ -51,13 +52,26 @@ struct UpdateIngredientsView: View {
             .modifier(ButtonModifier()),
             alignment: .bottomTrailing
         )
+        .sheet(isPresented: $showingSheet){
+            // MARK: ADD INGREDIENTS SHEET
+            AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
+                .presentationDetents([.height(300)])
+        }
+        .sheet(isPresented: $showingUpdateSheet){
+            // MARK: UPDATE INGREDIENTS SHEET
+            UpdateIngredientsSheetView(updateInputIngredient: $updateInputIngredient, Ingredients: $Ingredients, showingUpdateSheet: $showingUpdateSheet)
+                .presentationDetents([.height(300)])
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        
         
     }
 }
 
+
 struct UpdateIngredientsView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateIngredientsView(Ingredients: .constant([]))
+        UpdateIngredientsView(Ingredients: .constant([]))
     }
 }
 
@@ -78,22 +92,33 @@ private extension UpdateIngredientsView{
                     Circle().fill(Color.theme.OrangeInstance).frame(width: 10, height: 10)
                     Text(ingredient)
                         .font(.custom("ZillaSlab-Regular", size: 20))
-                        .frame(width: 280, alignment: .leading)
-                    Spacer()
+                        .frame(width: 260, alignment: .leading)
+                    Button(action: {
+                        updateIngredient(ingredient)
+                    }) {
+                        Image(systemName: "pencil.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(Color.theme.OrangeInstance)
+                            .padding(.trailing, 15)
+                    }
                     Button(action: {
                         removeIngredient(ingredient)
                     }) {
                         Image(systemName: "minus.circle")
                             .resizable()
-                            .frame(width: 25, height: 25)
+                            .frame(width: 30, height: 30)
                             .foregroundColor(Color.theme.OrangeInstance)
-                            .padding(.trailing, 15)
+                            .padding(.trailing, 20)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 20)
             }
-            Spacer()
+            Text("")
+                .frame(height: 150)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
+

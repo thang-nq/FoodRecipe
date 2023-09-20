@@ -36,7 +36,6 @@ struct CreateRecipeView: View {
                 }
                     .opacity(createRecipeVM.showPopUp ? 1 : 0)
             )
-            .offset(y: -40)
             .background(Color.theme.White)
             
             // MARK: CHECK LOADING
@@ -81,7 +80,9 @@ private extension CreateRecipeView{
                 Text("Create")
                     .font(.system(size: 20))
                 
-            }.padding(.trailing, 20)
+            }
+            .padding(.trailing, 20)
+            .disabled(createRecipeVM.isValidCreate())
         }
     }
     

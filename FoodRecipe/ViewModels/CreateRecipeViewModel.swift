@@ -14,7 +14,6 @@ class CreateRecipeViewModel: ObservableObject {
     @StateObject private var homeVM = HomeViewModel()
     //MARK: VARIABLES
     @Published var backgroundPhoto: PhotosPickerItem? = nil
-//    @Published var recipeName = ""
     @Published var cookingTime : Int = 0
     @Published var servingSize : Int = 0
     @Published var description = ""
@@ -174,5 +173,9 @@ class CreateRecipeViewModel: ObservableObject {
                 recipeName = String(recipeName.prefix(recipeNameLimit))
             }
         }
+    }
+    
+    func isValidCreate() -> Bool {
+        return recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentSelectedMealTypes.isEmpty || calories == 0
     }
 }

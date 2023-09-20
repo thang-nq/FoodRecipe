@@ -16,6 +16,10 @@ struct RecipeDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var detailVM = RecipeDetailViewModel()
     @State private var selectedTabIndex = 0
+    @State var userId = UserManager.shared.currentUser!.id
+    @State private var creatorId = ""
+    @State private var isCreator = false
+
     private func back() {
         // Back action
         self.presentationMode.wrappedValue.dismiss()
@@ -23,6 +27,16 @@ struct RecipeDetailView: View {
     private func saveAction() {
         Task {
             await detailVM.saveOrReomveSavedRecipe(recipeID: recipeId)
+        }
+    }
+    private func checkCreater() async{
+        if let recipeDetail = detailVM.recipe{
+            print("gggg")
+            print(userId)
+            print(recipeDetail.creatorID)
+            if(userId == recipeDetail.creatorID){
+                isCreator = true
+            }
         }
     }
     var body: some View {
@@ -44,7 +58,7 @@ struct RecipeDetailView: View {
                                 )
                                 .offset(y: -60)
                             
-                            TopBar(recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
+                            TopBar(isCreator: isCreator,recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
                             
                             // MARK: Content
                             VStack(spacing: 15) {
@@ -112,6 +126,7 @@ struct RecipeDetailView: View {
                         // Handle any errors that occur during the async operation
                         print("Error: \(error)")
                     }
+                    await checkCreater()
                 }
             }
             .onDisappear {
@@ -130,38 +145,39 @@ struct RecipeDetailView_Previews: PreviewProvider {
 
 // MARK: TopBar
 struct TopBar: View {
+    var isCreator : Bool
     var recipeId: String
     var isSaved: Bool
     var backAction: () -> Void
     var saveAction: () -> Void
     var body: some View {
         HStack  {
-            Button {
-                backAction()
-            } label: {
-                // Back button
-                Image("chevron-left")
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(Color.theme.Black.opacity(0.5))
-                    .padding(10)
-                    .background(.white)
-                    .clipShape(Circle())
-            }
-            
-            
+                Button {
+                    backAction()
+                } label: {
+                    // Back button
+                    Image("chevron-left")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(Color.theme.Black.opacity(0.5))
+                        .padding(10)
+                        .background(.white)
+                        .clipShape(Circle())
+                }
             Spacer()
-            
-            NavigationLink(destination: UpdateRecipeView(recipeId: recipeId)) {
-                                Image(systemName: "square.and.pencil")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 24, height: 24)
-                                    .foregroundColor(Color.theme.Black.opacity(0.5))
-                                    .padding(10)
-                                    .background(.white)
-                                    .clipShape(Circle())
-                           }
+            if(isCreator == true){
+                NavigationLink(destination: UpdateRecipeView(recipeId: recipeId)) {
+                    Image(systemName: "square.and.pencil")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(Color.theme.Black.opacity(0.5))
+                        .padding(10)
+                        .background(.white)
+                        .clipShape(Circle())
+                }
+            }
+                          
             
             Button {
                 saveAction()
