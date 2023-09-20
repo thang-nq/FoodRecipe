@@ -39,9 +39,9 @@ struct CreateStepsView: View {
             }, label: {
                 Image(systemName: "plus")
                                 .font(.system(size: 24))
-                                .foregroundColor(.white)
+                                .foregroundColor(Color.theme.WhiteInstance)
                                 .padding(20)
-                                .background(Color("Orange"))
+                                .background(Color.theme.OrangeInstance)
                                 .clipShape(Circle())
                                 
             })
@@ -69,7 +69,7 @@ struct AddStepsSheetView: View {
             Label("Select a photo for step", systemImage: "photo.fill")
         }
         .padding(.vertical, 10)
-        .foregroundColor(Color("Orange"))
+        .foregroundColor(Color.theme.OrangeInstance)
             Button(action: {
                 if(!InputStep.isEmpty){
                     Steps.append(InputStep)
@@ -83,10 +83,10 @@ struct AddStepsSheetView: View {
                 InputStep = ""
             }) {
                 Text("Save")
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.theme.WhiteInstance)
                                     .font(.headline)
                                     .frame(width: 120, height: 40)
-                                    .background(Color("Orange"))
+                                    .background(Color.theme.OrangeInstance)
                                     .cornerRadius(8)
             }
         }
@@ -104,7 +104,7 @@ private extension CreateStepsView{
         VStack(alignment: .leading) {
             if(Steps.isEmpty){
                 HStack {
-                    Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
+                    Circle().fill(Color.theme.OrangeInstance).frame(width: 10, height: 10)
                     Text("Click the plus button below to adding step")
                         .font(.custom("ZillaSlab-Regular", size: 20))
                         
@@ -123,13 +123,13 @@ private extension CreateStepsView{
                         Image(systemName: "minus.circle")
                             .resizable()
                             .frame(width: 25, height: 25)
-                            .foregroundColor(Color("Orange"))
+                            .foregroundColor(Color.theme.OrangeInstance)
                             .padding(.trailing, 20)
                     }
                 }.frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 20)
                 HStack {
-                    Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
+                    Circle().fill(Color.theme.OrangeInstance).frame(width: 10, height: 10)
                     Text(step)
                         .font(.custom("ZillaSlab-Regular", size: 20))
                         .frame(width: 280, alignment: .leading)

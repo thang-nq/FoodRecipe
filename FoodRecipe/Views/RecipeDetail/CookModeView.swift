@@ -24,45 +24,15 @@ struct CookModeView: View {
         VStack(spacing: 0) {
             TabView(selection: $pageIndex) {
                 ForEach(pages) { page in
-                    PageView(page: page, totalSteps: pages.count).tag(page.tag)
+                    // MARK: Page view
+                    PageView(page: page, totalSteps: pages.count, incrementPage: incrementPage, decrementPage: decrementPage).tag(page.tag)
                 }
             }
-            .overlay(
-                HStack {
-                    Button {
-                        decrementPage()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(Color.theme.WhiteInstance)
-                            .padding(10)
-                            .background(Color.theme.Orange)
-                            .clipShape(Circle())
-                    }
-                    
-                    Spacer()
-                    Button {
-                        incrementPage()
-                    } label: {
-                        Image(systemName: "chevron.right")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(Color.theme.Orange)
-                            .clipShape(Circle())
-                    }
-                    
-                }.padding(20),
-                alignment: .bottom
-            )
-            .animation(.easeInOut, value: pageIndex)
-            .tabViewStyle(.page)
+            
             
         }
+        .animation(.easeInOut, value: pageIndex)
+        .tabViewStyle(.page)
         .padding(.top, 50)
         .overlay(
             NavBar(title: "Cook Mode", leftIconName: "xmark", leftIconAction: back)
