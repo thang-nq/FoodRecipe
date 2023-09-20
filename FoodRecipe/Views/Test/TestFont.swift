@@ -46,18 +46,20 @@ struct TestFont: View {
                 
             }
 
-
-            //MARK: COMPONENT
-            Button(action:{}){
-                Text("Submit")
-                    .font(Font.custom.ButtonText)
-                    .frame(width: 150, height: 50)
-                    .contentShape(Rectangle())
+            VStack(spacing: 10) {
+                
+                //MARK: COMPONENT
+                Button(action:{}){
+                    Text("Submit")
+                        .font(Font.custom.ButtonText)
+                        .frame(width: 150, height: 50)
+                        .contentShape(Rectangle())
+                }
+                .foregroundColor(Color.theme.DarkBlueInstance)
+                .background(Color.theme.Orange)
+                .cornerRadius(8)
             }
-            .foregroundColor(Color.theme.DarkBlueInstance)
-            .background(Color.theme.Orange)
-            .cornerRadius(8)
-            
+
         }
             
  
