@@ -21,6 +21,7 @@ struct ContentView: View {
 //                    UserProfileView()
                     HomeView()
                 } else {
+//                    LoginView()
                     Progress(loadingSize: 4)
                 }
 

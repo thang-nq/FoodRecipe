@@ -181,9 +181,9 @@ struct MainInfo: View {
                 .foregroundColor(.black)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
             HStack {
-                TagView(text: recipe.mealType)
+                Tag(text: recipe.mealType)
                 ForEach(recipe.tags, id: \.self) { tag in
-                    TagView(text: tag)
+                    Tag(text: tag)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
