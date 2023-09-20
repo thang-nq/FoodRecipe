@@ -47,6 +47,22 @@ struct RecipeListView: View {
                     }
                 }
             }
+            .overlay(
+                HStack {
+                    NavigationLink(destination: CreateRecipeView()) {
+                        Image(systemName: "flame")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.theme.Orange)
+                            .clipShape(Circle())
+                    }
+                }.padding(15),
+                
+                alignment: .bottomTrailing
+            )
         }
         .onAppear {
             fetchRecipes()
