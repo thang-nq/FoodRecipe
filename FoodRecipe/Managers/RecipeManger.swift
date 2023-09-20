@@ -304,12 +304,14 @@ final class RecipeManager {
     
     // MARK: Get user created recipe
     func getUserCreatedRecipeList(userID: String) async throws -> [Recipe] {
+        
         let snapshot = try await db.whereField("creatorID", isEqualTo: userID).getDocuments()
         var recipes: [Recipe] = []
         for document in snapshot.documents {
-            var recipe = try document.data(as: Recipe.self)
+            let recipe = try document.data(as: Recipe.self)
             recipes.append(recipe)
         }
+        
         return recipes
     }
     

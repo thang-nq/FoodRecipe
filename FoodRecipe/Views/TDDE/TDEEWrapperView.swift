@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct TDEEWrapperView: View {
+
     @State var isTDEECalculator: Bool = true
     @EnvironmentObject var authViewModel: AuthViewModel
+
     var body: some View {
         Group {
             if let currentUser = authViewModel.currentUser {

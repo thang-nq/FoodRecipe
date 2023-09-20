@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 class TDDEViewModel : ObservableObject {
     @Published var tddeRecipes: [Recipe] = []
-    @Published var tddeCount: Int = 0
+    @Published var recommendCal: Int = 0
     
     
     init() {
@@ -21,13 +21,19 @@ class TDDEViewModel : ObservableObject {
 
     
     func getTDDERecipe() async {
-        self.tddeRecipes = await RecipeManager.shared.getUserTDDERecipes()
+        if let currentUser = UserManager.shared.currentUser {
+            self.tddeRecipes = await RecipeManager.shared.getUserTDDERecipes()
+            self.recommendCal = UserManager.shared.currentUser!.recommendCal
+        }
+
+        
     }
     
     func removeRecipeFromTDDE(recipeID: String) async {
         await RecipeManager.shared.removeRecipeFromTDDE(recipeID: recipeID)
         await getTDDERecipe()
     }
+    
     
     func calculateTDDE(age: Int, height: Int, weight: Int, gender: String, activityLevel: Float) async {
         if let currentUser = UserManager.shared.currentUser {
@@ -40,6 +46,7 @@ class TDDEViewModel : ObservableObject {
                 recCalories = Int(round(result))
             }
             try? await UserManager.shared.updateUser(userID: currentUser.id, updateValues: ["recommendCal": recCalories, "enableTDDE": true])
+            self.recommendCal = UserManager.shared.currentUser!.recommendCal
         }
     }
     

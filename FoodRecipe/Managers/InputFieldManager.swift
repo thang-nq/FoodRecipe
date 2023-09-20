@@ -102,8 +102,17 @@ class InputFieldManager: ObservableObject {
         }
     }
     
+    @Published var weightInput = "" {
+        didSet {
+            let filtered = weightInput.filter { $0.isNumber }
+            if weightInput != filtered {
+                weightInput = filtered
+            }
+        }
+    }
+    
     func isValidBMIForm() -> Bool {
-        return ageInput.isEmpty || heightInput.isEmpty
+        return ageInput.isEmpty || heightInput.isEmpty || weightInput.isEmpty
     }
     
     
