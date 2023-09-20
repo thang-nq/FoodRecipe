@@ -20,6 +20,7 @@ struct UserProfileView: View {
     @State private var savedRecipe: [Recipe] = []
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
+    @StateObject var tddeVM = TDDEViewModel()
     // MARK: change to environment object when demo
 //    @StateObject var viewModel = AuthViewModel()
     @EnvironmentObject var viewModel: AuthViewModel
@@ -78,55 +79,68 @@ struct UserProfileView: View {
                 // MARK: Update recipe
                 ScrollView {
                     VStack (alignment: .center) {
-                        if let recipe = detailVM.recipe {
+//                        if let recipe = detailVM.recipe {
+//                            Button {
+//                                Task {
+//
+//                                    // Update entire recipe and re-define cooking steps (overwrite old cookingSteps)
+//                                    await detailVM.updateRecipe(recipeID: recipe.id!, updateData: updateRecipeInterface(name: "Updated recipe and steps", backgroundImage: stepPhoto, steps: [CookingStepInterface(context: "New step context", imageData: stepPhoto, stepNumber: 1)]))
+//                                }
+//                            } label: {
+//                                Text("Update recipe")
+//                            }
+//                            FirebaseImage(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
+//                                .padding(.bottom)
+//                            Text(recipe.name)
+//                            HStack(alignment: .center) {
+//                                Text("Created by - \(recipe.creatorName)")
+//                                UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
+//                            }
+//                            Text("Created at - \(recipe.createdAt)")
+//                            Text(recipe.mealType)
+//                            ForEach(recipe.steps) { step in
+//
+//
+//                                Text("Step \(step.stepNumber) - \(step.context)")
+//                                FirebaseImage(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
+//                                    .padding(.bottom)
+//
+//
+//                                Button {
+//                                    Task {
+//
+//                                        // MARK: Update a step
+//                                        await detailVM.updateCookingStep(recipeID: recipe.id!, stepID: step.id!, context: "This step is updated", backgroundImage: stepPhoto)
+//                                    }
+//                                } label: {
+//                                    Text("Update this step")
+//                                }
+//
+//
+//                                // MARK: Delete a step
+//                                Button {
+//                                    Task {
+//                                        await detailVM.deleteCookingStep(recipeID: recipe.id!, stepID: step.id!)
+//                                    }
+//                                } label: {
+//                                    Text("Delete this step").foregroundColor(.red)
+//                                }
+//                            }
+//                        } else {
+//
+//                        }
+                        
+                        ForEach(tddeVM.tddeRecipes) { recipe in
+                            Text("Name - \(recipe.name)")
                             Button {
                                 Task {
-                                    
-                                    // Update entire recipe and re-define cooking steps (overwrite old cookingSteps)
-                                    await detailVM.updateRecipe(recipeID: recipe.id!, updateData: updateRecipeInterface(name: "Updated recipe and steps", steps: [CookingStepInterface(context: "New step context", imageData: stepPhoto, stepNumber: 1)]))
+                                    await tddeVM.removeRecipeFromTDDE(recipeID: recipe.id!)
                                 }
                             } label: {
-                                Text("Update recipe")
+                                 Text("Remove from list")
                             }
-                            FirebaseImage(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
-                                .padding(.bottom)
-                            Text(recipe.name)
-                            HStack(alignment: .center) {
-                                Text("Created by - \(recipe.creatorName)")
-                                UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
-                            }
-                            Text("Created at - \(recipe.createdAt)")
-                            Text(recipe.mealType)
-                            ForEach(recipe.steps) { step in
-
-                                
-                                Text("Step \(step.stepNumber) - \(step.context)")
-                                FirebaseImage(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
-                                    .padding(.bottom)
-                                
-                                
-                                Button {
-                                    Task {
-                                        
-                                        // MARK: Update a step
-                                        await detailVM.updateCookingStep(recipeID: recipe.id!, stepID: step.id!, context: "This step is updated", backgroundImage: stepPhoto)
-                                    }
-                                } label: {
-                                    Text("Update this step")
-                                }
-                                
-                                
-                                // MARK: Delete a step
-                                Button {
-                                    Task {
-                                        await detailVM.deleteCookingStep(recipeID: recipe.id!, stepID: step.id!)
-                                    }
-                                } label: {
-                                    Text("Delete this step").foregroundColor(.red)
-                                }
-                            }
-                        } else {
-
+                        }.task {
+                            await tddeVM.getTDDERecipe()
                         }
                     }
                 }
@@ -223,7 +237,9 @@ struct UserProfileView: View {
                                 
                                 Button {
                                     Task {
-                                        await homeVM.saveOrRemoveRecipe(recipeID: recipe.id!)
+//                                        await homeVM.saveOrRemoveRecipe(recipeID: recipe.id!)
+                                        await homeVM.addRecipeToTDDE(recipeID: recipe.id!)
+                                        await tddeVM.getTDDERecipe()
                                     }
                                 } label: {
                                     Text(recipe.isSaved ? "Remove save" : "Save to favorite ♥️")
