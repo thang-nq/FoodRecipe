@@ -17,8 +17,8 @@ struct IngredientsView: View {
             VStack (alignment: .leading) {
                 ForEach(ingredientsList, id: \.self) { ingredient in
                     HStack {
-                        Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
-                        Text(ingredient)
+                        Circle().fill(Color.theme.Orange).frame(width: 7, height: 7)
+                        Text(ingredient).font(.custom.Content)
                     }
                     
                 }

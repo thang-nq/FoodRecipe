@@ -20,8 +20,8 @@ struct StepsView: View {
             VStack (alignment: .leading) {
                 ForEach(stepsList) { step in
                     HStack {
-                        Circle().fill(Color.theme.Orange).frame(width: 10, height: 10)
-                        Text(step.context)
+                        Circle().fill(Color.theme.Orange).frame(width: 7, height: 7)
+                        Text(step.context).font(.custom.Content)
                     }
                     
                 }
