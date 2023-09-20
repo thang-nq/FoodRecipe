@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct UpdateStepsView: View {
+    @StateObject var updateVM = UpdateRecipeViewModel()
     //MARK: VARIABLES
     @Binding var Steps: [String]
     @Binding var listStepsPhoto: [PhotosPickerItem?]
@@ -57,6 +58,46 @@ struct UpdateStepsView_Previews: PreviewProvider {
     static var previews: some View {
         CreateStepsView(Steps: .constant([]), listStepsPhoto: .constant([]), backgroundPhoto: .constant(nil))
     }
+}
+
+//MARK: ADD STEP SHEET VIEW
+struct AddingStepsSheetView: View {
+    @Binding var InputStep : String
+    @Binding var Steps : [String]
+    @Binding var stepPhoto: PhotosPickerItem?
+    @Binding var listStepsPhoto : [PhotosPickerItem?]
+    @Binding var backgroundPhoto: PhotosPickerItem?
+    var body: some View{
+        VStack{
+            InputFieldRecipe(text: $InputStep , title: "Step", placeHolder: "Enter step")
+        }
+        
+        PhotosPicker(selection: $stepPhoto, photoLibrary: .shared()) {
+            Label("Select a photo for step", systemImage: "photo.fill")
+        }
+        .padding(.vertical, 10)
+        .foregroundColor(Color.theme.OrangeInstance)
+            Button(action: {
+                if(!InputStep.isEmpty){
+                    Steps.append(InputStep)
+                }
+                if let photo = stepPhoto {
+                    listStepsPhoto.append(photo)
+                } else{
+                    listStepsPhoto.append(backgroundPhoto)
+                }
+//                func addCookingStep(recipeID: updateVM.recipeId, context: String, backgroundImage: PhotosPickerItem?, stepNumber: Int)
+                stepPhoto = nil
+                InputStep = ""
+            }) {
+                Text("Save")
+                    .foregroundColor(Color.theme.WhiteInstance)
+                                    .font(.headline)
+                                    .frame(width: 120, height: 40)
+                                    .background(Color.theme.OrangeInstance)
+                                    .cornerRadius(8)
+            }
+        }
 }
 
 private extension UpdateStepsView{
