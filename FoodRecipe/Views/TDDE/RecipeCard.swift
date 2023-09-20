@@ -21,11 +21,11 @@ struct RecipeCard: View {
         
                 Text("Beef Tender Charcoal")
                     .foregroundColor(Color.theme.DarkBlue)
-                    .font(.custom("ZillaSlab-SemiBold", size: 20))
+                    .font(Font.custom.SubHeading)
             
                 Text("Calories: 600 Kcal")
                     .foregroundColor(Color.theme.DarkBlue)
-                    .font(.custom("ZillaSlab-Regular", size: 16))
+                    .font(Font.custom.SubContentRegular)
                 
                 HStack{
                     Text("Carb: 90g")
@@ -33,7 +33,7 @@ struct RecipeCard: View {
                     Text("Fat: 12g")
                 }
                 .foregroundColor(Color.theme.DarkBlue)
-                .font(.custom("ZillaSlab-Regular", size: 16))
+                .font(Font.custom.SubContentRegular)
             }
             Spacer()
             VStack(alignment: .center, spacing: 15){
