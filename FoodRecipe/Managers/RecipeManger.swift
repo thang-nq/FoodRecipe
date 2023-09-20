@@ -317,26 +317,32 @@ final class RecipeManager {
     
     // MARK: Create new recipe
     func createNewRecipe(recipe: Recipe, backgroundImage: PhotosPickerItem?, cookingSteps: [CookingStepInterface]?) async throws {
-        let recipeID = db.document().documentID
-        // save document
-        try db.document(recipeID).setData(from: recipe)
-        var backgroundURL = "default.jpeg"
-        // If provided an image and successfully update the background image, set the backgroundURL in recipe
-        if let backgroundImageData = backgroundImage {
-            backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
-            
-        }
-        // Add cooking step and related image
-        if cookingSteps != nil {
-            for step in cookingSteps! {
-                let stepID = db.document().documentID
-                try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": backgroundURL, "stepNumber": step.stepNumber])
-                // Upload if the step contain image data
-                if let imageData = step.imageData {
-                    try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
+        
+        if let userData = UserManager.shared.currentUser {
+            let recipeID = db.document().documentID
+            var recipeData = recipe
+            recipeData.creatorID = userData.id
+            // save document
+            try db.document(recipeID).setData(from: recipeData)
+            var backgroundURL = "default.jpeg"
+            // If provided an image and successfully update the background image, set the backgroundURL in recipe
+            if let backgroundImageData = backgroundImage {
+                backgroundURL = try await uploadRecipeBGImage(data: backgroundImageData, recipeID: recipeID)
+                
+            }
+            // Add cooking step and related image
+            if cookingSteps != nil {
+                for step in cookingSteps! {
+                    let stepID = db.document().documentID
+                    try await db.document(recipeID).collection("cookingSteps").document(stepID).setData(["context": step.context, "backgroundURL": backgroundURL, "stepNumber": step.stepNumber])
+                    // Upload if the step contain image data
+                    if let imageData = step.imageData {
+                        try await uploadStepImage(data: imageData, recipeID: recipeID, stepID: stepID)
+                    }
                 }
             }
         }
+        
         
     }
     

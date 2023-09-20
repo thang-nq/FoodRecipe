@@ -14,7 +14,7 @@ import PhotosUI
 struct Recipe: Identifiable, Codable {
     @DocumentID var id: String?
     var name: String
-    let creatorID: String
+    var creatorID: String
     var timeStamp: Timestamp = Timestamp(date: Date())
     var createdAt: String = ""
     var creatorName: String = ""
