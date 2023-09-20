@@ -10,14 +10,12 @@ import SwiftUI
 struct CompactRecipeCard: View {
     var recipe: Recipe
     var body: some View {
-        Button {
-            // Navigate to Recipe Detail
-        } label: {
+        NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!, onDissappear: {}).navigationBarHidden(true)) {
             VStack(alignment: .leading, spacing: 8) {
                 FirebaseImage(imagePathName: recipe.backgroundURL)
                     .aspectRatio(contentMode: .fill)
                     .frame(minWidth: 150)
-                    .frame(height: 200 )
+                    .frame(height: 200)
                     .cornerRadius(20)
                     .clipped()
                 Text(recipe.name)
@@ -31,7 +29,6 @@ struct CompactRecipeCard: View {
             .padding(8)
             .frame(maxWidth: .infinity, alignment: .topLeading)
         }
-        
     }
 }
 

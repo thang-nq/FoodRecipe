@@ -34,7 +34,7 @@ struct UserProfileMockView: View {
     @State var popUpIconColor = Color.theme.BlueInstance
     var body: some View {
         NavigationView {
-            VStack {
+            ScrollView {
                 if let currentUser = viewModel.currentUser {
                     top(currentUser: currentUser)
                     myRecipes(recipeList: userProfileViewModel.recipeList)
@@ -107,7 +107,6 @@ private extension UserProfileMockView {
                 NavigationLink(destination: CreateRecipeView()) {
                     Text("Create recipe").foregroundColor(Color.theme.Orange).underline()
                 }
-                
             }
             Grid {
                 ForEach(Array(stride(from: 0, to: recipeList.count, by: 2)), id: \.self) { index in
@@ -116,9 +115,6 @@ private extension UserProfileMockView {
                         if(index + 1 < recipeList.count) {
                             CompactRecipeCard(recipe: recipeList[index+1])
                         }
-                        //                        if(index + 2 < recipeList.count) {
-                        //                            CompactRecipeCard()
-                        //                        }
                     }
                 }
             }
