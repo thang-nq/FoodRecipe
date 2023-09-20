@@ -383,7 +383,9 @@ final class RecipeManager {
             recipeToUpdate.cookingTime = updateData.cookingTime ?? recipeToUpdate.cookingTime
             recipeToUpdate.intro = updateData.intro ?? recipeToUpdate.intro
             recipeToUpdate.servingSize = updateData.servingSize ?? recipeToUpdate.servingSize
+            recipeToUpdate.mealType = updateData.mealType ?? recipeToUpdate.mealType
             recipeToUpdate.name = updateData.name ?? recipeToUpdate.name
+            recipeToUpdate.tags = updateData.tags ?? recipeToUpdate.tags
             
             try db.document(recipeID).setData(from: recipeToUpdate, merge: true)
             if let updateBackgroundImage = updateData.backgroundImage {

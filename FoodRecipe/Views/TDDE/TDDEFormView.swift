@@ -12,7 +12,7 @@ struct TDDEFormView: View {
     
     //MARK: USER VARAIBLES
     @State private var gender: String = "MALE"
-    @State private var activityLevel: Float = 1.2
+    @State private var activityLevel: Double = 1.2
     @ObservedObject var inputFieldManager = InputFieldManager()
     @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
     @StateObject var tddeViewModel = TDDEViewModel()
@@ -143,8 +143,9 @@ private extension TDDEFormView {
             print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel); WEIGHT: \(weightInt) ")
             Task {
                 await tddeViewModel.calculateTDDE(age: ageInt, height: heightInt, weight: weightInt, gender: gender, activityLevel: activityLevel)
+                navigateToPersonalTDEE = true
             }
-            navigateToPersonalTDEE = true
+            
         }){
             Text("Submit")
                 .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
