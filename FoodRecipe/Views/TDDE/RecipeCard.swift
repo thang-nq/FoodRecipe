@@ -8,29 +8,36 @@
 import SwiftUI
 
 struct RecipeCard: View {
+    var id: String
+    var calories: Int
+    var name: String
+    var imageURL: String
+    var protein: Int
+    var fat: Int
+    var carb: Int
+    @StateObject private var tddeVM = TDDEViewModel.shared
     var body: some View {
         HStack(alignment: .center){
             
-            Image("salas")
-                .resizable()
+            FirebaseImage(imagePathName: imageURL)
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 80, height: 80, alignment: .center)
                 .clipShape(Circle())
 
             VStack(alignment: .leading){
         
-                Text("Beef Tender Charcoal")
+                Text(name)
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.SubHeading)
             
-                Text("Calories: 600 Kcal")
+                Text("Calories: \(calories)")
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.SubContent)
                 
                 HStack{
-                    Text("Carb: 90g")
-                    Text("Proterin: 40g")
-                    Text("Fat: 12g")
+                    Text("Carb: \(carb)g")
+                    Text("Protein: \(protein)g")
+                    Text("Fat: \(fat)g")
                 }
                 .foregroundColor(Color.theme.DarkBlue)
                 .font(Font.custom.SubContent)
@@ -40,7 +47,11 @@ struct RecipeCard: View {
                 Button(action:{}, label: {Image(systemName: "info.circle.fill")})
                     .foregroundColor(Color.theme.BlueInstance)
                 
-                Button(action:{}, label: {Image(systemName: "trash")})
+                Button(action:{
+                    Task {
+                        await tddeVM.removeRecipeFromTDDE(recipeID: id)
+                    }
+                }, label: {Image(systemName: "trash")})
                     .foregroundColor(Color.theme.RedInstance)
             }
 
@@ -52,11 +63,11 @@ struct RecipeCard: View {
     }
 }
 
-struct RecipeCard_Previews: PreviewProvider {
-    static var previews: some View {
-        RecipeCard()
-    }
-}
+//struct RecipeCard_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RecipeCard()
+//    }
+//}
 
 private extension RecipeCard {
     var backGroundStyle: some View {

@@ -13,7 +13,7 @@ struct TDEEPersonalView: View {
     @State var caloriesConsumed: Int = 2456
     @State private var navigateToTDEEForm = false
     @EnvironmentObject private var authVM: AuthViewModel
-    @StateObject private var tddeViewModel = TDDEViewModel()
+    @StateObject private var tddeViewModel = TDDEViewModel.shared
     
     //MARK: init font cus nav title
     init() {
@@ -57,11 +57,11 @@ private extension TDEEPersonalView {
                 .padding(.bottom, 5)
             
             HStack{
-                Text("Carbs: 90g")
+                Text("Carbs: \(tddeViewModel.recommendCarb)g")
                 Divider()
-                Text("Protein: 120g")
+                Text("Protein: \(tddeViewModel.recommendProtein)g")
                 Divider()
-                Text("Fat: 40g")
+                Text("Fat: \(tddeViewModel.recommendFat)g")
             }
             .foregroundColor(Color.theme.Blue)
             .font(Font.custom.Content)
@@ -82,14 +82,14 @@ private extension TDEEPersonalView {
                 VStack{
                     Text("Consumed")
                         .foregroundColor(Color.theme.Orange)
-                    Text("\(caloriesConsumed)")
+                    Text("\(tddeViewModel.consumedCal)")
                 }
                 
         
                 VStack {
                     Text("Balance")
                         .foregroundColor(Color.theme.Orange)
-                    Text("\(tddeViewModel.recommendCal - caloriesConsumed)")
+                    Text("\(tddeViewModel.recommendCal - tddeViewModel.consumedCal)")
                 }
     
             }
@@ -110,10 +110,11 @@ private extension TDEEPersonalView {
                 .font(.custom("ZillaSlab-Bold", size: 26))
                 .padding(.horizontal, 20)
             ScrollView {
-                RecipeCard()
-                RecipeCard()
-                RecipeCard()
-                RecipeCard()
+                ForEach(tddeViewModel.tddeRecipes) {recipe in
+
+                    RecipeCard(id: recipe.id!, calories: recipe.calories, name: recipe.name, imageURL: recipe.backgroundURL, protein: recipe.protein, fat: recipe.fat, carb: recipe.carb)
+                }
+                
             }
             .padding(.horizontal)
         }

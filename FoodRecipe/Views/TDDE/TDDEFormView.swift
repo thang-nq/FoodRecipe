@@ -15,7 +15,7 @@ struct TDDEFormView: View {
     @State private var activityLevel: Double = 1.2
     @ObservedObject var inputFieldManager = InputFieldManager()
     @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
-    @StateObject var tddeViewModel = TDDEViewModel()
+    @StateObject var tddeViewModel = TDDEViewModel.shared
 //    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var navigateToPersonalTDEE = false
     
@@ -147,7 +147,9 @@ private extension TDDEFormView {
                 await tddeViewModel.calculateTDDE(age: ageInt, height: heightInt, weight: weightInt, gender: gender, activityLevel: activityLevel)
                 
             }
+            
             navigateToPersonalTDEE = true
+            
             
         }){
             Text("CALCULATE")

@@ -159,3 +159,34 @@ struct updateRecipeInterface {
     var tags: [String]? = nil
     var steps: [CookingStepInterface]? = nil
 }
+
+
+
+
+func getTagColor(tagValue: String) -> Color {
+    switch tagValue {
+    case "Breakfast":
+        return Color.theme.LightBlueInstance
+    case "Brunch":
+        return Color.theme.GreenInstance
+    case "Dinner":
+        return Color.theme.LightOrangeInstance
+    case "Chicken":
+        return Color.theme.YellowInstance
+    case "Beef":
+        return Color.theme.RedInstance
+    case "Pork":
+        return Color.theme.RedInstance
+    case "Eggs":
+        return Color.theme.DarkBlueInstance
+    case "Soup":
+        return Color.theme.BlueInstance
+        
+    default:
+        return Color.theme.GrayInstance
+    }
+    
+}
+
+
+
