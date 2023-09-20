@@ -24,10 +24,10 @@ struct FontCustom {
     let SubHeading = Font.custom("ZillaSlab-SemiBold", size: 20)
     let SubHeadingItalic = Font.custom("ZillaSlab-SemiBoldItalic", size: 20)
     
-    let ContentRegular = Font.custom("ZillaSlab-Regular", size: 16)
+    let Content = Font.custom("ZillaSlab-Regular", size: 16)
     let ContentItalic = Font.custom("ZillaSlab-MediumItalic", size: 16)
     
-    let SubContentRegular = Font.custom("ZillaSlab-Regular", size: 14)
+    let SubContent = Font.custom("ZillaSlab-Regular", size: 14)
     let SubContentItalic = Font.custom("ZillaSlab-MediumItalic", size: 14)
     
     

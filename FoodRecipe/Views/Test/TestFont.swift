@@ -33,13 +33,13 @@ struct TestFont: View {
             VStack(spacing: 10) {
                 
                 Text("Content regular")
-                    .font(Font.custom.ContentRegular)
+                    .font(Font.custom.Content)
                 
                 Text("Content italic")
                     .font(Font.custom.ContentItalic)
                 
                 Text("Sub content regular")
-                    .font(Font.custom.SubContentRegular)
+                    .font(Font.custom.SubContent)
                 
                 Text("Sub content italic")
                     .font(Font.custom.SubContentItalic)
