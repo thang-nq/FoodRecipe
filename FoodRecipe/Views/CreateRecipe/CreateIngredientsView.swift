@@ -10,7 +10,9 @@ import SwiftUI
 struct CreateIngredientsView: View {
     // MARK: VARIABLES
     @State private var showingSheet = false
+    @State private var showingUpdateSheet = false
     @State private var InputIngredient = ""
+    @State private var updateInputIngredient = ""
     @Binding var Ingredients: [String]
     
     // MARK: FUNCTION
@@ -21,6 +23,11 @@ struct CreateIngredientsView: View {
         }
     }
     
+    private func updateIngredient(_ ingredient: String) {
+        updateInputIngredient = ingredient
+        showingUpdateSheet.toggle()
+    }
+    
     var body: some View {
         // MARK: MAIN LAYOUT
         VStack{
@@ -29,14 +36,8 @@ struct CreateIngredientsView: View {
                         .accessibilityLabel("Ingredients")
             }
         }
-        .sheet(isPresented: $showingSheet){
-            // MARK: ADD INGREDIENTS SHEET
-            AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
-                .presentationDetents([.height(300)])
-        }
-        .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
         .overlay(
-            // MARK: Create new ingredient button
+            // MARK: ADD INGREDIENTS BUTTON
             Button(action: {
                 self.showingSheet.toggle()
             }, label: {
@@ -51,6 +52,18 @@ struct CreateIngredientsView: View {
             .modifier(ButtonModifier()),
             alignment: .bottomTrailing
         )
+        .sheet(isPresented: $showingSheet){
+            // MARK: ADD INGREDIENTS SHEET
+            AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
+                .presentationDetents([.height(300)])
+        }
+        .sheet(isPresented: $showingUpdateSheet){
+            // MARK: UPDATE INGREDIENTS SHEET
+            UpdateIngredientsSheetView(updateInputIngredient: $updateInputIngredient, Ingredients: $Ingredients, showingUpdateSheet: $showingUpdateSheet)
+                .presentationDetents([.height(300)])
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        
         
     }
 }
@@ -60,7 +73,7 @@ struct ButtonModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
           .padding(.bottom, 20)
-          .padding(.trailing, 10)
+          .padding(.trailing, 15)
       
   }
 }
@@ -77,6 +90,36 @@ struct AddIngredientsSheetView: View {
                 if(!InputIngredient.isEmpty){
                     Ingredients.append(InputIngredient)
                     InputIngredient = ""
+                }
+            }) {
+                Text("Save")
+                    .foregroundColor(Color.theme.WhiteInstance)
+                                    .font(.headline)
+                                    .frame(width: 120, height: 40)
+                                    .background(Color.theme.OrangeInstance)
+                                    .cornerRadius(8)
+
+            }
+        }
+}
+
+// MARK: UPDATE INGREDIENTS SHEET VIEW
+struct UpdateIngredientsSheetView: View {
+    @State private var newIngredient : String = ""
+    @Binding var updateInputIngredient : String
+    @Binding var Ingredients : [String]
+    @Binding var showingUpdateSheet : Bool
+    var body: some View{
+        VStack{
+            InputFieldRecipe(text: $newIngredient, title: "Update Ingredient", placeHolder: "Enter new Ingredient")
+        }
+            Button(action: {
+                if(!newIngredient.isEmpty){
+                    if let index = Ingredients.firstIndex(of: updateInputIngredient) {
+                                        Ingredients[index] = newIngredient
+                                        updateInputIngredient = ""
+                                        showingUpdateSheet.toggle()
+                                    }
                 }
             }) {
                 Text("Save")
@@ -113,22 +156,32 @@ private extension CreateIngredientsView{
                     Circle().fill(Color.theme.OrangeInstance).frame(width: 10, height: 10)
                     Text(ingredient)
                         .font(.custom("ZillaSlab-Regular", size: 20))
-                        .frame(width: 280, alignment: .leading)
-                    Spacer()
+                        .frame(width: 260, alignment: .leading)
+                    Button(action: {
+                        updateIngredient(ingredient)
+                    }) {
+                        Image(systemName: "pencil.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(Color.theme.OrangeInstance)
+                            .padding(.trailing, 15)
+                    }
                     Button(action: {
                         removeIngredient(ingredient)
                     }) {
                         Image(systemName: "minus.circle")
                             .resizable()
-                            .frame(width: 25, height: 25)
+                            .frame(width: 30, height: 30)
                             .foregroundColor(Color.theme.OrangeInstance)
-                            .padding(.trailing, 15)
+                            .padding(.trailing, 20)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 20)
             }
-            Spacer()
+            Text("")
+                .frame(height: 150)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
