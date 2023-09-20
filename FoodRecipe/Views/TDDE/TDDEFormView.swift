@@ -145,8 +145,9 @@ private extension TDDEFormView {
             print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel); WEIGHT: \(weightInt) ")
             Task {
                 await tddeViewModel.calculateTDDE(age: ageInt, height: heightInt, weight: weightInt, gender: gender, activityLevel: activityLevel)
+                navigateToPersonalTDEE = true
             }
-            navigateToPersonalTDEE = true
+            
         }){
             Text("Submit")
                 .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))

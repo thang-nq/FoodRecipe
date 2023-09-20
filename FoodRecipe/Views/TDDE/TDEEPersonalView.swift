@@ -76,7 +76,7 @@ private extension TDEEPersonalView {
                 VStack{
                     Text("Total Calo")
                         .foregroundColor(Color.theme.Orange)
-                    Text("\(tddeViewModel.recommendCal)")
+                    Text("\(UserManager.shared.currentUser!.recommendCal)")
                 }
                             
                 VStack{
@@ -89,7 +89,7 @@ private extension TDEEPersonalView {
                 VStack {
                     Text("Balance")
                         .foregroundColor(Color.theme.Orange)
-                    Text("\(TDEENumber - caloriesConsumed)")
+                    Text("\(UserManager.shared.currentUser!.recommendCal - caloriesConsumed)")
                 }
     
             }
