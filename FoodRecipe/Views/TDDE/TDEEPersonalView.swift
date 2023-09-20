@@ -12,6 +12,8 @@ struct TDEEPersonalView: View {
     @State var TDEENumber: Int = 3000
     @State var caloriesConsumed: Int = 2456
     @State private var navigateToTDEEForm = false
+    @EnvironmentObject private var authVM: AuthViewModel
+    @StateObject private var tddeViewModel = TDDEViewModel()
     
     //MARK: init font cus nav title
     init() {
@@ -20,16 +22,19 @@ struct TDEEPersonalView: View {
     
     var body: some View {
         NavigationStack{
-            VStack{
-                caloriesCalculate
-                    .frame(height: 200)
+            ScrollView{
+                VStack{
+                    caloriesCalculate
+                        .frame(height: 200)
+                    
+                    todayList
+                        .padding(.top, 20)
+                }
+                .navigationTitle("MY CALORIES")
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(trailing: reCalButton)
                 
-                todayList
-                    .padding(.top, 20)
             }
-            .navigationTitle("MY CALORIES")
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: reCalButton)
         }
     }
 }
@@ -46,9 +51,9 @@ private extension TDEEPersonalView {
     //MARK: CALCULATOR PERSONAL UI
     var caloriesCalculate: some View {
         VStack(alignment: .center){
-            Text("Suggestion nutitrions")
+            Text("Personal TDEE")
                 .foregroundColor(Color.theme.DarkBlue)
-                .font(.custom("ZillaSlab-SemiBold", size: 24))
+                .font(Font.custom.Heading)
                 .padding(.bottom, 5)
             
             HStack{
@@ -59,7 +64,7 @@ private extension TDEEPersonalView {
                 Text("Fat: 40g")
             }
             .foregroundColor(Color.theme.Blue)
-            .font(.custom("ZillaSlab-Regular", size: 14))
+            .font(Font.custom.ContentRegular)
             
             Divider()
                 .frame(width: 350, height: 2)
@@ -69,9 +74,9 @@ private extension TDEEPersonalView {
             HStack(alignment: .center, spacing: 40){
                 
                 VStack{
-                    Text("Total Calories")
+                    Text("Total Calo")
                         .foregroundColor(Color.theme.Orange)
-                    Text("\(TDEENumber)")
+                    Text("\(UserManager.shared.currentUser!.recommendCal)")
                 }
                             
                 VStack{
@@ -84,12 +89,12 @@ private extension TDEEPersonalView {
                 VStack {
                     Text("Balance")
                         .foregroundColor(Color.theme.Orange)
-                    Text("\(TDEENumber - caloriesConsumed)")
+                    Text("\(UserManager.shared.currentUser!.recommendCal - caloriesConsumed)")
                 }
     
             }
             .frame(height: 80)
-            .font(.custom("ZillaSlab-SemiBold", size: 20))
+            .font(Font.custom.SubHeading)
         }
         .padding()
         .background(
@@ -127,7 +132,7 @@ private extension TDEEPersonalView {
         .navigationDestination(isPresented: $navigateToTDEEForm){
             TDDEFormView()
         }
-        .font(.custom("ZillaSlab-SemiBold", size: 16))
+        .font(Font.custom.ButtonText)
         .frame(width: 150, height: 40, alignment: .center)
         .foregroundColor(Color.theme.DarkBlue)
         .background(Color.theme.OrangeInstance)

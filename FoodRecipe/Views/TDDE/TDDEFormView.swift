@@ -12,10 +12,11 @@ struct TDDEFormView: View {
     
     //MARK: USER VARAIBLES
     @State private var gender: String = "MALE"
-    @State private var activityLevel: Float = 1.2
+    @State private var activityLevel: Double = 1.2
     @ObservedObject var inputFieldManager = InputFieldManager()
     @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
-    
+    @StateObject var tddeViewModel = TDDEViewModel()
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var navigateToPersonalTDEE = false
     
     //MARK: init font cus nav title
@@ -65,7 +66,7 @@ private extension TDDEFormView {
 
             } header: {
                 Text("Select your gender")
-                    .font(.custom("ZillaSlab-Bold", size: 18))
+                    .font(Font.custom.Heading)
                     .foregroundColor(Color.theme.DarkBlue)
             }
             
@@ -81,30 +82,40 @@ private extension TDDEFormView {
             //MARK: HEIGHT UI
             Section(header: Text("Your height")) {
                 TextField("Your height (cm)", text: $inputFieldManager.heightInput)
-                    .font(.custom("ZillaSlab-MediumItalic", size: 16))
+                    .font(Font.custom.ContentItalic)
                     .keyboardType(.decimalPad)
             }
             .font(.custom("ZillaSlab-Bold", size: 18))
             .foregroundColor(Color.theme.DarkBlue)
         
+            //MARK: HEIGHT UI
+            Section(header: Text("Your weight")) {
+                TextField("Your weight (kg)", text: $inputFieldManager.weightInput)
+                    .font(Font.custom.ContentItalic)
+                    .keyboardType(.decimalPad)
+            }
+            .font(.custom("ZillaSlab-Bold", size: 18))
+            .foregroundColor(Color.theme.DarkBlue)
             
             //MARK: ACTIVITY LEVEL
             Section{
                 Picker("Activity level", selection: $activityLevel){
+                    
                     Text("Sedentary")
                         .tag(1.2)
-                    
+
                     Text("Light")
                         .tag(1.375)
-                    
+
                     Text("Moderate")
                         .tag(1.55)
-                    
+
                     Text("Active")
                         .tag(1.725)
-                    
+
                     Text("Very Active")
                         .tag(1.9)
+                    
                 }
                 .font(.custom("ZillaSlab-BoldItalic", size: 16))
                 .foregroundColor(Color.theme.DarkBlue)
@@ -129,8 +140,14 @@ private extension TDDEFormView {
             //Convert age and height string to INT & FLOAT
             let ageInt = (inputFieldManager.ageInput as NSString).integerValue
             let heightInt = (inputFieldManager.heightInput as NSString).integerValue
-            print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel)")
-            navigateToPersonalTDEE = true
+            let weightInt = (inputFieldManager.weightInput as NSString).integerValue
+            
+            print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel); WEIGHT: \(weightInt) ")
+            Task {
+                await tddeViewModel.calculateTDDE(age: ageInt, height: heightInt, weight: weightInt, gender: gender, activityLevel: activityLevel)
+                navigateToPersonalTDEE = true
+            }
+            
         }){
             Text("Submit")
                 .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
@@ -142,7 +159,7 @@ private extension TDDEFormView {
         .cornerRadius(8)
         .disabled(inputFieldManager.isValidBMIForm())
         .navigationDestination(isPresented: $navigateToPersonalTDEE){
-            TDEEPersonalView()
+//            TDEEPersonalView()
         }
     }
         

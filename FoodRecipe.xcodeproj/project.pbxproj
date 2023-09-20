@@ -15,6 +15,8 @@
 		A12005212AB74F6200E11DF6 /* TDEEWelcomeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005202AB74F6200E11DF6 /* TDEEWelcomeList.swift */; };
 		A1556EDF2AB2E42E00074074 /* OnLoadingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1556EDE2AB2E42E00074074 /* OnLoadingPageView.swift */; };
 		A1556EE12AB2EB9B00074074 /* OnLoadingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1556EE02AB2EB9B00074074 /* OnLoadingList.swift */; };
+		A15E3E772ABAA5FB008D59E2 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E3E762ABAA5FB008D59E2 /* Font.swift */; };
+		A15E3E792ABAADC1008D59E2 /* TestFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E3E782ABAADC1008D59E2 /* TestFont.swift */; };
 		A17132F32AB5728D00F103CF /* TestProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17132F22AB5728D00F103CF /* TestProgress.swift */; };
 		A17132F52AB573B500F103CF /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17132F42AB573B500F103CF /* Progress.swift */; };
 		A17B54192AB039960096A8A9 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B54182AB039960096A8A9 /* AuthViewModel.swift */; };
@@ -56,7 +58,8 @@
 		A57741F62AB45F97009B4882 /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57741F52AB45F97009B4882 /* RecipeDetailViewModel.swift */; };
 		A57741F82AB483C7009B4882 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57741F72AB483C7009B4882 /* SearchViewModel.swift */; };
 		A57741FA2AB5E4D1009B4882 /* DateTimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57741F92AB5E4D1009B4882 /* DateTimeFormat.swift */; };
-		A5A529A32AB931B600F2591F /* SaveRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A529A22AB931B600F2591F /* SaveRecipeViewModel.swift */; };
+		A5A529A32AB931B600F2591F /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A529A22AB931B600F2591F /* UserProfileViewModel.swift */; };
+		A5A529A52ABA1A9900F2591F /* TDDEViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A529A42ABA1A9900F2591F /* TDDEViewModel.swift */; };
 		A5F1C2D82AB324B500949874 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2D62AB324B400949874 /* UserManager.swift */; };
 		A5F1C2D92AB324B500949874 /* RecipeManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2D72AB324B400949874 /* RecipeManger.swift */; };
 		A5F1C2DB2AB3265D00949874 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2DA2AB3265D00949874 /* Errors.swift */; };
@@ -99,6 +102,8 @@
 		A12005202AB74F6200E11DF6 /* TDEEWelcomeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDEEWelcomeList.swift; sourceTree = "<group>"; };
 		A1556EDE2AB2E42E00074074 /* OnLoadingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnLoadingPageView.swift; sourceTree = "<group>"; };
 		A1556EE02AB2EB9B00074074 /* OnLoadingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnLoadingList.swift; sourceTree = "<group>"; };
+		A15E3E762ABAA5FB008D59E2 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		A15E3E782ABAADC1008D59E2 /* TestFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFont.swift; sourceTree = "<group>"; };
 		A17132F22AB5728D00F103CF /* TestProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProgress.swift; sourceTree = "<group>"; };
 		A17132F42AB573B500F103CF /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
 		A17B54182AB039960096A8A9 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -138,7 +143,8 @@
 		A57741F52AB45F97009B4882 /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
 		A57741F72AB483C7009B4882 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		A57741F92AB5E4D1009B4882 /* DateTimeFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeFormat.swift; sourceTree = "<group>"; };
-		A5A529A22AB931B600F2591F /* SaveRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRecipeViewModel.swift; sourceTree = "<group>"; };
+		A5A529A22AB931B600F2591F /* UserProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
+		A5A529A42ABA1A9900F2591F /* TDDEViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDDEViewModel.swift; sourceTree = "<group>"; };
 		A5F1C2D62AB324B400949874 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		A5F1C2D72AB324B400949874 /* RecipeManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeManger.swift; sourceTree = "<group>"; };
 		A5F1C2DA2AB3265D00949874 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -218,6 +224,8 @@
 				C2C5F22A2AB85A4A003A54A6 /* CreateRecipeViewModel.swift */,
 				A5A529A22AB931B600F2591F /* SaveRecipeViewModel.swift */,
 				C23CFA092ABA147800C2BF51 /* UpdateRecipeViewModel.swift */,
+				A5A529A22AB931B600F2591F /* UserProfileViewModel.swift */,
+				A5A529A42ABA1A9900F2591F /* TDDEViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -228,6 +236,7 @@
 				A188D5AE2AB1870500E8FF0E /* TestColors.swift */,
 				A17132F22AB5728D00F103CF /* TestProgress.swift */,
 				A120051E2AB74B6000E11DF6 /* testView.swift */,
+				A15E3E782ABAADC1008D59E2 /* TestFont.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -256,6 +265,7 @@
 				A17B541A2AB039B70096A8A9 /* ImageProcessing.swfit.swift */,
 				A1A85E672AAF031E00875285 /* Color.swift */,
 				A57741F92AB5E4D1009B4882 /* DateTimeFormat.swift */,
+				A15E3E762ABAA5FB008D59E2 /* Font.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -554,7 +564,7 @@
 				A188D5AA2AB1747700E8FF0E /* RoundedCorners.swift in Sources */,
 				A5F1C2D92AB324B500949874 /* RecipeManger.swift in Sources */,
 				A17132F52AB573B500F103CF /* Progress.swift in Sources */,
-				A5A529A32AB931B600F2591F /* SaveRecipeViewModel.swift in Sources */,
+				A5A529A32AB931B600F2591F /* UserProfileViewModel.swift in Sources */,
 				A5F1C2DB2AB3265D00949874 /* Errors.swift in Sources */,
 				C23CFA082AB9F69000C2BF51 /* UpdateStepsView.swift in Sources */,
 				C23CFA062AB9F68400C2BF51 /* UpdateIngredientsView.swift in Sources */,
@@ -563,9 +573,11 @@
 				A548C0852AADE2D400884B91 /* UserAvatar.swift in Sources */,
 				CC85B0C62AB1A78900913056 /* SearchBar.swift in Sources */,
 				CC8D218B2AB0164F0036ABF3 /* SectionTitleView.swift in Sources */,
+				A15E3E792ABAADC1008D59E2 /* TestFont.swift in Sources */,
 				A120051F2AB74B6000E11DF6 /* testView.swift in Sources */,
 				A12005182AB58B3B00E11DF6 /* InputFieldManager.swift in Sources */,
 				A11EAE902AB97BFC008E56B5 /* TDEEWrapperView.swift in Sources */,
+				A5A529A52ABA1A9900F2591F /* TDDEViewModel.swift in Sources */,
 				A548C07B2AADDD6800884B91 /* User.swift in Sources */,
 				A17B54192AB039960096A8A9 /* AuthViewModel.swift in Sources */,
 				A1A85E682AAF031E00875285 /* Color.swift in Sources */,
@@ -577,6 +589,7 @@
 				C2C5F22B2AB85A4A003A54A6 /* CreateRecipeViewModel.swift in Sources */,
 				CCD973EE2AAF3D3300E1AF9C /* NutritionView.swift in Sources */,
 				C2E9278A2AB4D48C00C9E450 /* CreateIntroView.swift in Sources */,
+				A15E3E772ABAA5FB008D59E2 /* Font.swift in Sources */,
 				CCD3FD562AB5B83B00B51F67 /* CookModeView.swift in Sources */,
 				A120051A2AB5A22800E11DF6 /* SignupView.swift in Sources */,
 				CCE488562AB71B4600A58FFA /* NavBar.swift in Sources */,

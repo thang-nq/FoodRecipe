@@ -8,20 +8,29 @@
 import SwiftUI
 
 struct TDEEWrapperView: View {
+
     @State var isTDEECalculator: Bool = true
+    @EnvironmentObject var authViewModel: AuthViewModel
+
     var body: some View {
         Group {
-            if isTDEECalculator {
-                TDEEPersonalView()
+            if let currentUser = authViewModel.currentUser {
+                if currentUser.enableTDDE {
+                    TDEEPersonalView()
+                } else {
+                    TDDEFormView()
+                }
+                
             } else{
-                TDDEFormView()
+                //                TDDEFormView()
+                LoginView()
             }
         }
     }
 }
 
-struct TDEEWrapperView_Previews: PreviewProvider {
-    static var previews: some View {
-        TDEEWrapperView()
-    }
-}
+//struct TDEEWrapperView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TDEEWrapperView()
+//    }
+//}

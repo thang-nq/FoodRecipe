@@ -98,6 +98,70 @@ final class RecipeManager {
     }
     
     
+    func getUserTDDERecipes() async -> [Recipe] {
+        var recipes: [Recipe] = []
+        var returnRecipes: [Recipe] = []
+        do {
+            if let user = UserManager.shared.currentUser {
+                let userData = await UserManager.shared.getUserData(userID: user.id)
+                if userData!.tddeRecipes.count > 0 {
+                    var tddeRecipesIDs = userData!.tddeRecipes
+                    let snapshot = try await db.whereField(FieldPath.documentID(), in: userData!.savedRecipe).getDocuments()
+                    for d in snapshot.documents {
+                        var recipe = try d.data(as: Recipe.self)
+                        recipes.append(recipe)
+                    }
+                    
+                    for item in tddeRecipesIDs {
+                        for recipeAvailable in recipes {
+                            if (recipeAvailable.id! == item) {
+                                returnRecipes.append(recipeAvailable)
+                            }
+                        }
+                    }
+                }
+                
+            }
+        } catch {
+            print("DEBUG: \(error.localizedDescription)")
+        }
+        print(returnRecipes.count)
+        return returnRecipes
+    }
+    
+    func addRecipeToTDDE(recipeID: String) async {
+        do {
+            if let localUser = UserManager.shared.currentUser {
+                var userData = await UserManager.shared.getUserData(userID: localUser.id)
+                var tddeRecipes = userData!.tddeRecipes
+                tddeRecipes.append(recipeID)
+                try await UserManager.shared.updateUser(userID: localUser.id, updateValues: ["tddeRecipes": tddeRecipes])
+            }
+        } catch {
+            print("DEBUG - \(error.localizedDescription)")
+        }
+    }
+    
+    func removeRecipeFromTDDE(recipeID: String) async {
+        do {
+            if let localUser = UserManager.shared.currentUser {
+                var userData = await UserManager.shared.getUserData(userID: localUser.id)
+                var tddeRecipes = userData!.tddeRecipes
+                
+
+                // Remove the id from array
+                if tddeRecipes.contains(recipeID) {
+                    let index = tddeRecipes.firstIndex(of: recipeID)
+                    tddeRecipes.remove(at: index!)
+                    try await UserManager.shared.updateUser(userID: localUser.id, updateValues: ["tddeRecipes": tddeRecipes])
+                }
+            }
+        } catch {
+            print("DEBUG - \(error.localizedDescription)")
+        }
+    }
+    
+    
     // MARK: Add/remove recipe from saved recipe
     func saveOrRemoveRecipeFromFavorite(recipeID: String) async {
         do {
@@ -240,12 +304,14 @@ final class RecipeManager {
     
     // MARK: Get user created recipe
     func getUserCreatedRecipeList(userID: String) async throws -> [Recipe] {
+        
         let snapshot = try await db.whereField("creatorID", isEqualTo: userID).getDocuments()
         var recipes: [Recipe] = []
         for document in snapshot.documents {
             let recipe = try document.data(as: Recipe.self)
             recipes.append(recipe)
         }
+        
         return recipes
     }
     
@@ -317,7 +383,9 @@ final class RecipeManager {
             recipeToUpdate.cookingTime = updateData.cookingTime ?? recipeToUpdate.cookingTime
             recipeToUpdate.intro = updateData.intro ?? recipeToUpdate.intro
             recipeToUpdate.servingSize = updateData.servingSize ?? recipeToUpdate.servingSize
+            recipeToUpdate.mealType = updateData.mealType ?? recipeToUpdate.mealType
             recipeToUpdate.name = updateData.name ?? recipeToUpdate.name
+            recipeToUpdate.tags = updateData.tags ?? recipeToUpdate.tags
             
             try db.document(recipeID).setData(from: recipeToUpdate, merge: true)
             if let updateBackgroundImage = updateData.backgroundImage {
