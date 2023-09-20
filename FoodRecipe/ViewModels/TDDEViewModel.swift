@@ -12,20 +12,36 @@ class TDDEViewModel : ObservableObject {
     static let shared = TDDEViewModel()
     @Published var tddeRecipes: [Recipe] = []
     @Published var recommendCal: Int = UserManager.shared.currentUser!.recommendCal
+    @Published var recommendProtein: Int = 0
+    @Published var recommendCarb: Int = 0
+    @Published var recommendFat: Int = 0
+    @Published var consumedCal: Int = 0
     
     
     private init() {
         Task {
             await self.getTDDERecipe()
         }
-        
     }
 
     
     func getTDDERecipe() async {
-        if let currentUser = UserManager.shared.currentUser {
+        if UserManager.shared.currentUser != nil {
+            self.consumedCal = 0
             self.tddeRecipes = await RecipeManager.shared.getUserTDDERecipes()
             print("TDDE recipes: \(self.tddeRecipes.count)")
+            self.recommendCal = try! await UserManager.shared.getCurrentUserData()!.recommendCal
+            let protein = Double(self.recommendCal) * 0.35
+            self.recommendProtein = Int(protein/4)
+            
+            let fat = Double(self.recommendCal) * 0.2
+            self.recommendFat = Int(fat/9)
+            
+            let carb = Double(self.recommendCal) * 0.45
+            self.recommendCarb = Int(carb/4)
+            for recipe in tddeRecipes {
+                consumedCal += recipe.calories
+            }
         }
         
     }
@@ -48,6 +64,7 @@ class TDDEViewModel : ObservableObject {
             }
             self.recommendCal = recCalories
             try? await UserManager.shared.updateUser(userID: currentUser.id, updateValues: ["recommendCal": recCalories, "enableTDDE": true])
+            await getTDDERecipe()
             
         }
     }
