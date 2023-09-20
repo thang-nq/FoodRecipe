@@ -29,7 +29,7 @@ struct UpdateStepsView: View {
         }
         .sheet(isPresented: $showingSheet){
             // MARK: ADD STEP SHEET UI
-            AddStepsSheetView(InputStep: $InputStep, Steps: $Steps, stepPhoto: $stepPhoto, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
+            AddingStepsSheetView(InputStep: $InputStep, Steps: $Steps, stepPhoto: $stepPhoto, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
                 .presentationDetents([.height(300)])
         }
         .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
@@ -86,7 +86,7 @@ struct AddingStepsSheetView: View {
                 } else{
                     listStepsPhoto.append(backgroundPhoto)
                 }
-//                func addCookingStep(recipeID: updateVM.recipeId, context: String, backgroundImage: PhotosPickerItem?, stepNumber: Int)
+//                func addCookingStep(recipeID: recipeId, context: String, backgroundImage: PhotosPickerItem?, stepNumber: Int)
                 stepPhoto = nil
                 InputStep = ""
             }) {
