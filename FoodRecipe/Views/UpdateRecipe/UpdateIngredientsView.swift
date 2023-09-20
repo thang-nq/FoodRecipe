@@ -83,7 +83,7 @@ private extension UpdateIngredientsView{
                 HStack {
                     Circle().fill(Color.theme.OrangeInstance).frame(width: 10, height: 10)
                     Text("Click the plus button below to adding ingredient")
-                        .font(.custom("ZillaSlab-Regular", size: 20))
+                        .font(Font.custom.Content)
                         
                 }.padding(.leading, 20)
             }
@@ -91,7 +91,7 @@ private extension UpdateIngredientsView{
                 HStack() {
                     Circle().fill(Color.theme.OrangeInstance).frame(width: 10, height: 10)
                     Text(ingredient)
-                        .font(.custom("ZillaSlab-Regular", size: 20))
+                        .font(Font.custom.Content)
                         .frame(width: 260, alignment: .leading)
                     Button(action: {
                         updateIngredient(ingredient)

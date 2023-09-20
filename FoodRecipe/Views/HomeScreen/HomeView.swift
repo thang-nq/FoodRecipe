@@ -26,7 +26,7 @@ struct HomeView: View {
                     Text("Search")
                 }
 //            CreateRecipeView()
-            CreateRecipeView()
+            TDEEWrapperView()
                 .tabItem(){
                     Image(systemName: "brain")
                     Text("TDEE")

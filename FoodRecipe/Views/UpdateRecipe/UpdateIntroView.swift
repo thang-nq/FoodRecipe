@@ -125,7 +125,7 @@ private extension UpdateIntroView{
                 Spacer()
             }
             TextEditor(text: $description)
-                .font(.custom("ZillaSlab-Regular", size: 16))
+                .font(Font.custom.Content)
                 .frame(height: 250)
                 .colorMultiply(Color.theme.DarkWhite)
                 .cornerRadius(10)
@@ -147,14 +147,17 @@ private extension UpdateIntroView{
             HStack{
                 RequireNutritionInput(value: $calories, name: "Calories", placeHolder: "0")
                 NutritionInput(value: $carb, name: "Carb", placeHolder: "0")
-                NutritionInput(value: $protein, name: "Protein", placeHolder: "0")
-                NutritionInput(value: $fat, name: "Fat", placeHolder: "0")
             }
             HStack{
+                NutritionInput(value: $protein, name: "Protein", placeHolder: "0")
+                NutritionInput(value: $fat, name: "Fat", placeHolder: "0")
                 NutritionInput(value: $sugars, name: "Sugars", placeHolder: "0")
+            }
+            HStack{
                 NutritionInput(value: $salt, name: "Salt", placeHolder: "0")
                 NutritionInput(value: $saturates, name: "Saturates", placeHolder: "0")
                 NutritionInput(value: $fibre, name: "Fibre", placeHolder: "0")
+                
             }
         }
     }

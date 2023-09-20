@@ -122,7 +122,7 @@ private extension UpdateRecipeView{
             Spacer()
             // Title of the view
             Text("Update recipe")
-                .font(.custom("ZillaSlab-Bold", size: 25))
+                .font(Font.custom.NavigationTitle)
                 .padding(.leading, 70)
             Spacer()
             
