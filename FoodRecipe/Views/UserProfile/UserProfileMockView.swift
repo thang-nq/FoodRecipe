@@ -35,53 +35,9 @@ struct UserProfileMockView: View {
     var body: some View {
         NavigationView {
             VStack {
-                top
-                HStack {
-                    SectionTitleView(title: "My Recipes")
-                    //                Button {
-                    //
-                    //                } label: {
-                    //
-                    //                }
-                    NavigationLink(destination: CreateRecipeView()) {
-                        Text("Create recipe").foregroundColor(Color.theme.Orange).underline()
-                    }
-                    
-                }
-                Grid {
-                    //                For index in 0...userProfileViewModel.recipeList.count {
-                    //                    if(index % 2 == 0) {
-                    //                        GridRow(
-                    //                    }
-                    //                }
-                    
-                    ForEach(Array(stride(from: 0, to: userProfileViewModel.recipeList.count, by: 2)), id: \.self) { index in
-                        HStack {
-                            GridRow {
-                                CompactRecipeCard()
-                                if(index + 1 < userProfileViewModel.recipeList.count) {
-                                    CompactRecipeCard()
-                                    //                        NutritionElementView(item: recipe.nutritionsArray[index+1])
-                                }
-                                if(index + 2 < userProfileViewModel.recipeList.count) {
-                                    CompactRecipeCard()
-                                    //                        NutritionElementView(item: recipe.nutritionsArray[index+1])
-                                }
-                            }
-                        }
-                    }
-                    
-                    
-                    
-                    
-                    //                GridRow {
-                    //                    CompactRecipeCard()
-                    //                    CompactRecipeCard()
-                    //                }
-                    //                GridRow {
-                    //                    CompactRecipeCard()
-                    //                    CompactRecipeCard()
-                    //                }
+                if let currentUser = viewModel.currentUser {
+                    top(currentUser: currentUser)
+                    myRecipes(recipeList: userProfileViewModel.recipeList)
                 }
                 Spacer()
             }
@@ -102,18 +58,18 @@ struct UserProfileMockView_Previews: PreviewProvider {
 }
 
 private extension UserProfileMockView {
-    var top: some View {
+    func top(currentUser: User) -> some View {
         VStack {
             SectionTitleView(title: "User Profile Settings")
             VStack {
                 HStack {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Nararaya Kirana")
+                        Text(currentUser.fullName)
                             .font(.custom("ZillaSlab-Regular", size: 26))
                             .kerning(0.552)
                             .foregroundColor(Color.theme.Black)
                             .frame(maxWidth: .infinity, alignment: .topLeading)
-                        Text("nararaya.putri@mail.com")
+                        Text(currentUser.email)
                         //                            .foregroundColor()
                     }.padding(0)
                     Spacer()
@@ -121,8 +77,8 @@ private extension UserProfileMockView {
                         .foregroundColor(.clear)
                         .frame(width: 60, height: 60)
                         .background(
-                            Image("soup")
-                                .resizable()
+                            
+                            FirebaseImage(imagePathName: currentUser.avatarUrl)
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 60, height: 60)
                                 .clipped()
@@ -134,12 +90,38 @@ private extension UserProfileMockView {
                                 .stroke(.white, lineWidth: 5)
                         )
                 }
-                Text("Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.")
+                Text(currentUser.initials)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .padding(.vertical, 16)
             .background(Color.theme.White)
             .shadow(color: Color.theme.Black.opacity(0.1), radius: 0, x: 0, y: -1)
             .shadow(color: Color.theme.Black.opacity(0.1), radius: 0, x: 0, y: 1)
+        }
+    }
+    
+    func myRecipes(recipeList: [Recipe]) -> some View {
+        VStack {
+            HStack {
+                SectionTitleView(title: "My Recipes")
+                NavigationLink(destination: CreateRecipeView()) {
+                    Text("Create recipe").foregroundColor(Color.theme.Orange).underline()
+                }
+                
+            }
+            Grid {
+                ForEach(Array(stride(from: 0, to: recipeList.count, by: 2)), id: \.self) { index in
+                    GridRow {
+                        CompactRecipeCard(recipe: recipeList[index])
+                        if(index + 1 < recipeList.count) {
+                            CompactRecipeCard(recipe: recipeList[index+1])
+                        }
+                        //                        if(index + 2 < recipeList.count) {
+                        //                            CompactRecipeCard()
+                        //                        }
+                    }
+                }
+            }
         }
     }
 }

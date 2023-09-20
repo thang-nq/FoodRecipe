@@ -8,29 +8,20 @@
 import SwiftUI
 
 struct CompactRecipeCard: View {
-    var recipe: Recipe = Recipe(name: "Crispy Pork",
-                                creatorID: "randomshit",
-                                intro: "This is a healthy dish",
-                                servingSize: 3,
-                                cookingTime: 90,
-                                calories: 740,
-                                carb: 15,
-                                protein: 30,
-                                ingredients: ["300g Pork", "20g Salt"],
-                                tags: ["Pork", "Dinner"])
+    var recipe: Recipe
     var body: some View {
         Button {
             // Navigate to Recipe Detail
         } label: {
             VStack(alignment: .leading, spacing: 8) {
-                Image("soup")
-                    .resizable()
+                FirebaseImage(imagePathName: recipe.backgroundURL)
                     .aspectRatio(contentMode: .fill)
-                    .frame(height: 200)
+                    .frame(minWidth: 150)
+                    .frame(height: 200 )
                     .cornerRadius(20)
                     .clipped()
-                Text("Chicken Soup Oven Potato")
-                    .font(.custom("ZillaSlab-Bold", size: 20)).fontWeight(.medium)
+                Text(recipe.name)
+                    .font(.custom("ZillaSlab-Regular", size: 15)).fontWeight(.medium)
                     .kerning(0.552)
                     .foregroundColor(Color.theme.Black)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -48,12 +39,12 @@ struct CompactRecipeCard_Previews: PreviewProvider {
     static var previews: some View {
         Grid {
             GridRow {
-                CompactRecipeCard()
-                CompactRecipeCard()
+                CompactRecipeCard(recipe: Recipe.sampleRecipe)
+                CompactRecipeCard(recipe: Recipe.sampleRecipe)
             }
             GridRow {
-                CompactRecipeCard()
-                CompactRecipeCard()
+                CompactRecipeCard(recipe: Recipe.sampleRecipe)
+                CompactRecipeCard(recipe: Recipe.sampleRecipe)
             }
         }
     }
