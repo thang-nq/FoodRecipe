@@ -12,6 +12,8 @@ struct TDEEPersonalView: View {
     @State var TDEENumber: Int = 3000
     @State var caloriesConsumed: Int = 2456
     @State private var navigateToTDEEForm = false
+    @EnvironmentObject private var authVM: AuthViewModel
+    @StateObject private var tddeViewModel = TDDEViewModel()
     
     //MARK: init font cus nav title
     init() {
@@ -74,7 +76,7 @@ private extension TDEEPersonalView {
                 VStack{
                     Text("Total Calories")
                         .foregroundColor(Color.theme.Orange)
-                    Text("\(TDEENumber)")
+                    Text("\(tddeViewModel.recommendCal)")
                 }
                             
                 VStack{

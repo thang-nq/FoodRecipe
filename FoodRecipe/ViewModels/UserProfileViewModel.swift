@@ -13,6 +13,12 @@ class UserProfileViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showError: Bool = false
     
+    init() {
+        Task {
+            await getUserCreatedRecipe()
+        }
+    }
+    
     func getUserCreatedRecipe() async {
         do {
             if let currentUser = UserManager.shared.currentUser {

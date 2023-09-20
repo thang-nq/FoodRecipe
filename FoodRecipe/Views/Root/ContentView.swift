@@ -18,8 +18,8 @@ struct ContentView: View {
             if $authVM.userSession != nil {
 
                 if authVM.currentUser != nil {
-//                    UserProfileView()
-                    HomeView()
+                    UserProfileView()
+//                    HomeView()
                 } else {
                     Progress(loadingSize: 4)
                 }

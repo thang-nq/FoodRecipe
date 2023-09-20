@@ -21,6 +21,7 @@ struct UserProfileView: View {
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     @StateObject var tddeVM = TDDEViewModel()
+    @StateObject var userProfileVM = UserProfileViewModel()
     // MARK: change to environment object when demo
 //    @StateObject var viewModel = AuthViewModel()
     @EnvironmentObject var viewModel: AuthViewModel
@@ -130,17 +131,17 @@ struct UserProfileView: View {
 //
 //                        }
                         
-                        ForEach(tddeVM.tddeRecipes) { recipe in
+                        ForEach(userProfileVM.recipeList) { recipe in
                             Text("Name - \(recipe.name)")
                             Button {
                                 Task {
-                                    await tddeVM.removeRecipeFromTDDE(recipeID: recipe.id!)
+                                    
                                 }
                             } label: {
                                  Text("Remove from list")
                             }
                         }.task {
-                            await tddeVM.getTDDERecipe()
+                            await userProfileVM.getUserCreatedRecipe()
                         }
                     }
                 }
