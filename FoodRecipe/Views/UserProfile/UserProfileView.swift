@@ -20,7 +20,7 @@ struct UserProfileView: View {
     @State private var savedRecipe: [Recipe] = []
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
-    @StateObject var tddeVM = TDDEViewModel()
+    @StateObject var tddeVM = TDDEViewModel.shared
     @StateObject var userProfileVM = UserProfileViewModel()
     // MARK: change to environment object when demo
 //    @StateObject var viewModel = AuthViewModel()

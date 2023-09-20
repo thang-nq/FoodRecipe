@@ -9,11 +9,12 @@ import Foundation
 
 @MainActor
 class TDDEViewModel : ObservableObject {
+    static let shared = TDDEViewModel()
     @Published var tddeRecipes: [Recipe] = []
     @Published var recommendCal: Int = UserManager.shared.currentUser!.recommendCal
     
     
-    init() {
+    private init() {
         Task {
             await self.getTDDERecipe()
         }
@@ -24,6 +25,7 @@ class TDDEViewModel : ObservableObject {
     func getTDDERecipe() async {
         if let currentUser = UserManager.shared.currentUser {
             self.tddeRecipes = await RecipeManager.shared.getUserTDDERecipes()
+            print("TDDE recipes: \(self.tddeRecipes.count)")
         }
         
     }
