@@ -105,6 +105,36 @@ struct InputFieldRecipe: View {
     }
 }
 
+//MARK: REQUIRE INPUT FIELD VIEW
+struct RequireInputFieldRecipe: View {
+    @Binding var text: String
+    let title: String
+    let placeHolder: String
+    var isSecureField = false
+    var body: some View {
+        VStack (alignment: .leading, spacing: 12) {
+            HStack{
+                Text(title)
+                    .font(.custom("ZillaSlab-SemiBold", size: 22))
+                Text("*")
+                    .font(.system(size: 22))
+                    .foregroundColor(Color.theme.RedInstance)
+            }
+            if isSecureField {
+                SecureField(placeHolder, text: $text)
+                    .font(.custom("ZillaSlab-Regular", size: 16))
+            } else {
+                TextField(placeHolder, text: $text)
+                    .font(.custom("ZillaSlab-Regular", size: 16))
+            }
+            
+            Divider()
+        }
+        .padding(.horizontal, 15)
+        .padding(.bottom, 10)
+    }
+}
+
 //MARK: NUMBER INPUT FIELD VIEW
 struct NumberInput: View {
     @Binding var value: Int
@@ -112,8 +142,14 @@ struct NumberInput: View {
     let placeHolder: String
     var body: some View {
         VStack (alignment: .leading, spacing: 12) {
-            Text(name)
-                .font(.custom("ZillaSlab-SemiBold", size: 22))
+            HStack{
+                Text(name)
+                    .font(.custom("ZillaSlab-SemiBold", size: 22))
+                    
+                Text("*")
+                    .font(.system(size: 22))
+                    .foregroundColor(Color.theme.RedInstance)
+            }
             TextField(placeHolder, value: $value, formatter: NumberFormatter())
                 .font(.custom("ZillaSlab-Regular", size: 15))
             
@@ -143,6 +179,30 @@ struct NutritionInput: View {
     }
 }
 
+//MARK: REQUIRE NUMBER INPUT FIELD VIEW
+struct RequireNutritionInput: View {
+    @Binding var value: Int
+    let name: String
+    let placeHolder: String
+    var body: some View {
+        VStack (alignment: .leading, spacing: 12) {
+            HStack{
+                Text(name)
+                    .font(.custom("ZillaSlab-Regular", size: 15))
+                Text("*")
+                    .font(.system(size: 22))
+                    .foregroundColor(Color.theme.RedInstance)
+            }
+            TextField(placeHolder, value: $value, formatter: NumberFormatter())
+                .font(.custom("ZillaSlab-Regular", size: 15))
+            
+            Divider()
+        }
+        .padding(.horizontal, 15)
+        .padding(.bottom, 10)
+    }
+}
+
 struct CreateIntroView_Previews: PreviewProvider {
     static var previews: some View {
         CreateIntroView(backgroundPhoto: .constant(nil), recipeName: .constant(""), cookingTime: .constant(0), servingSize: .constant(0), description: .constant(""), calories: .constant(0), carb: .constant(0), protein: .constant(0), fat: .constant(0), sugars: .constant(0), salt: .constant(0), saturates: .constant(0), fibre: .constant(0), currentSelectedTags: .constant([]), currentSelectedMealTypes: .constant([]))
@@ -153,17 +213,17 @@ private extension CreateIntroView{
     
     //MARK: TITLE INPUT UI
     var titleInput: some View{
-        InputFieldRecipe(text: $recipeName, title: "Title", placeHolder: "Enter title")
+        RequireInputFieldRecipe(text: $recipeName, title: "Title", placeHolder: "Enter title")
     }
     
     //MARK: COOK TIME AND SERVING SIZE UI
     var timeAndServingInput: some View{
         HStack(){
             NumberInput(value: $cookingTime, name: "Cook time", placeHolder: "Enter minutes")
-                .frame(width: 150)
+                .frame(width: 170)
                 .padding(.trailing, 30)
             NumberInput(value: $servingSize, name: "Serving size", placeHolder: "Enter serving size")
-                .frame(width: 150)
+                .frame(width: 180)
             Spacer()
         }
     }
@@ -182,6 +242,9 @@ private extension CreateIntroView{
                 Text("Description")
                     .font(.custom("ZillaSlab-SemiBold", size: 22))
                     .padding(.leading, 15)
+                Text("*")
+                    .font(.system(size: 22))
+                    .foregroundColor(Color.theme.RedInstance)
                 Spacer()
             }
             TextEditor(text: $description)
@@ -205,16 +268,19 @@ private extension CreateIntroView{
                 Spacer()
             }
             HStack{
-                NutritionInput(value: $calories, name: "Calories", placeHolder: "0")
+                RequireNutritionInput(value: $calories, name: "Calories", placeHolder: "0")
                 NutritionInput(value: $carb, name: "Carb", placeHolder: "0")
-                NutritionInput(value: $protein, name: "Protein", placeHolder: "0")
-                NutritionInput(value: $fat, name: "Fat", placeHolder: "0")
             }
             HStack{
+                NutritionInput(value: $protein, name: "Protein", placeHolder: "0")
+                NutritionInput(value: $fat, name: "Fat", placeHolder: "0")
                 NutritionInput(value: $sugars, name: "Sugars", placeHolder: "0")
+            }
+            HStack{
                 NutritionInput(value: $salt, name: "Salt", placeHolder: "0")
                 NutritionInput(value: $saturates, name: "Saturates", placeHolder: "0")
                 NutritionInput(value: $fibre, name: "Fibre", placeHolder: "0")
+                
             }
         }
     }
@@ -226,6 +292,9 @@ private extension CreateIntroView{
                 Text("Meal types")
                     .font(.custom("ZillaSlab-SemiBold", size: 22))
                     .padding(.leading, 15)
+                Text("*")
+                    .font(.system(size: 22))
+                    .foregroundColor(Color.theme.RedInstance)
                 Spacer()
             }
             TagsFilterView(tags: MOCK_MEAL_TYPES, currentSelectedTags: $currentSelectedMealTypes, action: selectMealType)
