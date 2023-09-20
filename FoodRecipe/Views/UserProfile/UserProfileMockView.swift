@@ -13,14 +13,10 @@ import FirebaseFirestoreSwift
 struct UserProfileMockView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarViewRefresh: Bool = false
-    @State private var stepPhoto: PhotosPickerItem? = nil
     @State private var inputText: String = ""
     @State private var oldPassword: String = ""
     @State private var password: String = ""
-    @State private var savedRecipe: [Recipe] = []
     @StateObject var homeVM = HomeViewModel()
-    @StateObject var detailVM = RecipeDetailViewModel()
-    @StateObject var tddeVM = TDDEViewModel()
     @StateObject var userProfileViewModel = UserProfileViewModel.shared
     // MARK: change to environment object when demo
     //    @StateObject var viewModel = AuthViewModel()
