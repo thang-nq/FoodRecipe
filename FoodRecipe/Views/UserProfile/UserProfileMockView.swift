@@ -6,32 +6,92 @@
 //
 
 import SwiftUI
+import PhotosUI
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct UserProfileMockView: View {
+    @State private var selectedPhoto: PhotosPickerItem? = nil
+    @State private var avatarViewRefresh: Bool = false
+    @State private var stepPhoto: PhotosPickerItem? = nil
+    @State private var inputText: String = ""
+    @State private var oldPassword: String = ""
+    @State private var password: String = ""
+    @State private var savedRecipe: [Recipe] = []
+    @StateObject var homeVM = HomeViewModel()
+    @StateObject var detailVM = RecipeDetailViewModel()
+    @StateObject var tddeVM = TDDEViewModel()
+    @StateObject var userProfileViewModel = UserProfileViewModel()
+    // MARK: change to environment object when demo
+    //    @StateObject var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel: AuthViewModel
+    
+    //MARK: POP UP VARIABLES
+    @State var showPopUp = false
+    @State var popUpIcon = ""
+    @State var popUptitle = ""
+    @State var popUpContent = ""
+    @State var popUpIconColor = Color.theme.BlueInstance
     var body: some View {
-        VStack {
-            top
-            HStack {
-                SectionTitleView(title: "My Recipes")
-                Button {
+        NavigationView {
+            VStack {
+                top
+                HStack {
+                    SectionTitleView(title: "My Recipes")
+                    //                Button {
+                    //
+                    //                } label: {
+                    //
+                    //                }
+                    NavigationLink(destination: CreateRecipeView()) {
+                        Text("Create recipe").foregroundColor(Color.theme.Orange).underline()
+                    }
                     
-                } label: {
-                    Text("View all").foregroundColor(Color.theme.Orange).underline()
                 }
-                
+                Grid {
+                    //                For index in 0...userProfileViewModel.recipeList.count {
+                    //                    if(index % 2 == 0) {
+                    //                        GridRow(
+                    //                    }
+                    //                }
+                    
+                    ForEach(Array(stride(from: 0, to: userProfileViewModel.recipeList.count, by: 2)), id: \.self) { index in
+                        HStack {
+                            GridRow {
+                                CompactRecipeCard()
+                                if(index + 1 < userProfileViewModel.recipeList.count) {
+                                    CompactRecipeCard()
+                                    //                        NutritionElementView(item: recipe.nutritionsArray[index+1])
+                                }
+                                if(index + 2 < userProfileViewModel.recipeList.count) {
+                                    CompactRecipeCard()
+                                    //                        NutritionElementView(item: recipe.nutritionsArray[index+1])
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    //                GridRow {
+                    //                    CompactRecipeCard()
+                    //                    CompactRecipeCard()
+                    //                }
+                    //                GridRow {
+                    //                    CompactRecipeCard()
+                    //                    CompactRecipeCard()
+                    //                }
+                }
+                Spacer()
             }
-            Grid {
-                GridRow {
-                    CompactRecipeCard()
-                    CompactRecipeCard()
-                }
-                GridRow {
-                    CompactRecipeCard()
-                    CompactRecipeCard()
+            .padding(16)
+            .onAppear {
+                Task {
+                    await userProfileViewModel.getUserCreatedRecipe()
                 }
             }
-            Spacer()
-        }.padding(16)
+        }
     }
 }
 
@@ -54,7 +114,7 @@ private extension UserProfileMockView {
                             .foregroundColor(Color.theme.Black)
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                         Text("nararaya.putri@mail.com")
-//                            .foregroundColor()
+                        //                            .foregroundColor()
                     }.padding(0)
                     Spacer()
                     Rectangle()
