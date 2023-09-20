@@ -14,7 +14,7 @@ class CreateRecipeViewModel: ObservableObject {
     @StateObject private var homeVM = HomeViewModel()
     //MARK: VARIABLES
     @Published var backgroundPhoto: PhotosPickerItem? = nil
-    @Published var recipeName = ""
+//    @Published var recipeName = ""
     @Published var cookingTime : Int = 0
     @Published var servingSize : Int = 0
     @Published var description = ""
@@ -161,6 +161,17 @@ class CreateRecipeViewModel: ObservableObject {
                 await resetTheCreateRecipeForm()
                 await cancelLoading()
                 await showSuccessPopup()
+            }
+        }
+    }
+    
+    //MARK: TUAN'S TEST
+    let recipeNameLimit = 25
+    
+    @Published var recipeName = "" {
+        didSet {
+            if recipeName.count > recipeNameLimit {
+                recipeName = String(recipeName.prefix(recipeNameLimit))
             }
         }
     }
