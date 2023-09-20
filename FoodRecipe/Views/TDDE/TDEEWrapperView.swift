@@ -12,10 +12,16 @@ struct TDEEWrapperView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View {
         Group {
-            if isTDEECalculator {
-                TDEEPersonalView()
+            if let currentUser = authViewModel.currentUser {
+                if currentUser.enableTDDE {
+                    TDEEPersonalView()
+                } else {
+                    TDDEFormView()
+                }
+                
             } else{
-                TDDEFormView()
+                //                TDDEFormView()
+                LoginView()
             }
         }
     }

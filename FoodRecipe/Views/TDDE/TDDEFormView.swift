@@ -16,6 +16,7 @@ struct TDDEFormView: View {
     @ObservedObject var inputFieldManager = InputFieldManager()
     @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
     @StateObject var tddeViewModel = TDDEViewModel()
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var navigateToPersonalTDEE = false
     
     //MARK: init font cus nav title
@@ -131,7 +132,7 @@ private extension TDDEFormView {
             let heightInt = (inputFieldManager.heightInput as NSString).integerValue
             print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel)")
             Task {
-                await tddeViewModel.calculateTDDE()
+                await tddeViewModel.calculateTDDE(age: ageInt, height: heightInt, weight: 80, gender: gender, activityLevel: activityLevel)
             }
             navigateToPersonalTDEE = true
         }){
