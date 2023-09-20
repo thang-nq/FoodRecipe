@@ -32,7 +32,7 @@ struct HomeView: View {
                     Text("TDEE")
 //                    Text("Create Recipe")
                 }
-            UserProfileViewDemo()
+            UserProfileMockView()
                 .tabItem(){
                     Image(systemName: "person")
                     Text("Profile")
