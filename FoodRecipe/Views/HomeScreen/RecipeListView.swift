@@ -79,7 +79,7 @@ struct RecipeCardView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
-                        .background(Color("Orange"))
+                        .background(getTagColor(tagValue: tag))
                         .cornerRadius(8)
                 }
                 Spacer()
