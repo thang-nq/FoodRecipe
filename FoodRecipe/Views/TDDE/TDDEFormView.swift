@@ -100,20 +100,22 @@ private extension TDDEFormView {
             //MARK: ACTIVITY LEVEL
             Section{
                 Picker("Activity level", selection: $activityLevel){
+                    
                     Text("Sedentary")
                         .tag(1.2)
-                    
+
                     Text("Light")
                         .tag(1.375)
-                    
+
                     Text("Moderate")
                         .tag(1.55)
-                    
+
                     Text("Active")
                         .tag(1.725)
-                    
+
                     Text("Very Active")
                         .tag(1.9)
+                    
                 }
                 .font(.custom("ZillaSlab-BoldItalic", size: 16))
                 .foregroundColor(Color.theme.DarkBlue)
@@ -157,7 +159,7 @@ private extension TDDEFormView {
         .cornerRadius(8)
         .disabled(inputFieldManager.isValidBMIForm())
         .navigationDestination(isPresented: $navigateToPersonalTDEE){
-            TDEEPersonalView()
+//            TDEEPersonalView()
         }
     }
         
