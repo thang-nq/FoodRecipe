@@ -68,14 +68,14 @@ struct RecipeCardView: View {
                 .cornerRadius(5)
             HStack{
                 Text(recipe.name)
-                    .font(.custom("ZillaSlab-SemiBold", size: 26))
+                    .font(Font.custom.Heading)
                     .padding(.top, 10)
                     .frame(width: 220, alignment: .leading)
             }.frame(maxWidth: .infinity, alignment: .leading)
             HStack {
                 ForEach(recipe.tags, id: \.self) { tag in
                     Text(tag)
-                        .font(.custom("ZillaSlab-Regular", size: 20))
+                        .font(Font.custom.Content)
                         .foregroundColor(.white)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
