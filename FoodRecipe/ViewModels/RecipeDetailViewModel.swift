@@ -55,6 +55,16 @@ class RecipeDetailViewModel: ObservableObject {
         }
     }
     
+    func addCookingStep(recipeID: String, context: String, backgroundImage: PhotosPickerItem?, stepNumber: Int) async {
+        do {
+            try await RecipeManager.shared.addCookingStep(recipeID: recipeID, context: context, backgroundImage: backgroundImage, stepNumber: stepNumber)
+            await getRecipeDetail(recipeID: recipeID)
+        } catch {
+            errorMessage = error.localizedDescription
+            showError = true
+        }
+    }
+    
     func deleteCookingStep(recipeID: String, stepID: String) async {
         do {
             try await RecipeManager.shared.deleteCookingStep(recipeID: recipeID, stepID: stepID)
