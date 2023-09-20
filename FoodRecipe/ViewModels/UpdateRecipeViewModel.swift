@@ -11,7 +11,6 @@ import SwiftUI
 
 @MainActor
 class UpdateRecipeViewModel: ObservableObject {
-    
     @StateObject private var homeVM = HomeViewModel()
     @StateObject private var detailVM = RecipeDetailViewModel()
     //MARK: VARIABLES
@@ -38,7 +37,7 @@ class UpdateRecipeViewModel: ObservableObject {
     @Published var cookingSteps: [CookingStepInterface] = []
     @Published var recipeValidated: Bool = false
     @Published var selectedTabIndex = 0
-    @State private var isLoading = false
+    @Published var isLoading = false
     
     //MARK: POP UP VARIABLES
     @Published var showPopUp = false
@@ -57,13 +56,6 @@ class UpdateRecipeViewModel: ObservableObject {
             let mealType = currentSelectedMealTypes[0]
             currentMealType = mealType
         }
-    }
-    func printMealTags(){
-        getMealType()
-        print(currentMealType)
-        print("here")
-        print(currentSelectedMealTypes)
-        print(currentSelectedTags)
     }
     
     // Adding Cooking Steps with photo function
@@ -91,7 +83,7 @@ class UpdateRecipeViewModel: ObservableObject {
     func showSuccessPopup() async{
         showPopUp = true
         popUpIcon = "checkmark.message.fill"
-        popUptitle = "Create recipe success"
+        popUptitle = "Update recipe success"
         popUpContent = "You can check your recipe in the My Recipe section"
         popUpIconColor = Color.theme.GreenInstance
     }
@@ -131,65 +123,31 @@ class UpdateRecipeViewModel: ObservableObject {
         isLoading = false
     }
     
-    
+    // Update recipe
     func updateRecipe(){
-        if  (!recipeName.isEmpty){
-            getMealType()
+        getMealType()
+        if  (recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || calories == 0 ){
+                showPopUp = true
+                popUpIcon = "xmark"
+                popUptitle = "Missing Information"
+                popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
+                popUpIconColor = Color.theme.RedInstance
+        } else {
+            recipeValidated = true
+        }
+        if (recipeValidated == true){
             Task{
+                await loading()
                 if backgroundPhoto == nil{
-                    await detailVM.updateRecipe(recipeID: recipeId, updateData: updateRecipeInterface(name: recipeName, servingSize: servingSize))
+                    await detailVM.updateRecipe(recipeID: recipeId, updateData: updateRecipeInterface(name: recipeName, mealType: currentMealType, intro: description, servingSize: servingSize, cookingTime: cookingTime, calories: calories, carb: carb, protein: protein, fat: fat, sugars: sugars, salt: salt, saturates: saturates, fibre: fibre, ingredients: Ingredients, tags: currentSelectedTags))
                 }else {
-//                    await getMealType()
-                    await addingCookingSteps()
+//                    await addingCookingSteps()
                     await detailVM.updateRecipe(recipeID: recipeId, updateData: updateRecipeInterface(name: recipeName, mealType: currentMealType, backgroundImage: backgroundPhoto, intro: description, servingSize: servingSize, cookingTime: cookingTime, calories: calories, carb: carb, protein: protein, fat: fat, sugars: sugars, salt: salt, saturates: saturates, fibre: fibre, ingredients: Ingredients, tags: currentSelectedTags))
                 }
-                
+                await cancelLoading()
+                await showSuccessPopup()
             }
         }
     }
-//    // Create recipe function
-//    func createRecipe(){
-//        getMealType()
-//        // Validate input field
-//        if recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || backgroundPhoto == nil || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || calories == 0 {
-//            showPopUp = true
-//            popUpIcon = "xmark"
-//            popUptitle = "Missing Information"
-//            popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
-//            popUpIconColor = Color.theme.RedInstance
-//        } else{
-//            recipeValidated = true
-//        }
-//        
-//        // Creating recipe when the inputs are validated
-//        if (recipeValidated == true){
-//            Task {
-//                await loading()
-//                await addingCookingSteps()
-//                await homeVM.addRecipe(recipe: Recipe(name: recipeName,
-//                                                          creatorID: "99",
-//                                                          mealType: currentMealType,
-//                                                          intro: description,
-//                                                          servingSize: servingSize,
-//                                                          cookingTime: cookingTime,
-//                                                          calories: calories,
-//                                                          carb: carb,
-//                                                          protein: protein,
-//                                                          fat: fat,
-//                                                          sugars: sugars,
-//                                                          salt: salt,
-//                                                          saturates: saturates,
-//                                                          fibre: fibre,
-//                                                          ingredients: Ingredients,
-//                                                          tags: currentSelectedTags),
-//                                           image: backgroundPhoto,
-//                                           cookingSteps: cookingSteps
-//                )
-//                await resetTheCreateRecipeForm()
-//                await cancelLoading()
-//                await showSuccessPopup()
-//            }
-//        }
-//    }
 }
 

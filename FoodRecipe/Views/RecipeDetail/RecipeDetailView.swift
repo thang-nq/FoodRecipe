@@ -152,6 +152,17 @@ struct TopBar: View {
             
             Spacer()
             
+            NavigationLink(destination: UpdateRecipeView(recipeId: recipeId)) {
+                                Image(systemName: "square.and.pencil")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 24, height: 24)
+                                    .foregroundColor(Color.theme.Black.opacity(0.5))
+                                    .padding(10)
+                                    .background(.white)
+                                    .clipShape(Circle())
+                           }
+            
             Button {
                 saveAction()
             } label: {

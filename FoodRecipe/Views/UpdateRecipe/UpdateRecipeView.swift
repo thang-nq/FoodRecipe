@@ -13,12 +13,14 @@ struct UpdateRecipeView: View {
     @StateObject var updateVM = UpdateRecipeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     //MARK: VARIABLES
+    @State var userId = UserManager.shared.currentUser!.id
+    var recipeId : String
     @State private var selectedTabIndex = 0
     @State private var isLoading = false
 
     func fetchRecipeDetail() async{
         if let recipe = detailVM.recipe{
-            updateVM.recipeId = "NSaOOqCRtynqDIMDMy0g"
+            updateVM.recipeId = recipeId
             updateVM.backgroundPhoto = nil
             updateVM.recipeName = recipe.name
             updateVM.cookingTime = recipe.cookingTime
@@ -62,20 +64,43 @@ struct UpdateRecipeView: View {
                         }
                     }
                 }
-        }
-        .onAppear {
-            Task(priority: .medium) {
-                do {
-                    try await detailVM.getRecipeDetail(recipeID: "NSaOOqCRtynqDIMDMy0g")
-                    if let recipe = detailVM.recipe {
-                    }else {
-                        detailVM.getMockRecipeDetail()
+                .overlay(
+                // MARK: SHOW THE SUCCESS POP UP
+                    ZStack {
+                        if updateVM.showPopUp {
+                            Color.theme.DarkWhite.opacity(0.5)
+                                .edgesIgnoringSafeArea(.all)
+                            PopUp(iconName: updateVM.popUpIcon , title: updateVM.popUptitle, content: updateVM.popUpContent, iconColor: updateVM.popUpIconColor ,didClose: {updateVM.showPopUp = false})
+                        }
                     }
-                    await fetchRecipeDetail()
-                    await addCookingSteps()
-                } catch {
-                    // Handle any errors that occur during the async operation
-                    print("Error: \(error)")
+                        .opacity(updateVM.showPopUp ? 1 : 0)
+                )
+                .background(Color.theme.White)
+                .onAppear {
+                    Task(priority: .medium) {
+                        do {
+                            try await detailVM.getRecipeDetail(recipeID: recipeId)
+                            if let recipe = detailVM.recipe {
+                            }else {
+                                detailVM.getMockRecipeDetail()
+                            }
+                            await fetchRecipeDetail()
+                            await addCookingSteps()
+                        } catch {
+                            // Handle any errors that occur during the async operation
+                            print("Error: \(error)")
+                        }
+                    }
+                }
+            // MARK: CHECK LOADING
+            if (updateVM.isLoading == true){
+                ZStack {
+                    Color(.black)
+                        .ignoresSafeArea()
+                        .opacity(0.5)
+                        .background(Color.clear)
+                    
+                    Progress(loadingSize: 3)
                 }
             }
         }
@@ -84,7 +109,7 @@ struct UpdateRecipeView: View {
 
 struct UpdateRecipeView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdateRecipeView()
+        UpdateRecipeView(recipeId: "NSaOOqCRtynqDIMDMy0g")
     }
 }
 
@@ -95,22 +120,19 @@ private extension UpdateRecipeView{
         HStack {
             Spacer()
             // Title of the view
-            Text("Create new recipe")
+            Text("Update recipe")
                 .font(.custom("ZillaSlab-Bold", size: 25))
                 .padding(.leading, 70)
-            Text(updateVM.currentSelectedMealTypes[0])
-            ForEach(updateVM.currentSelectedTags, id: \.self) { tag in
-                Text(tag)}
             Spacer()
             
             // Button create new recipe
             Button(action: {
                 // Create recipe
 //                updateVM.createRecipe()
-                updateVM.printMealTags()
+//                updateVM.printMealTags()
                 updateVM.updateRecipe()
             }) {
-                Text("Create")
+                Text("Save")
                     .font(.system(size: 20))
                 
             }.padding(.trailing, 20)

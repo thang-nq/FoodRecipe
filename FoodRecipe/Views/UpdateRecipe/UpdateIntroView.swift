@@ -82,7 +82,7 @@ struct UpdateIntroView: View {
 
 struct UpdateIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateIntroView(backgroundPhoto: .constant(nil), recipeName: .constant(""), cookingTime: .constant(0), servingSize: .constant(0), description: .constant(""), calories: .constant(0), carb: .constant(0), protein: .constant(0), fat: .constant(0), sugars: .constant(0), salt: .constant(0), saturates: .constant(0), fibre: .constant(0), currentSelectedTags: .constant([]), currentSelectedMealTypes: .constant([]))
+        UpdateIntroView(backgroundPhoto: .constant(nil), recipeName: .constant(""), cookingTime: .constant(0), servingSize: .constant(0), description: .constant(""), calories: .constant(0), carb: .constant(0), protein: .constant(0), fat: .constant(0), sugars: .constant(0), salt: .constant(0), saturates: .constant(0), fibre: .constant(0), currentSelectedTags: .constant([]), currentSelectedMealTypes: .constant([]))
     }
 }
 
@@ -90,7 +90,7 @@ private extension UpdateIntroView{
     
     //MARK: TITLE INPUT UI
     var titleInput: some View{
-        InputFieldRecipe(text: $recipeName, title: "Title", placeHolder: "Enter title")
+        RequireInputFieldRecipe(text: $recipeName, title: "Title", placeHolder: "Enter title")
     }
     
     //MARK: COOK TIME AND SERVING SIZE UI
@@ -108,7 +108,7 @@ private extension UpdateIntroView{
     //MARK: ADD PHOTO UI
     var addPhoto: some View{
         PhotosPicker(selection: $backgroundPhoto, photoLibrary: .shared()) {
-            Label("Select a photo for the recipe", systemImage: "photo.fill")
+            Label("Select a photo for the recipe *", systemImage: "photo.fill")
         }.padding(.vertical, 10)
     }
     
@@ -119,6 +119,9 @@ private extension UpdateIntroView{
                 Text("Description")
                     .font(.custom("ZillaSlab-SemiBold", size: 22))
                     .padding(.leading, 15)
+                Text("*")
+                    .font(.system(size: 22))
+                    .foregroundColor(Color.theme.RedInstance)
                 Spacer()
             }
             TextEditor(text: $description)
@@ -142,7 +145,7 @@ private extension UpdateIntroView{
                 Spacer()
             }
             HStack{
-                NutritionInput(value: $calories, name: "Calories", placeHolder: "0")
+                RequireNutritionInput(value: $calories, name: "Calories", placeHolder: "0")
                 NutritionInput(value: $carb, name: "Carb", placeHolder: "0")
                 NutritionInput(value: $protein, name: "Protein", placeHolder: "0")
                 NutritionInput(value: $fat, name: "Fat", placeHolder: "0")
@@ -163,6 +166,9 @@ private extension UpdateIntroView{
                 Text("Meal types")
                     .font(.custom("ZillaSlab-SemiBold", size: 22))
                     .padding(.leading, 15)
+                Text("*")
+                    .font(.system(size: 22))
+                    .foregroundColor(Color.theme.RedInstance)
                 Spacer()
             }
             TagsFilterView(tags: MOCK_MEAL_TYPES, currentSelectedTags: $currentSelectedMealTypes, action: selectMealType)
