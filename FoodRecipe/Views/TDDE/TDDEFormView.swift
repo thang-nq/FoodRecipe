@@ -65,7 +65,8 @@ private extension TDDEFormView {
 
             } header: {
                 Text("Select your gender")
-                    .font(.custom("ZillaSlab-Bold", size: 18))
+                    .font(Font.custom.Heading)
+//                    .font(.custom("ZillaSlab-Bold", size: 18))
                     .foregroundColor(Color.theme.DarkBlue)
             }
             
@@ -81,7 +82,7 @@ private extension TDDEFormView {
             //MARK: HEIGHT UI
             Section(header: Text("Your height")) {
                 TextField("Your height (cm)", text: $inputFieldManager.heightInput)
-                    .font(.custom("ZillaSlab-MediumItalic", size: 16))
+                    .font(Font.custom.ContentItalic)
                     .keyboardType(.decimalPad)
             }
             .font(.custom("ZillaSlab-Bold", size: 18))
