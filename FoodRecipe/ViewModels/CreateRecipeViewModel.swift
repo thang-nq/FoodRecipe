@@ -13,6 +13,7 @@ import SwiftUI
 class CreateRecipeViewModel: ObservableObject {
     @StateObject private var homeVM = HomeViewModel()
     //MARK: VARIABLES
+    @Published var userId = UserManager.shared.currentUser!.id
     @Published var backgroundPhoto: PhotosPickerItem? = nil
     @Published var cookingTime : Int = 0
     @Published var servingSize : Int = 0
@@ -43,6 +44,9 @@ class CreateRecipeViewModel: ObservableObject {
     @Published var popUpContent = ""
     @Published var popUpIconColor = Color.theme.BlueInstance
     
+    func printId() async{
+        print(userId)
+    }
     //MARK: FUNCTION
     // Get meal type function
     func getMealType(){
@@ -136,10 +140,11 @@ class CreateRecipeViewModel: ObservableObject {
         // Creating recipe when the inputs are validated
         if (recipeValidated == true){
             Task {
+                await printId()
                 await loading()
                 await addingCookingSteps()
                 await homeVM.addRecipe(recipe: Recipe(name: recipeName,
-                                                          creatorID: "99",
+                                                          creatorID: userId,
                                                           mealType: currentMealType,
                                                           intro: description,
                                                           servingSize: servingSize,
