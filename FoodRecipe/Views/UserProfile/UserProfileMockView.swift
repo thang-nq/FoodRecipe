@@ -19,7 +19,7 @@ struct UserProfileMockView: View {
     @StateObject var homeVM = HomeViewModel()
     @StateObject var userProfileViewModel = UserProfileViewModel.shared
     // MARK: change to environment object when demo
-    //    @StateObject var viewModel = AuthViewModel()
+//        @StateObject var viewModel = AuthViewModel()
     @EnvironmentObject var viewModel: AuthViewModel
     
     //MARK: POP UP VARIABLES
@@ -64,11 +64,11 @@ struct UserProfileMockView: View {
     }
 }
 
-struct UserProfileMockView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserProfileMockView()
-    }
-}
+//struct UserProfileMockView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserProfileMockView()
+//    }
+//}
 
 private extension UserProfileMockView {
     // MARK: USER AVATAR
