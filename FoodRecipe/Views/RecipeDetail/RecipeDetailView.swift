@@ -26,89 +26,103 @@ struct RecipeDetailView: View {
         }
     }
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                    if let recipeDetail = detailVM.recipe {
-                        ZStack(alignment: .top) {
-                            Color("LightGray")
-                            // MARK: Overlay Image
-                            CoverImage(recipeDetail: recipeDetail)
-                            
-                            TopBar(recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
-                            
-                            // MARK: Content
-                            VStack(spacing: 15) {
-                                ZStack {
-                                    VStack(spacing: 15) {
-                                        // MARK: MainInfo
-                                        MainInfo(recipe: recipeDetail)
-                                        // MARK: Nutrition
-                                        NutritionView(recipe: recipeDetail)
+        ZStack {
+            NavigationView {
+                ScrollView {
+                    VStack {
+                        if let recipeDetail = detailVM.recipe {
+                            ZStack(alignment: .top) {
+                                Color("LightGray")
+                                // MARK: Overlay Image
+                                CoverImage(recipeDetail: recipeDetail)
+                                
+                                TopBar(recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
+                                
+                                // MARK: Content
+                                VStack(spacing: 15) {
+                                    ZStack {
+                                        VStack(spacing: 15) {
+                                            // MARK: MainInfo
+                                            MainInfo(recipe: recipeDetail)
+                                            // MARK: Nutrition
+                                            NutritionView(recipe: recipeDetail)
+                                        }
                                     }
+                                    VStack {
+                                        // MARK: Sliding tab views
+                                        SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom.SubHeading,  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
+                                        if selectedTabIndex == 0 {
+                                            // Intro
+                                            SectionContainerView {
+                                                Text(recipeDetail.intro)
+                                                    .font(.custom.Content)
+                                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                            }.padding(.horizontal, 10).padding(.vertical, 0)
+                                        }
+                                        if selectedTabIndex == 1 {
+                                            // Ingredients
+                                            IngredientsView(ingredientsList: recipeDetail.ingredients)
+                                        }
+                                        
+                                        if selectedTabIndex == 2 {
+                                            // Steps
+                                            StepsView(stepsList: recipeDetail.steps)
+                                        }
+                                    }.background(Color.theme.WhiteInstance).frame(minHeight: 300)
                                 }
-                                VStack {
-                                    // MARK: Sliding tab views
-                                    SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom.SubHeading,  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
-                                    if selectedTabIndex == 0 {
-                                        // Intro
-                                        SectionContainerView {
-                                            Text(recipeDetail.intro)
-                                                .font(.custom.Content)
-                                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                        }.padding(.horizontal, 10).padding(.vertical, 0)
-                                    }
-                                    if selectedTabIndex == 1 {
-                                        // Ingredients
-                                        IngredientsView(ingredientsList: recipeDetail.ingredients)
-                                    }
-                                    
-                                    if selectedTabIndex == 2 {
-                                        // Steps
-                                        StepsView(stepsList: recipeDetail.steps)
-                                    }
-                                }.background(Color.theme.WhiteInstance).frame(minHeight: 300)
+                                
                             }
-                            
+                        }
+                    }
+                }.overlay(
+                    HStack {
+                        if let recipeDetail = detailVM.recipe {
+                            NavigationLink(destination: CookModeView(recipe: recipeDetail)) {
+                                Image(systemName: "flame")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color.theme.Orange)
+                                    .clipShape(Circle())
+                            }
+                        }
+                    }.padding(15),
+                    
+                    alignment: .bottomTrailing
+                )
+                .onAppear {
+                    Task(priority: .medium) {
+                        do {
+                            try await detailVM.getRecipeDetail(recipeID: recipeId)
+                            if let recipe = detailVM.recipe {
+                            }else {
+                                detailVM.getMockRecipeDetail()
+                            }
+                        } catch {
+                            // Handle any errors that occur during the async operation
+                            print("Error: \(error)")
                         }
                     }
                 }
-            }.overlay(
-                HStack {
-                    if let recipeDetail = detailVM.recipe {
-                        NavigationLink(destination: CookModeView(recipe: recipeDetail)) {
-                            Image(systemName: "flame")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color.theme.Orange)
-                                .clipShape(Circle())
-                        }
-                    }
-                }.padding(15),
-                
-                alignment: .bottomTrailing
-            )
-            .onAppear {
-                Task(priority: .medium) {
-                    do {
-                        try await detailVM.getRecipeDetail(recipeID: recipeId)
-                        if let recipe = detailVM.recipe {
-                        }else {
-                            detailVM.getMockRecipeDetail()
-                        }
-                    } catch {
-                        // Handle any errors that occur during the async operation
-                        print("Error: \(error)")
-                    }
+                .onDisappear {
+                    onDissappear()
                 }
             }
-            .onDisappear {
-                onDissappear()
+            // MARK: CHECK LOADING
+            if (detailVM.isLoading == true){
+                ZStack {
+                    Color(.black)
+                        .ignoresSafeArea()
+                        .opacity(0.5)
+                        .background(Color.clear)
+                    
+                    Progress(loadingSize: 3)
+                }
             }
         }
+        
     }
 }
 
