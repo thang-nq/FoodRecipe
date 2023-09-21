@@ -50,6 +50,7 @@ struct CreateRecipeView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -64,11 +65,11 @@ private extension CreateRecipeView{
     //MARK: TOP BAR UI
     var topBar: some View{
         HStack {
+            CustomBackButtonRecipe()
             Spacer()
             // Title of the view
             Text("Create new recipe")
                 .font(Font.custom.NavigationTitle)
-                .padding(.leading, 50)
             
             Spacer()
             
