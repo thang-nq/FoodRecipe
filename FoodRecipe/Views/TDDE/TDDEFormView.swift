@@ -14,41 +14,37 @@ struct TDDEFormView: View {
     @State private var gender: String = "MALE"
     @State private var activityLevel: Double = 1.2
     @ObservedObject var inputFieldManager = InputFieldManager()
-    @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
     @StateObject var tddeViewModel = TDDEViewModel.shared
-//    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var navigateToPersonalTDEE = false
     
     //MARK: init font cus nav title
-    init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "ZillaSlab-Bold", size: 30)!]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.theme.Orange)]
-    }
-    
+//    init() {
+//        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "ZillaSlab-Bold", size: 30)!]
+//        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.theme.Orange)]
+//    }
+//
     var body: some View {
         NavigationStack{
             VStack{
+                title
                 form
                 submitButton
             }
-//            .navigationBarTitle("TDEE CALCULATOR", displayMode: .large)
-            .navigationTitle(Text("TDEE CALCULATOR"))
             .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: ExitButton())
         }
-        .fullScreenCover(isPresented: $TDDEIntro, content: {
-            TDEEWelcomeList()
-        })
     }
     
 }
 
-//struct TDDEFormView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TDDEFormView()
-//    }
-//}
-
 private extension TDDEFormView {
+    
+    //MARK: TITLE
+    var title: some View {
+        Text("TDEE CALCULATOR")
+            .font(Font.custom.NavigationTitle)
+    }
+    
     //MARK: FORM UI
     var form: some View {
         
@@ -130,24 +126,21 @@ private extension TDDEFormView {
                     .foregroundColor(Color.theme.DarkGray)
             }
         }
-//        .listStyle(.sidebar)
     }
     
     
     //MARK: SUBMIT BUTTON
     var submitButton: some View {
         Button(action:{
-            //Convert age and height string to INT & FLOAT
+            //Convert age and height string to INT & DOUBLE
             let ageInt = (inputFieldManager.ageInput as NSString).integerValue
             let heightInt = (inputFieldManager.heightInput as NSString).integerValue
             let weightInt = (inputFieldManager.weightInput as NSString).integerValue
+//            print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel); WEIGHT: \(weightInt) ")
             
-            print("AGE: \(ageInt); HEIGHT: \(heightInt); GENDER: \(gender); ACTIVITY LEVEL: \(activityLevel); WEIGHT: \(weightInt) ")
             Task {
                 await tddeViewModel.calculateTDDE(age: ageInt, height: heightInt, weight: weightInt, gender: gender, activityLevel: activityLevel)
-                
             }
-            
             navigateToPersonalTDEE = true
             
             
@@ -165,6 +158,9 @@ private extension TDDEFormView {
             TDEEPersonalView()
         }
     }
+    
+    //MARK: BACK BUTTON
+    
         
         
 }

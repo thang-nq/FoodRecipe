@@ -38,6 +38,7 @@
 		A1A85E602AAEF08500875285 /* ZillaSlab-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E572AAEF08500875285 /* ZillaSlab-Medium.ttf */; };
 		A1A85E622AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1A85E612AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf */; };
 		A1A85E682AAF031E00875285 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A85E672AAF031E00875285 /* Color.swift */; };
+		A1C843182ABCA9F100264F27 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C843172ABCA9F100264F27 /* ExitButton.swift */; };
 		A53A6B812AAF2E81007ECBCD /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B802AAF2E81007ECBCD /* Recipe.swift */; };
 		A53A6B872AAF6080007ECBCD /* FirebaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A6B862AAF6080007ECBCD /* FirebaseImage.swift */; };
 		A548C0552AADBA9F00884B91 /* FoodRecipeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C0542AADBA9F00884B91 /* FoodRecipeApp.swift */; };
@@ -129,6 +130,7 @@
 		A1A85E572AAEF08500875285 /* ZillaSlab-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-Medium.ttf"; sourceTree = "<group>"; };
 		A1A85E612AAEF08C00875285 /* ZillaSlab-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZillaSlab-MediumItalic.ttf"; sourceTree = "<group>"; };
 		A1A85E672AAF031E00875285 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		A1C843172ABCA9F100264F27 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
 		A53A6B802AAF2E81007ECBCD /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		A53A6B862AAF6080007ECBCD /* FirebaseImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseImage.swift; sourceTree = "<group>"; };
 		A548C0512AADBA9F00884B91 /* FoodRecipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodRecipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -402,6 +404,7 @@
 				CCD3FD532AB5A4F300B51F67 /* CompactRecipeCard.swift */,
 				A17132F42AB573B500F103CF /* Progress.swift */,
 				CCE488552AB71B4600A58FFA /* NavBar.swift */,
+				A1C843172ABCA9F100264F27 /* ExitButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				CC8B46EC2ABC8108000196D5 /* FilterSheet.swift in Sources */,
 				A17B541B2AB039B70096A8A9 /* ImageProcessing.swfit.swift in Sources */,
 				A53A6B872AAF6080007ECBCD /* FirebaseImage.swift in Sources */,
+				A1C843182ABCA9F100264F27 /* ExitButton.swift in Sources */,
 				A188D5AA2AB1747700E8FF0E /* RoundedCorners.swift in Sources */,
 				A5F1C2D92AB324B500949874 /* RecipeManger.swift in Sources */,
 				CC9E6AB92AB96219002BDF66 /* UserProfileMockView.swift in Sources */,

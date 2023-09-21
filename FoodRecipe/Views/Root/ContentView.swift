@@ -19,7 +19,9 @@ struct ContentView: View {
                 if UserManager.shared.currentUser != nil {
                     HomeView()
                 } else {
-                    Progress(loadingSize: 4)
+                    LoginView()
+//                    Progress(loadingSize: 4)
+
                 }
 
             } else {

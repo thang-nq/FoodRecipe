@@ -16,7 +16,7 @@ struct InputField: View {
         VStack (alignment: .leading, spacing: 12) {
             Text(title)
                 .font(.custom("ZillaSlab-SemiBold", size: 20))
-                .foregroundColor(Color(.darkGray))
+                .foregroundColor(Color.theme.DarkBlue)
             
             if isSecureField {
                 SecureField(placeHolder, text: $text)

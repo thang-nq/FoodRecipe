@@ -28,19 +28,17 @@ struct HomeView: View {
                 SavedRecipeListView()
                     .tabItem(){
                         Image(systemName: "heart")
-                        Text("Saved Recipe")
+                        Text("Saved")
                     }
                 SearchView()
                     .tabItem(){
                         Image(systemName: "magnifyingglass")
                         Text("Search")
                     }
-                //            CreateRecipeView()
-                TDEEWrapperView()
+                TDEEPersonalView()
                     .tabItem(){
                         Image(systemName: "brain")
                         Text("TDEE")
-                        //                    Text("Create Recipe")
                     }
                 UserProfileMockView()
                     .tabItem(){
@@ -52,7 +50,6 @@ struct HomeView: View {
             .scrollContentBackground(.hidden)
             .edgesIgnoringSafeArea(.bottom)
             .accentColor(Color.theme.Orange)
-            .navigationBarBackButtonHidden(true)
         }
         .environment(\.colorScheme, isDark ? .dark : .light)
 

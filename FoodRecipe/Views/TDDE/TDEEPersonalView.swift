@@ -9,48 +9,55 @@ import SwiftUI
 
 struct TDEEPersonalView: View {
     
-    @State var TDEENumber: Int = 3000
-    @State var caloriesConsumed: Int = 2456
     @State private var navigateToTDEEForm = false
     @EnvironmentObject private var authVM: AuthViewModel
     @StateObject private var tddeViewModel = TDDEViewModel.shared
+    @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
     
-    //MARK: init font cus nav title
-    init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "ZillaSlab-Bold", size: 30)!]
-    }
-    
+//    //MARK: init font cus nav title
+//    init() {
+//        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "ZillaSlab-Bold", size: 30)!]
+//    }
+
     var body: some View {
         NavigationStack{
             ScrollView{
                 VStack{
+                    title
+                    
                     caloriesCalculate
                         .frame(height: 200)
+                        .overlay(alignment: .topTrailing) {
+                            reCalButton
+                                .padding(.vertical, 5)
+                        }
                     
                     todayList
                         .padding(.top, 20)
                 }
-                .navigationTitle("MY CALORIES")
+                .padding()
                 .navigationBarBackButtonHidden(true)
-                .navigationBarItems(trailing: reCalButton)
-                
             }
         }
+        .fullScreenCover(isPresented: $TDDEIntro, content: {
+            TDEEWelcomeList()
+        })
     }
 }
-
-//struct TDEEPersonalView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TDEEPersonalView()
-//    }
-//}
 
 
 private extension TDEEPersonalView {
     
+    //MARK: TITLE
+    var title: some View {
+        Text("Total Daily Energy Expenditure")
+            .font(Font.custom.NavigationTitle)
+    }
+    
     //MARK: CALCULATOR PERSONAL UI
     var caloriesCalculate: some View {
         VStack(alignment: .center){
+                        
             Text("Personal TDEE")
                 .foregroundColor(Color.theme.DarkBlue)
                 .font(Font.custom.Heading)
@@ -70,7 +77,7 @@ private extension TDEEPersonalView {
                 .frame(width: 350, height: 2)
                 .background(Color.theme.DarkBlue)
                 
-            
+
             HStack(alignment: .center, spacing: 40){
                 
                 VStack{
@@ -85,7 +92,6 @@ private extension TDEEPersonalView {
                     Text("\(tddeViewModel.consumedCal)")
                 }
                 
-        
                 VStack {
                     Text("Balance")
                         .foregroundColor(Color.theme.Orange)
@@ -98,7 +104,7 @@ private extension TDEEPersonalView {
         }
         .padding()
         .background(
-            RoundedCorners(color: Color.theme.WhiteInstance, tl: 5, tr: 5, bl:5, br: 5)
+            RoundedCorners(color: Color.theme.DarkWhite, tl: 5, tr: 5, bl:5, br: 5)
                 .shadow(color: Color.theme.DarkBlueInstance.opacity(0.5) ,radius: 2)
         )
     }
@@ -111,7 +117,6 @@ private extension TDEEPersonalView {
                 .padding(.horizontal, 20)
             ScrollView {
                 ForEach(tddeViewModel.tddeRecipes) {recipe in
-
                     RecipeCard(id: recipe.id!, calories: recipe.calories, name: recipe.name, imageURL: recipe.backgroundURL, protein: recipe.protein, fat: recipe.fat, carb: recipe.carb)
                 }
                 
@@ -125,16 +130,13 @@ private extension TDEEPersonalView {
         Button(action: {
             navigateToTDEEForm = true
         }){
-            Text("Recalculator")
+            Label("", systemImage: "pencil.line")
         }
         .navigationDestination(isPresented: $navigateToTDEEForm){
             TDDEFormView()
         }
-        .font(Font.custom.ButtonText)
-        .frame(width: 150, height: 40, alignment: .center)
+        .font(Font.custom.ContentBold)
         .foregroundColor(Color.theme.DarkBlue)
-        .background(Color.theme.OrangeInstance)
-        .cornerRadius(8)
 
     }
     
