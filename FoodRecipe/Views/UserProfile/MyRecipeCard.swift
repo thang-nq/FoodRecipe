@@ -8,36 +8,48 @@
 import SwiftUI
 
 struct MyRecipeCard: View {
+    
+    @StateObject private var detailVM = RecipeDetailViewModel()
+    var recipe : Recipe
     var body: some View {
         HStack(alignment: .center){
-            Image("salas")
-                .resizable()
+            FirebaseImage(imagePathName: recipe.backgroundURL)
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 80, height: 80, alignment: .center)
                 .clipShape(Circle())
-
+            
             VStack(alignment: .leading, spacing: 5){
         
-                Text("Beef Tender Charcoal Chee")
+                Text(recipe.name)
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.SubHeading)
             
                 HStack(spacing: 5) {
-                    Tag(text: "Healthy", tagColor: Color.theme.GreenInstance)
-                    Tag(text: "Peanut", tagColor: Color.theme.LightOrange)
-                    Tag(text: "Chicken", tagColor: Color.theme.RedInstance)
+                    ForEach(recipe.tags, id: \.self){ tag in
+                        Tag(text: tag, tagColor: getTagColor(tagValue: tag))
+                    }
                 }
                 
-                Text("Created: 19/19/1919")
+                Text(recipe.createdAt)
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.Content)
             }
             Spacer()
             VStack(alignment: .center, spacing: 15){
-                Button(action:{}, label: {Image(systemName: "highlighter")})
-                    .foregroundColor(Color.theme.DarkBlue)
-                
-                Button(action:{}, label: {Image(systemName: "trash")})
+                NavigationLink(destination: UpdateRecipeView(recipeId: recipe.id!)) {
+                    Image(systemName: "highlighter")
+                        .foregroundColor(Color.theme.DarkBlue)
+                }
+                Button(action:{
+                    Task {
+                        do {
+                            try await detailVM.deleteRecipe(recipeID: recipe.id!)
+                        } catch {
+                            // Handle the error here
+                            print("Error deleting recipe: \(error)")
+                        }
+                    }
+                }, label: {Image(systemName: "trash")})
                     .foregroundColor(Color.theme.RedInstance)
             }
         }
@@ -50,11 +62,11 @@ struct MyRecipeCard: View {
     }
 }
 
-struct MyRecipeCard_Previews: PreviewProvider {
-    static var previews: some View {
-        MyRecipeCard()
-    }
-}
+//struct MyRecipeCard_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyRecipeCard()
+//    }
+//}
 
 private extension MyRecipeCard {
     var backGroundStyle: some View {
