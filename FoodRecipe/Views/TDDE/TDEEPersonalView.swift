@@ -24,7 +24,6 @@ struct TDEEPersonalView: View {
             ScrollView{
                 VStack{
                     title
-                    
                     caloriesCalculate
                         .frame(height: 200)
                         .overlay(alignment: .topTrailing) {
@@ -104,8 +103,8 @@ private extension TDEEPersonalView {
         }
         .padding()
         .background(
-            RoundedCorners(color: Color.theme.DarkWhite, tl: 5, tr: 5, bl:5, br: 5)
-                .shadow(color: Color.theme.DarkBlueInstance.opacity(0.5) ,radius: 2)
+            RoundedCorners(color: Color.theme.White, tl: 5, tr: 5, bl:5, br: 5)
+                .shadow(color: Color.theme.DarkBlueInstance.opacity(0.8) ,radius: 5)
         )
     }
     
@@ -136,7 +135,7 @@ private extension TDEEPersonalView {
             TDDEFormView()
         }
         .font(Font.custom.ContentBold)
-        .foregroundColor(Color.theme.DarkBlue)
+        .foregroundColor(Color.theme.OrangeInstance)
 
     }
     

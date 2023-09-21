@@ -72,7 +72,7 @@ struct RecipeCard: View {
 
 private extension RecipeCard {
     var backGroundStyle: some View {
-        RoundedCorners(color: Color.theme.DarkWhiteInstance, tl: 10, tr: 10, bl:10, br: 10)
-            .shadow(color: .black.opacity(0.2) ,radius: 5)
+        RoundedCorners(color: Color.theme.RecipeCardBg, tl: 10, tr: 10, bl:10, br: 10)
+            .shadow(color: Color.theme.DarkBlueInstance.opacity(0.8) ,radius: 5)
     }
 }
