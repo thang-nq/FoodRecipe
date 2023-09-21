@@ -20,6 +20,7 @@ struct RecipeDetailView: View {
     @State var userId = UserManager.shared.currentUser!.id
     @State private var creatorId = ""
     @State private var isCreator = false
+    @StateObject var tdde = TDDEViewModel.shared
     
     private func back() {
         // Back action
@@ -40,6 +41,13 @@ struct RecipeDetailView: View {
             }
         }
     }
+    
+    func addToTDDE() {
+        Task {
+            await tdde.addRecipeToTDDE(recipeID: recipeId)
+        }
+    }
+    
     var body: some View {
         ZStack {
             NavigationView {
@@ -57,7 +65,7 @@ struct RecipeDetailView: View {
                                 // MARK: Overlay Image
                                 CoverImage(recipeDetail: recipeDetail)
                                 
-                                TopBar(isCreator: isCreator,recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
+                                TopBar(isCreator: isCreator,recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction, addToListAction: addToTDDE)
                                 
                                 // MARK: Content
                                 VStack(spacing: 15) {
@@ -164,6 +172,7 @@ struct TopBar: View {
     var isSaved: Bool
     var backAction: () -> Void
     var saveAction: () -> Void
+    var addToListAction: () -> Void
     var body: some View {
         HStack  {
             Button {
@@ -179,6 +188,20 @@ struct TopBar: View {
                     .clipShape(Circle())
             }
             Spacer()
+            
+            // Add to recipe list button
+            Button {
+                addToListAction()
+            } label: {
+                Image(systemName: "fork.knife")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(Color.theme.BlueInstance)
+                    .padding(10)
+                    .background(Color.theme.WhiteInstance)
+                    .clipShape(Circle())
+            }
             if(isCreator == true){
                 NavigationLink(destination: UpdateRecipeView(recipeId: recipeId)) {
                     Image(systemName: "square.and.pencil")
