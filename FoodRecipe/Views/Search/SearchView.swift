@@ -16,6 +16,7 @@ struct SearchView: View {
     @State var currentSelectedMealTypes: [String] = []
     @State var searchInput = ""
     @State var showingSheet: Bool = false
+    @AppStorage("isDarkMode") var isDark = false
     var body: some View {
         // MARK: Main
         VStack(spacing: 10){
@@ -34,13 +35,13 @@ struct SearchView: View {
                 }.sheet(isPresented: $showingSheet) {
                     // MARK: Sheet View
                     FilterSheet(currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes, selectMealType: selectMealType, selectTag: selectTag)
-                        .presentationDetents([.medium, .large])
+                        .presentationDetents([.medium, .large]).environment(\.colorScheme, isDark ? .dark : .light)
                 }
                 
                 Rectangle()
                     .foregroundColor(.clear)
                     .frame(width: 1, height: 50)
-                    .background(Color(red: 0.88, green: 0.89, blue: 0.89))
+                    .background(isDark ? Color.theme.DarkGray : Color(red: 0.88, green: 0.89, blue: 0.89))
                 ScrollView(.horizontal) {
                     HStack {
                         ForEach(currentSelectedMealTypes + currentSelectedTags, id: \.self) { selected in
@@ -67,10 +68,10 @@ struct SearchView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 0)
             .frame(width: 375, height: 50, alignment: .leading)
-            .background(.white)
-            .shadow(color: .black.opacity(0.1), radius: 0, x: 0, y: 1)
+            .background(Color.theme.White)
+            .shadow(color: isDark ? Color.theme.DarkGray : Color.theme.Black.opacity(0.1), radius: 0, x: 0, y: 1)
             Spacer()
-        }.padding(10)
+        }.padding(10).environment(\.colorScheme, isDark ? .dark : .light)
     }
     
     
@@ -105,23 +106,6 @@ struct SearchView: View {
 }
 
 
-struct FilterSheet: View {
-    @Binding var currentSelectedTags: [String]
-    @Binding var currentSelectedMealTypes: [String]
-    var selectMealType: (String) -> Void
-    var selectTag: (String) -> Void
-    var body: some View {
-        ZStack {
-            VStack {
-                SectionTitleView(title: "Meal types")
-                TagsFilterView(tags: MOCK_MEAL_TYPES, currentSelectedTags: $currentSelectedMealTypes, action: selectMealType)
-                SectionTitleView(title: "Tags")
-                TagsFilterView(tags: MOCK_TAGS, currentSelectedTags: $currentSelectedTags, action: selectTag)
-                Spacer()
-            }.padding(10)
-        }
-    }
-}
 
 
 struct SearchView_Previews: PreviewProvider {
@@ -135,7 +119,8 @@ struct TagsFilterView: View {
     var tags: [String]
     @Binding var currentSelectedTags: [String]
     var action: (String) -> Void
-    
+    @AppStorage("isDarkMode") var isDark = false
+   
     @State private var totalHeight
     = CGFloat.zero       // << variant for ScrollView/List
     //    = CGFloat.infinity   // << variant for VStack
@@ -197,8 +182,8 @@ struct TagsFilterView: View {
             }
             .padding(.vertical, 5)
             .padding(.horizontal, 5)
-            .background(isSelect ? Color.theme.LightOrange : Color.theme.LightGray)
-            .foregroundColor(isSelect ? Color.theme.WhiteInstance : Color.theme.DarkGray)
+            .background(isSelect ? Color.theme.LightOrange : (isDark ? Color.theme.DarkGray.opacity(0.5) : Color.theme.LightGray))
+            .foregroundColor(isSelect ? Color.theme.WhiteInstance : (isDark ? Color.theme.WhiteInstance.opacity(1) : Color.theme.DarkGray))
             .cornerRadius(5)
         }
     }
