@@ -18,4 +18,8 @@ class SearchViewModel: ObservableObject {
     func searchRecipeByTags(tags: [String]) async {
         self.recipes = await RecipeManager.shared.filterRecipeByTags(tags: tags)
     }
+    
+    func searchAllRecipe() async {
+        self.recipes = await RecipeManager.shared.searchAllRecipes()
+    }
 }
