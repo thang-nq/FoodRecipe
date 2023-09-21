@@ -109,7 +109,7 @@ private extension UpdateIntroView{
     var addPhoto: some View{
         PhotosPicker(selection: $backgroundPhoto, photoLibrary: .shared()) {
             Label("Select a photo for the recipe *", systemImage: "photo.fill")
-        }.padding(.vertical, 10)
+        }.padding(.vertical, 15)
     }
     
     //MARK: DESCRIPTION INPUT UI

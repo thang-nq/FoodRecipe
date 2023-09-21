@@ -46,5 +46,10 @@ struct ColorTheme {
     let RedInstance = Color("RedInstance")
     let GreenInstance = Color("GreenInstance")
     let YellowInstance = Color("YellowInstance")
+    
+    //MARK: TAB VIEW COLOR
+    
+    let TabBarColor = Color("TabBarColor")
+    let UnTintColor = Color("UnTintColor")
 
 }

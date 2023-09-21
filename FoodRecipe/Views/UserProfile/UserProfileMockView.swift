@@ -148,16 +148,19 @@ private extension UserProfileMockView {
                         .foregroundColor(Color.theme.Orange).underline()
                 }
             }
-            Grid {
-                ForEach(Array(stride(from: 0, to: recipeList.count, by: 2)), id: \.self) { index in
-                    GridRow {
-                        CompactRecipeCard(recipe: recipeList[index])
-                        if(index + 1 < recipeList.count) {
-                            CompactRecipeCard(recipe: recipeList[index+1])
-                        }
-                    }
-                }
+            ForEach(recipeList){ recipe in
+                MyRecipeCard(recipe: recipe)
             }
+//            Grid {
+//                ForEach(Array(stride(from: 0, to: recipeList.count, by: 2)), id: \.self) { index in
+//                    GridRow {
+//                        CompactRecipeCard(recipe: recipeList[index])
+//                        if(index + 1 < recipeList.count) {
+//                            CompactRecipeCard(recipe: recipeList[index+1])
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 }

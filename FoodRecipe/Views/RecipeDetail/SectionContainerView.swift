@@ -22,7 +22,7 @@ struct SectionContainerView<Content>: View where Content: View {
         }
         .padding(16)
         .frame(width: .infinity, alignment: .top)
-        .background(.white)
+        .background(Color.theme.White)
         .cornerRadius(16)
     }
 }
