@@ -15,6 +15,7 @@ class RecipeDetailViewModel: ObservableObject {
     @Published var recipe: Recipe? = nil
     @Published var showError: Bool = false
     @Published var errorMessage: String?
+    @Published var isLoading: Bool = false
     
     func getRecipeDetail(recipeID: String) async {
         self.recipe = nil
@@ -30,8 +31,10 @@ class RecipeDetailViewModel: ObservableObject {
     }
     
     func saveOrReomveSavedRecipe(recipeID: String) async {
+        isLoading.toggle()
         await RecipeManager.shared.saveOrRemoveRecipeFromFavorite(recipeID: recipeID)
         await getUpdatedRecipeDetail(recipeID: recipeID)
+        isLoading.toggle()
     }
     
     func updateRecipe(recipeID: String, updateData: updateRecipeInterface) async {
