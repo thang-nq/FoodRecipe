@@ -1,13 +1,13 @@
 //
-//  CreateIngredientsView.swift
+//  UpdateIngredientsView.swift
 //  FoodRecipe
 //
-//  Created by Tien on 16/09/2023.
+//  Created by Tien on 19/09/2023.
 //
 
 import SwiftUI
 
-struct CreateIngredientsView: View {
+struct UpdateIngredientsView: View {
     // MARK: VARIABLES
     @State private var showingSheet = false
     @State private var showingUpdateSheet = false
@@ -68,78 +68,14 @@ struct CreateIngredientsView: View {
     }
 }
 
-// Button modifier
-struct ButtonModifier: ViewModifier {
-  func body(content: Content) -> some View {
-    content
-          .padding(.bottom, 20)
-          .padding(.trailing, 15)
-      
-  }
-}
 
-// MARK: ADD INGREDIENTS SHEET VIEW
-struct AddIngredientsSheetView: View {
-    @Binding var InputIngredient : String
-    @Binding var Ingredients : [String]
-    var body: some View{
-        VStack{
-            InputFieldRecipe(text: $InputIngredient, title: "Ingredient", placeHolder: "Enter Ingredient")
-        }
-            Button(action: {
-                if(!InputIngredient.isEmpty){
-                    Ingredients.append(InputIngredient)
-                    InputIngredient = ""
-                }
-            }) {
-                Text("Save")
-                    .foregroundColor(Color.theme.WhiteInstance)
-                                    .font(.headline)
-                                    .frame(width: 120, height: 40)
-                                    .background(Color.theme.OrangeInstance)
-                                    .cornerRadius(8)
-
-            }
-        }
-}
-
-// MARK: UPDATE INGREDIENTS SHEET VIEW
-struct UpdateIngredientsSheetView: View {
-    @State private var newIngredient : String = ""
-    @Binding var updateInputIngredient : String
-    @Binding var Ingredients : [String]
-    @Binding var showingUpdateSheet : Bool
-    var body: some View{
-        VStack{
-            InputFieldRecipe(text: $newIngredient, title: "Update Ingredient", placeHolder: "Enter new Ingredient")
-        }
-            Button(action: {
-                if(!newIngredient.isEmpty){
-                    if let index = Ingredients.firstIndex(of: updateInputIngredient) {
-                                        Ingredients[index] = newIngredient
-                                        updateInputIngredient = ""
-                                        showingUpdateSheet.toggle()
-                                    }
-                }
-            }) {
-                Text("Save")
-                    .foregroundColor(Color.theme.WhiteInstance)
-                                    .font(.headline)
-                                    .frame(width: 120, height: 40)
-                                    .background(Color.theme.OrangeInstance)
-                                    .cornerRadius(8)
-
-            }
-        }
-}
-
-struct CreateIngredientsView_Previews: PreviewProvider {
+struct UpdateIngredientsView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateIngredientsView(Ingredients: .constant([]))
+        UpdateIngredientsView(Ingredients: .constant([]))
     }
 }
 
-private extension CreateIngredientsView{
+private extension UpdateIngredientsView{
     // MARK: INGREDIENTS UI
     var ingredients: some View{
         VStack(alignment: .leading) {
@@ -185,3 +121,4 @@ private extension CreateIngredientsView{
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
+

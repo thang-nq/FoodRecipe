@@ -28,4 +28,7 @@ class SearchViewModel: ObservableObject {
     }
     
 //    func save
+    func searchAllRecipe() async {
+        self.recipes = await RecipeManager.shared.searchAllRecipes()
+    }
 }

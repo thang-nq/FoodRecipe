@@ -1,14 +1,14 @@
 //
-//  CreateIntroView.swift
+//  UpdateIntroView.swift
 //  FoodRecipe
 //
-//  Created by Tien on 16/09/2023.
+//  Created by Tien on 19/09/2023.
 //
 
 import SwiftUI
 import PhotosUI
 
-struct CreateIntroView: View {
+struct UpdateIntroView: View {
     //MARK: VARIABLES
     @Binding var backgroundPhoto: PhotosPickerItem?
     @Binding var recipeName : String
@@ -80,136 +80,13 @@ struct CreateIntroView: View {
     }
 }
 
-//MARK: INPUT FIELD VIEW
-struct InputFieldRecipe: View {
-    @Binding var text: String
-    let title: String
-    let placeHolder: String
-    var isSecureField = false
-    var body: some View {
-        VStack (alignment: .leading, spacing: 12) {
-            Text(title)
-                .font(.custom("ZillaSlab-SemiBold", size: 22))
-            if isSecureField {
-                SecureField(placeHolder, text: $text)
-                    .font(.custom("ZillaSlab-Regular", size: 16))
-            } else {
-                TextField(placeHolder, text: $text)
-                    .font(.custom("ZillaSlab-Regular", size: 16))
-            }
-            
-            Divider()
-        }
-        .padding(.horizontal, 15)
-        .padding(.bottom, 10)
-    }
-}
-
-//MARK: REQUIRE INPUT FIELD VIEW
-struct RequireInputFieldRecipe: View {
-    @Binding var text: String
-    let title: String
-    let placeHolder: String
-    var isSecureField = false
-    var body: some View {
-        VStack (alignment: .leading, spacing: 12) {
-            HStack{
-                Text(title)
-                    .font(.custom("ZillaSlab-SemiBold", size: 22))
-                Text("*")
-                    .font(.system(size: 22))
-                    .foregroundColor(Color.theme.RedInstance)
-            }
-            if isSecureField {
-                SecureField(placeHolder, text: $text)
-                    .font(.custom("ZillaSlab-Regular", size: 16))
-            } else {
-                TextField(placeHolder, text: $text)
-                    .font(.custom("ZillaSlab-Regular", size: 16))
-            }
-            
-            Divider()
-        }
-        .padding(.horizontal, 15)
-        .padding(.bottom, 10)
-    }
-}
-
-//MARK: NUMBER INPUT FIELD VIEW
-struct NumberInput: View {
-    @Binding var value: Int
-    let name: String
-    let placeHolder: String
-    var body: some View {
-        VStack (alignment: .leading, spacing: 12) {
-            HStack{
-                Text(name)
-                    .font(.custom("ZillaSlab-SemiBold", size: 22))
-                    
-                Text("*")
-                    .font(.system(size: 22))
-                    .foregroundColor(Color.theme.RedInstance)
-            }
-            TextField(placeHolder, value: $value, formatter: NumberFormatter())
-                .font(Font.custom.Content)
-            
-            Divider()
-        }
-        .padding(.horizontal, 15)
-        .padding(.bottom, 10)
-    }
-}
-
-//MARK: NUMBER INPUT FIELD VIEW
-struct NutritionInput: View {
-    @Binding var value: Int
-    let name: String
-    let placeHolder: String
-    var body: some View {
-        VStack (alignment: .leading, spacing: 12) {
-            Text(name)
-                .font(Font.custom.Content)
-            TextField(placeHolder, value: $value, formatter: NumberFormatter())
-                .font(Font.custom.Content)
-            
-            Divider()
-        }
-        .padding(.horizontal, 15)
-        .padding(.bottom, 10)
-    }
-}
-
-//MARK: REQUIRE NUMBER INPUT FIELD VIEW
-struct RequireNutritionInput: View {
-    @Binding var value: Int
-    let name: String
-    let placeHolder: String
-    var body: some View {
-        VStack (alignment: .leading, spacing: 12) {
-            HStack{
-                Text(name)
-                    .font(Font.custom.Content)
-                Text("*")
-                    .font(Font.custom.Content)
-                    .foregroundColor(Color.theme.RedInstance)
-            }
-            TextField(placeHolder, value: $value, formatter: NumberFormatter())
-                .font(Font.custom.Content)
-            
-            Divider()
-        }
-        .padding(.horizontal, 15)
-        .padding(.bottom, 10)
-    }
-}
-
-struct CreateIntroView_Previews: PreviewProvider {
+struct UpdateIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateIntroView(backgroundPhoto: .constant(nil), recipeName: .constant(""), cookingTime: .constant(0), servingSize: .constant(0), description: .constant(""), calories: .constant(0), carb: .constant(0), protein: .constant(0), fat: .constant(0), sugars: .constant(0), salt: .constant(0), saturates: .constant(0), fibre: .constant(0), currentSelectedTags: .constant([]), currentSelectedMealTypes: .constant([]))
+        UpdateIntroView(backgroundPhoto: .constant(nil), recipeName: .constant(""), cookingTime: .constant(0), servingSize: .constant(0), description: .constant(""), calories: .constant(0), carb: .constant(0), protein: .constant(0), fat: .constant(0), sugars: .constant(0), salt: .constant(0), saturates: .constant(0), fibre: .constant(0), currentSelectedTags: .constant([]), currentSelectedMealTypes: .constant([]))
     }
 }
 
-private extension CreateIntroView{
+private extension UpdateIntroView{
     
     //MARK: TITLE INPUT UI
     var titleInput: some View{
