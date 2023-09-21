@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchBar: View {
     @Binding var searchText: String
+    var searchAction: (String) -> Void
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
@@ -19,6 +20,7 @@ struct SearchBar: View {
             TextField("Search for recipes", text: $searchText)
                 .foregroundColor(Color.theme.Orange)
                 .accentColor(Color.theme.Orange)
+                .submitLabel(.search)
                 .overlay(
                     Image(systemName: "xmark.circle.fill")
                         .opacity(searchText.isEmpty ? 0 : 1)
@@ -30,8 +32,12 @@ struct SearchBar: View {
                         }
                     , alignment: .trailing
                 )
-        }.font(.headline)
-            .padding()
+                .onSubmit {
+//                    print(searchText)
+                    searchAction(searchText)
+                }
+        }.font(.custom.Content)
+            .padding(10)
             .background(
                 RoundedRectangle(cornerRadius: 25)
                     .fill(.white)
@@ -46,6 +52,6 @@ struct SearchBar: View {
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(searchText: .constant(""))
+        SearchBar(searchText: .constant(""), searchAction: {searchString in})
     }
 }

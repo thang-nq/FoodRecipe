@@ -12,77 +12,35 @@ var MOCK_TAGS = ["chicken", "soup", "rice", "pork", "sandwich", "eggs", "duck", 
 var MOCK_MEAL_TYPES = ["breakfast", "brunch", "lunch", "dinner", "snack"]
 
 struct SearchView: View {
+    @StateObject var viewModel: SearchViewModel = SearchViewModel()
     @State var currentSelectedTags: [String] = []
     @State var currentSelectedMealTypes: [String] = []
     @State var searchInput = ""
     @State var showingSheet: Bool = false
+    func searchAction(searchString: String) {
+        Task {
+            await viewModel.searchRecipeByText(text: searchString)
+        }
+    }
+    func saveAction(recipeId: String) {
+        print("saving")
+    }
     var body: some View {
         // MARK: Main
         VStack(spacing: 10){
-            SearchBar(searchText: $searchInput)
-            HStack(alignment: .center, spacing: 27) {
-                // MARK: Filter bar
-                Button {
-                    showingSheet.toggle()
-                } label: {
-                    HStack(alignment: .center, spacing: 14) {
-                        Image(systemName: "slider.horizontal.3").foregroundColor(Color.theme.DarkGray)
-                        Text("Filter")
-                            .foregroundColor(Color.theme.DarkGray)
-                        .font(.custom("ZillaSlab-Regular", size: 20))                }
-                    .padding(0)
-                }.sheet(isPresented: $showingSheet) {
-                    // MARK: Sheet View
-                    FilterSheet(currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes, selectMealType: selectMealType, selectTag: selectTag)
-                        .presentationDetents([.medium, .large])
-                }
-                
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: 1, height: 50)
-                    .background(Color(red: 0.88, green: 0.89, blue: 0.89))
-                ScrollView(.horizontal) {
-                    HStack {
-                        ForEach(currentSelectedMealTypes + currentSelectedTags, id: \.self) { selected in
-                            Button {
-                                //                            action(text)
-                                print(selected)
-                            } label: {
-                                HStack {
-                                    Text(selected.capitalized)
-                                        .font(.body)
-                                    Image(systemName: "minus").font(.system(size: 15))
-                                    
-                                }
-                                .padding(.vertical, 5)
-                                .padding(.horizontal, 5)
-                                .background(Color.theme.LightOrange)
-                                .foregroundColor(Color.theme.WhiteInstance)
-                                .cornerRadius(5)
-                            }
-                        }
+            SearchBar(searchText: $searchInput, searchAction: searchAction).padding(10)
+            filterBar.padding(10)
+            ScrollView {
+                ForEach(viewModel.recipes) { recipe in
+                    NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!, onDissappear: {}).navigationBarHidden(true)) {
+                        RecipeCardView(recipe: recipe, saveAction: saveAction)
                     }
                 }
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 0)
-            .frame(width: 375, height: 50, alignment: .leading)
-            .background(.white)
-            .shadow(color: .black.opacity(0.1), radius: 0, x: 0, y: 1)
+            }.padding(20)
             Spacer()
-        }.padding(10)
+        }
     }
     
-    
-//    func selectFilter(tag: String) {
-//        if(currentSelectedFilters.contains(tag)) {
-//            if let index = currentSelectedFilters.firstIndex(of: tag) {
-//                currentSelectedFilters.remove(at: index)
-//            }
-//        } else {
-//            currentSelectedFilters.append(tag)
-//        }
-//    }
     
     func selectTag(tag: String) {
         if(currentSelectedTags.contains(tag)) {
@@ -101,6 +59,61 @@ struct SearchView: View {
         } else {
             currentSelectedMealTypes.append(tag)
         }
+    }
+}
+
+private extension SearchView {
+    var filterBar: some View {
+        HStack(alignment: .center, spacing: 10) {
+            // MARK: Filter bar
+            Button {
+                showingSheet.toggle()
+            } label: {
+                HStack(alignment: .center, spacing: 5) {
+                    Image(systemName: "slider.horizontal.3").foregroundColor(Color.theme.DarkGray)
+                    Text("Filter")
+                        .foregroundColor(Color.theme.DarkGray)
+                }
+                .font(.custom.Content)
+                .padding(0)
+            }.sheet(isPresented: $showingSheet) {
+                // MARK: Sheet View
+                FilterSheet(currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes, selectMealType: selectMealType, selectTag: selectTag)
+                    .presentationDetents([.medium, .large])
+            }
+            
+            Rectangle()
+                .foregroundColor(.clear)
+                .frame(width: 1, height: 50)
+                .background(Color(red: 0.88, green: 0.89, blue: 0.89))
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(currentSelectedMealTypes + currentSelectedTags, id: \.self) { selected in
+                        Button {
+                            //                            action(text)
+                            print(selected)
+                        } label: {
+                            HStack {
+                                Text(selected.capitalized)
+                                    .font(.custom.Content)
+                                Image(systemName: "minus").font(.system(size: 15))
+                                
+                            }
+                            .padding(.vertical, 5)
+                            .padding(.horizontal, 5)
+                            .background(Color.theme.LightOrange)
+                            .foregroundColor(Color.theme.WhiteInstance)
+                            .cornerRadius(5)
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 0)
+        .frame(width: 375, height: 50, alignment: .leading)
+        .background(.white)
+        .shadow(color: .black.opacity(0.1), radius: 0, x: 0, y: 1)
     }
 }
 
@@ -191,7 +204,7 @@ struct TagsFilterView: View {
         } label: {
             HStack {
                 Text(text.capitalized)
-                    .font(.body)
+                    .font(.custom.Content)
                 Image(systemName: isSelect ? "checkmark" : "plus").font(.system(size: 15))
                 
             }
