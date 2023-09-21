@@ -28,7 +28,7 @@ struct RecipeListView: View {
     }
     var body: some View {
         VStack {
-            NavigationView {
+            NavigationStack {
                 ScrollView {
                     Text("Today's Recipes")
                         .font(Font.custom.NavigationTitle)
@@ -40,6 +40,7 @@ struct RecipeListView: View {
                         }
                     }.padding(10)
                 }.padding(10)
+                    .frame(width: 390)
                     .overlay(
                         HStack {
                             NavigationLink(destination: CreateRecipeView()) {
