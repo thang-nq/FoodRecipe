@@ -52,7 +52,17 @@ struct MyRecipeCard: View {
 
 struct MyRecipeCard_Previews: PreviewProvider {
     static var previews: some View {
-        MyRecipeCard()
+
+        Group {
+            MyRecipeCard()
+                .previewDisplayName("iOS light")
+                .preferredColorScheme(.light)
+            
+            MyRecipeCard()
+                .previewDisplayName("iOS dark")
+                .preferredColorScheme(.dark)
+            
+        }
     }
 }
 
