@@ -12,7 +12,6 @@ struct SectionTitleView: View {
     var body: some View {
         Text(title)
             .font(.custom.Heading)
-            .kerning(0.552)
             .foregroundColor(Color.theme.Black)
             .frame(maxWidth: .infinity, alignment: .topLeading)
     }

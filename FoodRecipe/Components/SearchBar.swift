@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchBar: View {
     @Binding var searchText: String
+    var action: () -> Void
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
@@ -30,22 +31,26 @@ struct SearchBar: View {
                         }
                     , alignment: .trailing
                 )
-        }.font(.headline)
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 25)
-                    .fill(Color.theme.White)
-                    .shadow(
-                        color: Color.theme.BlackInstance.opacity(0.1),
-                        radius: 10, x: 0, y: 0
-                    )
-            )
-//            .padding()
+                .onSubmit {
+                    action()
+                }
+        }
+        .font(.headline)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 25)
+                .fill(Color.theme.White)
+                .shadow(
+                    color: Color.theme.BlackInstance.opacity(0.1),
+                    radius: 10, x: 0, y: 0
+                )
+        )
+        //            .padding()
     }
 }
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(searchText: .constant(""))
+        SearchBar(searchText: .constant(""), action: {})
     }
 }
