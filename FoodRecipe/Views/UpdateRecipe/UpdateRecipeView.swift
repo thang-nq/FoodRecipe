@@ -94,7 +94,7 @@ struct UpdateRecipeView: View {
                         await fetchSteps()
                     }
                 }
-            CustomBackButtonRecipe()
+
             // MARK: CHECK LOADING
             if (updateVM.isLoading == true){
                 ZStack {
