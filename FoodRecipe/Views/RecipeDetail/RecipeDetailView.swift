@@ -29,7 +29,7 @@ struct RecipeDetailView: View {
             await detailVM.saveOrReomveSavedRecipe(recipeID: recipeId)
         }
     }
-    private func checkCreater() async{
+   func checkCreator() async{
         if let recipeDetail = detailVM.recipe{
             print("gggg")
             print(userId)
@@ -50,7 +50,7 @@ struct RecipeDetailView: View {
                                 // MARK: Overlay Image
                                 CoverImage(recipeDetail: recipeDetail)
                                 
-                                TopBar(recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
+                                TopBar(isCreator: isCreator,recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
                                 
                                 // MARK: Content
                                 VStack(spacing: 15) {
@@ -111,15 +111,17 @@ struct RecipeDetailView: View {
                         do {
                             try await detailVM.getRecipeDetail(recipeID: recipeId)
                             if let recipe = detailVM.recipe {
-                            }else {
+                                // Handle the recipe data
+                            } else {
                                 detailVM.getMockRecipeDetail()
                             }
                         } catch {
                             // Handle any errors that occur during the async operation
                             print("Error: \(error)")
                         }
+                        
+                        await checkCreator()
                     }
-                    await checkCreater()
                 }
                 .onDisappear {
                     onDissappear()
