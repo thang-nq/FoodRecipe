@@ -116,15 +116,4 @@ class InputFieldManager: ObservableObject {
     }
     
     
-    //MARK: RECIPE VARAIBALES
-    let foodNameLimit = 25
-
-    @Published var foodNameInput = "" {
-        didSet {
-            if foodNameInput.count > foodNameLimit {
-                foodNameInput = String(foodNameInput.prefix(foodNameLimit))
-            }
-        }
-    }
-    
 }

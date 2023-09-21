@@ -57,16 +57,28 @@ struct MyRecipeCard: View {
         .background(backGroundStyle)
         .foregroundColor(Color.theme.DarkWhite)
         .padding(.horizontal, 10)
-      
-        
     }
 }
 
-//struct MyRecipeCard_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MyRecipeCard()
-//    }
-//}
+struct MyRecipeCard_Previews: PreviewProvider {
+    static var previews: some View {
+
+
+        Group {
+            MyRecipeCard(recipe: Recipe.sampleRecipe)
+                .previewDisplayName("iOS light")
+                .preferredColorScheme(.light)
+            
+            MyRecipeCard(recipe: Recipe.sampleRecipe)
+                .previewDisplayName("iOS dark")
+                .preferredColorScheme(.dark)
+            
+        }
+
+//        MyRecipeCard(recipe: Recipe.sampleRecipe)
+
+    }
+}
 
 private extension MyRecipeCard {
     var backGroundStyle: some View {

@@ -10,23 +10,18 @@ import SwiftUI
 struct TDEEWrapperView: View {
 
     @EnvironmentObject var authViewModel: AuthViewModel
-
+    
     var body: some View {
         Group {
             if let currentUser = UserManager.shared.currentUser {
                 if currentUser.enableTDDE {
                     TDEEPersonalView()
                 } else {
-                    TDDEFormView()
+//                    TDDEFormView()
+                    TDEEPersonalView()
                 }
 
             }
         }
     }
 }
-
-//struct TDEEWrapperView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TDEEWrapperView()
-//    }
-//}

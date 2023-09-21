@@ -237,12 +237,10 @@ struct TopBar: View {
 struct MainInfo: View {
     let recipe: Recipe
     var body: some View {
-        //    return SectionContainerView {
         SectionContainerView {
             Text(recipe.name)
                 .font(.custom.Heading)
-                .kerning(0.552)
-                .foregroundColor(.black)
+                .foregroundColor(Color.theme.Black)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
             HStack {
                 Tag(text: recipe.mealType, tagColor: Color.theme.BlueInstance)
@@ -265,8 +263,6 @@ struct MainInfo: View {
                         .frame(width: 24, height: 24)
                     Text("\(recipe.cookingTime) minutes").font(.custom.SubHeading).fontWeight(.regular)
                 }.frame(maxWidth: .infinity)
-                //                Divider()
-                //                Rectangle().fill(.blue).frame(width: 1) // or any other color
                 Rectangle()
                     .foregroundColor(.clear)
                     .frame(width: 1, height: 70)

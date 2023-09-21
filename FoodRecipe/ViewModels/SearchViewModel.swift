@@ -10,10 +10,10 @@ import Foundation
 @MainActor
 class SearchViewModel: ObservableObject {
     @Published var recipes : [Recipe] = []
+    @Published var searchString: String = ""
     
-    
-    func searchRecipeByText(text: String) async {
-        self.recipes = await RecipeManager.shared.searchRecipeByText(text: text)
+    func searchRecipeByText() async {
+        self.recipes = await RecipeManager.shared.searchRecipeByText(text: searchString)
     }
     
     func searchRecipeByTags(tags: [String]) async {
@@ -21,7 +21,6 @@ class SearchViewModel: ObservableObject {
     }
     
     func searchAllRecipe() async {
-        var rec = await RecipeManager.shared.searchAllRecipes()
-        
+        self.recipes = await RecipeManager.shared.searchAllRecipes()
     }
 }
