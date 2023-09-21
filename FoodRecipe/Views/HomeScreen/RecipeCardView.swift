@@ -9,7 +9,8 @@ import SwiftUI
 
 struct RecipeCardView: View {
     var recipe: Recipe
-    var saveAction: (String) -> Void
+    var saveAction: (String) -> Void = {mock in}
+    var hideSave: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5){
@@ -23,7 +24,6 @@ struct RecipeCardView: View {
                         // Handle save action
                         saveAction(recipe.id!)
                     }) {
-                        //                        Image(systemName: recipe.isSaved ? "heart.fill" : "heart")
                         Image(systemName: recipe.isSaved ? "heart.circle" : "heart.circle.fill")
                     }
                         .foregroundColor(recipe.isSaved ? Color.theme.Orange : Color.theme.DarkGray)
@@ -31,6 +31,7 @@ struct RecipeCardView: View {
                         .padding(.trailing, 16)
                         .font(.system(size: 25))
                         .offset(x: 5, y: 10)
+                        .opacity(hideSave ? 0 : 1)
                     , alignment: .topTrailing
                 )
             HStack{
