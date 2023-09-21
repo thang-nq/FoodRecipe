@@ -63,8 +63,11 @@ struct RecipeCardView: View {
                 .multilineTextAlignment(.leading)
                 .frame(maxHeight: 58)
             
-        }.foregroundColor(Color.theme.Black)
-            .padding(.bottom, 10)
+        }
+        .foregroundColor(Color.theme.Black)
+        .padding(10)
+        .background(backGroundStyle)
+        
     }
 }
 
@@ -73,6 +76,15 @@ struct RecipeCardView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             RecipeCardView(recipe: .sampleRecipe, saveAction: {mock in})
+            RecipeCardView(recipe: .sampleRecipe, saveAction: {mock in})
         }
     }
 }
+
+private extension RecipeCardView {
+    var backGroundStyle: some View {
+        RoundedCorners(color: Color.theme.DarkGray.opacity(0.1), tl: 10, tr: 10, bl:10, br: 10)
+            .shadow(color: Color.theme.LightGray.opacity(0.1) ,radius: 2)
+    }
+}
+//                                    Color("DarkGray").opacity(0.1)
