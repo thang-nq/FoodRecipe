@@ -18,7 +18,9 @@ struct CookModeView: View {
     var pages: [Page] = Page.samplePages
     init(recipe: Recipe) {
         self.recipe = recipe
-        self.pages = recipe.steps.map { Page(name: "Step \($0.stepNumber)", description: $0.context, imageUrl: $0.backgroundURL, tag: $0.stepNumber - 1)}
+        self.pages = recipe.steps.enumerated().map { (index, element) in
+            return Page(name: "Step \(index+1)", description: element.context, imageUrl: element.backgroundURL, tag: index)
+        }
     }
     var body: some View {
         VStack(spacing: 0) {
