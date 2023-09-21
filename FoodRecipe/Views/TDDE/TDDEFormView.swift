@@ -162,7 +162,7 @@ private extension TDDEFormView {
         .cornerRadius(8)
         .disabled(inputFieldManager.isValidBMIForm())
         .navigationDestination(isPresented: $navigateToPersonalTDEE){
-//            TDEEPersonalView()
+            TDEEPersonalView()
         }
     }
         
