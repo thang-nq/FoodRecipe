@@ -48,8 +48,9 @@ struct ColorTheme {
     let YellowInstance = Color("YellowInstance")
     
     //MARK: TAB VIEW COLOR
-    
     let TabBarColor = Color("TabBarColor")
     let UnTintColor = Color("UnTintColor")
+    let RecipeCardBg = Color("RecipeCardBg")
+    
 
 }

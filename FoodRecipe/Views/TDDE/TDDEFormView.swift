@@ -16,6 +16,14 @@ struct TDDEFormView: View {
     @ObservedObject var inputFieldManager = InputFieldManager()
     @StateObject var tddeViewModel = TDDEViewModel.shared
     @State private var navigateToPersonalTDEE = false
+    @AppStorage("isDarkMode") var isDark = false
+    
+    //MARK: POP UP VARIABLES
+    @State var showPopUp = false
+    @State var popUpIcon = ""
+    @State var popUptitle = ""
+    @State var popUpContent = ""
+    @State var popUpIconColor = Color.theme.BlueInstance
     
     //MARK: init font cus nav title
 //    init() {
@@ -32,7 +40,27 @@ struct TDDEFormView: View {
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: ExitButton())
+            .overlay(
+                ZStack {
+                    if showPopUp {
+                        Color.theme.DarkWhite.opacity(0.5)
+                            .edgesIgnoringSafeArea(.all)
+                        PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
+                    }
+                }
+            )
+            .toolbar {
+            // MARK: Tool Bar
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: { isDark.toggle() }) {
+                        isDark ? Label("Dark", systemImage: "lightbulb.fill") :
+                        Label("Dark", systemImage: "lightbulb")
+                    }
+                    .foregroundColor(Color.theme.OrangeInstance)
+                }
+            }
         }
+        .environment(\.colorScheme, isDark ? .dark : .light)
     }
     
 }
@@ -141,7 +169,14 @@ private extension TDDEFormView {
             Task {
                 await tddeViewModel.calculateTDDE(age: ageInt, height: heightInt, weight: weightInt, gender: gender, activityLevel: activityLevel)
             }
-            navigateToPersonalTDEE = true
+    
+            popUpIcon = "figure.dance"
+            popUptitle = "Calculate new TDEE success"
+            popUpContent = "Please back to TDEE screen to view new update nutritions suggest"
+            showPopUp = true
+            
+            
+//            navigateToPersonalTDEE = true
             
             
         }){
@@ -154,9 +189,9 @@ private extension TDDEFormView {
         .background(inputFieldManager.isValidBMIForm() ? Color.theme.LightGray: Color.theme.Orange)
         .cornerRadius(8)
         .disabled(inputFieldManager.isValidBMIForm())
-        .navigationDestination(isPresented: $navigateToPersonalTDEE){
-            TDEEPersonalView()
-        }
+//        .navigationDestination(isPresented: $navigateToPersonalTDEE){
+////            TDEEPersonalView()
+//        }
     }
     
     //MARK: BACK BUTTON

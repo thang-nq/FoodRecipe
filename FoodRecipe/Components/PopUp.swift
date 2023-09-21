@@ -21,7 +21,6 @@ struct PopUp: View {
         VStack(spacing: 10) {
             icon
                 .foregroundColor(iconColor)
-            
             contentWrapper
         }
         .padding(.horizontal)
@@ -83,5 +82,6 @@ private extension PopUp {
             Text(content)
                 .font(.custom("ZillaSlab-SemiBold", size: 20))
         }
+        .foregroundColor(Color.theme.DarkBlueInstance)
     }
 }
