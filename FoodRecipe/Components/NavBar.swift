@@ -20,13 +20,13 @@ struct NavBar: View {
                     Button {
                         leftIconAction()
                     } label: {
-                        Image(systemName: leftIconNameUnwrapped).font(.system(size: 20)).foregroundColor(Color.theme.WhiteInstance)
+                        Image(systemName: leftIconNameUnwrapped).font(.custom.Heading).foregroundColor(Color.theme.WhiteInstance)
                     }
                 }
                 
                 Text(title)
                     .foregroundColor(Color.theme.WhiteInstance)
-                    .font(.largeTitle.weight(.bold))
+                    .font(.custom.NavigationTitle)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }.padding(.horizontal, 10)
         }

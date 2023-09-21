@@ -12,7 +12,7 @@ struct NutritionView: View {
     var body: some View {
         SectionContainerView {
             SectionTitleView(title: "Nutrition")
-            ForEach(Array(stride(from: 0, to: recipe.nutritionsArray.count, by: 3)), id: \.self) { index in
+            ForEach(Array(stride(from: 0, to: recipe.nutritionsArray.count, by: 4)), id: \.self) { index in
                 HStack {
                     NutritionElementView(item: recipe.nutritionsArray[index])
                     if(index + 1 < recipe.nutritionsArray.count) {
@@ -20,6 +20,9 @@ struct NutritionView: View {
                     }
                     if(index + 2 < recipe.nutritionsArray.count) {
                         NutritionElementView(item: recipe.nutritionsArray[index+2])
+                    }
+                    if(index + 3 < recipe.nutritionsArray.count) {
+                        NutritionElementView(item: recipe.nutritionsArray[index+3])
                     }
                 }
             }
@@ -45,18 +48,18 @@ struct NutritionElementView: View {
     var item: NutritionItem
     
     var body: some View {
-        VStack (spacing: 7){
+        VStack (spacing: 4){
             Text(item.type)
-                .font(.system(size: 18))
+                .font(.custom.Content)
                 .foregroundColor(Color.theme.WhiteInstance)
                 .bold()
             Text("\(item.value)")
-                .font(.system(size: 22))
+                .font(.custom.ContentBold)
                 .foregroundColor(Color.theme.WhiteInstance)
                 .fontWeight(.semibold)
         }
         .padding(10)
-        .frame(width: 100, height: 80)
+        .frame(width: 80, height: 60)
         .background(Color.theme.LightOrange)
         .cornerRadius(10)
     }

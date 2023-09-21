@@ -13,7 +13,7 @@ struct TDEEWrapperView: View {
 
     var body: some View {
         Group {
-            if let currentUser = authViewModel.currentUser {
+            if let currentUser = UserManager.shared.currentUser {
                 if currentUser.enableTDDE {
                     TDEEPersonalView()
                 } else {

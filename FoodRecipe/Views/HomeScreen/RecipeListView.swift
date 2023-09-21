@@ -27,23 +27,26 @@ struct RecipeListView: View {
         }
     }
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    Section(header: Text("Today's Recipes").font(.custom("ZillaSlab-Bold", size: 30))) {
+        VStack {
+            NavigationView {
+                ScrollView {
+                    Text("Today's Recipes")
+                        .font(Font.custom.NavigationTitle)
+                    VStack {
                         ForEach(viewModel.recipes) { recipe in
                             NavigationLink(destination: RecipeDetailView(recipeId: recipe.id!, onDissappear: fetchRecipes).navigationBarHidden(true)) {
                                 RecipeCardView(recipe: recipe, saveAction: saveAction)
                             }
                         }
-                    }.headerProminence(.increased)
-                }.listStyle(.insetGrouped)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { isDark.toggle() }) {
-                        isDark ? Label("Dark", systemImage: "lightbulb.fill") :
-                        Label("Dark", systemImage: "lightbulb")
+                    }.padding(10)
+                }.padding(10)
+                .toolbar {
+                // MARK: Tool Bar
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: { isDark.toggle() }) {
+                            isDark ? Label("Dark", systemImage: "lightbulb.fill") :
+                            Label("Dark", systemImage: "lightbulb")
+                        }
                     }
                 }
             }
@@ -63,66 +66,14 @@ struct RecipeListView: View {
                 
                 alignment: .bottomTrailing
             )
+            .onAppear {
+                fetchRecipes()
+            }
+            .environment(\.colorScheme, isDark ? .dark : .light)
         }
-        .onAppear {
-            fetchRecipes()
-        }
-        .environment(\.colorScheme, isDark ? .dark : .light)
     }
 }
 
-struct RecipeCardView: View {
-    var recipe: Recipe
-    var saveAction: (String) -> Void
-    
-    var body: some View {
-        VStack(alignment: .leading){
-            FirebaseImage(imagePathName: recipe.backgroundURL)
-                .aspectRatio(contentMode: .fill)
-                .frame(maxWidth: .infinity)
-                .frame(height: 200)
-                .cornerRadius(5)
-            HStack{
-                Text(recipe.name)
-                    .font(Font.custom.Heading)
-                    .padding(.top, 10)
-                    .frame(width: 220, alignment: .leading)
-            }.frame(maxWidth: .infinity, alignment: .leading)
-            HStack {
-                ForEach(recipe.tags, id: \.self) { tag in
-                    Text(tag)
-                        .font(Font.custom.Content)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(Color("Orange"))
-                        .cornerRadius(8)
-                }
-                Spacer()
-            }
-            .padding(.bottom, 10)
-            
-            Text(recipe.intro)
-                .font(.custom("ZillaSlab-Regular", size: 20))
-            
-        }
-        .overlay(
-            Button(action: {
-                // Handle save action
-                //                homeVM
-                saveAction(recipe.id!)
-            }) {
-                Image(systemName: recipe.isSaved ? "heart.fill" : "heart")
-            }
-                .foregroundColor(Color("Orange"))
-                .buttonStyle(PlainButtonStyle())
-                .padding(.trailing, 16)
-                .font(.system(size: 25))
-                .offset(x:140, y:50)
-        )
-        .padding(.bottom, 10)
-    }
-}
 
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {

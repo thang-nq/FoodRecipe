@@ -52,6 +52,7 @@ struct Recipe: Identifiable, Codable {
     }
     
     static var sampleRecipe: Recipe = Recipe(
+        id: "asokdfjaskdfjaso239849iowefj",
         name: "Yakitori Grilled Chicken",
         creatorID: "somerandomID",
         timeStamp: Timestamp(date: Date()),
@@ -118,6 +119,12 @@ struct Recipe: Identifiable, Codable {
         isSaved: true
     )
     
+    static var sampleRecipeList: [Recipe] = Array(0...5).map { index in
+        var newRecipe = sampleRecipe
+        newRecipe.id = "\(index)"
+        return newRecipe
+    }
+    
 }
 
 
@@ -159,3 +166,34 @@ struct updateRecipeInterface {
     var tags: [String]? = nil
     var steps: [CookingStepInterface]? = nil
 }
+
+
+
+
+func getTagColor(tagValue: String) -> Color {
+    switch tagValue {
+    case "Breakfast":
+        return Color.theme.LightBlueInstance
+    case "Brunch":
+        return Color.theme.GreenInstance
+    case "Dinner":
+        return Color.theme.LightOrangeInstance
+    case "Chicken":
+        return Color.theme.YellowInstance
+    case "Beef":
+        return Color.theme.RedInstance
+    case "Pork":
+        return Color.theme.RedInstance
+    case "Eggs":
+        return Color.theme.DarkBlueInstance
+    case "Soup":
+        return Color.theme.BlueInstance
+        
+    default:
+        return Color.theme.GrayInstance
+    }
+    
+}
+
+
+

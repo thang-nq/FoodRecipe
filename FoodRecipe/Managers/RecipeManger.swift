@@ -106,9 +106,13 @@ final class RecipeManager {
                 let userData = await UserManager.shared.getUserData(userID: user.id)
                 if userData!.tddeRecipes.count > 0 {
                     let tddeRecipesIDs = userData!.tddeRecipes
-                    let snapshot = try await db.whereField(FieldPath.documentID(), in: userData!.savedRecipe).getDocuments()
+                    let snapshot = try await db.whereField(FieldPath.documentID(), in: userData!.tddeRecipes).getDocuments()
                     for d in snapshot.documents {
-                        let recipe = try d.data(as: Recipe.self)
+                        var recipe = try d.data(as: Recipe.self)
+                        recipe.calories = Int(recipe.calories / recipe.servingSize)
+                        recipe.protein = Int(recipe.protein / recipe.servingSize)
+                        recipe.carb = Int(recipe.carb / recipe.servingSize)
+                        recipe.fat = Int(recipe.fat / recipe.servingSize)
                         recipes.append(recipe)
                     }
                     

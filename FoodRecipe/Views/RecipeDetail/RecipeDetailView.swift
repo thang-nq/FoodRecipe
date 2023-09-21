@@ -40,99 +40,104 @@ struct RecipeDetailView: View {
         }
     }
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                    if let recipeDetail = detailVM.recipe {
-                        ZStack(alignment: .top) {
-                            Color("LightGray")
-                            // MARK: Overlay Image
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: .infinity, height: 408)
-                                .background(
-                                    FirebaseImage(imagePathName: recipeDetail.backgroundURL)
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(minWidth: 408, maxHeight: 408)
-                                        .clipped()
-                                )
-                                .offset(y: -60)
-                            
-                            TopBar(isCreator: isCreator,recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
-                            
-                            // MARK: Content
-                            VStack(spacing: 15) {
-                                ZStack {
-                                    VStack(spacing: 15) {
-                                        // MARK: MainInfo
-                                        MainInfo(recipe: recipeDetail)
-                                        // MARK: Nutrition
-                                        NutritionView(recipe: recipeDetail)
-                                    }
-                                }
-                                VStack {
-                                    // MARK: Sliding tab views
-                                    SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
-                                    if selectedTabIndex == 0 {
-                                        // Intro
-                                        SectionContainerView {
-                                            Text(recipeDetail.intro)
-                                                .font(.custom("ZillaSlab-Regular", size: 20))
-                                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        ZStack {
+            NavigationView {
+                ScrollView {
+                    VStack {
+                        if let recipeDetail = detailVM.recipe {
+                            ZStack(alignment: .top) {
+                                Color("LightGray")
+                                // MARK: Overlay Image
+                                CoverImage(recipeDetail: recipeDetail)
+                                
+                                TopBar(recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction)
+                                
+                                // MARK: Content
+                                VStack(spacing: 15) {
+                                    ZStack {
+                                        VStack(spacing: 15) {
+                                            // MARK: MainInfo
+                                            MainInfo(recipe: recipeDetail)
+                                            // MARK: Nutrition
+                                            NutritionView(recipe: recipeDetail)
                                         }
                                     }
-                                    if selectedTabIndex == 1 {
-                                        // Ingredients
-                                        IngredientsView(ingredientsList: recipeDetail.ingredients)
-                                    }
-                                    
-                                    if selectedTabIndex == 2 {
-                                        // Steps
-                                        StepsView(stepsList: recipeDetail.steps)
-                                    }
-                                }.background(Color.theme.WhiteInstance).frame(minHeight: 300)
+                                    VStack {
+                                        // MARK: Sliding tab views
+                                        SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom.SubHeading,  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
+                                        if selectedTabIndex == 0 {
+                                            // Intro
+                                            SectionContainerView {
+                                                Text(recipeDetail.intro)
+                                                    .font(.custom.Content)
+                                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                            }.padding(.horizontal, 10).padding(.vertical, 0)
+                                        }
+                                        if selectedTabIndex == 1 {
+                                            // Ingredients
+                                            IngredientsView(ingredientsList: recipeDetail.ingredients)
+                                        }
+                                        
+                                        if selectedTabIndex == 2 {
+                                            // Steps
+                                            StepsView(stepsList: recipeDetail.steps)
+                                        }
+                                    }.background(Color.theme.WhiteInstance).frame(minHeight: 300)
+                                }
+                                
                             }
-                            
                         }
                     }
-                }
-            }.overlay(
-                HStack {
-                    if let recipeDetail = detailVM.recipe {
-                        NavigationLink(destination: CookModeView(recipe: recipeDetail)) {
-                            Image(systemName: "flame")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color.theme.Orange)
-                                .clipShape(Circle())
+                }.overlay(
+                    HStack {
+                        if let recipeDetail = detailVM.recipe {
+                            NavigationLink(destination: CookModeView(recipe: recipeDetail)) {
+                                Image(systemName: "flame")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color.theme.Orange)
+                                    .clipShape(Circle())
+                            }
                         }
-                    }
-                }.padding(15),
-                
-                alignment: .bottomTrailing
-            )
-            .onAppear {
-                Task(priority: .medium) {
-                    do {
-                        try await detailVM.getRecipeDetail(recipeID: recipeId)
-                        if let recipe = detailVM.recipe {
-                        }else {
-                            detailVM.getMockRecipeDetail()
+                    }.padding(15),
+                    
+                    alignment: .bottomTrailing
+                )
+                .onAppear {
+                    Task(priority: .medium) {
+                        do {
+                            try await detailVM.getRecipeDetail(recipeID: recipeId)
+                            if let recipe = detailVM.recipe {
+                            }else {
+                                detailVM.getMockRecipeDetail()
+                            }
+                        } catch {
+                            // Handle any errors that occur during the async operation
+                            print("Error: \(error)")
                         }
-                    } catch {
-                        // Handle any errors that occur during the async operation
-                        print("Error: \(error)")
                     }
                     await checkCreater()
                 }
+                .onDisappear {
+                    onDissappear()
+                }
             }
-            .onDisappear {
-                onDissappear()
+            // MARK: CHECK LOADING
+            if (detailVM.isLoading == true){
+                ZStack {
+                    Color(.black)
+                        .ignoresSafeArea()
+                        .opacity(0.5)
+                        .background(Color.clear)
+                    
+                    Progress(loadingSize: 3)
+                }
             }
         }
+        
     }
 }
 
@@ -203,7 +208,7 @@ struct MainInfo: View {
         //    return SectionContainerView {
         SectionContainerView {
             Text(recipe.name)
-                .font(.custom("ZillaSlab-BoldItalic", size: 26)).fontWeight(.medium)
+                .font(.custom.Heading)
                 .kerning(0.552)
                 .foregroundColor(.black)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -215,9 +220,9 @@ struct MainInfo: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             HStack {
-                Text("By ") + Text("**\(recipe.creatorName)**").font(.custom("ZillaSlab-BoldItalic", size: 20)).fontWeight(.medium)
+                Text("By ").font(.custom.Content) + Text("\(recipe.creatorName)").font(.custom.ContentBold)
                 Spacer()
-                Text(recipe.createdAt)
+                Text(recipe.createdAt).font(.custom.ContentItalic)
             }
             HStack(alignment: .center, spacing: 16) {
                 VStack(spacing: 8) {
@@ -226,7 +231,7 @@ struct MainInfo: View {
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(Color.theme.Orange)
                         .frame(width: 24, height: 24)
-                    Text("\(recipe.cookingTime) minutes")
+                    Text("\(recipe.cookingTime) minutes").font(.custom.SubHeading).fontWeight(.regular)
                 }.frame(maxWidth: .infinity)
                 //                Divider()
                 //                Rectangle().fill(.blue).frame(width: 1) // or any other color
@@ -241,7 +246,7 @@ struct MainInfo: View {
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(Color.theme.Orange)
                         .frame(width: 24, height: 24)
-                    Text("Serves \(recipe.servingSize)")
+                    Text("Serves \(recipe.servingSize)").font(.custom.SubHeading).fontWeight(.regular)
                 }.frame(maxWidth: .infinity)
             }.padding(.horizontal, 16)
                 .padding(.top, 16)
@@ -249,10 +254,6 @@ struct MainInfo: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .background(.white)
                 .shadow(color: Color.theme.Black.opacity(0.3), radius: 0, x: 0, y: -1)
-//                .shadow(color: Color.theme.Black.opacity(0.3), radius: 0, x: 0, y: 1)
-//            Text(recipe.intro)
-//                .font(.custom("ZillaSlab-Regular", size: 20))
-//                .frame(maxWidth: .infinity, alignment: .topLeading)
         }
         .padding(.top, 300)
         .padding(.horizontal, 25)
@@ -260,4 +261,19 @@ struct MainInfo: View {
         .zIndex(100)
     }
     
+}
+
+private extension RecipeDetailView {
+    func CoverImage(recipeDetail: Recipe) -> some View {
+        Rectangle()
+            .foregroundColor(.clear)
+            .frame(width: .infinity, height: 408)
+            .background(
+                FirebaseImage(imagePathName: recipeDetail.backgroundURL)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(minWidth: 408, maxHeight: 408)
+                    .clipped()
+            )
+            .offset(y: -60)
+    }
 }
