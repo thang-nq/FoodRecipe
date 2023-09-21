@@ -67,8 +67,8 @@ private extension CreateRecipeView{
             Spacer()
             // Title of the view
             Text("Create new recipe")
-                .font(.custom("ZillaSlab-Bold", size: 25))
-                .padding(.leading, 70)
+                .font(Font.custom.NavigationTitle)
+                .padding(.leading, 50)
             
             Spacer()
             
@@ -80,7 +80,9 @@ private extension CreateRecipeView{
                 Text("Create")
                     .font(.system(size: 20))
                 
-            }.padding(.trailing, 20)
+            }
+            .padding(.trailing, 20)
+            .disabled(createRecipeVM.isValidCreate())
         }
     }
     
