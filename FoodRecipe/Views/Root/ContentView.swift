@@ -16,13 +16,12 @@ struct ContentView: View {
     var body: some View {
         Group {
             if $authVM.userSession != nil {
-
-                if authVM.currentUser != nil {
-//                    UserProfileView()
+                if UserManager.shared.currentUser != nil {
                     HomeView()
                 } else {
                     LoginView()
 //                    Progress(loadingSize: 4)
+
                 }
 
             } else {

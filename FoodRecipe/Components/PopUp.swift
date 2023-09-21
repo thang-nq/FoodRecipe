@@ -53,7 +53,6 @@ private extension PopUp {
                           design: .rounded
                          )
             )
-//        Color.theme.BlueInstance
     }
     
     

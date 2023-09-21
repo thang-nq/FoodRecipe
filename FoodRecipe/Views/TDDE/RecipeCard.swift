@@ -16,6 +16,7 @@ struct RecipeCard: View {
     var fat: Int
     var carb: Int
     @StateObject private var tddeVM = TDDEViewModel.shared
+    
     var body: some View {
         HStack(alignment: .center){
             

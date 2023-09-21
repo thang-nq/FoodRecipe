@@ -41,14 +41,15 @@ struct SavedRecipeListView: View {
                         }
                     }.padding(10)
                 }.padding(10)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: { isDark.toggle() }) {
-                                isDark ? Label("Dark", systemImage: "lightbulb.fill") :
-                                Label("Dark", systemImage: "lightbulb")
-                            }
-                        }
-                    }
+                    .frame(width: 390)
+//                    .toolbar {
+//                        ToolbarItem(placement: .navigationBarTrailing) {
+//                            Button(action: { isDark.toggle() }) {
+//                                isDark ? Label("Dark", systemImage: "lightbulb.fill") :
+//                                Label("Dark", systemImage: "lightbulb")
+//                            }
+//                        }
+//                    }
             }
             .onAppear {
                 fetchSavedRecipes()

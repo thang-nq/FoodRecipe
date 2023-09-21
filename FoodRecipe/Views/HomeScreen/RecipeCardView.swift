@@ -9,7 +9,8 @@ import SwiftUI
 
 struct RecipeCardView: View {
     var recipe: Recipe
-    var saveAction: (String) -> Void
+    var saveAction: (String) -> Void = {mock in}
+    var hideSave: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5){
@@ -23,13 +24,14 @@ struct RecipeCardView: View {
                         // Handle save action
                         saveAction(recipe.id!)
                     }) {
-                        Image(systemName: recipe.isSaved ? "heart.fill" : "heart")
+                        Image(systemName: recipe.isSaved ? "heart.circle" : "heart.circle.fill")
                     }
-                        .foregroundColor(Color("Orange"))
+                        .foregroundColor(recipe.isSaved ? Color.theme.Orange : Color.theme.DarkGray)
                         .buttonStyle(PlainButtonStyle())
                         .padding(.trailing, 16)
                         .font(.system(size: 25))
                         .offset(x: 5, y: 10)
+                        .opacity(hideSave ? 0 : 1)
                     , alignment: .topTrailing
                 )
             HStack{
@@ -38,12 +40,12 @@ struct RecipeCardView: View {
             }.frame(maxWidth: .infinity, alignment: .leading)
             HStack {
                 Text(recipe.mealType)
-                        .font(Font.custom.SubContent)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 3)
-                        .background(getTagColor(tagValue: recipe.mealType))
-                        .cornerRadius(8)
+                    .font(Font.custom.SubContent)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
+                    .background(getTagColor(tagValue: recipe.mealType))
+                    .cornerRadius(8)
                 ForEach(recipe.tags, id: \.self) { tag in
                     Text(tag)
                         .font(Font.custom.SubContent)
@@ -69,6 +71,8 @@ struct RecipeCardView: View {
 
 struct RecipeCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeCardView(recipe: .sampleRecipe, saveAction: {mock in})
+        VStack {
+            RecipeCardView(recipe: .sampleRecipe, saveAction: {mock in})
+        }
     }
 }

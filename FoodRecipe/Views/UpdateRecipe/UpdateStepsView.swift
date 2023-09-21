@@ -270,7 +270,7 @@ private extension UpdateStepsView{
                         .frame(width: 300, alignment: .leading)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 20)
+                .padding(.leading, 15)
             
             }
             Text("")

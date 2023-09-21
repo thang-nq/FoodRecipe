@@ -270,6 +270,20 @@ final class RecipeManager {
     }
     
     
+    func searchAllRecipes() async -> [Recipe] {
+        var recipes: [Recipe] = []
+        do {
+            let snapshot = try await db.getDocuments()
+            for d in snapshot.documents {
+                var recipe = try d.data(as: Recipe.self)
+                recipes.append(recipe)
+            }
+        } catch {
+            
+        }
+        return recipes
+    }
+    
     func searchRecipeByText(text: String) async -> [Recipe] {
         var recipes: [Recipe] = []
         do {

@@ -15,11 +15,12 @@ struct RecipeDetailView: View {
     var onDissappear: () -> Void
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var detailVM = RecipeDetailViewModel()
+    @AppStorage("isDarkMode") var isDark = false
     @State private var selectedTabIndex = 0
     @State var userId = UserManager.shared.currentUser!.id
     @State private var creatorId = ""
     @State private var isCreator = false
-
+    
     private func back() {
         // Back action
         self.presentationMode.wrappedValue.dismiss()
@@ -29,7 +30,7 @@ struct RecipeDetailView: View {
             await detailVM.saveOrReomveSavedRecipe(recipeID: recipeId)
         }
     }
-   func checkCreator() async{
+    func checkCreator() async{
         if let recipeDetail = detailVM.recipe{
             print("gggg")
             print(userId)
@@ -46,7 +47,13 @@ struct RecipeDetailView: View {
                     VStack {
                         if let recipeDetail = detailVM.recipe {
                             ZStack(alignment: .top) {
-                                Color("LightGray")
+                                if(isDark) {
+                                    Color("DarkGray").opacity(0.1)
+                                } else {
+                                    Color("LightGray")
+                                }
+                                
+                                
                                 // MARK: Overlay Image
                                 CoverImage(recipeDetail: recipeDetail)
                                 
@@ -64,7 +71,7 @@ struct RecipeDetailView: View {
                                     }
                                     VStack {
                                         // MARK: Sliding tab views
-                                        SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom.SubHeading,  activeAccentColor: Color.theme.Orange, selectionBarColor: Color.theme.Orange)
+                                        SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom.SubHeading,  activeAccentColor: Color.theme.Orange, inactiveAccentColor: Color.theme.Black, selectionBarColor: Color.theme.Orange)
                                         if selectedTabIndex == 0 {
                                             // Intro
                                             SectionContainerView {
@@ -82,7 +89,7 @@ struct RecipeDetailView: View {
                                             // Steps
                                             StepsView(stepsList: recipeDetail.steps)
                                         }
-                                    }.background(Color.theme.WhiteInstance).frame(minHeight: 300)
+                                    }.background(Color.theme.White).frame(minHeight: 300)
                                 }
                                 
                             }
@@ -159,18 +166,18 @@ struct TopBar: View {
     var saveAction: () -> Void
     var body: some View {
         HStack  {
-                Button {
-                    backAction()
-                } label: {
-                    // Back button
-                    Image("chevron-left")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(Color.theme.Black.opacity(0.5))
-                        .padding(10)
-                        .background(.white)
-                        .clipShape(Circle())
-                }
+            Button {
+                backAction()
+            } label: {
+                // Back button
+                Image("chevron-left")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(Color.theme.BlackInstance.opacity(0.5))
+                    .padding(10)
+                    .background(Color.theme.WhiteInstance)
+                    .clipShape(Circle())
+            }
             Spacer()
             if(isCreator == true){
                 NavigationLink(destination: UpdateRecipeView(recipeId: recipeId)) {
@@ -178,13 +185,13 @@ struct TopBar: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 24, height: 24)
-                        .foregroundColor(Color.theme.Black.opacity(0.5))
+                        .foregroundColor(Color.theme.BlackInstance.opacity(0.5))
                         .padding(10)
-                        .background(.white)
+                        .background(Color.theme.WhiteInstance)
                         .clipShape(Circle())
                 }
             }
-                          
+            
             
             Button {
                 saveAction()
@@ -194,7 +201,7 @@ struct TopBar: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 24, height: 24)
-                    .foregroundColor(isSaved ? Color.theme.WhiteInstance : Color.theme.Black.opacity(0.5))
+                    .foregroundColor(isSaved ? Color.theme.WhiteInstance : Color.theme.BlackInstance.opacity(0.5))
                     .padding(10)
                     .background(isSaved ? Color.theme.Orange : .white)
                     .clipShape(Circle())
@@ -207,12 +214,10 @@ struct TopBar: View {
 struct MainInfo: View {
     let recipe: Recipe
     var body: some View {
-        //    return SectionContainerView {
         SectionContainerView {
             Text(recipe.name)
                 .font(.custom.Heading)
-                .kerning(0.552)
-                .foregroundColor(.black)
+                .foregroundColor(Color.theme.Black)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
             HStack {
                 Tag(text: recipe.mealType, tagColor: Color.theme.BlueInstance)
@@ -235,8 +240,6 @@ struct MainInfo: View {
                         .frame(width: 24, height: 24)
                     Text("\(recipe.cookingTime) minutes").font(.custom.SubHeading).fontWeight(.regular)
                 }.frame(maxWidth: .infinity)
-                //                Divider()
-                //                Rectangle().fill(.blue).frame(width: 1) // or any other color
                 Rectangle()
                     .foregroundColor(.clear)
                     .frame(width: 1, height: 70)
@@ -250,12 +253,13 @@ struct MainInfo: View {
                         .frame(width: 24, height: 24)
                     Text("Serves \(recipe.servingSize)").font(.custom.SubHeading).fontWeight(.regular)
                 }.frame(maxWidth: .infinity)
-            }.padding(.horizontal, 16)
-                .padding(.top, 16)
-                .padding(.bottom, 8)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .background(.white)
-                .shadow(color: Color.theme.Black.opacity(0.3), radius: 0, x: 0, y: -1)
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 16)
+            .padding(.bottom, 8)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .background(Color.theme.White)
+            .shadow(color: Color.theme.Black.opacity(0.3), radius: 0, x: 0, y: -1)
         }
         .padding(.top, 300)
         .padding(.horizontal, 25)

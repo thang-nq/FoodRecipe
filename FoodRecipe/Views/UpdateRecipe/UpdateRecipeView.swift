@@ -48,7 +48,7 @@ struct UpdateRecipeView: View {
         }
     }
     var body: some View {
-        ZStack{
+        ZStack(alignment: .leading){
                 VStack{
                     if let recipe = detailVM.recipe{
                         VStack {
@@ -61,6 +61,7 @@ struct UpdateRecipeView: View {
                         }
                     }
                 }
+                
                 .overlay(
                 // MARK: SHOW THE SUCCESS POP UP
                     ZStack {
@@ -93,6 +94,7 @@ struct UpdateRecipeView: View {
                         await fetchSteps()
                     }
                 }
+
             // MARK: CHECK LOADING
             if (updateVM.isLoading == true){
                 ZStack {
@@ -105,6 +107,7 @@ struct UpdateRecipeView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -114,16 +117,35 @@ struct UpdateRecipeView_Previews: PreviewProvider {
     }
 }
 
+struct CustomBackButtonRecipe: View {
+    @Environment(\.presentationMode) var presentationMode
+    var body: some View {
+        
+            Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image("chevron-left")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(Color.theme.Black.opacity(0.5))
+                            .padding(10)
+                            .background(.white)
+                            .clipShape(Circle())
+                    }
+            
+    }
+}
+
 private extension UpdateRecipeView{
     
     //MARK: TOP BAR UI
     var topBar: some View{
         HStack {
+            CustomBackButtonRecipe()
             Spacer()
             // Title of the view
             Text("Update recipe")
                 .font(Font.custom.NavigationTitle)
-                .padding(.leading, 70)
             Spacer()
             
             // Button create new recipe
