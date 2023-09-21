@@ -54,16 +54,11 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func changePassword(oldPassword oldpassword: String ,newPassword password: String) async {
-        do {
-            if let user = Auth.auth().currentUser {
-                let credential = EmailAuthProvider.credential(withEmail: user.email!, password: oldpassword)
-                try await user.reauthenticate(with: credential)
-                try await Auth.auth().currentUser?.updatePassword(to: password)
-            }
-            
-        } catch {
-            print("DEBUG: \(error.localizedDescription)")
+    func changePassword(oldPassword oldpassword: String ,newPassword password: String) async throws {
+        if let user = Auth.auth().currentUser {
+            let credential = EmailAuthProvider.credential(withEmail: user.email!, password: oldpassword)
+            try await user.reauthenticate(with: credential)
+            try await Auth.auth().currentUser?.updatePassword(to: password)
         }
     }
     

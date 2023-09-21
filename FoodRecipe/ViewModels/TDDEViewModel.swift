@@ -46,6 +46,11 @@ class TDDEViewModel : ObservableObject {
         
     }
     
+    func addRecipeToTDDE(recipeID: String) async {
+        await RecipeManager.shared.addRecipeToTDDE(recipeID: recipeID)
+        await getTDDERecipe()
+    }
+    
     func removeRecipeFromTDDE(recipeID: String) async {
         await RecipeManager.shared.removeRecipeFromTDDE(recipeID: recipeID)
         await getTDDERecipe()

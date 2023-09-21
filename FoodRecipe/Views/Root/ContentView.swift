@@ -15,8 +15,8 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            if $authVM.userSession != nil {
-                if UserManager.shared.currentUser != nil {
+            if authVM.userSession != nil {
+                if authVM.currentUser != nil {
                     HomeView()
                 } else {
                     Progress(loadingSize: 4)
@@ -35,9 +35,9 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(AuthViewModel())
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//            .environmentObject(AuthViewModel())
+//    }
+//}

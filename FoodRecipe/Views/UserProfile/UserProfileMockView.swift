@@ -15,7 +15,9 @@ struct UserProfileMockView: View {
     @State private var avatarViewRefresh: Bool = false
     @State private var inputText: String = ""
     @State private var oldPassword: String = ""
-    @State private var password: String = ""
+    @State private var newPassword: String = ""
+    @State private var showChangePasswordField: Bool = false
+    @ObservedObject var inputFieldManager = InputFieldManager()
     @StateObject var homeVM = HomeViewModel()
     @StateObject var userProfileViewModel = UserProfileViewModel.shared
     // MARK: change to environment object when demo
@@ -33,7 +35,50 @@ struct UserProfileMockView: View {
             ScrollView {
                 if let currentUser = viewModel.currentUser {
                     top(currentUser: currentUser)
+                    
+                    if showChangePasswordField {
+                        VStack {
+                            InputField(text: $oldPassword, title: "Current password", placeHolder: "Type your current pass", isSecureField: true)
+                            InputField(text: $newPassword, title: "New password", placeHolder: "Type your new pass", isSecureField: true)
+                            
+                            Button(action:{
+                                Task {
+                                    print("text")
+                                    do {
+                                        try await viewModel.changePassword(oldPassword: oldPassword, newPassword: newPassword)
+                                        showPopUp = true
+                                        popUpIcon = "checkmark.message.fill"
+                                        popUptitle = "Error"
+                                        popUpContent = "Update password success"
+                                        popUpIconColor = Color.theme.GreenInstance
+                                        
+                                    } catch {
+                                        showPopUp = true
+                                        popUpIcon = "checkmark.message.fill"
+                                        popUptitle = "Error"
+                                        popUpContent = "\(error.localizedDescription)"
+                                        popUpIconColor = Color.theme.RedInstance
+                                        print(error.localizedDescription)
+                                    }
+                                    oldPassword = ""
+                                    newPassword = ""
+                                }
+                                
+
+                            }){
+                                Text("Submit")
+                                    .font(Font.custom.ButtonText)
+                                    .frame(width: 150, height: 50)
+                                    .contentShape(Rectangle())
+                            }
+                            .foregroundColor(Color.theme.DarkBlueInstance)
+                            .background(Color.theme.Orange)
+                            .cornerRadius(8)
+                            .padding(8)
+                        }
+                    }
                     myRecipes(recipeList: userProfileViewModel.recipeList)
+                    
                 }
                 Spacer()
             }
@@ -61,6 +106,15 @@ struct UserProfileMockView: View {
                     }
                 }
             })
+        .overlay(
+            ZStack {
+                if showPopUp {
+                    Color.theme.DarkWhite.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                    PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
+                }
+            }
+        )
     }
 }
 
@@ -95,9 +149,53 @@ private extension UserProfileMockView {
                             .font(.custom.Content)
                             .foregroundColor(Color.theme.Orange)
                             .underline()
-                        Text(currentUser.initials).font(.custom.Content)
-                        //                            .foregroundColor()
-                    }.padding(0)
+                        
+                        
+                        HStack {
+                            Button(action: {
+                                viewModel.signOut()
+                            }) {
+                                HStack {
+                                    Image(systemName: "power")
+                                        .foregroundColor(Color.theme.RedInstance)
+                                    Text("Log out")
+                                        .foregroundColor(Color.theme.RedInstance)
+                                }
+                                .padding(8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.theme.RedInstance, lineWidth: 2)
+                                )
+                            }
+                            .padding(2)
+                            
+                            
+                            Button(action: {
+                                showChangePasswordField.toggle()
+                            }) {
+                                HStack {
+                                    Image(systemName: "lock.fill")
+                                        .foregroundColor(Color.theme.BlueInstance)
+                                    Text("Edit")
+                                        .foregroundColor(Color.theme.BlueInstance)
+                                }
+                                .padding(8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.theme.BlueInstance, lineWidth: 2)
+                                )
+                            }
+                            .padding(2)
+                            
+                            
+                        }
+                        
+
+                        
+                        
+                        
+                    }
+                    
                     Spacer()
                     
                     PhotosPicker(selection: $selectedPhoto, photoLibrary: .shared()) {
@@ -163,4 +261,6 @@ private extension UserProfileMockView {
 //            }
         }
     }
+    
+
 }
