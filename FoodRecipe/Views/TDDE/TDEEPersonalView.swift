@@ -112,7 +112,7 @@ private extension TDEEPersonalView {
     var todayList: some View {
         VStack(alignment: .leading){
             Text("Today Meals")
-                .font(.custom("ZillaSlab-Bold", size: 26))
+                .font(Font.custom.Heading)
                 .padding(.horizontal, 20)
             ScrollView {
                 ForEach(tddeViewModel.tddeRecipes) {recipe in

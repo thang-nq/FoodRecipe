@@ -16,6 +16,7 @@ import PhotosUI
 
 @MainActor
 class AuthViewModel: ObservableObject {
+    
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     private var storage = Storage.storage().reference()
@@ -113,6 +114,45 @@ class AuthViewModel: ObservableObject {
         }
         return recipes
     }
+    
+    //MARK: TEST TUAN
+    let updateNameLimit = 20
+    let oldPWLimit = 20
+    let updatePWLimit = 20
+    
+    @Published var updateName = "" {
+        didSet {
+            if updateName.count > updateNameLimit {
+                updateName = String(updateName.prefix(updateNameLimit))
+            }
+        }
+    }
+    
+    @Published var updatePW = "" {
+        didSet {
+            if updatePW.count > updatePWLimit {
+                updatePW = String(updatePW.prefix(updatePWLimit))
+            }
+        }
+    }
+    
+
+    @Published var oldPW = "" {
+        didSet {
+            if oldPW.count > oldPWLimit {
+                oldPW = String(oldPW.prefix(oldPWLimit))
+            }
+        }
+    }
+    
+    func isValidUpdatePW() -> Bool {
+        return oldPW.isEmpty || updatePW.isEmpty
+    }
+    
+    func isValidUpdateName() -> Bool {
+        return updateName.isEmpty
+    }
+    
     
 }
 

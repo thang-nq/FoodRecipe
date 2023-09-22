@@ -21,6 +21,7 @@ struct ContentView: View {
                 } else {
 //                    LoginView()
                     Progress(loadingSize: 4)
+                    
 
                 }
 
