@@ -63,7 +63,7 @@ struct RecipeDetailView: View {
                                 CoverImage(recipeDetail: recipeDetail)
                                 
                                 TopBar(isCreator: isCreator,recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction, addToListAction: addToTDDE)
-                                
+                                                                
                                 // MARK: Content
                                 VStack(spacing: 15) {
                                     ZStack {
@@ -184,6 +184,8 @@ struct TopBar: View {
                     .background(Color.theme.WhiteInstance)
                     .clipShape(Circle())
             }
+            
+
             Spacer()
             
             // Add to recipe list button

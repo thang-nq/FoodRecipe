@@ -16,6 +16,7 @@ struct RecipeCard: View {
     var fat: Int
     var carb: Int
     @StateObject private var tddeVM = TDDEViewModel.shared
+
     
     var body: some View {
         HStack(alignment: .center){
@@ -65,8 +66,19 @@ struct RecipeCard: View {
 }
 
 //struct RecipeCard_Previews: PreviewProvider {
+//
 //    static var previews: some View {
-//        RecipeCard()
+//
+//        Group {
+//            RecipeCard(id: Recipe.sampleRecipe.id, calories: Recipe.sampleRecipe.calories, name: Recipe.sampleRecipe.name, imageURL: Recipe.sampleRecipe.backgroundURL, protein: Recipe.sampleRecipe.protein, fat: Recipe.sampleRecipe.fat, carb: Recipe.sampleRecipe.carb)
+//                .previewDisplayName("iOS light")
+//                .preferredColorScheme(.light)
+//
+//            RecipeCard(recipe: Recipe.sampleRecipe)
+//                .previewDisplayName("iOS dark")
+//                .preferredColorScheme(.dark)
+//
+//        }
 //    }
 //}
 
