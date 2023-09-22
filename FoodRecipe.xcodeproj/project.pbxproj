@@ -208,6 +208,7 @@
 		A120051B2AB6E9A300E11DF6 /* TDDE */ = {
 			isa = PBXGroup;
 			children = (
+				A12005202AB74F6200E11DF6 /* TDEEWelcomeList.swift */,
 				A120051C2AB6E9BE00E11DF6 /* TDDEFormView.swift */,
 				A17F89372AB82BC500D0FBD7 /* TDEEPersonalView.swift */,
 				A17F89392AB837B800D0FBD7 /* RecipeCard.swift */,
@@ -221,7 +222,6 @@
 			children = (
 				A1556EDE2AB2E42E00074074 /* OnLoadingPageView.swift */,
 				A1556EE02AB2EB9B00074074 /* OnLoadingList.swift */,
-				A12005202AB74F6200E11DF6 /* TDEEWelcomeList.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
