@@ -130,5 +130,8 @@ class UpdateRecipeViewModel: ObservableObject {
             }
         }
     }
+    func isValidCreate() -> Bool {
+        return recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentSelectedMealTypes.isEmpty || calories == 0
+    }
 }
 

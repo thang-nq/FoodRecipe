@@ -44,11 +44,6 @@ class AuthViewModel: ObservableObject {
     
     func createUser(withEmail email: String, password: String, fullName: String) async throws {
         do {
-//            let result = try await Auth.auth().createUser(withEmail: email, password: password)
-//            let newUser = User(id: result.user.uid, fullName: fullName, email: email)
-//            let encodedUser = try Firestore.Encoder().encode(newUser)
-//            try await Firestore.firestore().collection("users").document(newUser.id).setData(encodedUser)
-//            try await Auth.auth().currentUser?.sendEmailVerification()
             let result = try await UserManager.shared.createUser(withEmail: email, password: password, fullName: fullName)
             self.userSession = result.user
             await fetchUser()
@@ -59,17 +54,11 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func changePassword(oldPassword oldpassword: String ,newPassword password: String) async {
-        do {
-            if let user = Auth.auth().currentUser {
-                let credential = EmailAuthProvider.credential(withEmail: user.email!, password: oldpassword)
-                try await user.reauthenticate(with: credential)
-                try await Auth.auth().currentUser?.updatePassword(to: password)
-                
-            }
-            
-        } catch {
-            print("DEBUG: \(error.localizedDescription)")
+    func changePassword(oldPassword oldpassword: String ,newPassword password: String) async throws {
+        if let user = Auth.auth().currentUser {
+            let credential = EmailAuthProvider.credential(withEmail: user.email!, password: oldpassword)
+            try await user.reauthenticate(with: credential)
+            try await Auth.auth().currentUser?.updatePassword(to: password)
         }
     }
     

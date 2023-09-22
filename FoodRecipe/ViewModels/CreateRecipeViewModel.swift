@@ -17,7 +17,6 @@ class CreateRecipeViewModel: ObservableObject {
     @Published var backgroundPhoto: PhotosPickerItem? = nil
     @Published var cookingTime : Int = 0
     @Published var servingSize : Int = 0
-    @Published var description = ""
     @Published var calories: Int = 0
     @Published var carb: Int = 0
     @Published var protein: Int = 0
@@ -176,6 +175,15 @@ class CreateRecipeViewModel: ObservableObject {
         didSet {
             if recipeName.count > recipeNameLimit {
                 recipeName = String(recipeName.prefix(recipeNameLimit))
+            }
+        }
+    }
+    
+    let descriptionLimit = 150
+    @Published var description = "" {
+        didSet {
+            if description.count > descriptionLimit {
+                description = String(description.prefix(descriptionLimit))
             }
         }
     }

@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct UpdateStepsView: View {
+    @AppStorage("isDarkMode") var isDark = false
     @StateObject var detailVM = RecipeDetailViewModel()
     @StateObject var updateVM = UpdateRecipeViewModel()
     //MARK: VARIABLES
@@ -62,11 +63,15 @@ struct UpdateStepsView: View {
             // MARK: ADD STEP SHEET UI
             AddingStepsSheetView(recipeId: $recipeId,InputStep: $InputStep, Steps: $Steps, stepPhoto: $stepPhoto, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
                 .presentationDetents([.height(300)])
+                .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .sheet(isPresented: $showingUpdateSheet){
             // MARK: UPDATE STEP SHEET UI
             UpdatingStepsSheetView(listStepId: $listStepId, stepId: $stepId, recipeId: $recipeId, Steps: $Steps, listStepsPhoto: $listStepsPhoto,updateStep: $updateStep, updatePhoto: $updatePhoto, showingUpdateSheet: $showingUpdateSheet)
                 .presentationDetents([.height(300)])
+                .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
         .overlay(

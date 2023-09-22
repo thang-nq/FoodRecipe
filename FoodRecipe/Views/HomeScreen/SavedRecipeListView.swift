@@ -29,7 +29,7 @@ struct SavedRecipeListView: View {
     }
     var body: some View {
         VStack {
-            NavigationView {
+            NavigationStack {
                 ScrollView {
                     Text("Saved Recipes")
                         .font(Font.custom.NavigationTitle)
