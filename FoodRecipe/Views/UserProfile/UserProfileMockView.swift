@@ -14,8 +14,8 @@ struct UserProfileMockView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarViewRefresh: Bool = false
     @State private var inputText: String = ""
-    @State private var oldPassword: String = ""
-    @State private var newPassword: String = ""
+//    @State private var oldPassword: String = ""
+//    @State private var newPassword: String = ""
     @State private var showChangePasswordField: Bool = false
     @ObservedObject var inputFieldManager = InputFieldManager()
     @StateObject var homeVM = HomeViewModel()
@@ -38,14 +38,14 @@ struct UserProfileMockView: View {
                     
                     if showChangePasswordField {
                         VStack {
-                            InputField(text: $oldPassword, title: "Current password", placeHolder: "Type your current pass", isSecureField: true)
-                            InputField(text: $newPassword, title: "New password", placeHolder: "Type your new pass", isSecureField: true)
+                            InputField(text: $viewModel.oldPW, title: "Current password", placeHolder: "Type your current pass", isSecureField: true)
+                            InputField(text: $viewModel.updatePW, title: "New password", placeHolder: "Type your new pass", isSecureField: true)
                             
                             Button(action:{
                                 Task {
                                     print("text")
                                     do {
-                                        try await viewModel.changePassword(oldPassword: oldPassword, newPassword: newPassword)
+                                        try await viewModel.changePassword(oldPassword: viewModel.oldPW, newPassword: viewModel.updatePW)
                                         showPopUp = true
                                         popUpIcon = "checkmark.message.fill"
                                         popUptitle = "Error"
@@ -60,8 +60,8 @@ struct UserProfileMockView: View {
                                         popUpIconColor = Color.theme.RedInstance
                                         print(error.localizedDescription)
                                     }
-                                    oldPassword = ""
-                                    newPassword = ""
+//                                    oldPassword = ""
+//                                    newPassword = ""
                                 }
                                 
 
@@ -72,9 +72,10 @@ struct UserProfileMockView: View {
                                     .contentShape(Rectangle())
                             }
                             .foregroundColor(Color.theme.DarkBlueInstance)
-                            .background(Color.theme.Orange)
+                            .background(viewModel.isValidUpdatePW() ? Color.theme.LightGray: Color.theme.Orange)
                             .cornerRadius(8)
                             .padding(8)
+                            .disabled(viewModel.isValidUpdatePW())
                         }
                     }
                     myRecipes(recipeList: userProfileViewModel.recipeList)

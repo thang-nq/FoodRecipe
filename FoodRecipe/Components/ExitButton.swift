@@ -11,8 +11,8 @@ import SwiftUI
 // A custom back button, providing a visual indicator and a tap gesture for the user to go back to the previous view
 
 struct ExitButton: View {
+    
     @Environment(\.presentationMode) var presentationMode
-
     var body: some View {
         // Custom back button shape and back button behavior dismiss
         Button(action: {
