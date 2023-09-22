@@ -97,7 +97,7 @@ private extension LoginView {
         Button(action:{Task {try await viewModel.signIn(withEmail: inputFieldManager.emailInput, password: inputFieldManager.passwordInput)}})
         {
             Text("Login")
-                .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
+                .font(Font.custom.ButtonText)
                 .frame(width: 350, height: 50)
                 .contentShape(Rectangle())
         }
@@ -114,7 +114,7 @@ private extension LoginView {
         HStack {
             Text("Don't have an account?")
                 .foregroundColor(Color.theme.Blue)
-                .font(.custom("ZillaSlab-LightItalic", size: 16))
+                .font(Font.custom.ContentItalic)
             
             NavigationLink {
                 SignupView()
@@ -122,7 +122,8 @@ private extension LoginView {
             } label: {
                 Text("Sign up")
                     .foregroundColor(Color.theme.Blue)
-                    .font(.custom("ZillaSlab-SemiBold", size: 16))
+                    .font(Font.custom.ContentBold)
+
             }
         }
 

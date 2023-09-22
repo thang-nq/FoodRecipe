@@ -14,7 +14,7 @@ struct Tag: View {
     var body: some View {
         Text(text)
             .font(Font.custom.SubContent)
-            .foregroundColor(Color.theme.WhiteInstance)
+            .foregroundColor(Color.theme.DarkBlueInstance)
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
             .background(tagColor)

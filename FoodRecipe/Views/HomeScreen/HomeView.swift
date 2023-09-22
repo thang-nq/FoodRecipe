@@ -37,7 +37,7 @@ struct HomeView: View {
                     }
                 TDEEPersonalView()
                     .tabItem(){
-                        Image(systemName: "brain")
+                        Image(systemName: "heart.text.square.fill")
                         Text("TDEE")
                     }
                 UserProfileMockView()
@@ -50,6 +50,18 @@ struct HomeView: View {
             .scrollContentBackground(.hidden)
             .edgesIgnoringSafeArea(.bottom)
             .accentColor(Color.theme.Orange)
+            .toolbar {
+            // MARK: Tool Bar
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: { isDark.toggle() }) {
+                        isDark ? Label("Dark", systemImage: "sun.max.fill") :
+                        Label("Dark", systemImage: "moon.fill")
+                    }
+                    .foregroundColor(Color.theme.OrangeInstance)
+                }
+            }
+            
+            
         }
         .environment(\.colorScheme, isDark ? .dark : .light)
 

@@ -53,8 +53,8 @@ struct TDDEFormView: View {
             // MARK: Tool Bar
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { isDark.toggle() }) {
-                        isDark ? Label("Dark", systemImage: "lightbulb.fill") :
-                        Label("Dark", systemImage: "lightbulb")
+                        isDark ? Label("Dark", systemImage: "sun.max.fill") :
+                        Label("Dark", systemImage: "moon.fill")
                     }
                     .foregroundColor(Color.theme.OrangeInstance)
                 }
@@ -176,9 +176,6 @@ private extension TDDEFormView {
             showPopUp = true
             
             
-//            navigateToPersonalTDEE = true
-            
-            
         }){
             Text("CALCULATE")
                 .font(Font.custom.ButtonText)
@@ -189,9 +186,6 @@ private extension TDDEFormView {
         .background(inputFieldManager.isValidBMIForm() ? Color.theme.LightGray: Color.theme.Orange)
         .cornerRadius(8)
         .disabled(inputFieldManager.isValidBMIForm())
-//        .navigationDestination(isPresented: $navigateToPersonalTDEE){
-////            TDEEPersonalView()
-//        }
     }
     
     //MARK: BACK BUTTON

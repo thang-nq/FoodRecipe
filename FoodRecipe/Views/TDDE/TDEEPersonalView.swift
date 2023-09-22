@@ -49,7 +49,7 @@ private extension TDEEPersonalView {
     
     //MARK: TITLE
     var title: some View {
-        Text("Total Daily Energy Expenditure")
+        Text("Daily Energy Expenditure")
             .font(Font.custom.NavigationTitle)
     }
     
@@ -103,8 +103,8 @@ private extension TDEEPersonalView {
         }
         .padding()
         .background(
-            RoundedCorners(color: Color.theme.White, tl: 5, tr: 5, bl:5, br: 5)
-                .shadow(color: Color.theme.DarkBlueInstance.opacity(0.8) ,radius: 5)
+            RoundedCorners(color: Color.theme.DarkGray.opacity(0.1), tl: 10, tr: 10, bl: 10, br: 10)
+                .shadow(color: Color.theme.LightGray.opacity(0.1) ,radius: 2)
         )
     }
     
@@ -120,7 +120,7 @@ private extension TDEEPersonalView {
                 }
                 
             }
-            .padding(.horizontal)
+//            .padding(.horizontal, 5)
         }
     }
     
@@ -134,7 +134,7 @@ private extension TDEEPersonalView {
         .navigationDestination(isPresented: $navigateToTDEEForm){
             TDDEFormView()
         }
-        .font(Font.custom.ContentBold)
+        .font(Font.custom.Heading)
         .foregroundColor(Color.theme.OrangeInstance)
 
     }

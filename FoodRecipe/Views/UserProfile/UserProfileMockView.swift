@@ -14,14 +14,10 @@ struct UserProfileMockView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarViewRefresh: Bool = false
     @State private var inputText: String = ""
-//    @State private var oldPassword: String = ""
-//    @State private var newPassword: String = ""
     @State private var showChangePasswordField: Bool = false
     @ObservedObject var inputFieldManager = InputFieldManager()
     @StateObject var homeVM = HomeViewModel()
     @StateObject var userProfileViewModel = UserProfileViewModel.shared
-    // MARK: change to environment object when demo
-//        @StateObject var viewModel = AuthViewModel()
     @EnvironmentObject var viewModel: AuthViewModel
     
     //MARK: POP UP VARIABLES
@@ -30,10 +26,19 @@ struct UserProfileMockView: View {
     @State var popUptitle = ""
     @State var popUpContent = ""
     @State var popUpIconColor = Color.theme.BlueInstance
+    
+    
+    //MARK: TUAN'S TEST
+    @State var showingPWSheet: Bool = false
+    @State var showingNameSheet: Bool = false
+    @AppStorage("isDarkMode") var isDark = false
+    
     var body: some View {
         NavigationView {
             ScrollView {
+                
                 if let currentUser = viewModel.currentUser {
+                    
                     top(currentUser: currentUser)
                     
                     if showChangePasswordField {
@@ -60,8 +65,6 @@ struct UserProfileMockView: View {
                                         popUpIconColor = Color.theme.RedInstance
                                         print(error.localizedDescription)
                                     }
-//                                    oldPassword = ""
-//                                    newPassword = ""
                                 }
                                 
 
@@ -126,6 +129,7 @@ struct UserProfileMockView: View {
 //}
 
 private extension UserProfileMockView {
+    
     // MARK: USER AVATAR
     func emptyAvatar(initials: String) -> some View {
         Text(initials)
@@ -136,16 +140,34 @@ private extension UserProfileMockView {
             .background(Color(.systemGray3))
             .clipShape(Circle())
     }
+    
     func top(currentUser: User) -> some View {
         VStack {
             SectionTitleView(title: "User Profile Settings")
             VStack {
                 HStack {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(currentUser.fullName)
-                            .font(.custom.Heading)
-                            .foregroundColor(Color.theme.Black)
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                        
+                        HStack {
+                            Text(currentUser.fullName)
+                                .font(.custom.Heading)
+                                .foregroundColor(Color.theme.Black)
+                            
+                            Button {
+                                viewModel.updateName = ""
+                                showingNameSheet.toggle()
+                            } label: {
+                                Image(systemName: "highlighter")
+                                    .foregroundColor(Color.theme.DarkBlue)
+                            }
+                            .sheet(isPresented: $showingNameSheet) {
+                                EditNameSheet()
+                                    .presentationDetents([.medium, .large])
+                                    .environment(\.colorScheme, isDark ? .dark : .light)
+                            }
+                            
+                        }
+
                         Text(currentUser.email)
                             .font(.custom.Content)
                             .foregroundColor(Color.theme.Orange)
@@ -160,6 +182,7 @@ private extension UserProfileMockView {
                                     Image(systemName: "power")
                                         .foregroundColor(Color.theme.RedInstance)
                                     Text("Log out")
+                                        .font(Font.custom.SubContent)
                                         .foregroundColor(Color.theme.RedInstance)
                                 }
                                 .padding(8)
@@ -171,13 +194,35 @@ private extension UserProfileMockView {
                             .padding(2)
                             
                             
-                            Button(action: {
-                                showChangePasswordField.toggle()
-                            }) {
+//                            Button(action: {
+//                                showChangePasswordField.toggle()
+//                            }) {
+//                                HStack {
+//                                    Image(systemName: "lock.fill")
+//                                        .foregroundColor(Color.theme.BlueInstance)
+//                                    Text("Edit")
+//                                        .foregroundColor(Color.theme.BlueInstance)
+//                                }
+//                                .padding(8)
+//                                .background(
+//                                    RoundedRectangle(cornerRadius: 10)
+//                                        .stroke(Color.theme.BlueInstance, lineWidth: 2)
+//                                )
+//                            }
+//                            .padding(2)
+                            
+                            Button {
+                                viewModel.updatePW = ""
+                                viewModel.confirmUpdatePW = ""
+                                viewModel.oldPW = ""
+                                showingPWSheet.toggle()
+                            } label: {
                                 HStack {
                                     Image(systemName: "lock.fill")
                                         .foregroundColor(Color.theme.BlueInstance)
-                                    Text("Edit")
+                                    
+                                    Text("Change password")
+                                        .font(Font.custom.SubContent)
                                         .foregroundColor(Color.theme.BlueInstance)
                                 }
                                 .padding(8)
@@ -186,14 +231,15 @@ private extension UserProfileMockView {
                                         .stroke(Color.theme.BlueInstance, lineWidth: 2)
                                 )
                             }
-                            .padding(2)
-                            
+                            .sheet(isPresented: $showingPWSheet) {
+                                EditPasswordSheet()
+                                    .presentationDetents([.medium, .large])
+                                    .environment(\.colorScheme, isDark ? .dark : .light)
+                            }
                             
                         }
                         
 
-                        
-                        
                         
                     }
                     
@@ -204,8 +250,9 @@ private extension UserProfileMockView {
                             emptyAvatar(initials: currentUser.initials)
                         } else {
                             UserAvatar(imagePathName: currentUser.avatarUrl)
-                                .frame(width: 60, height: 60)
+                                .frame(width: 40, height: 70)
                                 .id(avatarViewRefresh)
+                                .padding(.horizontal, 20)
                             
                         }
                     }
