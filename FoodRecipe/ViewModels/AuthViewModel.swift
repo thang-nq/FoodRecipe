@@ -136,6 +136,14 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    @Published var confirmUpdatePW = "" {
+        didSet {
+            if confirmUpdatePW.count > updatePWLimit {
+                confirmUpdatePW = String(confirmUpdatePW.prefix(updatePWLimit))
+            }
+        }
+    }
+    
 
     @Published var oldPW = "" {
         didSet {
@@ -146,7 +154,7 @@ class AuthViewModel: ObservableObject {
     }
     
     func isValidUpdatePW() -> Bool {
-        return oldPW.isEmpty || updatePW.isEmpty
+        return oldPW.isEmpty || updatePW.isEmpty || confirmUpdatePW.isEmpty || updatePW != confirmUpdatePW
     }
     
     func isValidUpdateName() -> Bool {

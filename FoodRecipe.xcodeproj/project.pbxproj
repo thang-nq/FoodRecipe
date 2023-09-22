@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A11939CE2ABDDD590082F8DD /* EditPasswordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11939CD2ABDDD590082F8DD /* EditPasswordSheet.swift */; };
+		A11939D02ABE01E00082F8DD /* EditNameSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11939CF2ABE01E00082F8DD /* EditNameSheet.swift */; };
 		A11EAE902AB97BFC008E56B5 /* TDEEWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11EAE8F2AB97BFC008E56B5 /* TDEEWrapperView.swift */; };
 		A12005182AB58B3B00E11DF6 /* InputFieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */; };
 		A120051A2AB5A22800E11DF6 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12005192AB5A22800E11DF6 /* SignupView.swift */; };
@@ -98,6 +100,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A11939CD2ABDDD590082F8DD /* EditPasswordSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPasswordSheet.swift; sourceTree = "<group>"; };
+		A11939CF2ABE01E00082F8DD /* EditNameSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameSheet.swift; sourceTree = "<group>"; };
 		A11EAE8F2AB97BFC008E56B5 /* TDEEWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDEEWrapperView.swift; sourceTree = "<group>"; };
 		A12005172AB58B3B00E11DF6 /* InputFieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldManager.swift; sourceTree = "<group>"; };
 		A12005192AB5A22800E11DF6 /* SignupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
@@ -386,6 +390,8 @@
 				A548C0862AADE37C00884B91 /* UserProfileView.swift */,
 				CC9E6AB82AB96219002BDF66 /* UserProfileMockView.swift */,
 				A15E3E7A2ABAC322008D59E2 /* MyRecipeCard.swift */,
+				A11939CD2ABDDD590082F8DD /* EditPasswordSheet.swift */,
+				A11939CF2ABE01E00082F8DD /* EditNameSheet.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -625,6 +631,7 @@
 				A53A6B812AAF2E81007ECBCD /* Recipe.swift in Sources */,
 				C23CFA0A2ABA147800C2BF51 /* UpdateRecipeViewModel.swift in Sources */,
 				C2C88E282AB4480F00312F8A /* SavedRecipeListView.swift in Sources */,
+				A11939CE2ABDDD590082F8DD /* EditPasswordSheet.swift in Sources */,
 				A5F1C2D82AB324B500949874 /* UserManager.swift in Sources */,
 				A548C0552AADBA9F00884B91 /* FoodRecipeApp.swift in Sources */,
 				A57741FA2AB5E4D1009B4882 /* DateTimeFormat.swift in Sources */,
@@ -637,6 +644,7 @@
 				A548C0812AADE22B00884B91 /* InputField.swift in Sources */,
 				CC8D21892AB012EA0036ABF3 /* SectionContainerView.swift in Sources */,
 				CCE488582AB723A000A58FFA /* PageView.swift in Sources */,
+				A11939D02ABE01E00082F8DD /* EditNameSheet.swift in Sources */,
 				A188D5AF2AB1870500E8FF0E /* TestColors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -766,7 +774,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FoodRecipe/Preview Content\"";
-				DEVELOPMENT_TEAM = "G833JKHVFG";
+				DEVELOPMENT_TEAM = G833JKHVFG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodRecipe/Info.plist;

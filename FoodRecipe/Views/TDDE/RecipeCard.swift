@@ -65,26 +65,9 @@ struct RecipeCard: View {
     }
 }
 
-//struct RecipeCard_Previews: PreviewProvider {
-//
-//    static var previews: some View {
-//
-//        Group {
-//            RecipeCard(id: Recipe.sampleRecipe.id, calories: Recipe.sampleRecipe.calories, name: Recipe.sampleRecipe.name, imageURL: Recipe.sampleRecipe.backgroundURL, protein: Recipe.sampleRecipe.protein, fat: Recipe.sampleRecipe.fat, carb: Recipe.sampleRecipe.carb)
-//                .previewDisplayName("iOS light")
-//                .preferredColorScheme(.light)
-//
-//            RecipeCard(recipe: Recipe.sampleRecipe)
-//                .previewDisplayName("iOS dark")
-//                .preferredColorScheme(.dark)
-//
-//        }
-//    }
-//}
-
 private extension RecipeCard {
     var backGroundStyle: some View {
         RoundedCorners(color: Color.theme.RecipeCardBg, tl: 10, tr: 10, bl:10, br: 10)
-            .shadow(color: Color.theme.DarkBlueInstance.opacity(0.8) ,radius: 5)
+            .shadow(color: Color.theme.DarkBlueInstance.opacity(0.2) ,radius: 5)
     }
 }

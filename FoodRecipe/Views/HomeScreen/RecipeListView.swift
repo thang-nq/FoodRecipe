@@ -57,15 +57,6 @@ struct RecipeListView: View {
                         
                         alignment: .bottomTrailing
                     )
-                .toolbar {
-                // MARK: Tool Bar
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: { isDark.toggle() }) {
-                            isDark ? Label("Dark", systemImage: "lightbulb.fill") :
-                            Label("Dark", systemImage: "lightbulb")
-                        }
-                    }
-                }
             }
             .onAppear {
                 fetchRecipes()
