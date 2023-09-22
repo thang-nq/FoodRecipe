@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct CreateIntroView: View {
+    @AppStorage("isDarkMode") var isDark = false
     //MARK: VARIABLES
     @Binding var backgroundPhoto: PhotosPickerItem?
     @Binding var recipeName : String
@@ -152,6 +153,7 @@ struct NumberInput: View {
             }
             TextField(placeHolder, value: $value, formatter: NumberFormatter())
                 .font(Font.custom.Content)
+                .keyboardType(.decimalPad)
             
             Divider()
         }
@@ -171,6 +173,7 @@ struct NutritionInput: View {
                 .font(Font.custom.Content)
             TextField(placeHolder, value: $value, formatter: NumberFormatter())
                 .font(Font.custom.Content)
+                .keyboardType(.decimalPad)
             
             Divider()
         }
@@ -195,6 +198,7 @@ struct RequireNutritionInput: View {
             }
             TextField(placeHolder, value: $value, formatter: NumberFormatter())
                 .font(Font.custom.Content)
+                .keyboardType(.decimalPad)
             
             Divider()
         }
@@ -232,7 +236,9 @@ private extension CreateIntroView{
     var addPhoto: some View{
         PhotosPicker(selection: $backgroundPhoto, photoLibrary: .shared()) {
             Label("Select a photo for the recipe *", systemImage: "photo.fill")
-        }.padding(.vertical, 10)
+        }
+        .padding(.vertical, 10)
+        .foregroundColor(Color.theme.OrangeInstance)
     }
     
     //MARK: DESCRIPTION INPUT UI
@@ -250,7 +256,9 @@ private extension CreateIntroView{
             TextEditor(text: $description)
                 .font(Font.custom.Content)
                 .frame(height: 250)
-                .colorMultiply(Color.theme.DarkWhite)
+                .scrollContentBackground(.hidden) 
+                .background(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.DarkWhite)
+                .foregroundColor(isDark ? Color.theme.WhiteInstance : Color.theme.Black)
                 .cornerRadius(10)
                 .padding(.horizontal, 15)
                 .padding(.bottom, 10)

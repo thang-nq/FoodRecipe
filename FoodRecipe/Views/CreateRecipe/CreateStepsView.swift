@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct CreateStepsView: View {
+    @AppStorage("isDarkMode") var isDark = false
     //MARK: VARIABLES
     @Binding var Steps: [String]
     @Binding var listStepsPhoto: [PhotosPickerItem?]
@@ -25,7 +26,7 @@ struct CreateStepsView: View {
     @State private var popUpContent = ""
     @State private var popUpIconColor = Color.theme.BlueInstance
     
-    private func updateStepFunction(step: String, photo: PhotosPickerItem) {
+    private func updateStepFunction(step: String, photo: PhotosPickerItem?) {
         updateStep = step
         updatePhoto = photo
         showingUpdateSheet.toggle()
@@ -43,11 +44,15 @@ struct CreateStepsView: View {
             // MARK: ADD STEP SHEET UI
             AddStepsSheetView(InputStep: $InputStep, Steps: $Steps, stepPhoto: $stepPhoto, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
                 .presentationDetents([.height(300)])
+                .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .sheet(isPresented: $showingUpdateSheet){
             // MARK: UPDATE STEP SHEET UI
             UpdateStepsSheetView(Steps: $Steps, listStepsPhoto: $listStepsPhoto,updateStep: $updateStep, updatePhoto: $updatePhoto, showingUpdateSheet: $showingUpdateSheet)
                 .presentationDetents([.height(300)])
+                .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .frame(maxWidth: 500, maxHeight: .infinity, alignment: .topLeading)
         .overlay(

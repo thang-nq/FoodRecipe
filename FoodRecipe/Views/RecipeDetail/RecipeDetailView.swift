@@ -33,9 +33,6 @@ struct RecipeDetailView: View {
     }
     func checkCreator() async{
         if let recipeDetail = detailVM.recipe{
-            print("gggg")
-            print(userId)
-            print(recipeDetail.creatorID)
             if(userId == recipeDetail.creatorID){
                 isCreator = true
             }

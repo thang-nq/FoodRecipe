@@ -10,6 +10,7 @@ import SlidingTabView
 import PhotosUI
 
 struct UpdateRecipeView: View {
+    @AppStorage("isDarkMode") var isDark = false
     @StateObject var updateVM = UpdateRecipeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     //MARK: VARIABLES
@@ -61,7 +62,7 @@ struct UpdateRecipeView: View {
                         }
                     }
                 }
-                
+                .environment(\.colorScheme, isDark ? .dark : .light)
                 .overlay(
                 // MARK: SHOW THE SUCCESS POP UP
                     ZStack {
@@ -126,12 +127,12 @@ struct CustomBackButtonRecipe: View {
                     }) {
                         Image("chevron-left")
                             .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(Color.theme.Black.opacity(0.5))
+                            .frame(width: 20, height: 20)
                             .padding(10)
                             .background(.white)
                             .clipShape(Circle())
-                    }
+                        
+                    }.padding(.leading, 25)
             
     }
 }
@@ -150,22 +151,20 @@ private extension UpdateRecipeView{
             
             // Button create new recipe
             Button(action: {
-                // Create recipe
-//                updateVM.createRecipe()
-//                updateVM.printMealTags()
                 updateVM.updateRecipe()
             }) {
                 Text("Save")
                     .font(.system(size: 20))
-                
-            }.padding(.trailing, 20)
+            }
+            .padding(.trailing, 20)
+            .disabled(updateVM.isValidCreate())
         }
     }
     
     //MARK: SLIDING TAB UI
     var slidingTab: some View{
         VStack{
-            SlidingTabView(selection: $updateVM.selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),  activeAccentColor: Color.theme.OrangeInstance, selectionBarColor: Color.theme.OrangeInstance)
+            SlidingTabView(selection: $updateVM.selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom("ZillaSlab-Regular", size: 22),    activeAccentColor: Color.theme.Orange, inactiveAccentColor : Color.theme.Gray, selectionBarColor: Color.theme.Orange)
             // Check the selected tab index
             if updateVM.selectedTabIndex == 0 {
                 UpdateIntroView(backgroundPhoto: $updateVM.backgroundPhoto ,recipeName: $updateVM.recipeName, cookingTime: $updateVM.cookingTime, servingSize: $updateVM.servingSize, description: $updateVM.description, calories: $updateVM.calories, carb: $updateVM.carb, protein: $updateVM.protein, fat: $updateVM.fat, sugars: $updateVM.sugars, salt: $updateVM.salt, saturates: $updateVM.saturates, fibre: $updateVM.fibre, currentSelectedTags: $updateVM.currentSelectedTags, currentSelectedMealTypes: $updateVM.currentSelectedMealTypes)

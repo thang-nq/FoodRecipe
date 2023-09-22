@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CreateIngredientsView: View {
+    @AppStorage("isDarkMode") var isDark = false
     // MARK: VARIABLES
     @State private var showingSheet = false
     @State private var showingUpdateSheet = false
@@ -54,13 +55,18 @@ struct CreateIngredientsView: View {
         )
         .sheet(isPresented: $showingSheet){
             // MARK: ADD INGREDIENTS SHEET
-            AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
-                .presentationDetents([.height(300)])
+    
+                AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
+                    .presentationDetents([.height(300)])
+                    .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                    .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .sheet(isPresented: $showingUpdateSheet){
             // MARK: UPDATE INGREDIENTS SHEET
             UpdateIngredientsSheetView(updateInputIngredient: $updateInputIngredient, Ingredients: $Ingredients, showingUpdateSheet: $showingUpdateSheet)
                 .presentationDetents([.height(300)])
+                .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         
@@ -80,27 +86,30 @@ struct ButtonModifier: ViewModifier {
 
 // MARK: ADD INGREDIENTS SHEET VIEW
 struct AddIngredientsSheetView: View {
-    @Binding var InputIngredient : String
-    @Binding var Ingredients : [String]
-    var body: some View{
-        VStack{
-            InputFieldRecipe(text: $InputIngredient, title: "Ingredient", placeHolder: "Enter Ingredient")
-        }
+    @Binding var InputIngredient: String
+    @Binding var Ingredients: [String]
+    
+    var body: some View {
+        VStack {
+            VStack {
+                InputFieldRecipe(text: $InputIngredient, title: "Ingredient", placeHolder: "Enter Ingredient")
+            }
+            
             Button(action: {
-                if(!InputIngredient.isEmpty){
+                if !InputIngredient.isEmpty {
                     Ingredients.append(InputIngredient)
                     InputIngredient = ""
                 }
             }) {
                 Text("Save")
                     .foregroundColor(Color.theme.WhiteInstance)
-                                    .font(.headline)
-                                    .frame(width: 120, height: 40)
-                                    .background(Color.theme.OrangeInstance)
-                                    .cornerRadius(8)
-
+                    .font(.headline)
+                    .frame(width: 120, height: 40)
+                    .background(Color.theme.OrangeInstance)
+                    .cornerRadius(8)
             }
         }
+    }
 }
 
 // MARK: UPDATE INGREDIENTS SHEET VIEW

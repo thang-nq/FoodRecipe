@@ -70,7 +70,7 @@ private extension CreateRecipeView{
             CustomBackButtonRecipe()
             Spacer()
             // Title of the view
-            Text("Create new recipe")
+            Text("Create recipe")
                 .font(Font.custom.NavigationTitle)
             
             Spacer()

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UpdateIngredientsView: View {
+    @AppStorage("isDarkMode") var isDark = false
     // MARK: VARIABLES
     @State private var showingSheet = false
     @State private var showingUpdateSheet = false
@@ -56,11 +57,15 @@ struct UpdateIngredientsView: View {
             // MARK: ADD INGREDIENTS SHEET
             AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
                 .presentationDetents([.height(300)])
+                .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .sheet(isPresented: $showingUpdateSheet){
             // MARK: UPDATE INGREDIENTS SHEET
             UpdateIngredientsSheetView(updateInputIngredient: $updateInputIngredient, Ingredients: $Ingredients, showingUpdateSheet: $showingUpdateSheet)
                 .presentationDetents([.height(300)])
+                .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         

@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct UpdateIntroView: View {
+    @AppStorage("isDarkMode") var isDark = false
     //MARK: VARIABLES
     @Binding var backgroundPhoto: PhotosPickerItem?
     @Binding var recipeName : String
@@ -110,6 +111,7 @@ private extension UpdateIntroView{
         PhotosPicker(selection: $backgroundPhoto, photoLibrary: .shared()) {
             Label("Select a photo for the recipe *", systemImage: "photo.fill")
         }.padding(.vertical, 15)
+            .foregroundColor(Color.theme.OrangeInstance)
     }
     
     //MARK: DESCRIPTION INPUT UI
@@ -127,7 +129,9 @@ private extension UpdateIntroView{
             TextEditor(text: $description)
                 .font(Font.custom.Content)
                 .frame(height: 250)
-                .colorMultiply(Color.theme.DarkWhite)
+                .scrollContentBackground(.hidden)
+                .background(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.DarkWhite)
+                .foregroundColor(isDark ? Color.theme.WhiteInstance : Color.theme.Black)
                 .cornerRadius(10)
                 .padding(.horizontal, 15)
                 .padding(.bottom, 10)
