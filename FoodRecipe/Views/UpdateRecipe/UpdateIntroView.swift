@@ -108,10 +108,17 @@ private extension UpdateIntroView{
     
     //MARK: ADD PHOTO UI
     var addPhoto: some View{
-        PhotosPicker(selection: $backgroundPhoto, photoLibrary: .shared()) {
-            Label("Select a photo for the recipe *", systemImage: "photo.fill")
-        }.padding(.vertical, 15)
+        HStack{
+            PhotosPicker(selection: $backgroundPhoto, photoLibrary: .shared()) {
+                Label("Select a photo for the recipe", systemImage: "photo.fill")
+            }
+            .padding(.vertical, 10)
             .foregroundColor(Color.theme.OrangeInstance)
+            .font(Font.custom.SubHeading)
+            Text("*")
+                .font(.system(size: 22))
+                .foregroundColor(Color.theme.RedInstance)
+        }
     }
     
     //MARK: DESCRIPTION INPUT UI

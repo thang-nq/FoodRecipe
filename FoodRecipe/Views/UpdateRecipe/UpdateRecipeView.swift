@@ -157,7 +157,7 @@ private extension UpdateRecipeView{
                 updateVM.updateRecipe()
             }) {
                 Text("Save")
-                    .font(.system(size: 20))
+                    .font(Font.custom.SubHeading)
             }
             .disabled(updateVM.isValidCreate())
             .foregroundColor(updateVM.isValidCreate() ? Color.theme.LightGray: Color.theme.Orange)

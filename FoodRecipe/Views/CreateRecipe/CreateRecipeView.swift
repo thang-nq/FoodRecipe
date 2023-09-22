@@ -83,7 +83,7 @@ private extension CreateRecipeView{
                 createRecipeVM.createRecipe()
             }) {
                 Text("Create")
-                    .font(.system(size: 20))
+                    .font(Font.custom.SubHeading)
                 
             }
             .padding(.trailing, 20)
