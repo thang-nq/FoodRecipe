@@ -188,6 +188,8 @@ private extension UpdateIntroView{
             }
             TagsFilterView(tags: MOCK_TAGS, currentSelectedTags: $currentSelectedTags, action: selectTag)
                 .padding(.leading, 15)
+            Text("")
+                .frame(height: 150)
         }
     }
 }
