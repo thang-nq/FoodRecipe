@@ -159,8 +159,8 @@ private extension UpdateRecipeView{
                 Text("Save")
                     .font(.system(size: 20))
             }
-            
             .disabled(updateVM.isValidCreate())
+            .foregroundColor(updateVM.isValidCreate() ? Color.theme.LightGray: Color.theme.Orange)
             Spacer()
         }
     }

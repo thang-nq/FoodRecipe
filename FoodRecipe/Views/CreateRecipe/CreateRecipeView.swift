@@ -88,6 +88,7 @@ private extension CreateRecipeView{
             }
             .padding(.trailing, 20)
             .disabled(createRecipeVM.isValidCreate())
+            .foregroundColor(createRecipeVM.isValidCreate() ? Color.theme.LightGray: Color.theme.Orange)
           
         }
     }
