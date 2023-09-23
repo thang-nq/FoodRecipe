@@ -27,7 +27,8 @@ struct FilterSheet: View {
             }
             //            .background(Color.theme.DarkGray.opacity(0.1))
             .padding(10)
-        }.background(Color.theme.White)
+        }
+        .background(Color.theme.White)
     }
 }
 

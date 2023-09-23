@@ -131,7 +131,7 @@ private extension SignupView {
         })
         {
             Text("Register")
-                .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
+                .font(Font.custom.ButtonText)
                 .frame(width: 380, height: 50)
                 .contentShape(Rectangle())
         }
@@ -147,14 +147,14 @@ private extension SignupView {
         HStack {
             Text("Already have an account?")
                 .foregroundColor(Color.theme.Blue)
-                .font(.custom("ZillaSlab-LightItalic", size: 16))
+                .font(Font.custom.ContentItalic)
             
             Button {
                 dismiss()
             } label: {
                 Text("Log in")
                     .foregroundColor(Color.theme.Blue)
-                    .font(.custom("ZillaSlab-SemiBold", size: 16))
+                    .font(Font.custom.ContentBold)
             }
         }
     }

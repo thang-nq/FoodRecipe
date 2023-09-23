@@ -44,28 +44,19 @@ struct RecipeListView: View {
                     .overlay(
                         HStack {
                             NavigationLink(destination: CreateRecipeView()) {
-                                Image(systemName: "flame")
+                                Image(systemName: "plus")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 30, height: 30)
+                                    .frame(width: 20, height: 20)
                                     .foregroundColor(.white)
-                                    .padding(10)
+                                    .padding(15)
                                     .background(Color.theme.Orange)
                                     .clipShape(Circle())
                             }
-                        }.padding(15),
+                        }.padding(10),
                         
                         alignment: .bottomTrailing
                     )
-                .toolbar {
-                // MARK: Tool Bar
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: { isDark.toggle() }) {
-                            isDark ? Label("Dark", systemImage: "lightbulb.fill") :
-                            Label("Dark", systemImage: "lightbulb")
-                        }
-                    }
-                }
             }
             .onAppear {
                 fetchRecipes()

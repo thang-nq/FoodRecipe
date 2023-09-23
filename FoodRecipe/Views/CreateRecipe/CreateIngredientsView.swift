@@ -35,6 +35,7 @@ struct CreateIngredientsView: View {
             ScrollView{
                     ingredients
                         .accessibilityLabel("Ingredients")
+                        .padding(.trailing, 15)
             }
         }
         .overlay(
