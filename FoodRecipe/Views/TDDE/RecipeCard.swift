@@ -46,8 +46,9 @@ struct RecipeCard: View {
             }
             Spacer()
             VStack(alignment: .center, spacing: 15){
-                Button(action:{}, label: {Image(systemName: "info.circle.fill")})
-                    .foregroundColor(Color.theme.BlueInstance)
+                NavigationLink(destination: RecipeDetailView(recipeId: id, onDissappear: {}).navigationBarHidden(true)) {
+                    Image(systemName: "info.circle.fill").foregroundColor(Color.theme.BlueInstance)
+                }
                 
                 Button(action:{
                     Task {
