@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import LocalAuthentication
 
 struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
@@ -18,6 +19,7 @@ struct UserProfileView: View {
     @State private var oldPassword: String = ""
     @State private var password: String = ""
     @State private var savedRecipe: [Recipe] = []
+    @State private var unlocked: Bool = false
     @StateObject var homeVM = HomeViewModel()
     @StateObject var detailVM = RecipeDetailViewModel()
     @StateObject var tddeVM = TDDEViewModel.shared
@@ -32,6 +34,23 @@ struct UserProfileView: View {
     @State var popUptitle = ""
     @State var popUpContent = ""
     @State var popUpIconColor = Color.theme.BlueInstance
+    
+    
+    func bioAuthenticate() {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Use Face ID to access your account data on this device") { success, authenticationError in
+                if success {
+                    unlocked = true
+                } else {
+                    print("There was a problem when auth by faceid")
+                }
+            }
+        }
+        
+    }
     
     var body: some View {
         
@@ -51,7 +70,18 @@ struct UserProfileView: View {
                     }
                     
                     userData(fullName: user.fullName, email: user.email)
+                    if unlocked {
+                        Text("Unlocked by faceID")
+                    } else {
+                        Text("Not yet unlocked")
+                    }
                     signOutButton
+                    
+                    Button {
+                        bioAuthenticate()
+                    } label: {
+                         Text("Face ID")
+                    }
                     
                     
                     //MARK: change password
@@ -353,6 +383,7 @@ private extension UserProfileView {
                 .foregroundColor(.red)
         }
     }
+    
     
     
 }
