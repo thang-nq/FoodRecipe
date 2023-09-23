@@ -263,13 +263,29 @@ final class RecipeManager {
     func filterRecipeByTags(tags: [String]) async -> [Recipe] {
         var recipes: [Recipe] = []
         do {
-            
+            var combinedRecipes: [Recipe] = []
             let query = db.whereField("tags", arrayContainsAny: tags)
+            let mealTypeQuery = db.whereField("mealType", arrayContainsAny: tags)
             let snapshot = try await query.getDocuments()
+            let mtSnapshot = try await mealTypeQuery.getDocuments()
             for d in snapshot.documents {
                 let recipe = try d.data(as: Recipe.self)
-                recipes.append(recipe)
+                combinedRecipes.append(recipe)
             }
+            for d in mtSnapshot.documents {
+                let recipe = try d.data(as: Recipe.self)
+                combinedRecipes.append(recipe)
+            }
+            
+            var uniqueRecipes: [String: Recipe] = [:]
+            
+            for recipe in combinedRecipes {
+                uniqueRecipes[recipe.id!] = recipe
+            }
+            
+            recipes = Array(uniqueRecipes.values)
+            
+            
         } catch {
             print("DEBUG: \(error.localizedDescription)")
         }
