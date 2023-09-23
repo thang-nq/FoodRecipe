@@ -85,10 +85,17 @@ class RecipeDetailViewModel: ObservableObject {
             errorMessage = error.localizedDescription
             showError = true
         }
-
+        
     }
     
-    
+    func addRecipeToTDDE(recipeID: String) async {
+        isLoading.toggle()
+        do {
+            try await RecipeManager.shared.addRecipeToTDDE(recipeID: recipeID)
+        }
+        isLoading.toggle()
+        
+    }
     
     
 }

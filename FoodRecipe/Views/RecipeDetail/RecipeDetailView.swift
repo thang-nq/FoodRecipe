@@ -41,9 +41,10 @@ struct RecipeDetailView: View {
     
     func addToTDDE() {
         Task {
-            await tdde.addRecipeToTDDE(recipeID: recipeId)
+            await detailVM.addRecipeToTDDE(recipeID:recipeId)
         }
     }
+    
     
     var body: some View {
         ZStack {
@@ -52,18 +53,19 @@ struct RecipeDetailView: View {
                     VStack {
                         if let recipeDetail = detailVM.recipe {
                             ZStack(alignment: .top) {
+                                
+                                // Background Color behind the MainInfo
                                 if(isDark) {
                                     Color("DarkGray").opacity(0.1)
                                 } else {
                                     Color("LightGray")
                                 }
                                 
-                                
                                 // MARK: Overlay Image
                                 CoverImage(recipeDetail: recipeDetail)
                                 
                                 TopBar(isCreator: isCreator,recipeId: recipeId, isSaved: recipeDetail.isSaved, backAction: back, saveAction: saveAction, addToListAction: addToTDDE)
-                                                                
+                                
                                 // MARK: Content
                                 VStack(spacing: 15) {
                                     ZStack {
@@ -74,48 +76,13 @@ struct RecipeDetailView: View {
                                             NutritionView(recipe: recipeDetail)
                                         }
                                     }
-                                    VStack {
-                                        // MARK: Sliding tab views
-                                        SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom.SubHeading,  activeAccentColor: Color.theme.Orange, inactiveAccentColor: Color.theme.Black, selectionBarColor: Color.theme.Orange)
-                                        if selectedTabIndex == 0 {
-                                            // Intro
-                                            SectionContainerView {
-                                                Text(recipeDetail.intro)
-                                                    .font(.custom.Content)
-                                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                            }.padding(.horizontal, 10).padding(.vertical, 0)
-                                        }
-                                        if selectedTabIndex == 1 {
-                                            // Ingredients
-                                            IngredientsView(ingredientsList: recipeDetail.ingredients)
-                                        }
-                                        
-                                        if selectedTabIndex == 2 {
-                                            // Steps
-                                            StepsView(stepsList: recipeDetail.steps)
-                                        }
-                                    }.background(Color.theme.White).frame(minHeight: 300)
+                                    SlidingTabs(recipeDetail: recipeDetail)
                                 }
-                                
                             }
                         }
                     }
                 }.overlay(
-                    HStack {
-                        if let recipeDetail = detailVM.recipe {
-                            NavigationLink(destination: CookModeView(recipe: recipeDetail)) {
-                                Image(systemName: "flame")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(.white)
-                                    .padding(10)
-                                    .background(Color.theme.Orange)
-                                    .clipShape(Circle())
-                            }
-                        }
-                    }.padding(15),
-                    
+                    CookModeButton,
                     alignment: .bottomTrailing
                 )
                 .onAppear {
@@ -185,7 +152,7 @@ struct TopBar: View {
                     .clipShape(Circle())
             }
             
-
+            
             Spacer()
             
             // Add to recipe list button
@@ -303,5 +270,46 @@ private extension RecipeDetailView {
                     .clipped()
             )
             .offset(y: -60)
+    }
+    
+    func SlidingTabs(recipeDetail: Recipe) -> some View {
+        VStack {
+            // MARK: Sliding tab views
+            SlidingTabView(selection: self.$selectedTabIndex, tabs: ["Intro","Ingredients", "Steps"], font: .custom.SubHeading,  activeAccentColor: Color.theme.Orange, inactiveAccentColor: Color.theme.Black, selectionBarColor: Color.theme.Orange)
+            if selectedTabIndex == 0 {
+                // Intro
+                SectionContainerView {
+                    Text(recipeDetail.intro)
+                        .font(.custom.Content)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                }.padding(.horizontal, 10).padding(.vertical, 0)
+            }
+            if selectedTabIndex == 1 {
+                // Ingredients
+                IngredientsView(ingredientsList: recipeDetail.ingredients)
+            }
+            
+            if selectedTabIndex == 2 {
+                // Steps
+                StepsView(stepsList: recipeDetail.steps)
+            }
+        }.background(Color.theme.White).frame(minHeight: 300)
+    }
+    
+    var CookModeButton: some View {
+        HStack {
+            if let recipeDetail = detailVM.recipe {
+                NavigationLink(destination: CookModeView(recipe: recipeDetail)) {
+                    Image(systemName: "flame")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Color.theme.Orange)
+                        .clipShape(Circle())
+                }
+            }
+        }.padding(15)
     }
 }
