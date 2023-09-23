@@ -52,22 +52,16 @@ struct SearchView: View {
                     .padding(0)
                 }.sheet(isPresented: $showingSheet) {
                     // MARK: Sheet View
-                    VStack {
-                        FilterSheet(currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes, selectMealType: selectMealType, selectTag: selectTag)
-                        Button {
-                            print("Helo")
-                            if(viewModel.searchString.count > 0) {
-                                searchAction()
-                            }else {
-                                searchByTag()
-                            }
-                        } label: {
-                            Text("Helo")
+                    ZStack {
+                        if isDark {
+                            Color("DarkGray").opacity(0.1).ignoresSafeArea(.all)
                         }
-                        
-                        
-                    }
-                    .presentationDetents([.medium, .large]).environment(\.colorScheme, isDark ? .dark : .light)
+                        VStack {
+                            FilterSheet(currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes, selectMealType: selectMealType, selectTag: selectTag)
+                            saveButton
+                        }
+                        .presentationDetents([.medium, .large]).environment(\.colorScheme, isDark ? .dark : .light)
+                    }.background(Color.theme.White.ignoresSafeArea(.all)).environment(\.colorScheme, isDark ? .dark : .light)
                 }
                 
                 Rectangle()
@@ -148,6 +142,28 @@ struct SearchView: View {
             currentSelectedMealTypes.append(tag)
             viewModel.currentSelectedMealTypes = currentSelectedMealTypes
         }
+    }
+}
+
+private extension SearchView {
+    var saveButton: some View {
+        Button {
+            if(viewModel.searchString.count > 0) {
+                searchAction()
+            }else {
+                searchByTag()
+            }
+            showingSheet.toggle()
+        } label: {
+            //                            Text("Helo")
+            Text("Search")
+                .font(Font.custom.ButtonText)
+                .frame(width: 350, height: 50)
+                .contentShape(Rectangle())
+        }
+        .foregroundColor(Color.theme.WhiteInstance)
+        .background(Color.theme.Orange)
+        .cornerRadius(8)
     }
 }
 
