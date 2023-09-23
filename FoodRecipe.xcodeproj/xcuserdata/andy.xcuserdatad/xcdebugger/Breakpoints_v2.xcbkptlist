@@ -93,8 +93,8 @@
             filePath = "FoodRecipe/Views/Authentication/Signup/SignupView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "registerBtn"
             landmarkType = "24">
          </BreakpointContent>
@@ -109,8 +109,8 @@
             filePath = "FoodRecipe/Views/TDDE/TDDEFormView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "form"
             landmarkType = "24">
          </BreakpointContent>
@@ -127,7 +127,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "157"
             endingLineNumber = "157"
-            landmarkName = "isValidUpdatePW()"
+            landmarkName = "faceIDAuth()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

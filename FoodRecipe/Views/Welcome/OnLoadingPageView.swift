@@ -9,12 +9,12 @@ import SwiftUI
 
 struct OnLoadingPageView: View {
     
-    var imageName: String
-    var iconColor: Color
-    var title: String
-    var description: String
-    let startedButton: Bool
-    let nextScreen: () -> Void
+    var imageName: String      // The name of the image to display
+    var iconColor: Color       // The color of the icon
+    var title: String          // The title text
+    var description: String    // The description text
+    let startedButton: Bool    // Determines whether to display a "Let's get started" button or "Next" button
+    let nextScreen: () -> Void // A closure to execute when the button is tapped
     
     var body: some View {
         VStack(spacing: 20) {
@@ -39,6 +39,7 @@ struct OnLoadingPageView: View {
             
             // MARK: NAVIGATE BUTTON UI
             if startedButton {
+                // Display "Let's get started" button
                 Button(action:{nextScreen()}){
                     Text("Lets get started")
                         .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
@@ -51,6 +52,7 @@ struct OnLoadingPageView: View {
                 .padding(.top)
                 
             } else {
+                // Display "Next" button
                 Button(action:{nextScreen()}){
                     Text("Next")
                         .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct TDEEWelcomeList: View {
     
-    @State private var tabIndex: Int = 0
-    @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
+    @State private var tabIndex: Int = 0 // State variable to track the selected tab
+    @AppStorage("TDDEIntro") var TDDEIntro: Bool = true // AppStorage to store a boolean value indicating if the TDEE introduction has been shown
     
     var body: some View {
         //MARK: TABVIEW WRAPPER UI
@@ -26,19 +26,22 @@ struct TDEEWelcomeList: View {
             OnLoadingPageView(imageName: "heart.text.square.fill", iconColor: Color.theme.GreenInstance, title: "TDEE Tracking", description: "With RecipePal's TDEE tracking, you can now keep tabs on your health while enjoying amazing recipes", startedButton: true, nextScreen: nextPage)
                 .tag(2)
         }
-        .tabViewStyle(.page(indexDisplayMode: .always))
-        .indexViewStyle(.page(backgroundDisplayMode: .always))
+        .tabViewStyle(.page(indexDisplayMode: .always)) // Set the tab view style
+        .indexViewStyle(.page(backgroundDisplayMode: .always)) // Set the index view style
     }
     
+    // Function to navigate to the next tab or finish the introduction
     func nextPage() {
         if tabIndex < 2 {
             withAnimation{
-                tabIndex += 1
+                tabIndex += 1 // Move to the next tab with animation
             }
         } else {
-            TDDEIntro = false
+            TDDEIntro = false  // Finish the introduction by setting TDDEIntro to false
         }
-    }}
+    }
+    
+}
 
 struct TDEEWelcomeList_Previews: PreviewProvider {
     static var previews: some View {

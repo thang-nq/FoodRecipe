@@ -13,39 +13,45 @@ struct MyRecipeCard: View {
     var recipe : Recipe
     var body: some View {
         HStack(alignment: .center){
+            // Display the recipe image using FirebaseImage
             FirebaseImage(imagePathName: recipe.backgroundURL)
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 80, height: 80, alignment: .center)
                 .clipShape(Circle())
             
             VStack(alignment: .leading, spacing: 5){
-        
+                
+                // Display the recipe name
                 Text(recipe.name)
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.SubHeading)
-            
+                
+                // Display tags associated with the recipe
                 HStack(spacing: 5) {
                     ForEach(recipe.tags, id: \.self){ tag in
                         Tag(text: tag, tagColor: getTagColor(tagValue: tag))
                     }
                 }
                 
+                // Display the creation date of the recipe
                 Text(recipe.createdAt)
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.Content)
             }
             Spacer()
             VStack(alignment: .center, spacing: 15){
+                // Navigate to the recipe update view
                 NavigationLink(destination: UpdateRecipeView(recipeId: recipe.id!)) {
                     Image(systemName: "highlighter")
                         .foregroundColor(Color.theme.DarkBlue)
                 }
+                // Button to delete the recipe
                 Button(action:{
                     Task {
                         do {
                             try await detailVM.deleteRecipe(recipeID: recipe.id!)
                         } catch {
-                            // Handle the error here
+                            // Handle the error here if deletion fails
                             print("Error deleting recipe: \(error)")
                         }
                     }
@@ -76,6 +82,7 @@ struct MyRecipeCard_Previews: PreviewProvider {
     }
 }
 
+// apply RoudnedConrners component to define background style
 private extension MyRecipeCard {
     var backGroundStyle: some View {
         RoundedCorners(color: Color.theme.RecipeCardBg, tl: 10, tr: 10, bl:10, br: 10)

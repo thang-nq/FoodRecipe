@@ -9,7 +9,6 @@ import SwiftUI
 
 // navigation button use in header
 // A custom back button, providing a visual indicator and a tap gesture for the user to go back to the previous view
-
 struct ExitButton: View {
     
     @Environment(\.presentationMode) var presentationMode

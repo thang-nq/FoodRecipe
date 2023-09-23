@@ -9,11 +9,9 @@ import SwiftUI
 
 struct OnLoadingList: View {
     
-//    @Binding var showLoading: Bool
     @State private var tabIndex: Int = 0
     @AppStorage("initialView") var initialView: Bool = true
 
-    
     var body: some View {
         //MARK: TABVIEW WRAPPER UI
         TabView(selection: $tabIndex) {
@@ -32,14 +30,14 @@ struct OnLoadingList: View {
         .indexViewStyle(.page(backgroundDisplayMode: .always))
     }
     
+    // Function to navigate to the next page or dismiss the loading view
     func nextPage() {
-        
         if tabIndex < 2 {
             withAnimation{
                 tabIndex += 1
             }
         } else {
-//            showLoading = false
+            // Dismiss the loading view
             initialView = false
         }
     }
@@ -49,8 +47,6 @@ struct OnLoadingList: View {
 
 struct OnLoadingList_Previews: PreviewProvider {
     static var previews: some View {
-//        OnLoadingList(showLoading: .constant(true))
         OnLoadingList()
-
     }
 }
