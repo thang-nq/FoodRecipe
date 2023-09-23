@@ -24,7 +24,6 @@ struct LoginView: View {
         
         // MARK: MAIN LAYOUT
         NavigationStack {
-            
             VStack {
                 appLogo
                     .padding(.top, 10)
@@ -37,6 +36,8 @@ struct LoginView: View {
                 loginButton
                     .accessibilityLabel("Login button")
                 
+                faceIDLoginButton
+                    .padding()
                 Spacer()
                 
                 bottomNavigation
@@ -106,6 +107,17 @@ private extension LoginView {
         .cornerRadius(8)
         .disabled(inputFieldManager.isValidLogin())
 
+    }
+    
+    var faceIDLoginButton: some View {
+        Button {
+            Task {
+                let bioAuthSuccess = await viewModel.faceIDAuth()
+            }
+        } label: {
+            Label("Login with Face ID", systemImage: "faceid")
+                .font(.custom("ZillaSlab-SemiBoldItalic", size: 20))
+        }
     }
     
     //MARK: BOTTOM NAVIGATION UI

@@ -12,6 +12,7 @@ import Firebase
 import FirebaseStorage
 import FirebaseFirestoreSwift
 import PhotosUI
+import LocalAuthentication
 
 
 @MainActor
@@ -22,19 +23,25 @@ class AuthViewModel: ObservableObject {
     private var storage = Storage.storage().reference()
     @Published private(set) var alertItem: AlertItem?
     @Published var showingAlert = false
+    @AppStorage("localEmail") var localEmail: String = ""
+    @AppStorage("localPW") var localPW: String = ""
+    @Published var isAuthenticated: Bool = false
     
     init() {
         self.userSession = Auth.auth().currentUser
-        
         Task {
             await fetchUser()
         }
     }
     
-    func signIn(withEmail email: String, password: String) async throws {
+    func signIn(withEmail email: String, password: String) async {
         do {
             let result = try await UserManager.shared.signIn(withEmail: email, password: password)
             self.userSession = result.user
+            localEmail = result.user.email!
+            localPW = password
+            self.isAuthenticated = true
+            print(self.isAuthenticated)
             await fetchUser()
         } catch {
             print("DEBUG: Failed to login with error \(error.localizedDescription)")
@@ -68,9 +75,19 @@ class AuthViewModel: ObservableObject {
             try UserManager.shared.signOut()
             self.userSession = nil // clear user session
             self.currentUser = nil // clear local user data
+            self.localEmail = ""
+            self.localPW = ""
+            self.isAuthenticated = false
         } catch {
             print("DEBUG: Failed to signout with error \(error.localizedDescription)")
         }
+    }
+    
+    func updateUserName(name: String) async throws {
+            if let currentUser = currentUser {
+                try await UserManager.shared.updateUser(userID: currentUser.id, updateValues: ["fullName": name])
+                await fetchUser()
+            }
     }
     
     func sendResetPasswordEmail(withEmail email: String) async {
@@ -105,6 +122,43 @@ class AuthViewModel: ObservableObject {
         return ""
         
     }
+    
+    func faceIDAuth() async -> Bool {
+        var isSuccess: Bool = false
+        do {
+            let context = LAContext()
+            
+            var error: NSError?
+            if !localEmail.isEmpty || !localPW.isEmpty {
+                if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                    context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Use Face ID to access your account data on this device") { success, authenticationError in
+                        if success {
+                            DispatchQueue.main.async {
+                                self.isAuthenticated = true
+                            }
+                            
+                        } else {
+                            print("There was a problem when auth by faceid")
+                        }
+                        
+                    }
+                } else {
+                    throw UserManagerError.faceIDNotSupport
+                }
+                
+            
+            } else {
+                throw UserManagerError.requireLoginWithEmailFirst
+            }
+        } catch {
+            showingAlert = true
+            alertItem = AlertItem(title: "Signin error", message: error.localizedDescription, buttonTitle: "Dismiss")
+            print("DEBUG: \(error.localizedDescription)")
+            
+        }
+        return isSuccess
+    }
+    
     
     
     func fetchUserSavedRecipe() async -> [Recipe]{

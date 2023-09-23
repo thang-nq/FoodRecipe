@@ -48,6 +48,8 @@ final class RecipeManager {
             // Check saved state
             if currentUser!.savedRecipe.contains(recipeID) {
                 recipe!.isSaved = true
+            } else {
+                recipe!.isSaved = false
             }
             
             // Sort the step
@@ -79,9 +81,12 @@ final class RecipeManager {
                             recipe.creatorAvatar = creator.avatarUrl
                         }
                         
+                        
                         // Check saved state
                         if userData!.savedRecipe.contains(d.documentID) {
                             recipe.isSaved = true
+                        } else {
+                            recipe.isSaved = false
                         }
                         
                         recipes.append(recipe)
@@ -210,9 +215,11 @@ final class RecipeManager {
                     // format time stamp
                     recipe.createdAt = formatTimestamp(recipe.timeStamp)
                     
-                    //                 Check if already saved
+                    // Check if already saved
                     if currentUserData!.savedRecipe.contains(document.documentID) {
                         recipe.isSaved = true
+                    } else {
+                        recipe.isSaved = false
                     }
                     
                     recipes.append(recipe)
@@ -256,13 +263,29 @@ final class RecipeManager {
     func filterRecipeByTags(tags: [String]) async -> [Recipe] {
         var recipes: [Recipe] = []
         do {
-            
+            var combinedRecipes: [Recipe] = []
             let query = db.whereField("tags", arrayContainsAny: tags)
+            let mealTypeQuery = db.whereField("mealType", arrayContainsAny: tags)
             let snapshot = try await query.getDocuments()
+            let mtSnapshot = try await mealTypeQuery.getDocuments()
             for d in snapshot.documents {
                 let recipe = try d.data(as: Recipe.self)
-                recipes.append(recipe)
+                combinedRecipes.append(recipe)
             }
+            for d in mtSnapshot.documents {
+                let recipe = try d.data(as: Recipe.self)
+                combinedRecipes.append(recipe)
+            }
+            
+            var uniqueRecipes: [String: Recipe] = [:]
+            
+            for recipe in combinedRecipes {
+                uniqueRecipes[recipe.id!] = recipe
+            }
+            
+            recipes = Array(uniqueRecipes.values)
+            
+            
         } catch {
             print("DEBUG: \(error.localizedDescription)")
         }
