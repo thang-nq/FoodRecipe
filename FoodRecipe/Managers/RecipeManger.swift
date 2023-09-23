@@ -264,26 +264,29 @@ final class RecipeManager {
         var recipes: [Recipe] = []
         do {
             var combinedRecipes: [Recipe] = []
-            let query = db.whereField("tags", arrayContainsAny: tags)
-            let mealTypeQuery = db.whereField("mealType", arrayContainsAny: tags)
-            let snapshot = try await query.getDocuments()
-            let mtSnapshot = try await mealTypeQuery.getDocuments()
-            for d in snapshot.documents {
-                let recipe = try d.data(as: Recipe.self)
-                combinedRecipes.append(recipe)
+            if tags.count > 0 {
+                let query = db.whereField("tags", arrayContainsAny: tags)
+                let mealTypeQuery = db.whereField("mealType", in: tags)
+                let snapshot = try await query.getDocuments()
+                let mtSnapshot = try await mealTypeQuery.getDocuments()
+                for d in snapshot.documents {
+                    let recipe = try d.data(as: Recipe.self)
+                    combinedRecipes.append(recipe)
+                }
+                for d in mtSnapshot.documents {
+                    let recipe = try d.data(as: Recipe.self)
+                    combinedRecipes.append(recipe)
+                }
+                
+                var uniqueRecipes: [String: Recipe] = [:]
+                
+                for recipe in combinedRecipes {
+                    uniqueRecipes[recipe.id!] = recipe
+                }
+                
+                recipes = Array(uniqueRecipes.values)
             }
-            for d in mtSnapshot.documents {
-                let recipe = try d.data(as: Recipe.self)
-                combinedRecipes.append(recipe)
-            }
-            
-            var uniqueRecipes: [String: Recipe] = [:]
-            
-            for recipe in combinedRecipes {
-                uniqueRecipes[recipe.id!] = recipe
-            }
-            
-            recipes = Array(uniqueRecipes.values)
+
             
             
         } catch {

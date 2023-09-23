@@ -136,11 +136,9 @@ class AuthViewModel: ObservableObject {
                             DispatchQueue.main.async {
                                 self.isAuthenticated = true
                             }
-                            
                         } else {
                             print("There was a problem when auth by faceid")
                         }
-                        
                     }
                 } else {
                     throw UserManagerError.faceIDNotSupport
