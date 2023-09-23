@@ -9,8 +9,13 @@ import SwiftUI
 
 struct SignupView: View {
         
-    @ObservedObject var inputFieldManager = InputFieldManager()    
+    // Create an observed object for managing input fields
+    @ObservedObject var inputFieldManager = InputFieldManager()
+    
+    // Access the AuthViewModel from the environment
     @EnvironmentObject var viewModel: AuthViewModel
+    
+    // Access the dismiss environment key
     @Environment(\.dismiss) var dismiss
     
     //MARK: POP UP VARIABLES
@@ -37,6 +42,7 @@ struct SignupView: View {
         .overlay(
             ZStack {
                 if viewModel.showingAlert {
+                    // Show an alert popup if triggered by the view model
                     Color.theme.DarkWhite.opacity(0.5)
                         .edgesIgnoringSafeArea(.all)
                     PopUp(iconName: "person.crop.circle.badge.exclamationmark.fill" , title: viewModel.alertItem!.title, content: viewModel.alertItem!.message, iconColor: popUpIconColor ,didClose: {viewModel.showingAlert = false})
@@ -46,6 +52,7 @@ struct SignupView: View {
         .overlay(
             ZStack {
                 if showPopUp {
+                    // Show a custom popup if needed
                     Color.theme.DarkWhite.opacity(0.5)
                         .edgesIgnoringSafeArea(.all)
                     PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})

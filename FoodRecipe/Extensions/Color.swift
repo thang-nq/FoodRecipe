@@ -8,13 +8,13 @@
 import Foundation
 import SwiftUI
 
+
+
 // config theme color using in application
 // these color directly interact with light/dark mode element
-
 extension Color {
     static let theme = ColorTheme()
 }
-
 
 struct ColorTheme {
     
@@ -32,6 +32,7 @@ struct ColorTheme {
     let White = Color("White")
     
     //MARK: INSTANCE COLORS
+    // custom instance color use in both light/dark mode element
     let BlackInstance = Color("BlackInstance")
     let BlueInstance = Color("BlueInstance")
     let DarkBlueInstance = Color("DarkBlueInstance")

@@ -15,27 +15,29 @@ struct RecipeCard: View {
     var protein: Int
     var fat: Int
     var carb: Int
+    
+    // Shared TDDE view model
     @StateObject private var tddeVM = TDDEViewModel.shared
 
-    
     var body: some View {
         HStack(alignment: .center){
             
+            // Display the recipe image using FirebaseImage
             FirebaseImage(imagePathName: imageURL)
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 80, height: 80, alignment: .center)
                 .clipShape(Circle())
 
             VStack(alignment: .leading){
-        
+                // Recipe name
                 Text(name)
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.SubHeading)
-            
+                // Display the number of calories
                 Text("Calories: \(calories)")
                     .foregroundColor(Color.theme.DarkBlue)
                     .font(Font.custom.SubContent)
-                
+                // Display the nutritional information (Carb, Protein, Fat)
                 HStack{
                     Text("Carb: \(carb)g")
                     Text("Protein: \(protein)g")
@@ -46,10 +48,11 @@ struct RecipeCard: View {
             }
             Spacer()
             VStack(alignment: .center, spacing: 15){
+                // Navigation link to the RecipeDetailView
                 NavigationLink(destination: RecipeDetailView(recipeId: id, onDissappear: {}).navigationBarHidden(true)) {
                     Image(systemName: "info.circle.fill").foregroundColor(Color.theme.BlueInstance)
                 }
-                
+                // Button to remove the recipe from TDEE
                 Button(action:{
                     Task {
                         await tddeVM.removeRecipeFromTDDE(recipeID: id)
@@ -67,6 +70,7 @@ struct RecipeCard: View {
 }
 
 private extension RecipeCard {
+    // Define the background style for the RecipeCard
     var backGroundStyle: some View {
         RoundedCorners(color: Color.theme.RecipeCardBg, tl: 10, tr: 10, bl:10, br: 10)
             .shadow(color: Color.theme.DarkBlueInstance.opacity(0.2) ,radius: 5)

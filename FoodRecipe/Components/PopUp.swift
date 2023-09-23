@@ -9,11 +9,13 @@ import SwiftUI
 
 struct PopUp: View {
     
-    var iconName: String
-    var title: String
-    var content: String
-    var iconColor : Color
-    let didClose: () -> Void
+    //MARK: POP UP VARAIBALES
+    
+    var iconName: String // Icon name string
+    var title: String // Title string
+    var content: String // Content string
+    var iconColor: Color // Icon color
+    let didClose: () -> Void // Closure for handling close action
     
     var body: some View {
         
@@ -28,9 +30,8 @@ struct PopUp: View {
         .frame(width: 350, height: 250)
         .background(backGroundStyle)
         .overlay(alignment: .topTrailing) {
-            closeButton
+            closeButton // Display the close button
         }
-//        .transition(.move(edge: .bottom))
     }
 }
 
@@ -45,6 +46,7 @@ private extension PopUp {
     
     // MARK: ICON UI
     var icon: some View {
+        // Display an image with the specified icon name and style
         Image(systemName: iconName)
             .symbolVariant(.circle.fill)
             .font(.system(size: 50,
@@ -58,30 +60,33 @@ private extension PopUp {
     // MARK: CLOSE BUTTON
     var closeButton: some View {
         Button(){
-            didClose()
+            didClose()  // Call the closure when the button is tapped
         } label: {
-        Image(systemName: "xmark.circle")
-                .symbolVariant(.circle.fill)
-                .font(.system(size:30, weight: .bold, design: .rounded))
-                .foregroundStyle(Color.theme.BlackInstance)
-                .padding(8)
+            // Display an image with an "x" icon for closing
+            Image(systemName: "xmark.circle")
+                    .symbolVariant(.circle.fill)
+                    .font(.system(size:30, weight: .bold, design: .rounded))
+                    .foregroundStyle(Color.theme.BlackInstance)
+                    .padding(8)
         }
     }
     
     // MARK: POPUP STYLE
     var backGroundStyle: some View {
+        // Apply rounded corners and a shadow to create a popup style
         RoundedCorners(color: Color.theme.DarkWhiteInstance, tl: 10, tr: 10, bl:10, br: 10)
             .shadow(color: .black.opacity(0.5) ,radius: 30)
     }
     
     // MARK: CONTENT VIEW
     var contentWrapper: some View {
+        // Vertical stack to arrange title and content text
         VStack(spacing: 10){
             Text(title)
-                .font(.custom("ZillaSlab-Bold", size: 26))
+                .font(.custom("ZillaSlab-Bold", size: 26)) // Set the title font
             Text(content)
-                .font(.custom("ZillaSlab-SemiBold", size: 20))
+                .font(.custom("ZillaSlab-SemiBold", size: 20))  // Set the content font
         }
-        .foregroundColor(Color.theme.DarkBlueInstance)
+        .foregroundColor(Color.theme.DarkBlueInstance) // Set text color
     }
 }
