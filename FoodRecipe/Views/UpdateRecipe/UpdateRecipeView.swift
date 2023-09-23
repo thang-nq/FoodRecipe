@@ -138,15 +138,18 @@ struct CustomBackButtonRecipe: View {
 }
 
 private extension UpdateRecipeView{
-    
     //MARK: TOP BAR UI
     var topBar: some View{
         HStack {
-            CustomBackButtonRecipe()
+            Spacer()
+            ExitButton()
+                
             Spacer()
             // Title of the view
             Text("Update recipe")
                 .font(Font.custom.NavigationTitle)
+                .padding(.leading, 30)
+             
             Spacer()
             
             // Button create new recipe
@@ -154,10 +157,11 @@ private extension UpdateRecipeView{
                 updateVM.updateRecipe()
             }) {
                 Text("Save")
-                    .font(.system(size: 20))
+                    .font(Font.custom.SubHeading)
             }
-            .padding(.trailing, 20)
             .disabled(updateVM.isValidCreate())
+            .foregroundColor(updateVM.isValidCreate() ? Color.theme.LightGray: Color.theme.Orange)
+            Spacer()
         }
     }
     

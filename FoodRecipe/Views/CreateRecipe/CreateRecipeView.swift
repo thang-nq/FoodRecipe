@@ -67,11 +67,13 @@ private extension CreateRecipeView{
     //MARK: TOP BAR UI
     var topBar: some View{
         HStack {
-            CustomBackButtonRecipe()
+            Spacer()
+            ExitButton()
             Spacer()
             // Title of the view
             Text("Create recipe")
                 .font(Font.custom.NavigationTitle)
+                .padding(.leading, 30)
             
             Spacer()
             
@@ -81,11 +83,13 @@ private extension CreateRecipeView{
                 createRecipeVM.createRecipe()
             }) {
                 Text("Create")
-                    .font(.system(size: 20))
+                    .font(Font.custom.SubHeading)
                 
             }
             .padding(.trailing, 20)
             .disabled(createRecipeVM.isValidCreate())
+            .foregroundColor(createRecipeVM.isValidCreate() ? Color.theme.LightGray: Color.theme.Orange)
+          
         }
     }
     
