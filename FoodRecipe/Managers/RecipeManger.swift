@@ -48,6 +48,8 @@ final class RecipeManager {
             // Check saved state
             if currentUser!.savedRecipe.contains(recipeID) {
                 recipe!.isSaved = true
+            } else {
+                recipe!.isSaved = false
             }
             
             // Sort the step
@@ -79,9 +81,12 @@ final class RecipeManager {
                             recipe.creatorAvatar = creator.avatarUrl
                         }
                         
+                        
                         // Check saved state
                         if userData!.savedRecipe.contains(d.documentID) {
                             recipe.isSaved = true
+                        } else {
+                            recipe.isSaved = false
                         }
                         
                         recipes.append(recipe)
@@ -210,9 +215,11 @@ final class RecipeManager {
                     // format time stamp
                     recipe.createdAt = formatTimestamp(recipe.timeStamp)
                     
-                    //                 Check if already saved
+                    // Check if already saved
                     if currentUserData!.savedRecipe.contains(document.documentID) {
                         recipe.isSaved = true
+                    } else {
+                        recipe.isSaved = false
                     }
                     
                     recipes.append(recipe)
