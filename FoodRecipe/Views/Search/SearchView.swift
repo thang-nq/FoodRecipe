@@ -24,6 +24,12 @@ struct SearchView: View {
             await viewModel.searchRecipeByText()
         }
     }
+    
+    func searchByTag() {
+        Task {
+            await viewModel.searchRecipeByTags(tags: viewModel.currentSelectedTags + viewModel.currentSelectedMealTypes)
+        }
+    }
     var body: some View {
         // MARK: Main
         VStack(spacing: 10){
@@ -46,8 +52,22 @@ struct SearchView: View {
                     .padding(0)
                 }.sheet(isPresented: $showingSheet) {
                     // MARK: Sheet View
-                    FilterSheet(currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes, selectMealType: selectMealType, selectTag: selectTag)
-                        .presentationDetents([.medium, .large]).environment(\.colorScheme, isDark ? .dark : .light)
+                    VStack {
+                        FilterSheet(currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes, selectMealType: selectMealType, selectTag: selectTag)
+                        Button {
+                            print("Helo")
+                            if(viewModel.searchString.count > 0) {
+                                searchAction()
+                            }else {
+                                searchByTag()
+                            }
+                        } label: {
+                            Text("Helo")
+                        }
+                        
+                        
+                    }
+                    .presentationDetents([.medium, .large]).environment(\.colorScheme, isDark ? .dark : .light)
                 }
                 
                 Rectangle()
@@ -111,18 +131,22 @@ struct SearchView: View {
         if(currentSelectedTags.contains(tag)) {
             if let index = currentSelectedTags.firstIndex(of: tag) {
                 currentSelectedTags.remove(at: index)
+                viewModel.currentSelectedTags = currentSelectedTags
             }
         } else {
             currentSelectedTags.append(tag)
+            viewModel.currentSelectedTags = currentSelectedTags
         }
     }
     func selectMealType(tag: String) {
         if(currentSelectedMealTypes.contains(tag)) {
             if let index = currentSelectedMealTypes.firstIndex(of: tag) {
                 currentSelectedMealTypes.remove(at: index)
+                viewModel.currentSelectedMealTypes = currentSelectedMealTypes
             }
         } else {
             currentSelectedMealTypes.append(tag)
+            viewModel.currentSelectedMealTypes = currentSelectedMealTypes
         }
     }
 }
