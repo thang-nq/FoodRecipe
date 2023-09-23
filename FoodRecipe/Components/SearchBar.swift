@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchBar: View {
     @Binding var searchText: String
+    @AppStorage("isDarkMode") var isDark = false
     var action: () -> Void
     var body: some View {
         HStack {
@@ -39,7 +40,7 @@ struct SearchBar: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 25)
-                .fill(Color.theme.White)
+                .fill(isDark ? Color.theme.DarkGray.opacity(0.1) : Color.theme.White)
                 .shadow(
                     color: Color.theme.BlackInstance.opacity(0.1),
                     radius: 10, x: 0, y: 0
