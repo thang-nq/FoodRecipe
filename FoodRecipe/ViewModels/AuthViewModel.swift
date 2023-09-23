@@ -83,6 +83,13 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    func updateUserName(name: String) async throws {
+            if let currentUser = currentUser {
+                try await UserManager.shared.updateUser(userID: currentUser.id, updateValues: ["fullName": name])
+                await fetchUser()
+            }
+    }
+    
     func sendResetPasswordEmail(withEmail email: String) async {
         do {
             try await Auth.auth().sendPasswordReset(withEmail: email)

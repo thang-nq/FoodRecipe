@@ -59,26 +59,26 @@ private extension EditNameSheet {
             
             InputField(text: $viewModel.updateName, title: "User name", placeHolder: "Type your new user name")
             
-                        
+            
             Button(action:{
-//                Task {
-//                    do {
-//                        try await viewModel.changePassword(oldPassword: viewModel.oldPW, newPassword: viewModel.updatePW)
-//                                showPopUp = true
-//                                popUpIcon = "checkmark.icloud.fill"
-//                                popUptitle = "Updated Successfully"
-//                                popUpContent = "Your new user name have been updated"
-//                                popUpIconColor = Color.theme.GreenInstance
-//
-//                    } catch {
-//                                showPopUp = true
-//                                popUpIcon = "person.crop.circle.badge.exclamationmark.fill"
-//                                popUptitle = "Error"
-//                                popUpContent = "\(error.localizedDescription)"
-//                                popUpIconColor = Color.theme.RedInstance
-//                        print(error.localizedDescription)
-//                    }
-//                }
+                
+                Task {
+                    do {
+                        try await viewModel.updateUserName(name: viewModel.updateName)
+                        showPopUp = true
+                        popUpIcon = "checkmark.icloud.fill"
+                        popUptitle = "Updated Successfully"
+                        popUpContent = "Your new user name have been updated"
+                        popUpIconColor = Color.theme.GreenInstance
+                    } catch {
+                        showPopUp = true
+                        popUpIcon = "person.crop.circle.badge.exclamationmark.fill"
+                        popUptitle = "Error"
+                        popUpContent = "\(error.localizedDescription)"
+                        popUpIconColor = Color.theme.RedInstance
+                    }
+                    
+                }
             })
             {
                 Text("Update user name")
