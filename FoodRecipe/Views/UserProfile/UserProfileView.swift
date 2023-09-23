@@ -1,8 +1,8 @@
 //
-//  UserProfileView.swift
+//  UserProfileMockView.swift
 //  FoodRecipe
 //
-//  Created by Thang Nguyen on 10/09/2023.
+//  Created by Man Pham on 19/09/2023.
 //
 
 import SwiftUI
@@ -13,17 +13,11 @@ import FirebaseFirestoreSwift
 struct UserProfileView: View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var avatarViewRefresh: Bool = false
-    @State private var stepPhoto: PhotosPickerItem? = nil
     @State private var inputText: String = ""
-    @State private var oldPassword: String = ""
-    @State private var password: String = ""
-    @State private var savedRecipe: [Recipe] = []
+    @State private var showChangePasswordField: Bool = false
+    @ObservedObject var inputFieldManager = InputFieldManager()
     @StateObject var homeVM = HomeViewModel()
-    @StateObject var detailVM = RecipeDetailViewModel()
-    @StateObject var tddeVM = TDDEViewModel.shared
-    @StateObject var userProfileVM = UserProfileViewModel()
-    // MARK: change to environment object when demo
-//    @StateObject var viewModel = AuthViewModel()
+    @StateObject var userProfileViewModel = UserProfileViewModel.shared
     @EnvironmentObject var viewModel: AuthViewModel
     
     //MARK: POP UP VARIABLES
@@ -33,257 +27,73 @@ struct UserProfileView: View {
     @State var popUpContent = ""
     @State var popUpIconColor = Color.theme.BlueInstance
     
+    
+    //MARK: TUAN'S TEST
+    @State var showingPWSheet: Bool = false
+    @State var showingNameSheet: Bool = false
+    @AppStorage("isDarkMode") var isDark = false
+    
     var body: some View {
-        
-        if let user = viewModel.currentUser {
-            VStack{
-                VStack {
-                    // MARK: WIREFRAME USER DATA
-                    PhotosPicker(selection: $selectedPhoto, photoLibrary: .shared()) {
-                        if user.avatarUrl.isEmpty {
-                            emptyAvatar(initials: user.initials)
-                        } else {
-                            UserAvatar(imagePathName: user.avatarUrl)
-                                .frame(width: 200, height: 200)
-                                .id(avatarViewRefresh)
+        NavigationView {
+            ScrollView {
+                
+                if let currentUser = viewModel.currentUser {
+                    
+                    top(currentUser: currentUser)
+                    
+                    if showChangePasswordField {
+                        VStack {
+                            InputField(text: $viewModel.oldPW, title: "Current password", placeHolder: "Type your current pass", isSecureField: true)
+                            InputField(text: $viewModel.updatePW, title: "New password", placeHolder: "Type your new pass", isSecureField: true)
                             
-                        }
-                    }
-                    
-                    userData(fullName: user.fullName, email: user.email)
-                    signOutButton
-                    
-                    
-                    //MARK: change password
-                    
-//                    InputField(text: $oldPassword, title: "Old password", placeHolder: "enter old password")
-//                    InputField(text: $password, title: "New password", placeHolder: "enter new password")
-//
-//                    Button {
-//                        Task {
-//                            await viewModel.changePassword(oldPassword: oldPassword, newPassword: password)
-//                        }
-//                    } label: {
-//                        Text("Change password")
-//                    }
-//
-//                    Button {
-//                        Task {
-//                            await viewModel.sendResetPasswordEmail(withEmail: "latuan2906@gmail.com")
-//                        }
-//                    } label: {
-//                        Text("Send reset pw email")
-//                    }
-                }
-                
-                
-                // MARK: Update recipe
-                ScrollView {
-                    VStack (alignment: .center) {
-                        if let recipe = detailVM.recipe {
-                            Button {
+                            Button(action:{
                                 Task {
-                                    // Update entire recipe and re-define cooking steps (overwrite old cookingSteps)
-                                    await detailVM.updateRecipe(recipeID: recipe.id!, updateData: updateRecipeInterface(name: "Updated recipe and steps", mealType: "UpdatedMealtype", backgroundImage: stepPhoto, steps: [CookingStepInterface(context: "New step context", imageData: stepPhoto, stepNumber: 1)]))
-                                }
-                            } label: {
-                                Text("Update recipe")
-                            }
-                            FirebaseImage(imagePathName: recipe.backgroundURL).frame(width: 200, height: 150)
-                                .padding(.bottom)
-                            Text(recipe.name)
-                            HStack(alignment: .center) {
-                                Text("Created by - \(recipe.creatorName)")
-                                UserAvatar(imagePathName: recipe.creatorAvatar).frame(width: 25, height: 25)
-                            }
-                            Text("Created at - \(recipe.createdAt)")
-                            Text("Mealtype - \(recipe.mealType)")
-                            Text(recipe.mealType)
-                            ForEach(recipe.steps) { step in
-
-
-                                Text("Step \(step.stepNumber) - \(step.context)")
-                                FirebaseImage(imagePathName: step.backgroundURL).frame(width: 150, height: 100)
-                                    .padding(.bottom)
-
-
-                                Button {
-                                    Task {
-
-                                        // MARK: Update a step
-                                        await detailVM.updateCookingStep(recipeID: recipe.id!, stepID: step.id!, context: "This step is updated", backgroundImage: stepPhoto)
+                                    print("text")
+                                    do {
+                                        try await viewModel.changePassword(oldPassword: viewModel.oldPW, newPassword: viewModel.updatePW)
+                                        showPopUp = true
+                                        popUpIcon = "checkmark.message.fill"
+                                        popUptitle = "Error"
+                                        popUpContent = "Update password success"
+                                        popUpIconColor = Color.theme.GreenInstance
+                                        
+                                    } catch {
+                                        showPopUp = true
+                                        popUpIcon = "checkmark.message.fill"
+                                        popUptitle = "Error"
+                                        popUpContent = "\(error.localizedDescription)"
+                                        popUpIconColor = Color.theme.RedInstance
+                                        print(error.localizedDescription)
                                     }
-                                } label: {
-                                    Text("Update this step")
                                 }
-
-
-                                // MARK: Delete a step
-                                Button {
-                                    Task {
-                                        await detailVM.deleteCookingStep(recipeID: recipe.id!, stepID: step.id!)
-                                    }
-                                } label: {
-                                    Text("Delete this step").foregroundColor(.red)
-                                }
-                            }
-                        } else {
-
-                        }
-                        
-//                        ForEach(userProfileVM.recipeList) { recipe in
-//                            Text("Name - \(recipe.name)")
-//                            Button {
-//                                Task {
-//
-//                                }
-//                            } label: {
-//                                 Text("Remove from list")
-//                            }
-//                        }.task {
-//                            await userProfileVM.getUserCreatedRecipe()
-//                        }
-                    }
-                }
-
-                
-//                ScrollView {
-//                    VStack {
-//                        Text("Saved recipes")
-//                        ForEach(homeVM.savedRecipes) {recipe in
-//                            VStack {
-//                                Text(recipe.name)
-//                                Text("Created by - \(recipe.creatorName)")
-//                                Text(recipe.isSaved ? "Already saved" : "Save to favorite")
-//                                Button {
-//                                    Task {
-//                                        await homeVM.saveOrRemoveRecipe(recipeID: recipe.id!)
-//                                    }
-//                                } label: {
-//                                    Text("🗑️ Unsave")
-//                                }
-//                            }
-//
-//                        }
-//                    }
-//
-//                }
-//                .task {
-//                    await homeVM.getSavedRecipe()
-//                }
-
-                
-                
-                // MARK: RECIPE WRAPPER
-                
-                // recipe detail
-
-                
-                
-                // Recipe list
-                
-                PhotosPicker(selection: $stepPhoto, photoLibrary: .shared()) {
-                    Label("Choose step photo", systemImage: "photo")
-                }
-                
-                Button {
-                    Task {
-                        
-                        // Add new recipe and image to firebase
-                        // Using CookingStepInterface to init
-                        // If no imagedata is provided to the steps, it will get the backgroundURL of recipe as default.
-                        // Step number is important to maintain the order
-                        try await homeVM.addRecipe(recipe: Recipe(name: "Crispy Pork",
-                                                                  creatorID: user.id,
-                                                                  intro: "This is a healthy dish",
-                                                                  servingSize: 3,
-                                                                  cookingTime: 90,
-                                                                  calories: 740,
-                                                                  carb: 15,
-                                                                  protein: 30,
-                                                                  ingredients: ["300g Pork", "20g Salt"],
-                                                                  tags: ["Pork", "Dinner"]),
-                                                   image: stepPhoto,
-                                                   cookingSteps: [
-                                                    CookingStepInterface(context: "Prepare the ingredient", imageData: nil, stepNumber: 1),
-                                                    CookingStepInterface(context: "Cook the meal", imageData: nil, stepNumber: 2),
-                                                    CookingStepInterface(context: "Divide the meal", imageData: nil, stepNumber: 3),
-                                                    CookingStepInterface(context: "Let's eat", imageData: nil, stepNumber: 4)]
-                        )
-                    }
-                } label: {
-                    Text("Add new recipe")
-                        .foregroundColor(.green)
-                }
-                
-                
-//                Button {
-//                    Task {
-////                        await homeVM.searchRecipeByTags(tags: ["Chicken", "Pork"])
-//                        await homeVM.searchRecipeByText(text: inputText)
-//                    }
-//                } label: {
-//                    Text("Search")
-//                }
-//
-//                InputField(text: $inputText, title: "Search Field", placeHolder: "Type here")
-                
-                Divider()
-                ScrollView {
-                    VStack {
-                        ForEach(homeVM.recipes) {recipe in
-                            VStack {
-                                Text(recipe.name)
-                                Text("Created by - \(recipe.creatorName)")
                                 
-                                Button {
-                                    Task {
-//                                        await homeVM.saveOrRemoveRecipe(recipeID: recipe.id!)
-                                        await homeVM.addRecipeToTDDE(recipeID: recipe.id!)
-                                        await tddeVM.getTDDERecipe()
-                                    }
-                                } label: {
-                                    Text(recipe.isSaved ? "Remove save" : "Save to favorite ♥️")
-                                }
-                                Button {
-                                    Task {
-                                        await detailVM.getRecipeDetail(recipeID: recipe.id!)
-                                    }
-                                } label: {
-                                    Text("View detail")
-                                }
-                                Button {
-                                    Task {
-                                        try await homeVM.deleteRecipe(recipeID: recipe.id!)
-                                    }
-                                } label: {
-                                    Text("Delete").foregroundColor(.red)
-                                }
+
+                            }){
+                                Text("Submit")
+                                    .font(Font.custom.ButtonText)
+                                    .frame(width: 150, height: 50)
+                                    .contentShape(Rectangle())
                             }
-                            
+                            .foregroundColor(Color.theme.DarkBlueInstance)
+                            .background(viewModel.isValidUpdatePW() ? Color.theme.LightGray: Color.theme.Orange)
+                            .cornerRadius(8)
+                            .padding(8)
+                            .disabled(viewModel.isValidUpdatePW())
                         }
                     }
+                    myRecipes(recipeList: userProfileViewModel.recipeList)
                     
                 }
-                .task {
-                    await homeVM.getAllRecipe()
-                }
-                
-                
-                
-                
+                Spacer()
             }
-            .overlay(
-                ZStack {
-                    if showPopUp {
-                        Color.theme.DarkWhite.opacity(0.5)
-                            .edgesIgnoringSafeArea(.all)
-                        PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
-                    }
+            .padding(16)
+            .onAppear {
+                Task {
+                    await userProfileViewModel.getUserCreatedRecipe()
                 }
-                    .opacity(showPopUp ? 1 : 0)
-            )
-            .onChange(of: selectedPhoto, perform: { newValue in
+            }
+        }
+        .onChange(of: selectedPhoto, perform: { newValue in
                 if let newValue {
                     
                     // CALL POP UP
@@ -300,23 +110,23 @@ struct UserProfileView: View {
                     }
                 }
             })
-            .onAppear {
-                
+        .overlay(
+            ZStack {
+                if showPopUp {
+                    Color.theme.DarkWhite.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                    PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
+                }
             }
-        }
-        
+        )
     }
 }
 
-
-struct UserProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserProfileView()
-            .environmentObject(AuthViewModel())
-    }
-}
-
-
+//struct UserProfileMockView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserProfileMockView()
+//    }
+//}
 
 private extension UserProfileView {
     
@@ -331,28 +141,174 @@ private extension UserProfileView {
             .clipShape(Circle())
     }
     
-    // MARK: USER NAME AND EMAIL
-    func userData(fullName: String, email: String) -> some View  {
-        VStack (alignment:.leading, spacing: 4) {
-            Text(fullName)
-                .fontWeight(.semibold)
-                .padding(.top, 4)
-            
-            Text(email)
-                .font(.footnote)
-                .foregroundColor(.blue)
+    func top(currentUser: User) -> some View {
+        VStack {
+            SectionTitleView(title: "User Profile Settings")
+            VStack {
+                HStack {
+                    VStack(alignment: .leading, spacing: 8) {
+                        
+                        HStack {
+                            Text(currentUser.fullName)
+                                .font(.custom.Heading)
+                                .foregroundColor(Color.theme.Black)
+                            
+                            Button {
+                                viewModel.updateName = ""
+                                showingNameSheet.toggle()
+                            } label: {
+                                Image(systemName: "highlighter")
+                                    .foregroundColor(Color.theme.DarkBlue)
+                            }
+                            .sheet(isPresented: $showingNameSheet) {
+                                EditNameSheet()
+                                    .presentationDetents([.medium, .large])
+                                    .environment(\.colorScheme, isDark ? .dark : .light)
+                            }
+                            
+                        }
+
+                        Text(currentUser.email)
+                            .font(.custom.Content)
+                            .foregroundColor(Color.theme.Orange)
+                            .underline()
+                        
+                        
+                        HStack {
+                            Button(action: {
+                                viewModel.signOut()
+                            }) {
+                                HStack {
+                                    Image(systemName: "power")
+                                        .foregroundColor(Color.theme.RedInstance)
+                                    Text("Log out")
+                                        .font(Font.custom.SubContent)
+                                        .foregroundColor(Color.theme.RedInstance)
+                                }
+                                .padding(8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.theme.RedInstance, lineWidth: 2)
+                                )
+                            }
+                            .padding(2)
+                            
+                            
+//                            Button(action: {
+//                                showChangePasswordField.toggle()
+//                            }) {
+//                                HStack {
+//                                    Image(systemName: "lock.fill")
+//                                        .foregroundColor(Color.theme.BlueInstance)
+//                                    Text("Edit")
+//                                        .foregroundColor(Color.theme.BlueInstance)
+//                                }
+//                                .padding(8)
+//                                .background(
+//                                    RoundedRectangle(cornerRadius: 10)
+//                                        .stroke(Color.theme.BlueInstance, lineWidth: 2)
+//                                )
+//                            }
+//                            .padding(2)
+                            
+                            Button {
+                                viewModel.updatePW = ""
+                                viewModel.confirmUpdatePW = ""
+                                viewModel.oldPW = ""
+                                showingPWSheet.toggle()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "lock.fill")
+                                        .foregroundColor(Color.theme.BlueInstance)
+                                    
+                                    Text("Change password")
+                                        .font(Font.custom.SubContent)
+                                        .foregroundColor(Color.theme.BlueInstance)
+                                }
+                                .padding(8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.theme.BlueInstance, lineWidth: 2)
+                                )
+                            }
+                            .sheet(isPresented: $showingPWSheet) {
+                                EditPasswordSheet()
+                                    .presentationDetents([.medium, .large])
+                                    .environment(\.colorScheme, isDark ? .dark : .light)
+                            }
+                            
+                        }
+                        
+
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    PhotosPicker(selection: $selectedPhoto, photoLibrary: .shared()) {
+                        if currentUser.avatarUrl.isEmpty {
+                            emptyAvatar(initials: currentUser.initials)
+                        } else {
+                            UserAvatar(imagePathName: currentUser.avatarUrl)
+                                .frame(width: 40, height: 70)
+                                .id(avatarViewRefresh)
+                                .padding(.horizontal, 20)
+                            
+                        }
+                    }
+//                    Rectangle()
+//                        .foregroundColor(.clear)
+//                        .frame(width: 60, height: 60)
+//                        .background(
+//
+//                            FirebaseImage(imagePathName: currentUser.avatarUrl)
+//                                .aspectRatio(contentMode: .fill)
+//                                .frame(width: 60, height: 60)
+//                                .clipped()
+//
+//
+//                        )
+//                        .cornerRadius(60)
+//                        .overlay(
+//                            RoundedRectangle(cornerRadius: 60)
+//                                .inset(by: -2.5)
+//                                .stroke(.white, lineWidth: 5)
+//                        )
+                }
+                
+            }
+            .padding(.vertical, 16)
+            .background(Color.theme.White)
+            .shadow(color: Color.theme.Black.opacity(0.1), radius: 0, x: 0, y: -1)
+            .shadow(color: Color.theme.Black.opacity(0.1), radius: 0, x: 0, y: 1)
         }
     }
     
-    //MARK: LOGOUT BUTTON UI
-    var signOutButton: some View {
-        Button {
-            viewModel.signOut()
-        } label: {
-            Text("Sign out")
-                .foregroundColor(.red)
+    func myRecipes(recipeList: [Recipe]) -> some View {
+        VStack {
+            HStack {
+                SectionTitleView(title: "My Recipes")
+                NavigationLink(destination: CreateRecipeView()) {
+                    Text("Create recipe")
+                        .font(.custom.SubContent)
+                        .foregroundColor(Color.theme.Orange).underline()
+                }
+            }
+            ForEach(recipeList){ recipe in
+                MyRecipeCard(recipe: recipe)
+            }
+//            Grid {
+//                ForEach(Array(stride(from: 0, to: recipeList.count, by: 2)), id: \.self) { index in
+//                    GridRow {
+//                        CompactRecipeCard(recipe: recipeList[index])
+//                        if(index + 1 < recipeList.count) {
+//                            CompactRecipeCard(recipe: recipeList[index+1])
+//                        }
+//                    }
+//                }
+//            }
         }
     }
     
-    
+
 }

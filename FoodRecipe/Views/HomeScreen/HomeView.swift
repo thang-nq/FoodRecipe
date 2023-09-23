@@ -40,7 +40,7 @@ struct HomeView: View {
                         Image(systemName: "heart.text.square.fill")
                         Text("TDEE")
                     }
-                UserProfileMockView()
+                UserProfileView()
                     .tabItem(){
                         Image(systemName: "person")
                         Text("Profile")
