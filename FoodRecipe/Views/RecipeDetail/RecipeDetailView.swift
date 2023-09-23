@@ -42,6 +42,7 @@ struct RecipeDetailView: View {
     func addToTDDE() {
         Task {
             await detailVM.addRecipeToTDDE(recipeID:recipeId)
+            await tdde.getTDDERecipe()
         }
     }
     
