@@ -9,16 +9,19 @@ import SwiftUI
 
 struct TDEEPersonalView: View {
     
+    // State variable to navigate to TDEE form
     @State private var navigateToTDEEForm = false
-    @EnvironmentObject private var authVM: AuthViewModel
-    @StateObject private var tddeViewModel = TDDEViewModel.shared
-    @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
     
-//    //MARK: init font cus nav title
-//    init() {
-//        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "ZillaSlab-Bold", size: 30)!]
-//    }
+    // Environment object for authentication
+    @EnvironmentObject private var authVM: AuthViewModel
+    
+    // Shared TDDE view model
+    @StateObject private var tddeViewModel = TDDEViewModel.shared
+    
+    // App storage for TDDE intro
+    @AppStorage("TDDEIntro") var TDDEIntro: Bool = true
 
+    //MARK: MAIN LAYOUT
     var body: some View {
         NavigationStack{
             ScrollView{
@@ -45,6 +48,7 @@ struct TDEEPersonalView: View {
 }
 
 
+//MARK: UI VARS
 private extension TDEEPersonalView {
     
     //MARK: TITLE
@@ -116,11 +120,10 @@ private extension TDEEPersonalView {
                 .padding(.horizontal, 20)
             ScrollView {
                 ForEach(tddeViewModel.tddeRecipes) {recipe in
-                    RecipeCard(id: recipe.id!, calories: recipe.calories, name: recipe.name, imageURL: recipe.backgroundURL, protein: recipe.protein, fat: recipe.fat, carb: recipe.carb)
+                    RecipeCard(id: recipe.id!, calories: recipe.calories, name: recipe.name, imageURL: recipe.backgroundURL, protein: recipe.protein, fat: recipe.fat, carb: recipe.carb) // display recipe card component with list data
                 }
                 
             }
-//            .padding(.horizontal, 5)
         }
     }
     

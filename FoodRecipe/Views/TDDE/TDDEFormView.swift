@@ -31,6 +31,7 @@ struct TDDEFormView: View {
 //        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.theme.Orange)]
 //    }
 //
+    //MARK: MAIN LAYOUT
     var body: some View {
         NavigationStack{
             VStack{
@@ -45,7 +46,7 @@ struct TDDEFormView: View {
                     if showPopUp {
                         Color.theme.DarkWhite.opacity(0.5)
                             .edgesIgnoringSafeArea(.all)
-                        PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false})
+                        PopUp(iconName: popUpIcon , title: popUptitle, content: popUpContent, iconColor: popUpIconColor ,didClose: {showPopUp = false}) // Apply custom pop up notification
                     }
                 }
             )
@@ -169,7 +170,8 @@ private extension TDDEFormView {
             Task {
                 await tddeViewModel.calculateTDDE(age: ageInt, height: heightInt, weight: weightInt, gender: gender, activityLevel: activityLevel)
             }
-    
+            
+            // init pop up notification
             popUpIcon = "figure.dance"
             popUptitle = "Calculate new TDEE success"
             popUpContent = "Please back to TDEE screen to view new update nutritions suggest"
@@ -185,7 +187,7 @@ private extension TDDEFormView {
         .foregroundColor(Color.theme.DarkBlueInstance)
         .background(inputFieldManager.isValidBMIForm() ? Color.theme.LightGray: Color.theme.Orange)
         .cornerRadius(8)
-        .disabled(inputFieldManager.isValidBMIForm())
+        .disabled(inputFieldManager.isValidBMIForm()) // disable button base on empty input field
     }
     
     //MARK: BACK BUTTON

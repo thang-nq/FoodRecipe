@@ -11,15 +11,16 @@ import Firebase
 
 @main
 struct FoodRecipeApp: App {
+    
     init() {
         FirebaseApp.configure()
     }
-    // init authVM
-    @StateObject private var authVM = AuthViewModel()
+    
+//    @StateObject private var authVM = AuthViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(authVM)
+            SplashScreenView()
         }
     }
 }

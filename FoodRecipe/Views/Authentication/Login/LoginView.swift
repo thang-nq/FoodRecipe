@@ -9,8 +9,13 @@ import SwiftUI
 
 struct LoginView: View {
     
+    // Access the AuthViewModel from the environment
     @EnvironmentObject var viewModel: AuthViewModel
+    
+    // State variable to control the availability of the submit button
     @State private var submitButton = true
+    
+    // Create an observed object for managing input fields
     @ObservedObject var inputFieldManager = InputFieldManager()
     
     //MARK: POP UP VARIABLES
@@ -47,6 +52,7 @@ struct LoginView: View {
             .overlay(
                 ZStack {
                     if viewModel.showingAlert {
+                        // Show an alert popup if triggered by the view model
                         Color.theme.DarkWhite.opacity(0.5)
                             .edgesIgnoringSafeArea(.all)
                         PopUp(iconName: popUpIcon , title: viewModel.alertItem!.title, content: viewModel.alertItem!.message, iconColor: popUpIconColor ,didClose: {viewModel.showingAlert = false})
