@@ -27,8 +27,8 @@ struct CreateIntroView: View {
     @Binding var currentSelectedTags: [String]
     @Binding var currentSelectedMealTypes: [String]
     
-    var MOCK_TAGS = ["Chicken", "Soup", "Rice", "Pork", "Sandwich", "Eggs", "Duck", "Avocado", "Simple", "Milk"]
-    var MOCK_MEAL_TYPES = ["Breakfast", "Brunch", "Lunch", "Dinner", "Snack"]
+//    var MOCK_TAGS = ["Chicken", "Soup", "Rice", "Pork", "Sandwich", "Eggs", "Duck", "Avocado", "Simple", "Milk"]
+//    var MOCK_MEAL_TYPES = ["Breakfast", "Brunch", "Lunch", "Dinner", "Snack"]
     
     //MARK: FUNCTION
     // Action select tag

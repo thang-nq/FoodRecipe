@@ -24,6 +24,12 @@ struct SearchView: View {
             await viewModel.searchRecipeByText()
         }
     }
+    
+    func searchByTag() {
+        Task {
+            await viewModel.searchRecipeByTags(tags: viewModel.currentSelectedTags + viewModel.currentSelectedMealTypes)
+        }
+    }
     var body: some View {
         // MARK: Main
         VStack(spacing: 10){
@@ -46,8 +52,16 @@ struct SearchView: View {
                     .padding(0)
                 }.sheet(isPresented: $showingSheet) {
                     // MARK: Sheet View
-                    FilterSheet(currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes, selectMealType: selectMealType, selectTag: selectTag)
+                    ZStack {
+                        if isDark {
+                            Color("DarkGray").opacity(0.1).ignoresSafeArea(.all)
+                        }
+                        VStack {
+                            FilterSheet(currentSelectedTags: $currentSelectedTags, currentSelectedMealTypes: $currentSelectedMealTypes, selectMealType: selectMealType, selectTag: selectTag)
+                            saveButton
+                        }
                         .presentationDetents([.medium, .large]).environment(\.colorScheme, isDark ? .dark : .light)
+                    }.background(Color.theme.White.ignoresSafeArea(.all)).environment(\.colorScheme, isDark ? .dark : .light)
                 }
                 
                 Rectangle()
@@ -111,19 +125,45 @@ struct SearchView: View {
         if(currentSelectedTags.contains(tag)) {
             if let index = currentSelectedTags.firstIndex(of: tag) {
                 currentSelectedTags.remove(at: index)
+                viewModel.currentSelectedTags = currentSelectedTags
             }
         } else {
             currentSelectedTags.append(tag)
+            viewModel.currentSelectedTags = currentSelectedTags
         }
     }
     func selectMealType(tag: String) {
         if(currentSelectedMealTypes.contains(tag)) {
             if let index = currentSelectedMealTypes.firstIndex(of: tag) {
                 currentSelectedMealTypes.remove(at: index)
+                viewModel.currentSelectedMealTypes = currentSelectedMealTypes
             }
         } else {
             currentSelectedMealTypes.append(tag)
+            viewModel.currentSelectedMealTypes = currentSelectedMealTypes
         }
+    }
+}
+
+private extension SearchView {
+    var saveButton: some View {
+        Button {
+            if(viewModel.searchString.count > 0) {
+                searchAction()
+            }else {
+                searchByTag()
+            }
+            showingSheet.toggle()
+        } label: {
+            //                            Text("Helo")
+            Text("Search")
+                .font(Font.custom.ButtonText)
+                .frame(width: 350, height: 50)
+                .contentShape(Rectangle())
+        }
+        .foregroundColor(Color.theme.WhiteInstance)
+        .background(Color.theme.Orange)
+        .cornerRadius(8)
     }
 }
 
