@@ -1,9 +1,14 @@
-//
-//  CreateRecipeViewModel.swift
-//  FoodRecipe
-//
-//  Created by Tien on 18/09/2023.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2023B
+  Assessment: Assignment 3
+  Author: Tien Tran
+  ID: s3919657
+  Created  date: 18/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement: Acknowledge the resources that you use here.
+*/
 
 import Foundation
 import PhotosUI
@@ -142,24 +147,26 @@ class CreateRecipeViewModel: ObservableObject {
                 await printId()
                 await loading()
                 await addingCookingSteps()
-                await homeVM.addRecipe(recipe: Recipe(name: recipeName,
-                                                          creatorID: userId,
-                                                          mealType: currentMealType,
-                                                          intro: description,
-                                                          servingSize: servingSize,
-                                                          cookingTime: cookingTime,
-                                                          calories: calories,
-                                                          carb: carb,
-                                                          protein: protein,
-                                                          fat: fat,
-                                                          sugars: sugars,
-                                                          salt: salt,
-                                                          saturates: saturates,
-                                                          fibre: fibre,
-                                                          ingredients: Ingredients,
-                                                          tags: currentSelectedTags),
-                                           image: backgroundPhoto,
-                                           cookingSteps: cookingSteps
+                await homeVM.addRecipe(
+                    recipe: Recipe(
+                        name: recipeName,
+                        creatorID: userId,
+                        mealType: currentMealType,
+                        intro: description,
+                        servingSize: servingSize,
+                        cookingTime: cookingTime,
+                        calories: calories,
+                        carb: carb,
+                        protein: protein,
+                        fat: fat,
+                        sugars: sugars,
+                        salt: salt,
+                        saturates: saturates,
+                        fibre: fibre,
+                        ingredients: Ingredients,
+                        tags: currentSelectedTags),
+                    image: backgroundPhoto,
+                    cookingSteps: cookingSteps
                 )
                 await resetTheCreateRecipeForm()
                 await cancelLoading()
