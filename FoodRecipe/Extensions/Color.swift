@@ -8,8 +8,6 @@
 import Foundation
 import SwiftUI
 
-
-
 // config theme color using in application
 // these color directly interact with light/dark mode element
 extension Color {
@@ -52,6 +50,4 @@ struct ColorTheme {
     let TabBarColor = Color("TabBarColor")
     let UnTintColor = Color("UnTintColor")
     let RecipeCardBg = Color("RecipeCardBg")
-    
-
 }

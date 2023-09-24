@@ -40,5 +40,4 @@ struct FontCustom {
     //MARK: COMPONENT STYLE
     // Component style font for buttons with a size of 20
     let ButtonText = Font.custom("ZillaSlab-SemiBold", size: 20)
-
 }
