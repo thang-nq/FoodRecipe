@@ -15,6 +15,7 @@ import SwiftUI
 struct MyRecipeCard: View {
     
     @StateObject private var detailVM = RecipeDetailViewModel()
+    @StateObject private var userProfileVM = UserProfileViewModel.shared
     var recipe : Recipe
     var body: some View {
         HStack(alignment: .center){
@@ -53,13 +54,10 @@ struct MyRecipeCard: View {
                 // Button to delete the recipe
                 Button(action:{
                     Task {
-                        do {
-                            try await detailVM.deleteRecipe(recipeID: recipe.id!)
-                        } catch {
-                            // Handle the error here if deletion fails
-                            print("Error deleting recipe: \(error)")
-                        }
+                        await userProfileVM.deleteRecipe(recipeID: recipe.id!)
                     }
+                    
+                    
                 }, label: {Image(systemName: "trash")})
                     .foregroundColor(Color.theme.RedInstance)
             }

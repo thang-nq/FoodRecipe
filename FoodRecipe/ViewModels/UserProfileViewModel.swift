@@ -42,6 +42,7 @@ class UserProfileViewModel: ObservableObject {
     func deleteRecipe(recipeID: String) async {
         do {
             try await RecipeManager.shared.deleteRecipe(recipeID: recipeID)
+            await getUserCreatedRecipe()
         } catch {
             self.errorMessage = error.localizedDescription
             self.showError = true
