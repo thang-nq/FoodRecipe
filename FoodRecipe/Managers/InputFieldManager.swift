@@ -75,6 +75,10 @@ class InputFieldManager: ObservableObject {
         return emailInput.isEmpty || passwordInput.isEmpty
     }
     
+    func isValidResetPW() -> Bool {
+        return emailInput.isEmpty
+    }
+    
     // catch null input field varaibales for disable register button action
     func isValidRegister() -> Bool {
         return emailInput.isEmpty || passwordInput.isEmpty || nameInput.isEmpty || repeatPWInput.isEmpty
