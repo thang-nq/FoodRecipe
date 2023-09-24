@@ -1,9 +1,14 @@
-//
-//  ContentView.swift
-//  FoodRecipe
-//
-//  Created by Thang Nguyen on 10/09/2023.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2023B
+  Assessment: Assignment 3
+  Author: Thang Nguyen
+  ID: s3796613
+  Created  date: 10/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement: Acknowledge the resources that you use here.
+*/
 
 import SwiftUI
 
@@ -16,21 +21,6 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-//            if authVM.userSession != nil {
-//                if authVM.currentUser != nil {
-////                    HomeView()
-//                    UserProfileView()
-//                } else {
-////                    LoginView()
-//                    Progress(loadingSize: 4)
-//
-//
-//                }
-//
-//            } else {
-//                LoginView()
-//            }
-            
             if authVM.isAuthenticated {
                 HomeView()
             } else {
@@ -38,9 +28,7 @@ struct ContentView: View {
             }
         }
         .fullScreenCover(isPresented: $initialView, content: {
-//            OnLoadingList(showLoading: $showLoading)
             OnLoadingList()
-
         })
         
     }
