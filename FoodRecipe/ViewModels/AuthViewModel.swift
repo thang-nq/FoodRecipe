@@ -3,13 +3,10 @@
   Course: COSC2659 iOS Development
   Semester: 2023B
   Assessment: Assignment 3
-  Author: Thang Nguyen
-  ID: s3796613
-  Created  date: 10/09/2023
+  Author: Team Android
+  Created  date: 13/09/2023
   Last modified: 24/09/2023
-  Acknowledgement: Acknowledge the resources that you use here.
 */
-
 
 import SwiftUI
 import Foundation
@@ -19,7 +16,7 @@ import FirebaseFirestoreSwift
 import PhotosUI
 import LocalAuthentication
 
-
+// ViewModel for interacting with the user
 @MainActor
 class AuthViewModel: ObservableObject {
     

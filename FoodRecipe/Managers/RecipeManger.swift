@@ -3,11 +3,9 @@
   Course: COSC2659 iOS Development
   Semester: 2023B
   Assessment: Assignment 3
-  Author: Thang Nguyen
-  ID: Your student id (e.g. 1234567)
+  Author: Team Android
   Created  date: 13/09/2023
   Last modified: 24/09/2023
-  Acknowledgement: Acknowledge the resources that you use here.
 */
 
 import SwiftUI
@@ -17,6 +15,7 @@ import FirebaseStorage
 import FirebaseFirestoreSwift
 import PhotosUI
 
+// Contains logic for interaction with Recipe model
 
 final class RecipeManager {
     static let shared = RecipeManager()
@@ -156,6 +155,7 @@ final class RecipeManager {
         }
     }
     
+    // MARK: Remove recipe from tdde
     func removeRecipeFromTDDE(recipeID: String) async {
         do {
             if let localUser = UserManager.shared.currentUser {
@@ -315,6 +315,7 @@ final class RecipeManager {
         return recipes
     }
     
+    // MARK: Search recipe by a text (keyword)
     func searchRecipeByText(text: String) async -> [Recipe] {
         var recipes: [Recipe] = []
         do {
@@ -475,6 +476,7 @@ final class RecipeManager {
         }
     }
     
+    // MARK: Add cooking step to an exist recipe
     func addCookingStep(recipeID: String, context: String, backgroundImage: PhotosPickerItem?, stepNumber: Int) async throws {
         if let recipeData = await getRecipeInformation(recipeID: recipeID) {
             let stepID = db.document().documentID

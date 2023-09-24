@@ -23,7 +23,6 @@
 		A17132F32AB5728D00F103CF /* TestProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17132F22AB5728D00F103CF /* TestProgress.swift */; };
 		A17132F52AB573B500F103CF /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17132F42AB573B500F103CF /* Progress.swift */; };
 		A17B54192AB039960096A8A9 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B54182AB039960096A8A9 /* AuthViewModel.swift */; };
-		A17B541B2AB039B70096A8A9 /* ImageProcessing.swfit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B541A2AB039B70096A8A9 /* ImageProcessing.swfit.swift */; };
 		A17F89382AB82BC500D0FBD7 /* TDEEPersonalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F89372AB82BC500D0FBD7 /* TDEEPersonalView.swift */; };
 		A17F893A2AB837B800D0FBD7 /* RecipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F89392AB837B800D0FBD7 /* RecipeCard.swift */; };
 		A188D5AA2AB1747700E8FF0E /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = A188D5A92AB1747700E8FF0E /* RoundedCorners.swift */; };
@@ -63,6 +62,7 @@
 		A57741F82AB483C7009B4882 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57741F72AB483C7009B4882 /* SearchViewModel.swift */; };
 		A57741FA2AB5E4D1009B4882 /* DateTimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57741F92AB5E4D1009B4882 /* DateTimeFormat.swift */; };
 		A58877BC2AC0122D00F62CBF /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58877BB2AC0122D00F62CBF /* ForgetPasswordView.swift */; };
+		A58877BE2AC04FA900F62CBF /* ImageProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58877BD2AC04FA900F62CBF /* ImageProcessing.swift */; };
 		A5A529A32AB931B600F2591F /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A529A22AB931B600F2591F /* UserProfileViewModel.swift */; };
 		A5A529A52ABA1A9900F2591F /* TDDEViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A529A42ABA1A9900F2591F /* TDDEViewModel.swift */; };
 		A5F1C2D82AB324B500949874 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1C2D62AB324B400949874 /* UserManager.swift */; };
@@ -117,7 +117,6 @@
 		A17132F22AB5728D00F103CF /* TestProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProgress.swift; sourceTree = "<group>"; };
 		A17132F42AB573B500F103CF /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
 		A17B54182AB039960096A8A9 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
-		A17B541A2AB039B70096A8A9 /* ImageProcessing.swfit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageProcessing.swfit.swift; path = FoodRecipe/Extensions/ImageProcessing.swfit.swift; sourceTree = SOURCE_ROOT; };
 		A17F89372AB82BC500D0FBD7 /* TDEEPersonalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDEEPersonalView.swift; sourceTree = "<group>"; };
 		A17F89392AB837B800D0FBD7 /* RecipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCard.swift; sourceTree = "<group>"; };
 		A188D5A92AB1747700E8FF0E /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
@@ -155,6 +154,7 @@
 		A57741F72AB483C7009B4882 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		A57741F92AB5E4D1009B4882 /* DateTimeFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeFormat.swift; sourceTree = "<group>"; };
 		A58877BB2AC0122D00F62CBF /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
+		A58877BD2AC04FA900F62CBF /* ImageProcessing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessing.swift; sourceTree = "<group>"; };
 		A5A529A22AB931B600F2591F /* UserProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
 		A5A529A42ABA1A9900F2591F /* TDDEViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDDEViewModel.swift; sourceTree = "<group>"; };
 		A5E95EB12ABEC15B00FDE0BD /* FoodRecipe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoodRecipe.entitlements; sourceTree = "<group>"; };
@@ -282,8 +282,8 @@
 		A1A85E662AAF02E300875285 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A58877BD2AC04FA900F62CBF /* ImageProcessing.swift */,
 				A5F1C2DA2AB3265D00949874 /* Errors.swift */,
-				A17B541A2AB039B70096A8A9 /* ImageProcessing.swfit.swift */,
 				A1A85E672AAF031E00875285 /* Color.swift */,
 				A57741F92AB5E4D1009B4882 /* DateTimeFormat.swift */,
 				A15E3E762ABAA5FB008D59E2 /* Font.swift */,
@@ -598,7 +598,6 @@
 				A548C0832AADE27C00884B91 /* Alert.swift in Sources */,
 				CCD973E92AAF0A7100E1AF9C /* RecipeDetailView.swift in Sources */,
 				CC8B46EC2ABC8108000196D5 /* FilterSheet.swift in Sources */,
-				A17B541B2AB039B70096A8A9 /* ImageProcessing.swfit.swift in Sources */,
 				A53A6B872AAF6080007ECBCD /* FirebaseImage.swift in Sources */,
 				A1C843182ABCA9F100264F27 /* ExitButton.swift in Sources */,
 				A188D5AA2AB1747700E8FF0E /* RoundedCorners.swift in Sources */,
@@ -665,6 +664,7 @@
 				A17132F32AB5728D00F103CF /* TestProgress.swift in Sources */,
 				A548C0812AADE22B00884B91 /* InputField.swift in Sources */,
 				CC8D21892AB012EA0036ABF3 /* SectionContainerView.swift in Sources */,
+				A58877BE2AC04FA900F62CBF /* ImageProcessing.swift in Sources */,
 				CCE488582AB723A000A58FFA /* PageView.swift in Sources */,
 				A11939D02ABE01E00082F8DD /* EditNameSheet.swift in Sources */,
 				A188D5AF2AB1870500E8FF0E /* TestColors.swift in Sources */,

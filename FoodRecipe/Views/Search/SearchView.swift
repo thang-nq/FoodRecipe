@@ -3,18 +3,16 @@
   Course: COSC2659 iOS Development
   Semester: 2023B
   Assessment: Assignment 3
-  Author: Man Pham
-  ID: s3804811
+  Author: Team Android
   Created  date: 13/09/2023
   Last modified: 24/09/2023
-  Acknowledgement: Acknowledge the resources that you use here.
 */
 
 import SwiftUI
 
 
-var MOCK_TAGS = ["chicken", "soup", "rice", "pork", "sandwich", "eggs", "duck", "avocado", "simple", "milk"]
-var MOCK_MEAL_TYPES = ["breakfast", "brunch", "lunch", "dinner", "snack"]
+var MOCK_TAGS = ["Chicken", "Soup", "Rice", "Pork", "Sandwich", "Eggs", "Duck", "Avocado", "Simple", "Milk"]
+var MOCK_MEAL_TYPES = ["Breakfast", "Brunch", "Lunch", "Dinner", "Snack"]
 
 struct SearchView: View {
     @State var currentSelectedTags: [String] = []
