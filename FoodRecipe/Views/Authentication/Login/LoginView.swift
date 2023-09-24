@@ -48,6 +48,9 @@ struct LoginView: View {
                 
                 faceIDLoginButton
                     .padding()
+                
+                resetPasswordNav
+                    .padding(8)
                 Spacer()
                 
                 bottomNavigation
@@ -132,6 +135,21 @@ private extension LoginView {
     }
     
     //MARK: BOTTOM NAVIGATION UI
+    var resetPasswordNav: some View {
+        HStack {
+            
+            NavigationLink {
+                ForgetPasswordView()
+                    .navigationBarBackButtonHidden()
+            } label: {
+                Text("Reset password")
+                    .foregroundColor(Color.theme.Blue)
+                    .font(Font.custom.ContentBold)
+                    .underline()
+
+            }
+        }
+    }
     
     var bottomNavigation: some View {
         VStack {
@@ -149,24 +167,10 @@ private extension LoginView {
                         .font(Font.custom.ContentBold)
 
                 }
-            }.padding(8)
-            
-            
-            HStack {
-                Text("Forgot your password?")
-                    .foregroundColor(Color.theme.Blue)
-                    .font(Font.custom.ContentItalic)
-                
-                NavigationLink {
-                    ForgetPasswordView()
-                        .navigationBarBackButtonHidden()
-                } label: {
-                    Text("Reset password")
-                        .foregroundColor(Color.theme.Blue)
-                        .font(Font.custom.ContentBold)
-
-                }
             }
+            
+            
+
         }
 
         
