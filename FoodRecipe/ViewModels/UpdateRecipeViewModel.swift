@@ -1,9 +1,14 @@
-//
-//  UpdateRecipeViewModel.swift
-//  FoodRecipe
-//
-//  Created by Tien on 20/09/2023.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2023B
+  Assessment: Assignment 3
+  Author: Tien Tran
+  ID: s3919657
+  Created  date: 20/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement: Acknowledge the resources that you use here.
+*/
 
 import Foundation
 import PhotosUI
@@ -47,7 +52,7 @@ class UpdateRecipeViewModel: ObservableObject {
     @Published var popUpContent = ""
     @Published var popUpIconColor = Color.theme.BlueInstance
     
- 
+    
     //MARK: FUNCTION
     // Get meal type function
     func getMealType(){
@@ -108,11 +113,11 @@ class UpdateRecipeViewModel: ObservableObject {
     func updateRecipe(){
         getMealType()
         if  (recipeName.isEmpty || cookingTime == 0 || servingSize == 0 || description.isEmpty || Ingredients.isEmpty || Steps.isEmpty || currentMealType.isEmpty || calories == 0 ){
-                showPopUp = true
-                popUpIcon = "xmark"
-                popUptitle = "Missing Information"
-                popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
-                popUpIconColor = Color.theme.RedInstance
+            showPopUp = true
+            popUpIcon = "xmark"
+            popUptitle = "Missing Information"
+            popUpContent = "Please fill in all fields in Intro, Ingredients, Steps."
+            popUpIconColor = Color.theme.RedInstance
         } else {
             recipeValidated = true
         }
@@ -122,7 +127,6 @@ class UpdateRecipeViewModel: ObservableObject {
                 if backgroundPhoto == nil{
                     await detailVM.updateRecipe(recipeID: recipeId, updateData: updateRecipeInterface(name: recipeName, mealType: currentMealType, intro: description, servingSize: servingSize, cookingTime: cookingTime, calories: calories, carb: carb, protein: protein, fat: fat, sugars: sugars, salt: salt, saturates: saturates, fibre: fibre, ingredients: Ingredients, tags: currentSelectedTags))
                 }else {
-//                    await addingCookingSteps()
                     await detailVM.updateRecipe(recipeID: recipeId, updateData: updateRecipeInterface(name: recipeName, mealType: currentMealType, backgroundImage: backgroundPhoto, intro: description, servingSize: servingSize, cookingTime: cookingTime, calories: calories, carb: carb, protein: protein, fat: fat, sugars: sugars, salt: salt, saturates: saturates, fibre: fibre, ingredients: Ingredients, tags: currentSelectedTags))
                 }
                 await cancelLoading()

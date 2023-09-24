@@ -1,9 +1,14 @@
-//
-//  TestProgress.swift
-//  FoodRecipe
-//
-//  Created by Tuấn Vũ Trụ on 16/09/2023.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2023B
+  Assessment: Assignment 3
+  Author: Tuan Le
+  ID: s3836290
+  Created  date: 16/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement: Acknowledge the resources that you use here.
+*/
 
 import SwiftUI
 
