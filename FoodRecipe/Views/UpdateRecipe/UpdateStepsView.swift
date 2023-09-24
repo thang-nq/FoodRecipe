@@ -65,14 +65,14 @@ struct UpdateStepsView: View {
         .sheet(isPresented: $showingSheet){
             // MARK: ADD STEP SHEET UI
             AddingStepsSheetView(recipeId: $recipeId,InputStep: $InputStep, Steps: $Steps, stepPhoto: $stepPhoto, listStepsPhoto: $listStepsPhoto, backgroundPhoto: $backgroundPhoto)
-                .presentationDetents([.height(150)])
+                .presentationDetents([.height(230)])
                 .presentationBackground(isDark ? Color.theme.DarkGray : Color.theme.White)
                 .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .sheet(isPresented: $showingUpdateSheet){
             // MARK: UPDATE STEP SHEET UI
             UpdatingStepsSheetView(listStepId: $listStepId, stepId: $stepId, recipeId: $recipeId, Steps: $Steps, listStepsPhoto: $listStepsPhoto,updateStep: $updateStep, updatePhoto: $updatePhoto, showingUpdateSheet: $showingUpdateSheet)
-                .presentationDetents([.height(150)])
+                .presentationDetents([.height(230)])
                 .presentationBackground(isDark ? Color.theme.DarkGray : Color.theme.White)
                 .environment(\.colorScheme, isDark ? .dark : .light)
         }

@@ -59,14 +59,14 @@ struct UpdateIngredientsView: View {
         .sheet(isPresented: $showingSheet){
             // MARK: ADD INGREDIENTS SHEET
             AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
-                .presentationDetents([.height(150)])
+                .presentationDetents([.height(230)])
                 .presentationBackground(isDark ? Color.theme.DarkGray : Color.theme.White)
                 .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .sheet(isPresented: $showingUpdateSheet){
             // MARK: UPDATE INGREDIENTS SHEET
             UpdateIngredientsSheetView(updateInputIngredient: $updateInputIngredient, Ingredients: $Ingredients, showingUpdateSheet: $showingUpdateSheet)
-                .presentationDetents([.height(150)])
+                .presentationDetents([.height(230)])
                 .presentationBackground(isDark ? Color.theme.DarkGray : Color.theme.White)
                 .environment(\.colorScheme, isDark ? .dark : .light)
         }
