@@ -3,11 +3,9 @@
   Course: COSC2659 iOS Development
   Semester: 2023B
   Assessment: Assignment 3
-  Author: Tien Tran
-  ID: s3919657
-  Created  date: 15/09/2023
+  Author: Team Android
+  Created  date: 13/09/2023
   Last modified: 24/09/2023
-  Acknowledgement: Acknowledge the resources that you use here.
 */
 
 import SwiftUI

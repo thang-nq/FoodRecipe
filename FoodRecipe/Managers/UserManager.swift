@@ -3,11 +3,9 @@
   Course: COSC2659 iOS Development
   Semester: 2023B
   Assessment: Assignment 3
-  Author: Thang Nguyen
-  ID: s3796613
+  Author: Team Android
   Created  date: 13/09/2023
   Last modified: 24/09/2023
-  Acknowledgement: Acknowledge the resources that you use here.
 */
 
 import SwiftUI
@@ -24,6 +22,9 @@ struct AuthDataResultModel {
     
 }
 
+
+// Manager class contains logic for interacting with user model
+
 final class UserManager {
     static let shared = UserManager()
     private(set) var currentUser: User? = nil
@@ -36,6 +37,7 @@ final class UserManager {
         }
     }
     
+    // MARK: Get user data by id
     func getUserData(userID: String) async -> User? {
         var user: User? = nil
         do {
@@ -47,6 +49,7 @@ final class UserManager {
         return user
     }
     
+    // MARK: Update user data
     func updateUser(userID: String, updateValues: [String: Any]) async throws {
         if let user = await self.getUserData(userID: userID) {
             try await db.document(user.id).updateData(updateValues)
@@ -56,6 +59,7 @@ final class UserManager {
         }
     }
     
+    // MARK: Create new user
     func createUser(withEmail email: String, password: String, fullName: String) async throws -> AuthDataResult {
         let result = try await Auth.auth().createUser(withEmail: email, password: password)
         let newUser = User(id: result.user.uid, fullName: fullName, email: email)
@@ -67,7 +71,7 @@ final class UserManager {
     }
     
     
-    
+    // MARK: Sign in with email and password
     func signIn(withEmail email: String, password: String) async throws -> AuthDataResult {
         let result = try await Auth.auth().signIn(withEmail: email, password: password)
         let user = await getUserData(userID: result.user.uid)
@@ -75,10 +79,13 @@ final class UserManager {
         return result
     }
     
+    
+    // MARK: Signout
     func signOut() throws {
         try Auth.auth().signOut() // sign out user in the firebase
         self.currentUser = nil // clear local user data
     }
+    
     
     func fetchCurrentUser() async throws -> User? {
         if let uid = Auth.auth().currentUser?.uid {
