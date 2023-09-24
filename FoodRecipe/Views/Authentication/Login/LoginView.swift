@@ -118,7 +118,7 @@ private extension LoginView {
     var faceIDLoginButton: some View {
         Button {
             Task {
-                let bioAuthSuccess = await viewModel.faceIDAuth()
+                _ = await viewModel.faceIDAuth()
             }
         } label: {
             Label("Login with Face ID", systemImage: "faceid")
@@ -129,21 +129,44 @@ private extension LoginView {
     //MARK: BOTTOM NAVIGATION UI
     
     var bottomNavigation: some View {
-        HStack {
-            Text("Don't have an account?")
-                .foregroundColor(Color.theme.Blue)
-                .font(Font.custom.ContentItalic)
-            
-            NavigationLink {
-                SignupView()
-                    .navigationBarBackButtonHidden()
-            } label: {
-                Text("Sign up")
+        VStack {
+            HStack {
+                Text("Don't have an account?")
                     .foregroundColor(Color.theme.Blue)
-                    .font(Font.custom.ContentBold)
+                    .font(Font.custom.ContentItalic)
+                
+                NavigationLink {
+                    SignupView()
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    Text("Sign up")
+                        .foregroundColor(Color.theme.Blue)
+                        .font(Font.custom.ContentBold)
 
+                }
+            }.padding(8)
+            
+            
+            HStack {
+                Text("Forgot your password?")
+                    .foregroundColor(Color.theme.Blue)
+                    .font(Font.custom.ContentItalic)
+                
+                NavigationLink {
+                    ForgetPasswordView()
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    Text("Reset password")
+                        .foregroundColor(Color.theme.Blue)
+                        .font(Font.custom.ContentBold)
+
+                }
             }
         }
+
+        
+        
+        
 
     }
 }

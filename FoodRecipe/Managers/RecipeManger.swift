@@ -366,6 +366,7 @@ final class RecipeManager {
             let recipeID = db.document().documentID
             var recipeData = recipe
             recipeData.creatorID = userData.id
+//            recipeData.ingredients = 
             // save document
             try db.document(recipeID).setData(from: recipeData)
             var backgroundURL = "default.jpeg"
