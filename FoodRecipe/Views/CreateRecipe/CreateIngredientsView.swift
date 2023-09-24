@@ -63,15 +63,15 @@ struct CreateIngredientsView: View {
             // MARK: ADD INGREDIENTS SHEET
     
                 AddIngredientsSheetView(InputIngredient: $InputIngredient, Ingredients: $Ingredients)
-                    .presentationDetents([.height(300)])
-                    .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                    .presentationDetents([.height(150)])
+                    .presentationBackground(isDark ? Color.theme.DarkGray : Color.theme.White)
                     .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .sheet(isPresented: $showingUpdateSheet){
             // MARK: UPDATE INGREDIENTS SHEET
             UpdateIngredientsSheetView(updateInputIngredient: $updateInputIngredient, Ingredients: $Ingredients, showingUpdateSheet: $showingUpdateSheet)
-                .presentationDetents([.height(300)])
-                .presentationBackground(isDark ? Color.theme.DarkWhite.opacity(0.2) : Color.theme.White)
+                .presentationDetents([.height(150)])
+                .presentationBackground(isDark ? Color.theme.DarkGray : Color.theme.White)
                 .environment(\.colorScheme, isDark ? .dark : .light)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
