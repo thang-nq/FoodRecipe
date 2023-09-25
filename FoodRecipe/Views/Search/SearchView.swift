@@ -17,7 +17,6 @@ var MOCK_MEAL_TYPES = ["Breakfast", "Brunch", "Lunch", "Dinner", "Snack"]
 struct SearchView: View {
     @State var currentSelectedTags: [String] = []
     @State var currentSelectedMealTypes: [String] = []
-    //    @State var searchInput = ""
     @State var showingSheet: Bool = false
     @StateObject var viewModel = SearchViewModel()
     @AppStorage("isDarkMode") var isDark = false
@@ -114,16 +113,6 @@ struct SearchView: View {
     }
     
     
-    //    func selectFilter(tag: String) {
-    //        if(currentSelectedFilters.contains(tag)) {
-    //            if let index = currentSelectedFilters.firstIndex(of: tag) {
-    //                currentSelectedFilters.remove(at: index)
-    //            }
-    //        } else {
-    //            currentSelectedFilters.append(tag)
-    //        }
-    //    }
-    
     func selectTag(tag: String) {
         if(currentSelectedTags.contains(tag)) {
             if let index = currentSelectedTags.firstIndex(of: tag) {
@@ -158,7 +147,6 @@ private extension SearchView {
             }
             showingSheet.toggle()
         } label: {
-            //                            Text("Helo")
             Text("Search")
                 .font(Font.custom.ButtonText)
                 .frame(width: 350, height: 50)

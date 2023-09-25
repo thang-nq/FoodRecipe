@@ -51,7 +51,6 @@ struct PageView: View {
                             .background(Color.theme.BlackInstance.opacity(0.3))
                             .clipShape(Circle())
                     }
-                    
                 }.padding(10),
                 alignment: .center
             )

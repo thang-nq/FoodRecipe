@@ -63,24 +63,11 @@ struct HomeView: View {
                     .foregroundColor(Color.theme.OrangeInstance)
                 }
             }
-            
-            
         }
         .environment(\.colorScheme, isDark ? .dark : .light)
-
     }
 }
 
-struct CreateRecipeViewDemo: View {
-    var body: some View {
-        Text("CreateRecipe")
-    }
-}
-struct UserProfileViewDemo: View {
-    var body: some View {
-        Text("UserProfile")
-    }
-}
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

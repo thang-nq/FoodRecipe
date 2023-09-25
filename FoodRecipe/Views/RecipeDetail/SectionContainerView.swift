@@ -19,7 +19,6 @@ struct SectionContainerView<Content>: View where Content: View {
     }
     
     var body: some View {
-        
         VStack(alignment: .center, spacing: 16) {
             content()
         }

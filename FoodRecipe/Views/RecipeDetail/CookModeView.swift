@@ -33,8 +33,6 @@ struct CookModeView: View {
                     PageView(page: page, totalSteps: pages.count, incrementPage: incrementPage, decrementPage: decrementPage).tag(page.tag)
                 }
             }
-            
-            
         }
         .animation(.easeInOut, value: pageIndex)
         .tabViewStyle(.page)
