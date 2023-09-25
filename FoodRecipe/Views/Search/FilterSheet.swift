@@ -28,7 +28,6 @@ struct FilterSheet: View {
                 TagsFilterView(tags: MOCK_TAGS, currentSelectedTags: $currentSelectedTags, action: selectTag)
                 Spacer()
             }
-            //            .background(Color.theme.DarkGray.opacity(0.1))
             .padding(10)
         }
         .background(Color.theme.White)

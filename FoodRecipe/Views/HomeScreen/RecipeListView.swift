@@ -57,7 +57,6 @@ struct RecipeListView: View {
                                     .clipShape(Circle())
                             }
                         }.padding(10),
-                        
                         alignment: .bottomTrailing
                     )
             }
@@ -68,7 +67,6 @@ struct RecipeListView: View {
         }
     }
 }
-
 
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {

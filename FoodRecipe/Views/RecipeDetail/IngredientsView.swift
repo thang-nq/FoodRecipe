@@ -16,21 +16,16 @@ struct IngredientsView: View {
     var ingredientsList: [String]
     var body: some View {
         SectionContainerView {
-//            SectionTitleView(title: "Ingredients")
             VStack (alignment: .leading) {
                 ForEach(ingredientsList, id: \.self) { ingredient in
                     HStack {
                         Circle().fill(Color.theme.Orange).frame(width: 7, height: 7)
                         Text(ingredient).font(.custom.Content)
                     }
-                    
                 }
             }
-            
-//            .frame(maxWidth: .infinity, alignment: .topLeading)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
-//        .padding(.horizontal, 25)
     }
 }
 
